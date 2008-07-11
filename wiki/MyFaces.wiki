@@ -1,1 +1,0 @@
-Apache MyFaces is a project of the Apache Software Foundation, and hosts several sub-projects relating to the JavaServer(tm) technology. If you want to know more about how JavaServer(tm) Faces works, take a look at the MyFaces introduction to JSF.
