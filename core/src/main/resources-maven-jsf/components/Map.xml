@@ -30,7 +30,7 @@
 	<componentClass>com.googlecode.gmaps4jsf.component.map.Map</componentClass>
 	<componentType>com.googlecode.gmaps4jsf.Map</componentType>
 	<componentFamily>com.googlecode.gmaps4jsf</componentFamily>
-	<rendererType>com.googlecode.gmaps4jsf.component.MapRenderer</rendererType>
+	<rendererType>com.googlecode.gmaps4jsf.component.map.MapRenderer</rendererType>
 	<rendererClass>com.googlecode.gmaps4jsf.component.map.MapRenderer</rendererClass>
 	<parent>javax.faces.component.UIComponentBase</parent>
 	<attributes>
@@ -43,7 +43,7 @@
 		</attribute>
 		<attribute>
 			<name>latitude</name>
-			<required>true</required>
+			<required>true</required>	
 			<type>java.lang.String</type>
 			<description>The latitude you wish the map to point to</description>
 		</attribute>	
@@ -51,13 +51,33 @@
 			<name>width</name>
 			<required>false</required>
 			<type>java.lang.String</type>
-			<description>The width of the map</description>
+			<defaultValue>500</defaultValue>					
+			<description>The width of the map. Default value is 500.</description>
 		</attribute>	
 		<attribute>
 			<name>height</name>
 			<required>false</required>
 			<type>java.lang.String</type>
-			<description>The height of the map</description>
+			<defaultValue>500</defaultValue>					
+			<description>The height of the map. Default value is 500.</description>
+		</attribute>		
+		<attribute>
+			<name>zoom</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<defaultValue>11</defaultValue>					
+			<description>The zoom value of the map. Default value is 11.</description>
+		</attribute>						
+		<attribute>
+			<name>type</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<defaultValue>G_HYBRID_MAP</defaultValue>					
+			<description>
+			The type of the map. 
+			It can be one of the following values (G_NORMAL_MAP, G_SATELLITE_MAP and G_HYBRID_MAP).
+			Default value is (G_HYBRID_MAP).
+			</description>
 		</attribute>			
 
 	</attributes>
