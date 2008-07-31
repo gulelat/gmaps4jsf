@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.yui4jsf.util;
+package com.googlecode.gmaps4jsf.util;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -26,10 +26,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * @author Latest modification by $Author: mulderbaba $
- * @version $Revision: 367 $ $Date: 2007-06-11 01:08:53 +0300 (Mon, 11 Jun 2007) $
- */
 public class SourceCodeServlet extends HttpServlet  {
     
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException  {
