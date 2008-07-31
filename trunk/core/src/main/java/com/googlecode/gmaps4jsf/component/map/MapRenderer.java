@@ -19,15 +19,27 @@
 package com.googlecode.gmaps4jsf.component.map;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 
+import com.googlecode.gmaps4jsf.component.htmlInformationWindow.HTMLInformationWindow;
+import com.googlecode.gmaps4jsf.component.map.Map;
+import com.googlecode.gmaps4jsf.component.marker.Marker;
+import com.googlecode.gmaps4jsf.util.ComponentConstants;
+import com.googlecode.gmaps4jsf.util.ComponentUtils;
+import com.googlecode.gmaps4jsf.util.HTMLInfoWindowRendererUtil;
+import com.googlecode.gmaps4jsf.util.MarkerRendererUtil;
+
 /**
  * @author Hazem Saleh
  * @date Jul 13, 2008
+ * last modified at Jul 31, 2008 
+ * The (MapRenderer) renders a google map with all its children 
+ * (markers, informationWindows ...etc).
  */
 public class MapRenderer extends Renderer {
 
@@ -36,26 +48,64 @@ public class MapRenderer extends Renderer {
 
 		Map mapComponent = (Map) component;
 
-		writer.startElement("script", component);
+		writer.startElement(ComponentConstants.HTML_SCRIPT, component);
 
 		writer.write("if (GBrowserIsCompatible()) {\n");
-		writer.write("var map = new GMap2(document.getElementById(\""
-				+ mapComponent.getClientId(facesContext) + "\"));");
 
-		writer.write("map.setCenter(new GLatLng("
-				+ mapComponent.getLatitude() + ", "
-				+ mapComponent.getLongitude() + "), 11);");
+		encodeMap(facesContext, mapComponent, writer);
 
-		writer.write("map.setMapType(G_HYBRID_MAP);");
+		encodeMarkers(facesContext, mapComponent, writer);
+
+		encodeHTMLInfoWindows(facesContext, mapComponent, writer);
 
 		writer.write("}\n");
-		writer.endElement("script");
+		writer.endElement(ComponentConstants.HTML_SCRIPT);
 	}
 
-	private void assertValidContext(FacesContext context) {
-		if(context == null) {
-			throw new NullPointerException("context cannot be null");
+	private void encodeHTMLInfoWindows(FacesContext facesContext,
+			Map mapComponent, ResponseWriter writer) throws IOException {
+
+		for (Iterator iterator = mapComponent.getChildren().iterator(); iterator
+				.hasNext();) {
+			UIComponent component = (UIComponent) iterator.next();
+
+			if (component instanceof HTMLInformationWindow) {
+				HTMLInfoWindowRendererUtil
+						.encodeMarker(facesContext, mapComponent,
+								(HTMLInformationWindow) component, writer);
+			}
 		}
+	}
+
+	private void encodeMarkers(FacesContext facesContext, Map mapComponent,
+			ResponseWriter writer) throws IOException {
+
+		for (Iterator iterator = mapComponent.getChildren().iterator(); iterator
+				.hasNext();) {
+			UIComponent component = (UIComponent) iterator.next();
+
+			if (component instanceof Marker) {
+				MarkerRendererUtil.encodeMarker(facesContext, mapComponent,
+						(Marker) component, writer);
+			}
+		}
+	}
+
+	private void encodeMap(FacesContext facesContext, Map mapComponent,
+			ResponseWriter writer) throws IOException {
+
+		writer.write("var " + ComponentConstants.JS_GMAP_BASE_VARIABLE
+				+ " = new " + ComponentConstants.JS_GMAP_CORE_OBJECT
+				+ "(document.getElementById(\""
+				+ mapComponent.getClientId(facesContext) + "\"));");
+
+		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
+				+ ".setCenter(new GLatLng(" + mapComponent.getLatitude() + ", "
+				+ mapComponent.getLongitude() + "), " + mapComponent.getZoom()
+				+ ");");
+
+		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE + ".setMapType("
+				+ mapComponent.getType() + ");");
 	}
 
 	private void encodeHTMLModel(FacesContext facesContext,
@@ -63,27 +113,27 @@ public class MapRenderer extends Renderer {
 
 		Map mapComponent = (Map) component;
 
-		writer.startElement("DIV", mapComponent);
+		writer.startElement(ComponentConstants.HTML_DIV, mapComponent);
 
-		writer.writeAttribute("id", mapComponent.getClientId(facesContext),
-				"id");
-		writer.writeAttribute("name", mapComponent.getClientId(facesContext),
-				"name");
-		writer.writeAttribute("style", "width: " + mapComponent.getWidth()
-				+ "; height: " + mapComponent.getHeight(), "style");
+		writer.writeAttribute(ComponentConstants.HTML_ATTR_ID, mapComponent
+				.getClientId(facesContext), ComponentConstants.HTML_ATTR_ID);
+		writer.writeAttribute(ComponentConstants.HTML_ATTR_NAME, mapComponent
+				.getClientId(facesContext), ComponentConstants.HTML_ATTR_NAME);
+		writer.writeAttribute(ComponentConstants.HTML_ATTR_STYLE, "width: "
+				+ mapComponent.getWidth() + "; height: "
+				+ mapComponent.getHeight(), ComponentConstants.HTML_ATTR_STYLE);
 
-		writer.endElement("DIV");
-
+		writer.endElement(ComponentConstants.HTML_DIV);
 	}
 
-
-	public void encodeBegin(FacesContext context,
-							UIComponent component) throws IOException {
+	public void encodeBegin(FacesContext context, UIComponent component)
+			throws IOException {
 	}
 
-	public void encodeEnd(FacesContext context,
-						  UIComponent component) throws IOException {
-		assertValidContext(context);
+	public void encodeEnd(FacesContext context, UIComponent component)
+			throws IOException {
+
+		ComponentUtils.assertValidContext(context);
 
 		ResponseWriter writer = context.getResponseWriter();
 
@@ -92,7 +142,6 @@ public class MapRenderer extends Renderer {
 		encodeScripts(context, component, writer);
 	}
 
-	public void decode(FacesContext context,
-					   UIComponent component) {
+	public void decode(FacesContext context, UIComponent component) {
 	}
 }
