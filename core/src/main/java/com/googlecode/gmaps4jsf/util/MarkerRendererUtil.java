@@ -37,8 +37,8 @@ public class MarkerRendererUtil {
 			Map mapComponent, Marker marker, ResponseWriter writer)
 			throws IOException {
 
-		writer.write("var marker_" + marker.getId() + " = new GMarker("
-				+ marker.getLatitude() + ", " + marker.getLongitude() + ");");
+		writer.write("var marker_" + marker.getId() + " = new GMarker(new GLatLng("
+				+ marker.getLatitude() + ", " + marker.getLongitude() + "));");
 
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
 				+ ".addOverlay(marker_" + marker.getId() + ");");
