@@ -1,0 +1,12 @@
+<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/basic.css" />
+<table class="pageHeader">
+	<tr>
+		<td>
+			<img src="<%= request.getContextPath() %>/images/site/logo.png">
+		</td>
+		<td>
+	         <span style="font-size:15px;color:#FFFFFF"> The GMaps and JavaServer&#8482; Faces Integration Library</span>
+	         <span style="font-size:10px;color:#FFFFFF">(GMaps4JSF Version 0.0.1-SNAPSHOT, using GMaps4JSF 0.0.1)</span>		
+		</td>	
+	</tr>
+</table>
