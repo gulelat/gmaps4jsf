@@ -37,16 +37,34 @@
 		&standard_uicomponent_attributes;
 		<attribute>
 			<name>longitude</name>
-			<required>true</required>
+			<required>false</required>
 			<type>java.lang.String</type>
+			<defaultValue>31.14</defaultValue>				
 			<description>The longitude you wish the map to point to</description>
 		</attribute>
 		<attribute>
 			<name>latitude</name>
-			<required>true</required>	
+			<required>false</required>	
 			<type>java.lang.String</type>
+			<defaultValue>30.01</defaultValue>				
 			<description>The latitude you wish the map to point to</description>
 		</attribute>	
+		<attribute>
+			<name>address</name>
+			<required>false</required>
+			<type>java.lang.String</type>				
+			<description>
+						The address you wish the map to point to. 
+						If you use this attribute donot longitude or latitude attributes.
+			</description>
+		</attribute>	
+		<attribute>
+			<name>locationNotFoundErrorMessage</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<defaultValue>(GClientGeocoder) service not found the address location</defaultValue>					
+			<description>The error message that should appear if the address location doesnot exist</description>
+		</attribute>					
 		<attribute>
 			<name>width</name>
 			<required>false</required>
@@ -67,7 +85,7 @@
 			<type>java.lang.String</type>
 			<defaultValue>11</defaultValue>					
 			<description>The zoom value of the map. Default value is 11.</description>
-		</attribute>						
+		</attribute>								
 		<attribute>
 			<name>type</name>
 			<required>false</required>

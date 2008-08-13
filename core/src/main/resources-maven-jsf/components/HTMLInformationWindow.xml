@@ -35,15 +35,15 @@
 		&standard_uicomponent_attributes;
 		<attribute>
 			<name>longitude</name>
-			<required>true</required>
+			<required>false</required>
 			<type>java.lang.String</type>
-			<description>The longitude of the HTML information window</description>
+			<description>The longitude of the HTML information window. If not set then the parent map longitude will be taken.</description>
 		</attribute>
 		<attribute>
 			<name>latitude</name>
-			<required>true</required>	
+			<required>false</required>	
 			<type>java.lang.String</type>
-			<description>The latitude of the HTML information window</description>
+			<description>The latitude of the HTML information window If not set then the parent map latitude will be taken.</description>
 		</attribute>	
 		<attribute>
 			<name>htmlText</name>
