@@ -7,7 +7,7 @@
     <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAxrVS1QxlpJHXxQ2Vxg2bJBT2yXp_ZAY8_ufC3CFXhHIE1NvwkxS9AOPy_YJl48ifAy4mq6I8SgK8fg"
             type="text/javascript"></script>    
     </HEAD>
-    <body>
+	<body>
 	<f:view>
     	<h:form id="form">
     		<m:map width="500" height="500" latitude="30.01" longitude="31.14">
@@ -17,5 +17,6 @@
     		</m:map>
     	</h:form>
 	</f:view>
+	<%@include file="../templates/footer.jspf" %>   	
     </body>
 </HTML>  
