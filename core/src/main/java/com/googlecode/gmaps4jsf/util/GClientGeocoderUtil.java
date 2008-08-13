@@ -23,39 +23,28 @@ import java.io.IOException;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import com.googlecode.gmaps4jsf.component.htmlInformationWindow.HTMLInformationWindow;
 import com.googlecode.gmaps4jsf.component.map.Map;
 
 /**
  * @author Hazem Saleh
- * @date Jul 31, 2008
- * The HTMLInfoWindowRendererUtil is used for providing rendering the map info windows.
+ * @date Aug 12, 2008
+ * The GClientGeocoderUtil acts a wrapper for GMaps (GClientGeocoder) service.
  */
-public class HTMLInfoWindowRendererUtil {
-
-	public static void encodeMarker(FacesContext facesContext,
-			Map mapComponent, HTMLInformationWindow window,
+public class GClientGeocoderUtil {
+	
+	public static void initMapLocation(FacesContext facesContext, Map mapComponent,
 			ResponseWriter writer) throws IOException {
 
-		String longitude;
-		String latitude;
+		writer.write("var geocoder_" + mapComponent.getId()
+				+ " = new GClientGeocoder();");
 
-		if (window.getLatitude() != null) {
-			latitude = window.getLatitude();
-		} else {
-			latitude = ComponentConstants.JS_GMAP_BASE_VARIABLE
-					+ ".getCenter().lat()";
-		}
-
-		if (window.getLongitude() != null) {
-			longitude = window.getLongitude();
-		} else {
-			longitude = ComponentConstants.JS_GMAP_BASE_VARIABLE
-					+ ".getCenter().lng()";
-		}
-
-		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-				+ ".openInfoWindowHtml(new GLatLng(" + latitude + ", "
-				+ longitude + "), \"" + window.getHtmlText() + "\");");
+		// send XHR request to get the address location and write to the response.
+		writer.write("geocoder_" + mapComponent.getId() + ".getLatLng(\""
+				+ mapComponent.getAddress() + "\"," + "function(location) {\n"
+				+ "if (!location) {\n" + "alert(\""
+				+ mapComponent.getLocationNotFoundErrorMessage() + "\");\n"
+				+ "} else {\n" 
+				+ "map.setCenter(location, "
+				+ mapComponent.getZoom() + ");\n" + "}" + "}\n" + ");\n");
 	}
 }
