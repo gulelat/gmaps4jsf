@@ -22,6 +22,13 @@
 
 
 <faces-config xmlns="http://java.sun.com/JSF/Configuration">
-
-
+    <managed-bean>
+        <managed-bean-name>addressBean</managed-bean-name>
+        <managed-bean-class>com.googlecode.gmaps4jsf.example.beans.AddressBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>address</property-name>
+            <value>Cairo, Egypt</value>
+        </managed-property>               
+    </managed-bean>	
 </faces-config>
