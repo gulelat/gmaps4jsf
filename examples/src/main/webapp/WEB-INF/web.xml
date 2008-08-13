@@ -36,11 +36,21 @@
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+
+	<servlet>
+    	<servlet-name>SourceCodeServlet</servlet-name>
+	    <servlet-class>com.googlecode.gmaps4jsf.util.SourceCodeServlet</servlet-class>
+	</servlet>		
 	
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.jsf</url-pattern>
 	</servlet-mapping>
+
+	<servlet-mapping>
+    	<servlet-name>SourceCodeServlet</servlet-name>
+	    <url-pattern>*.source</url-pattern>
+	</servlet-mapping>	
 	
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
