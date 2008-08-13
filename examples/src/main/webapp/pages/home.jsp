@@ -5,24 +5,33 @@
     <HEAD> 
     <title>Welcome to GMaps4JSF</title>  
     </HEAD>
-    <body>
-        <f:view>
+	<body>
+	<%@include file="../templates/header.jspf" %>           
+        <f:view> 
 	        <h:form>	                
-	                <h:outputText value="Example 1" />
+	                <h:outputText value="Simple Map" />
 	                <h:panelGrid style="padding-left:25px">
 	                    <h:outputLink value="pages/simple.jsf">
 	                        <f:verbatim>A simple map with no other components</f:verbatim>
 	                    </h:outputLink>
 	                </h:panelGrid>         
 	                
-	                <h:outputText value="Example 2" />
+	                <h:outputText value="Using Markers and Information Windows" />
 	                <h:panelGrid style="padding-left:25px">                
 	                    <h:outputLink value="pages/mapWithMarkersAndInfoWindows.jsf">
 	                    	<f:verbatim>A map with both markers and Information windows</f:verbatim>
 	                    </h:outputLink>                     
-	                </h:panelGrid>                             
+	                </h:panelGrid>
+	                
+	                <h:outputText value="Get My Location Example" />
+	                <h:panelGrid style="padding-left:25px">                
+	                    <h:outputLink value="pages/getMyLocation.jsf">
+	                    	<f:verbatim>An example that demonstrates the usage of the address attribute of the map</f:verbatim>
+	                    </h:outputLink>                     
+	                </h:panelGrid>         	                                             
 	
 			</h:form>
         </f:view>
+	<%@include file="../templates/footer.jspf" %>        
     </body>
 </HTML>  
