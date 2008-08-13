@@ -31,7 +31,9 @@ import com.googlecode.gmaps4jsf.component.map.Map;
 import com.googlecode.gmaps4jsf.component.marker.Marker;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
+import com.googlecode.gmaps4jsf.util.GClientGeocoderUtil;
 import com.googlecode.gmaps4jsf.util.HTMLInfoWindowRendererUtil;
+import com.googlecode.gmaps4jsf.util.MapRendererUtil;
 import com.googlecode.gmaps4jsf.util.MarkerRendererUtil;
 
 /**
@@ -94,18 +96,11 @@ public class MapRenderer extends Renderer {
 	private void encodeMap(FacesContext facesContext, Map mapComponent,
 			ResponseWriter writer) throws IOException {
 
-		writer.write("var " + ComponentConstants.JS_GMAP_BASE_VARIABLE
-				+ " = new " + ComponentConstants.JS_GMAP_CORE_OBJECT
-				+ "(document.getElementById(\""
-				+ mapComponent.getClientId(facesContext) + "\"));");
+		MapRendererUtil.createMap(facesContext, mapComponent, writer);
 
-		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-				+ ".setCenter(new GLatLng(" + mapComponent.getLatitude() + ", "
-				+ mapComponent.getLongitude() + "), " + mapComponent.getZoom()
-				+ ");");
+		MapRendererUtil.initMapLocation(facesContext, mapComponent, writer);
 
-		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE + ".setMapType("
-				+ mapComponent.getType() + ");");
+		MapRendererUtil.renderMap(facesContext, mapComponent, writer);
 	}
 
 	private void encodeHTMLModel(FacesContext facesContext,
