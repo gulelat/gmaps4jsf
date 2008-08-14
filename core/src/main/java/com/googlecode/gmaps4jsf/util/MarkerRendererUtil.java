@@ -19,7 +19,9 @@
 package com.googlecode.gmaps4jsf.util;
 
 import java.io.IOException;
+import java.util.Iterator;
 
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
@@ -33,7 +35,7 @@ import com.googlecode.gmaps4jsf.component.marker.Marker;
  */
 public class MarkerRendererUtil {
 
-	public static void encodeMarker(FacesContext facesContext,
+	private static void encodeMarker(FacesContext facesContext,
 			Map mapComponent, Marker marker, ResponseWriter writer)
 			throws IOException {
 
@@ -60,5 +62,31 @@ public class MarkerRendererUtil {
 
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
 				+ ".addOverlay(marker_" + marker.getId() + ");");
+	}
+
+	public static void encodeMarkersFunctionScript(FacesContext facesContext,
+			Map mapComponent, ResponseWriter writer) throws IOException {
+
+		writer.write("function "
+				+ ComponentConstants.JS_CREATE_MARKERS_FUNCTION_PREFIX
+				+ mapComponent.getId() + "() {");
+		for (Iterator iterator = mapComponent.getChildren().iterator(); iterator
+				.hasNext();) {
+			UIComponent component = (UIComponent) iterator.next();
+
+			if (component instanceof Marker) {
+				MarkerRendererUtil.encodeMarker(facesContext, mapComponent,
+						(Marker) component, writer);
+			}
+		}
+		writer.write("}");
+	}
+	
+	public static void encodeMarkersFunctionScriptCall(
+			FacesContext facesContext, Map mapComponent, ResponseWriter writer)
+			throws IOException {
+
+		writer.write(ComponentConstants.JS_CREATE_HTMLINFOWINDOWS_FUNCTION_PREFIX
+						+ mapComponent.getId() + "();");
 	}
 }
