@@ -47,6 +47,6 @@ longitude = 31.41, and the HTML information window will display the value in the
   </m:map>
 }}}
 
-This will create a simple map that will point to the specific address with the marker and an information window that contains the address.
+This will create a simple map that will point to the specific address with the marker and an information window containing the address.
 
  * For more information, please see the examples in the demo.
