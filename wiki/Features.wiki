@@ -1,13 +1,7 @@
-#summary One-sentence summary of this page.
-
-= Introduction =
-
-Add your content here.
-
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+*The library provide JSF tags that make it easy to :*
+ # Create the map using (latitude and longitude) or (address).
+ # The ability to switch between map types. 
+ # The ability to add marker to the map. 
+ # The ability to add information text to the map. 
+ # The ability to zoom in and out of the map. 
+ # others.
