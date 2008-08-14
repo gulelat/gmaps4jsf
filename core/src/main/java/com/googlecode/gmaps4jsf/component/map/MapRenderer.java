@@ -27,11 +27,9 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 
 import com.googlecode.gmaps4jsf.component.htmlInformationWindow.HTMLInformationWindow;
-import com.googlecode.gmaps4jsf.component.map.Map;
 import com.googlecode.gmaps4jsf.component.marker.Marker;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
-import com.googlecode.gmaps4jsf.util.GClientGeocoderUtil;
 import com.googlecode.gmaps4jsf.util.HTMLInfoWindowRendererUtil;
 import com.googlecode.gmaps4jsf.util.MapRendererUtil;
 import com.googlecode.gmaps4jsf.util.MarkerRendererUtil;
@@ -54,19 +52,21 @@ public class MapRenderer extends Renderer {
 
 		writer.write("if (GBrowserIsCompatible()) {\n");
 
-		encodeMap(facesContext, mapComponent, writer);
+		createMarkersFunctionScript(facesContext, mapComponent, writer);
 
-		encodeMarkers(facesContext, mapComponent, writer);
-
-		encodeHTMLInfoWindows(facesContext, mapComponent, writer);
+		createHTMLInfoWindowsFunctionScript(facesContext, mapComponent, writer);
+		
+		encodeMap(facesContext, mapComponent, writer);		
 
 		writer.write("}\n");
 		writer.endElement(ComponentConstants.HTML_SCRIPT);
 	}
 
-	private void encodeHTMLInfoWindows(FacesContext facesContext,
+	private void createHTMLInfoWindowsFunctionScript(FacesContext facesContext,
 			Map mapComponent, ResponseWriter writer) throws IOException {
 
+		writer.write("function createHTMLInfoWindowsFunction"
+				+ mapComponent.getId() + "() {");
 		for (Iterator iterator = mapComponent.getChildren().iterator(); iterator
 				.hasNext();) {
 			UIComponent component = (UIComponent) iterator.next();
@@ -77,11 +77,14 @@ public class MapRenderer extends Renderer {
 								(HTMLInformationWindow) component, writer);
 			}
 		}
+		writer.write("}");
 	}
 
-	private void encodeMarkers(FacesContext facesContext, Map mapComponent,
-			ResponseWriter writer) throws IOException {
+	private void createMarkersFunctionScript(FacesContext facesContext,
+			Map mapComponent, ResponseWriter writer) throws IOException {
 
+		writer.write("function createMarkerFunction"
+				+ mapComponent.getId() + "() {");
 		for (Iterator iterator = mapComponent.getChildren().iterator(); iterator
 				.hasNext();) {
 			UIComponent component = (UIComponent) iterator.next();
@@ -91,14 +94,13 @@ public class MapRenderer extends Renderer {
 						(Marker) component, writer);
 			}
 		}
+		writer.write("}");
 	}
 
 	private void encodeMap(FacesContext facesContext, Map mapComponent,
 			ResponseWriter writer) throws IOException {
 
 		MapRendererUtil.createMap(facesContext, mapComponent, writer);
-
-		MapRendererUtil.initMapLocation(facesContext, mapComponent, writer);
 
 		MapRendererUtil.renderMap(facesContext, mapComponent, writer);
 	}
