@@ -32,7 +32,7 @@ import com.googlecode.gmaps4jsf.component.map.Map;
  */
 public class GClientGeocoderUtil {
 	
-	public static void initMapLocation(FacesContext facesContext, Map mapComponent,
+	public static void renderMapXHR(FacesContext facesContext, Map mapComponent,
 			ResponseWriter writer) throws IOException {
 
 		writer.write("var geocoder_" + mapComponent.getId()
@@ -45,6 +45,11 @@ public class GClientGeocoderUtil {
 				+ mapComponent.getLocationNotFoundErrorMessage() + "\");\n"
 				+ "} else {\n" 
 				+ "map.setCenter(location, "
-				+ mapComponent.getZoom() + ");\n" + "}" + "}\n" + ");\n");
+				+ mapComponent.getZoom() + ");\n" 
+				+ MapRendererUtil.getMapPointersJSCode(mapComponent)
+				+ "}" 
+				+ "}\n" 
+				+ ");\n");
 	}
+	
 }

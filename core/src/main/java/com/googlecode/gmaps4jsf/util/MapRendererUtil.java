@@ -38,10 +38,26 @@ public class MapRendererUtil {
 		writer.write("var " + ComponentConstants.JS_GMAP_BASE_VARIABLE
 				+ " = new " + ComponentConstants.JS_GMAP_CORE_OBJECT
 				+ "(document.getElementById(\""
-				+ mapComponent.getClientId(facesContext) + "\"));");
+				+ mapComponent.getClientId(facesContext) + "\"));");		
+	}
+	
+	/**
+	 * The (getMapPointersJSCode) is used for generating the map controls JS
+	 * code. Pointers means  (Markers and HTMLInfoWindows);
+	 */
+	public static String getMapPointersJSCode(Map mapComponent) {
+		
+		String output = "";
+		output += "createHTMLInfoWindowsFunction" + mapComponent.getId()
+				+ "();";
+		output += "createMarkerFunction" + mapComponent.getId() + "();";
+		output += ComponentConstants.JS_GMAP_BASE_VARIABLE + ".setMapType("
+				+ mapComponent.getType() + ");";
+
+		return output;
 	}
 
-	public static void initMapLocation(FacesContext facesContext, Map mapComponent,
+	public static void renderMap(FacesContext facesContext, Map mapComponent,
 			ResponseWriter writer) throws IOException {
 
 		if (mapComponent.getAddress() == null) {
@@ -51,18 +67,12 @@ public class MapRendererUtil {
 					+ ".setCenter(new GLatLng(" + mapComponent.getLatitude()
 					+ ", " + mapComponent.getLongitude() + "), "
 					+ mapComponent.getZoom() + ");");
+			writer.write(getMapPointersJSCode(mapComponent));
 		} else {
 
 			// use the GClientGeocoder service to get the longitude and latitude. 
-			GClientGeocoderUtil.initMapLocation(facesContext, mapComponent,
+			GClientGeocoderUtil.renderMapXHR(facesContext, mapComponent,
 					writer);
-		}
-	}
-
-	public static void renderMap(FacesContext facesContext, Map mapComponent,
-			ResponseWriter writer) throws IOException {
-
-		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE + ".setMapType("
-				+ mapComponent.getType() + ");");
+		}		
 	}
 }
