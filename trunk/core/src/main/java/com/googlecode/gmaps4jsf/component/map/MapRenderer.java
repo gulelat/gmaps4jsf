@@ -19,15 +19,12 @@
 package com.googlecode.gmaps4jsf.component.map;
 
 import java.io.IOException;
-import java.util.Iterator;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 
-import com.googlecode.gmaps4jsf.component.htmlInformationWindow.HTMLInformationWindow;
-import com.googlecode.gmaps4jsf.component.marker.Marker;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
 import com.googlecode.gmaps4jsf.util.HTMLInfoWindowRendererUtil;
@@ -50,57 +47,39 @@ public class MapRenderer extends Renderer {
 
 		writer.startElement(ComponentConstants.HTML_SCRIPT, component);
 
-		writer.write("if (GBrowserIsCompatible()) {\n");
+		startEncodingBrowserCompatabilityChecking(facesContext, component,
+				writer);
 
-		createMarkersFunctionScript(facesContext, mapComponent, writer);
+		MarkerRendererUtil.encodeMarkersFunctionScript(facesContext,
+				mapComponent, writer);
 
-		createHTMLInfoWindowsFunctionScript(facesContext, mapComponent, writer);
-		
-		encodeMap(facesContext, mapComponent, writer);		
+		HTMLInfoWindowRendererUtil.encodeHTMLInfoWindowsFunctionScript(
+				facesContext, mapComponent, writer);
 
-		writer.write("}\n");
+		encodeMap(facesContext, mapComponent, writer);
+
+		endEncodingBrowserCompatabilityChecking(facesContext, component, writer);
+
 		writer.endElement(ComponentConstants.HTML_SCRIPT);
 	}
 
-	private void createHTMLInfoWindowsFunctionScript(FacesContext facesContext,
-			Map mapComponent, ResponseWriter writer) throws IOException {
-
-		writer.write("function createHTMLInfoWindowsFunction"
-				+ mapComponent.getId() + "() {");
-		for (Iterator iterator = mapComponent.getChildren().iterator(); iterator
-				.hasNext();) {
-			UIComponent component = (UIComponent) iterator.next();
-
-			if (component instanceof HTMLInformationWindow) {
-				HTMLInfoWindowRendererUtil
-						.encodeMarker(facesContext, mapComponent,
-								(HTMLInformationWindow) component, writer);
-			}
-		}
-		writer.write("}");
+	private void startEncodingBrowserCompatabilityChecking(
+			FacesContext facesContext, UIComponent component,
+			ResponseWriter writer) throws IOException {
+		
+		writer.write("if (" + ComponentConstants.JS_GBrowserIsCompatible_OBJECT
+				+ "()) {");
 	}
 
-	private void createMarkersFunctionScript(FacesContext facesContext,
-			Map mapComponent, ResponseWriter writer) throws IOException {
-
-		writer.write("function createMarkerFunction"
-				+ mapComponent.getId() + "() {");
-		for (Iterator iterator = mapComponent.getChildren().iterator(); iterator
-				.hasNext();) {
-			UIComponent component = (UIComponent) iterator.next();
-
-			if (component instanceof Marker) {
-				MarkerRendererUtil.encodeMarker(facesContext, mapComponent,
-						(Marker) component, writer);
-			}
-		}
+	private void endEncodingBrowserCompatabilityChecking(
+			FacesContext facesContext, UIComponent component,
+			ResponseWriter writer) throws IOException {
+		
 		writer.write("}");
 	}
 
 	private void encodeMap(FacesContext facesContext, Map mapComponent,
 			ResponseWriter writer) throws IOException {
-
-		MapRendererUtil.createMap(facesContext, mapComponent, writer);
 
 		MapRendererUtil.renderMap(facesContext, mapComponent, writer);
 	}

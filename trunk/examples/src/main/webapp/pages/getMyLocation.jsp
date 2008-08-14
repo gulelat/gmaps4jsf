@@ -18,7 +18,7 @@
             </h:panelGrid>      
             
             <h:panelGrid>                     	
-	    		<m:map width="300" height="300" address="#{addressBean.address}">
+	    		<m:map width="500" height="500" address="#{addressBean.address}">
 	    			<m:marker/>
 	    			<m:htmlInformationWindow htmlText="#{addressBean.address}"/>
 	    		</m:map>

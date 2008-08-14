@@ -19,7 +19,9 @@
 package com.googlecode.gmaps4jsf.util;
 
 import java.io.IOException;
+import java.util.Iterator;
 
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
@@ -33,7 +35,7 @@ import com.googlecode.gmaps4jsf.component.map.Map;
  */
 public class HTMLInfoWindowRendererUtil {
 
-	public static void encodeMarker(FacesContext facesContext,
+	private static void encodeMarker(FacesContext facesContext,
 			Map mapComponent, HTMLInformationWindow window,
 			ResponseWriter writer) throws IOException {
 
@@ -58,4 +60,30 @@ public class HTMLInfoWindowRendererUtil {
 				+ ".openInfoWindowHtml(new GLatLng(" + latitude + ", "
 				+ longitude + "), \"" + window.getHtmlText() + "\");");
 	}
+	
+	public static void encodeHTMLInfoWindowsFunctionScript(FacesContext facesContext,
+			Map mapComponent, ResponseWriter writer) throws IOException {
+
+		writer.write("function "
+				+ ComponentConstants.JS_CREATE_HTMLINFOWINDOWS_FUNCTION_PREFIX
+				+ mapComponent.getId() + "() {");
+		for (Iterator iterator = mapComponent.getChildren().iterator(); iterator
+				.hasNext();) {
+			UIComponent component = (UIComponent) iterator.next();
+
+			if (component instanceof HTMLInformationWindow) {
+				encodeMarker(facesContext, mapComponent,
+						(HTMLInformationWindow) component, writer);
+			}
+		}
+		writer.write("}");
+	}	
+	
+	public static void encodeHTMLInfoWindowsFunctionScriptCall(
+			FacesContext facesContext, Map mapComponent, ResponseWriter writer)
+			throws IOException {
+
+		writer.write(ComponentConstants.JS_CREATE_HTMLINFOWINDOWS_FUNCTION_PREFIX
+						+ mapComponent.getId() + "();");
+	}	
 }

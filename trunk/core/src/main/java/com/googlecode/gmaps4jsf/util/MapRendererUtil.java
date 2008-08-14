@@ -32,47 +32,77 @@ import com.googlecode.gmaps4jsf.component.map.Map;
  */
 public class MapRendererUtil {
 	
-	public static void createMap(FacesContext facesContext, Map mapComponent,
-			ResponseWriter writer) throws IOException {
+	private static void createMapJSObject(FacesContext facesContext,
+			Map mapComponent, ResponseWriter writer) throws IOException {
 
 		writer.write("var " + ComponentConstants.JS_GMAP_BASE_VARIABLE
 				+ " = new " + ComponentConstants.JS_GMAP_CORE_OBJECT
 				+ "(document.getElementById(\""
-				+ mapComponent.getClientId(facesContext) + "\"));");		
+				+ mapComponent.getClientId(facesContext) + "\"));");
 	}
 	
-	/**
-	 * The (getMapPointersJSCode) is used for generating the map controls JS
-	 * code. Pointers means  (Markers and HTMLInfoWindows);
-	 */
-	public static String getMapPointersJSCode(Map mapComponent) {
+	private static void encodeMapType(FacesContext facesContext,
+			Map mapComponent, ResponseWriter writer) throws IOException {
 		
-		String output = "";
-		output += "createHTMLInfoWindowsFunction" + mapComponent.getId()
-				+ "();";
-		output += "createMarkerFunction" + mapComponent.getId() + "();";
-		output += ComponentConstants.JS_GMAP_BASE_VARIABLE + ".setMapType("
-				+ mapComponent.getType() + ");";
-
-		return output;
+		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE + ".setMapType("
+				+ mapComponent.getType() + ");");
 	}
+	
+	private static void renderMapUsingLatLng(FacesContext facesContext,
+			Map mapComponent, ResponseWriter writer) throws IOException {
 
+		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
+				+ ".setCenter(new GLatLng(" + mapComponent.getLatitude() + ", "
+				+ mapComponent.getLongitude() + "), " + mapComponent.getZoom()
+				+ ");");
+
+		HTMLInfoWindowRendererUtil.encodeHTMLInfoWindowsFunctionScriptCall(
+				facesContext, mapComponent, writer);
+
+		MarkerRendererUtil.encodeMarkersFunctionScriptCall(facesContext,
+				mapComponent, writer);
+
+		encodeMapType(facesContext, mapComponent, writer);
+	}	
+	
+	private static void renderMapUsingAddress(FacesContext facesContext, Map mapComponent,
+			ResponseWriter writer) throws IOException {
+
+		writer.write("var geocoder_" + mapComponent.getId()
+				+ " = new GClientGeocoder();");
+
+		// send XHR request to get the address location and write to the response.
+		writer.write("geocoder_" + mapComponent.getId() + ".getLatLng(\""
+				+ mapComponent.getAddress() + "\"," + "function(location) {\n"
+				+ "if (!location) {\n" + "alert(\""
+				+ mapComponent.getLocationNotFoundErrorMessage() + "\");\n"
+				+ "} else {\n");
+		
+		writer.write("map.setCenter(location, "+ mapComponent.getZoom() + ");\n");		
+		
+		HTMLInfoWindowRendererUtil.encodeHTMLInfoWindowsFunctionScriptCall(
+				facesContext, mapComponent, writer);
+
+		MarkerRendererUtil.encodeMarkersFunctionScriptCall(facesContext,
+				mapComponent, writer);
+
+		encodeMapType(facesContext, mapComponent, writer);		
+				
+		writer.write("}" + "}\n" + ");\n");
+	}	
+	
 	public static void renderMap(FacesContext facesContext, Map mapComponent,
 			ResponseWriter writer) throws IOException {
 
+		createMapJSObject(facesContext, mapComponent, writer);
+
 		if (mapComponent.getAddress() == null) {
 
-			// if address doesnot exist then use longitude and latitude. 			
-			writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-					+ ".setCenter(new GLatLng(" + mapComponent.getLatitude()
-					+ ", " + mapComponent.getLongitude() + "), "
-					+ mapComponent.getZoom() + ");");
-			writer.write(getMapPointersJSCode(mapComponent));
+			renderMapUsingLatLng(facesContext, mapComponent, writer);
+
 		} else {
 
-			// use the GClientGeocoder service to get the longitude and latitude. 
-			GClientGeocoderUtil.renderMapXHR(facesContext, mapComponent,
-					writer);
-		}		
+			renderMapUsingAddress(facesContext, mapComponent, writer);
+		}
 	}
 }
