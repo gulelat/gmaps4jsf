@@ -13,7 +13,7 @@
 </head>
 
 
-<body>
+<body onunload="GUnload()">
 
 <f:view>
 
