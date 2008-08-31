@@ -6,4 +6,4 @@ To see a quick demo of the library, you have two possible ways :
  Then type :
  http://localhost:8080/gmaps4jsf-examples/ (If you are using port 8080 in your Tomcat :)).
 
-[http://www.jroller.com/HazemBlog/resource/map.PNG]
+[http://www.jroller.com/HazemBlog/resource/mashups.PNG]
