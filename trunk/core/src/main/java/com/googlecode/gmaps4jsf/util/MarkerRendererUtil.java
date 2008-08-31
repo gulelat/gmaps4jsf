@@ -69,7 +69,8 @@ public class MarkerRendererUtil {
 
 		writer.write("function "
 				+ ComponentConstants.JS_CREATE_MARKERS_FUNCTION_PREFIX
-				+ mapComponent.getId() + "() {");
+				+ mapComponent.getId() + "("
+				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ") {");
 		for (Iterator iterator = mapComponent.getChildren().iterator(); iterator
 				.hasNext();) {
 			UIComponent component = (UIComponent) iterator.next();
@@ -86,7 +87,10 @@ public class MarkerRendererUtil {
 			FacesContext facesContext, Map mapComponent, ResponseWriter writer)
 			throws IOException {
 
-		writer.write(ComponentConstants.JS_CREATE_HTMLINFOWINDOWS_FUNCTION_PREFIX
-						+ mapComponent.getId() + "();");
+		writer
+				.write(ComponentConstants.JS_CREATE_MARKERS_FUNCTION_PREFIX
+						+ mapComponent.getId()
+						+ "("
+						+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");");
 	}
 }
