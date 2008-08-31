@@ -4,6 +4,6 @@
 <head>
 </head>
 <body>
-	<jsp:forward page="/pages/home.jsf" />
+	<jsp:forward page="/home.jsf" />
 </body>
 </html>
