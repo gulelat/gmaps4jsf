@@ -44,15 +44,6 @@
   <param-name>org.apache.myfaces.PRETTY_HTML</param-name>
   <param-value>true</param-value>
  </context-param>
- <context-param>
-  <description>If true, a javascript function will be rendered that is able to restore the
-            former vertical scroll on every request. Convenient feature if you have pages
-            with long lists and you do not want the browser page to always jump to the top
-            if you trigger a link or button action that stays on the same page.
-            Default: "false"</description>
-  <param-name>org.apache.myfaces.AUTO_SCROLL</param-name>
-  <param-value>true</param-value>
- </context-param>
  
 	<filter>
 	 	<display-name>Ajax4jsf Filter</display-name>
