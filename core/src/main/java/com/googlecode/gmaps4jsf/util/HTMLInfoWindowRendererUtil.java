@@ -66,7 +66,8 @@ public class HTMLInfoWindowRendererUtil {
 
 		writer.write("function "
 				+ ComponentConstants.JS_CREATE_HTMLINFOWINDOWS_FUNCTION_PREFIX
-				+ mapComponent.getId() + "() {");
+				+ mapComponent.getId() + "("
+				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ") {");
 		for (Iterator iterator = mapComponent.getChildren().iterator(); iterator
 				.hasNext();) {
 			UIComponent component = (UIComponent) iterator.next();
@@ -84,6 +85,8 @@ public class HTMLInfoWindowRendererUtil {
 			throws IOException {
 
 		writer.write(ComponentConstants.JS_CREATE_HTMLINFOWINDOWS_FUNCTION_PREFIX
-						+ mapComponent.getId() + "();");
+						+ mapComponent.getId()
+						+ "("
+						+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");");
 	}	
 }
