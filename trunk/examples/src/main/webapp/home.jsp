@@ -38,7 +38,6 @@
 	                </h:panelGrid>   	                                                             
 	
 			</h:form>
-        </f:view>
-	<%@include file="../templates/footer.jspf" %>        
+        </f:view>      
     </body>
 </HTML>  
