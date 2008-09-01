@@ -49,14 +49,15 @@ public class MapRenderer extends Renderer {
 
 		startEncodingBrowserCompatabilityChecking(facesContext, component,
 				writer);
-
-		MarkerRendererUtil.encodeMarkersFunctionScript(facesContext,
-				mapComponent, writer);
-
-		HTMLInfoWindowRendererUtil.encodeHTMLInfoWindowsFunctionScript(
-				facesContext, mapComponent, writer);
-
-		encodeMap(facesContext, mapComponent, writer);
+		
+		encodeMapRendererWrapper(facesContext, mapComponent, writer);
+		
+		// determines whether to render map on window onload.
+		if ("true".equals(mapComponent.getRenderOnWindowLoad())) {
+			injectMapCodeInWindowOnLoad(facesContext, component, writer);
+		} else {
+			callMapRendererWrapper(facesContext, component, writer);
+		}
 
 		endEncodingBrowserCompatabilityChecking(facesContext, component, writer);
 
@@ -70,6 +71,57 @@ public class MapRenderer extends Renderer {
 		writer.write("if (" + ComponentConstants.JS_GBrowserIsCompatible_OBJECT
 				+ "()) {");
 	}
+	
+	private void encodeMapRendererWrapper(FacesContext facesContext,
+			Map mapComponent, ResponseWriter writer) throws IOException {
+
+		writer.write("function " + ComponentConstants.JS_RENDER_MAP_FUNC + mapComponent.getId()
+				+ "(){");
+		
+		MarkerRendererUtil.encodeMarkersFunctionScript(facesContext,
+				mapComponent, writer);
+
+		HTMLInfoWindowRendererUtil.encodeHTMLInfoWindowsFunctionScript(
+				facesContext, mapComponent, writer);
+
+		encodeMap(facesContext, mapComponent, writer);
+		
+		writer.write("}");		
+	}
+	
+	/*
+	 * The injectMapCodeInWindowOnLoad method is used for injecting the map code 
+	 * executes in the window onload (IE will complain without this method). 
+	 */
+	private void injectMapCodeInWindowOnLoad(
+			FacesContext facesContext, UIComponent component,
+			ResponseWriter writer) throws IOException {
+
+		 String injectMapCodeInWindowOnLoadScript = "\r\n// Inject code on the load of the window\r\n"
+				+ "var oldonload = window.onload;\r\n"
+				+ "if (typeof window.onload != 'function') {\r\n"
+				+ "window.onload = "
+				+ ComponentConstants.JS_RENDER_MAP_FUNC
+				+ component.getId()
+				+ ";\r\n"
+				+ "} else {\r\n"
+				+ "window.onload = function() {\r\n"
+				+ "if (oldonload) {\r\n"
+				+ "oldonload();\r\n"
+				+ "}\r\n"
+				+ ComponentConstants.JS_RENDER_MAP_FUNC
+				+ component.getId()
+				+ "();\r\n" + "}\r\n" + "}\r\n";
+		 
+		 writer.write(injectMapCodeInWindowOnLoadScript);
+	}	
+	
+	private void callMapRendererWrapper(FacesContext facesContext,
+			UIComponent component, ResponseWriter writer) throws IOException {
+
+		writer.write(ComponentConstants.JS_RENDER_MAP_FUNC + component.getId()
+				+ "();\r\n");
+	}		
 
 	private void endEncodingBrowserCompatabilityChecking(
 			FacesContext facesContext, UIComponent component,
