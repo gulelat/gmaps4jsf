@@ -9,34 +9,6 @@
   <param-value>client</param-value>
  </context-param>
  <context-param>
-  <description>This parameter tells MyFaces if javascript code should be allowed in the
-            rendered HTML output.
-            If javascript is allowed, command_link anchors will have javascript code
-            that submits the corresponding form.
-            If javascript is not allowed, the state saving info and nested parameters
-            will be added as url parameters.
-            Default: "true"</description>
-  <param-name>org.apache.myfaces.ALLOW_JAVASCRIPT</param-name>
-  <param-value>true</param-value>
- </context-param>
- <context-param>
-  <description>This parameter tells MyFaces if javascript code should be allowed in the
-            rendered HTML output.
-            If javascript is allowed, command_link anchors will have javascript code
-            that submits the corresponding form.
-            If javascript is not allowed, the state saving info and nested parameters
-            will be added as url parameters.
-            Default: "false"
-
-            Setting this param to true should be combined with STATE_SAVING_METHOD "server" for
-            best results.
-
-            This is an EXPERIMENTAL feature. You also have to enable the detector filter/filter mapping below to get
-            JavaScript detection working.</description>
-  <param-name>org.apache.myfaces.DETECT_JAVASCRIPT</param-name>
-  <param-value>false</param-value>
- </context-param>
- <context-param>
   <description>If true, rendered HTML code will be formatted, so that it is "human readable".
             i.e. additional line separators and whitespace will be written, that do not
             influence the HTML code.
@@ -55,8 +27,7 @@
 		<servlet-name>Faces Servlet</servlet-name>
 	 	<dispatcher>REQUEST</dispatcher>
 	 	<dispatcher>FORWARD</dispatcher>
-	 	<dispatcher>INCLUDE</dispatcher>
-	 	<dispatcher>DISPATCHER</dispatcher>	 	
+	 	<dispatcher>INCLUDE</dispatcher>	
 	</filter-mapping>  
 	 
  <!-- WelcomeFile Filter 
@@ -64,15 +35,6 @@
     <filter>
         <filter-name>WelcomeFile Filter</filter-name>
         <filter-class>org.apache.myfaces.webapp.filter.WelcomeFileFilter</filter-class>
-        <description>
-            Due to the manner in which the JSP / servlet lifecycle
-            functions, it is not currently possible to specify default
-            welcome files for a web application and map them to the
-            MyFacesServlet.  Normally they will be mapped to the
-            default servlet for the JSP container.  To offset this
-            shortcoming, we utilize a servlet Filter which examines
-            the URI of all incoming requests.
-        </description>
     </filter>
     
  JavaScriptDetector Filter 
@@ -84,7 +46,7 @@
  
  <filter>
   <filter-name>extensionsFilter</filter-name>
-  <filter-class>org.apache.myfaces.component.html.util.ExtensionsFilter</filter-class>
+  <filter-class>org.apache.myfaces.webapp.filter.ExtensionsFilter</filter-class>
   <init-param>
    <description>Set the size limit for uploaded files.
                 Format: 10 - 10 bytes
