@@ -28,6 +28,7 @@ public interface ComponentConstants {
 	final String HTML_ATTR_STYLE = "style";
 	final String JS_GMAP_BASE_VARIABLE = "map";
 	final String JS_GBrowserIsCompatible_OBJECT = "GBrowserIsCompatible";
+	final String JS_RENDER_MAP_FUNC = "renderMap";	
 	final String JS_CREATE_HTMLINFOWINDOWS_FUNCTION_PREFIX = "createHTMLInfoWindowsFunction";
 	final String JS_CREATE_MARKERS_FUNCTION_PREFIX = "createMarkerFunction";	
 }
