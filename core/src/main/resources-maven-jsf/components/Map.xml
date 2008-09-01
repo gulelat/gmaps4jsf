@@ -96,6 +96,18 @@
 			It can be one of the following values (G_NORMAL_MAP, G_SATELLITE_MAP and G_HYBRID_MAP).
 			Default value is (G_HYBRID_MAP).
 			</description>
+		</attribute>		
+		
+		<attribute>
+			<name>renderOnWindowLoad</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<defaultValue>true</defaultValue>					
+			<description>
+			This flag determines whether to render the window on window load.
+			This flag should be set to false if the map is inside a zone that will 
+			be updated by Ajax
+			</description>
 		</attribute>			
 
 	</attributes>
