@@ -66,7 +66,8 @@
 					<h:outputText id="lblCountryName" value="#{param.countryName}"></h:outputText>
 			   		<m:map id="mapCountry" width="300" height="300" 
 			   			   address="#{param.countryName}" 
-			   			   rendered="#{param.countryName ne null}">
+			   			   rendered="#{param.countryName ne null}"
+			   			   renderOnWindowLoad="false">
 			   			<m:marker/>
 			   			<m:htmlInformationWindow htmlText="#{param.countryName}"/>
 			   		</m:map>		
