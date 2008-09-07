@@ -8,7 +8,7 @@
 
 <head>
     <title>GMaps4JSF Mashups Example</title> 
-    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAxrVS1QxlpJHXxQ2Vxg2bJBT2yXp_ZAY8_ufC3CFXhHIE1NvwkxS9AOPy_YJl48ifAy4mq6I8SgK8fg"
+    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAxrVS1QxlpJHXxQ2Vxg2bJBSjitesYwnX88ICGDOjyrafu2mX4hQwsaVdFbQqlObiL8Zj6WlX3UXDUg"
             type="text/javascript"></script>    	
 </head>
 
