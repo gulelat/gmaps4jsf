@@ -1,5 +1,5 @@
 GMaps4JSF can work with Facelets, Here are the instructions :
-  * Create an XML file (gmaps4jsf-facelets-taglib.xml), then copy the following content to the file:
+  * Create an XML file (gmaps4jsf-facelets-taglib.xml), then copy the following content to it:
 {{{
 <?xml version="1.0"?>
 <!DOCTYPE facelet-taglib PUBLIC
