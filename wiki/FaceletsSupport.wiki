@@ -36,4 +36,19 @@ GMaps4JSF can work with Facelets, Here are the instructions :
         <param-value>/WEB-INF/gmaps4jsf-facelets-taglib.xml</param-value>
     </context-param>
 }}}
-  * 
+  * Add the following to the declaration to your Facelets XHTML file:
+{{{
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:m="http://code.google.com/p/gmaps4jsf/">
+...
+    		<m:map width="500px" height="500px" latitude="30.01" longitude="31.14">
+    			<m:marker latitude="30.01" longitude="31.14"/>
+    			<m:htmlInformationWindow latitude="30.01" longitude="31.14" 
+    			   htmlText="&lt;b&gt;This is Egypt&lt;b&gt;"/>
+    		</m:map>
+...
+
+}}}
