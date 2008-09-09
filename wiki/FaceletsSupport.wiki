@@ -29,14 +29,14 @@ GMaps4JSF can work with Facelets, Here are the instructions :
 </facelet-taglib>
 }}}
   * Copy the (gmaps4jsf-facelets-taglib.xml) file to the WEB-INF folder of your application.
-  * In the (web.xml) file of your application, add this context parameter:
+  * In the (web.xml) file of your application, add the following context parameter:
 {{{
     <context-param>
         <param-name>facelets.LIBRARIES</param-name>
         <param-value>/WEB-INF/gmaps4jsf-facelets-taglib.xml</param-value>
     </context-param>
 }}}
-  * Add the following to the declaration to your Facelets XHTML file:
+  * Add the following declaration to your Facelets XHTML file:
 {{{
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
