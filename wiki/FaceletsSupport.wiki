@@ -52,3 +52,4 @@ GMaps4JSF can work with Facelets, Here are the instructions :
 ...
 </html>
 }}}
+ * Enjoy working with Facelets!!!.
