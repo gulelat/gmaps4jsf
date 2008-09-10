@@ -65,7 +65,7 @@
 				
 				<h:panelGroup id="countryMapGroup">
 					<h:outputText id="lblCountryName" value="#{param.countryName}"></h:outputText>
-			   		<m:map id="mapCountry" width="300" height="300" 
+			   		<m:map id="mapCountry" width="300px" height="300px" 
 			   			   address="#{param.countryName}" 
 			   			   rendered="#{param.countryName ne null}"
 			   			   renderOnWindowLoad="false">

@@ -11,7 +11,7 @@
 	<body onunload="GUnload()">
 	<f:view>
     	<h:form id="form">
-    		<m:map width="500" height="500" latitude="30.01" longitude="31.14" />
+    		<m:map width="500px" height="500px" latitude="30.01" longitude="31.14" />
     	</h:form>
 	</f:view>
 	<%@include file="../templates/footer.jspf" %>   	
