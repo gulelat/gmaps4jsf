@@ -52,5 +52,6 @@
 			<defaultValue>This is a place to point to</defaultValue>					
 			<description>The Information Window HTML Text.</description>
 		</attribute>	
+		
 	</attributes>
 </component>

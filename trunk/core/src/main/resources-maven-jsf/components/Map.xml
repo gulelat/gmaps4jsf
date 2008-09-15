@@ -109,6 +109,28 @@
 			be updated by Ajax
 			</description>
 		</attribute>			
-
+		
+		
+		<attribute>
+			<name>enableDragging</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<defaultValue>true</defaultValue>					
+			<description>
+			This flag determines whether to support map dragging. Default is true.
+			</description>
+		</attribute>		
+		
+		<attribute>
+			<name>jsVariable</name>
+			<required>false</required>
+			<type>java.lang.String</type>				
+			<description>
+			This flag determines the JavaScript variable you want to use for referring to the map.
+			It should unique per map. Use this attribute if you want to use write additional JavaScript
+			code for the map to customize it.
+			</description>
+		</attribute>				
+				
 	</attributes>
 </component>
