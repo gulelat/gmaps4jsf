@@ -35,7 +35,7 @@ import com.googlecode.gmaps4jsf.component.map.Map;
  */
 public class HTMLInfoWindowRendererUtil {
 
-	private static void encodeMarker(FacesContext facesContext,
+	private static void encodeHTMLInfoWindow(FacesContext facesContext,
 			Map mapComponent, HTMLInformationWindow window,
 			ResponseWriter writer) throws IOException {
 
@@ -73,7 +73,7 @@ public class HTMLInfoWindowRendererUtil {
 			UIComponent component = (UIComponent) iterator.next();
 
 			if (component instanceof HTMLInformationWindow) {
-				encodeMarker(facesContext, mapComponent,
+				encodeHTMLInfoWindow(facesContext, mapComponent,
 						(HTMLInformationWindow) component, writer);
 			}
 		}
