@@ -19,12 +19,14 @@
 package com.googlecode.gmaps4jsf.component.map;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 
+import com.googlecode.gmaps4jsf.component.marker.Marker;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
 import com.googlecode.gmaps4jsf.util.HTMLInfoWindowRendererUtil;
@@ -46,6 +48,8 @@ public class MapRenderer extends Renderer {
 		Map mapComponent = (Map) component;
 
 		writer.startElement(ComponentConstants.HTML_SCRIPT, component);
+		
+		declareJSVariables(facesContext, mapComponent, writer);
 
 		startEncodingBrowserCompatabilityChecking(facesContext, component,
 				writer);
@@ -64,6 +68,32 @@ public class MapRenderer extends Renderer {
 		writer.endElement(ComponentConstants.HTML_SCRIPT);
 	}
 
+	/*
+	 * Declare the JS variables for the map and its related objects 
+	 * such as markers.
+	 */
+	private void declareJSVariables(FacesContext facesContext, Map map,
+			ResponseWriter writer) throws IOException {
+
+		// declare the map and markers variables.
+		if (map.getJsVariable() != null) {
+			writer.write("\r\n var " + map.getJsVariable() + ";");
+		}
+
+		for (Iterator iterator = map.getChildren().iterator(); iterator
+				.hasNext();) {
+			UIComponent component = (UIComponent) iterator.next();
+
+			if (component instanceof Marker) {
+				Marker marker = (Marker) component;
+
+				if (marker.getJsVariable() != null) {
+					writer.write("\r\n var " + marker.getJsVariable() + ";");
+				}
+			}
+		}
+	}
+
 	private void startEncodingBrowserCompatabilityChecking(
 			FacesContext facesContext, UIComponent component,
 			ResponseWriter writer) throws IOException {
@@ -72,6 +102,13 @@ public class MapRenderer extends Renderer {
 				+ "()) {");
 	}
 	
+	/*
+	 * This is the core method that is responsible for the whole map rendering.
+	 * @param facesContext
+	 * @param mapComponent
+	 * @param writer
+	 * @throws IOException
+	 */
 	private void encodeMapRendererWrapper(FacesContext facesContext,
 			Map mapComponent, ResponseWriter writer) throws IOException {
 
