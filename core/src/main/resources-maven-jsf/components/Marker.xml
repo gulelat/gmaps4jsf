@@ -45,5 +45,18 @@
 			<type>java.lang.String</type>
 			<description>The latitude of the marker. If not set then the parent map latitude will be taken.</description>
 		</attribute>
+		
+		<attribute>
+			<name>jsVariable</name>
+			<required>false</required>
+			<type>java.lang.String</type>				
+			<description>
+			This flag determines the JavaScript variable you want to use for referring to the marker.
+			Use this attribute if you want to use write additional JavaScript
+			code for the marker to customize it.
+			</description>
+		</attribute>				
+		
+		
 	</attributes>
 </component>
