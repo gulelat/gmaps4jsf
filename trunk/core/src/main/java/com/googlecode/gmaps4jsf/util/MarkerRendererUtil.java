@@ -62,8 +62,19 @@ public class MarkerRendererUtil {
 
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
 				+ ".addOverlay(marker_" + marker.getId() + ");");
+		
+		updateMarkerJSVariable(facesContext, marker, writer);
 	}
+	
+	private static void updateMarkerJSVariable(FacesContext facesContext,
+			Marker marker, ResponseWriter writer) throws IOException {
 
+		if (marker.getJsVariable() != null) {
+			writer.write("\r\n" + marker.getJsVariable() + " = " + "marker_"
+					+ marker.getId() + ";\r\n");
+		}
+	}	
+	
 	public static void encodeMarkersFunctionScript(FacesContext facesContext,
 			Map mapComponent, ResponseWriter writer) throws IOException {
 

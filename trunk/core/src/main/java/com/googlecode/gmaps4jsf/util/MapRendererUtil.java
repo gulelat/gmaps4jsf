@@ -35,10 +35,17 @@ public class MapRendererUtil {
 	private static void createMapJSObject(FacesContext facesContext,
 			Map mapComponent, ResponseWriter writer) throws IOException {
 
+		// create the map object.
 		writer.write("var " + ComponentConstants.JS_GMAP_BASE_VARIABLE
 				+ " = new " + ComponentConstants.JS_GMAP_CORE_OBJECT
 				+ "(document.getElementById(\""
 				+ mapComponent.getClientId(facesContext) + "\"));");
+		
+		// attach properties to it.
+		if (!"true".equalsIgnoreCase(mapComponent.getEnableDragging())) {
+			writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
+					+ ".disableDragging();");
+		}
 	}
 	
 	private static void encodeMapType(FacesContext facesContext,
@@ -48,14 +55,8 @@ public class MapRendererUtil {
 				+ mapComponent.getType() + ");");
 	}
 	
-	private static void renderMapUsingLatLng(FacesContext facesContext,
+	private static void completeMapRendering(FacesContext facesContext,
 			Map mapComponent, ResponseWriter writer) throws IOException {
-
-		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-				+ ".setCenter(new GLatLng(" + mapComponent.getLatitude() + ", "
-				+ mapComponent.getLongitude() + "), " + mapComponent.getZoom()
-				+ ");");
-
 		HTMLInfoWindowRendererUtil.encodeHTMLInfoWindowsFunctionScriptCall(
 				facesContext, mapComponent, writer);
 
@@ -63,6 +64,27 @@ public class MapRendererUtil {
 				mapComponent, writer);
 
 		encodeMapType(facesContext, mapComponent, writer);
+		
+		updateMapJSVariable(facesContext, mapComponent, writer);
+	}	
+	
+	private static void updateMapJSVariable(FacesContext facesContext,
+			Map mapComponent, ResponseWriter writer) throws IOException {
+
+		if (mapComponent.getJsVariable() != null) {
+			writer.write("\r\n" + mapComponent.getJsVariable() + "="
+					+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ";\r\n");
+		}
+	}
+
+	private static void renderMapUsingLatLng(FacesContext facesContext,
+			Map mapComponent, ResponseWriter writer) throws IOException {
+
+		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
+				+ ".setCenter(new GLatLng(" + mapComponent.getLatitude() + ", "
+				+ mapComponent.getLongitude() + "), " + mapComponent.getZoom()
+				+ ");");
+		completeMapRendering(facesContext, mapComponent, writer);
 	}	
 	
 	private static void renderMapUsingAddress(FacesContext facesContext, Map mapComponent,
@@ -78,15 +100,10 @@ public class MapRendererUtil {
 				+ mapComponent.getLocationNotFoundErrorMessage() + "\");\n"
 				+ "} else {\n");
 		
-		writer.write("map.setCenter(location, "+ mapComponent.getZoom() + ");\n");		
+		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
+				+ ".setCenter(location, " + mapComponent.getZoom() + ");\n");		
 		
-		HTMLInfoWindowRendererUtil.encodeHTMLInfoWindowsFunctionScriptCall(
-				facesContext, mapComponent, writer);
-
-		MarkerRendererUtil.encodeMarkersFunctionScriptCall(facesContext,
-				mapComponent, writer);
-
-		encodeMapType(facesContext, mapComponent, writer);		
+		completeMapRendering(facesContext, mapComponent, writer);
 				
 		writer.write("}" + "}\n" + ");\n");
 	}	
@@ -95,7 +112,7 @@ public class MapRendererUtil {
 			ResponseWriter writer) throws IOException {
 
 		createMapJSObject(facesContext, mapComponent, writer);
-
+		
 		if (mapComponent.getAddress() == null) {
 
 			renderMapUsingLatLng(facesContext, mapComponent, writer);
