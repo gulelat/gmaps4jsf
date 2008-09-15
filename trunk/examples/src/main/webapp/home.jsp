@@ -1,7 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
 <%@ taglib uri="http://code.google.com/p/gmaps4jsf/" prefix="m" %>
-<HTML>
+<!DOCTYPE html "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<HTML xmlns="http://www.w3.org/1999/xhtml">
     <HEAD> 
     <title>Welcome to GMaps4JSF</title>  
     </HEAD>
@@ -29,6 +31,13 @@
 	                    	<f:verbatim>An example that demonstrates the usage of the address attribute of the map</f:verbatim>
 	                    </h:outputLink>                     
 	                </h:panelGrid>         	
+	                
+	                <h:outputText value="Access your GMaps4JSF map using JavaScript" />
+	                <h:panelGrid style="padding-left:25px">                
+	                    <h:outputLink value="pages/jsVariableExample.jsf">
+	                    	<f:verbatim>An example that demonstrates the ability to use map and markers using JavaScript using the (jsVariable) attribute</f:verbatim>
+	                    </h:outputLink>                     
+	                </h:panelGrid>  	                
 	                
 	                <h:outputText value="Web 2.0 Mashup Demo" />
 	                <h:panelGrid style="padding-left:25px">                
