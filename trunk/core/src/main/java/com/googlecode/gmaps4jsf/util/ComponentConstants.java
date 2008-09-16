@@ -30,5 +30,6 @@ public interface ComponentConstants {
 	final String JS_GBrowserIsCompatible_OBJECT = "GBrowserIsCompatible";
 	final String JS_RENDER_MAP_FUNC = "renderMap";	
 	final String JS_CREATE_HTMLINFOWINDOWS_FUNCTION_PREFIX = "createHTMLInfoWindowsFunction";
-	final String JS_CREATE_MARKERS_FUNCTION_PREFIX = "createMarkerFunction";	
+	final String JS_CREATE_MARKERS_FUNCTION_PREFIX = "createMarkersFunction";
+	final String JS_CREATE_MAP_CONTROLS_FUNCTION_PREFIX = "createMapControlsFunction";	
 }
