@@ -25,8 +25,22 @@
 	                    </h:outputLink>                     
 	                </h:panelGrid>
 	                
-	                <h:outputText value="Get My Location Example" />
+	                <h:outputText value="Adding controls to your map" />
 	                <h:panelGrid style="padding-left:25px">                
+	                    <h:outputLink value="pages/mapWithControls.jsf">
+	                    	<f:verbatim>Adding controls to your map</f:verbatim>
+	                    </h:outputLink>                     
+	                </h:panelGrid>	                
+	                
+	                <h:outputText value="Adding events on your map" />
+	                <h:panelGrid style="padding-left:25px">                
+	                    <h:outputLink value="pages/mapEvents.jsf">
+	                    	<f:verbatim>Adding events to your map</f:verbatim>
+	                    </h:outputLink>                     
+	                </h:panelGrid>	  	                
+	                
+	                <h:outputText value="Get My Location Example" />
+	                <h:panelGrid style="padding-left:25px">          
 	                    <h:outputLink value="pages/getMyLocation.jsf">
 	                    	<f:verbatim>An example that demonstrates the usage of the address attribute of the map</f:verbatim>
 	                    </h:outputLink>                     
