@@ -55,8 +55,13 @@ public class MapRendererUtil {
 				+ mapComponent.getType() + ");");
 	}
 	
+	/*
+	 * Completing the map rendering stuff like 
+	 * (markers, notes, controls, ...etc).
+	 */
 	private static void completeMapRendering(FacesContext facesContext,
 			Map mapComponent, ResponseWriter writer) throws IOException {
+
 		HTMLInfoWindowRendererUtil.encodeHTMLInfoWindowsFunctionScriptCall(
 				facesContext, mapComponent, writer);
 
@@ -64,7 +69,10 @@ public class MapRendererUtil {
 				mapComponent, writer);
 
 		encodeMapType(facesContext, mapComponent, writer);
-		
+
+		MapControlRendererUtil.encodeMapControlsFunctionScriptCall(
+				facesContext, mapComponent, writer);
+
 		updateMapJSVariable(facesContext, mapComponent, writer);
 	}	
 	
