@@ -30,6 +30,7 @@ import com.googlecode.gmaps4jsf.component.marker.Marker;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
 import com.googlecode.gmaps4jsf.util.HTMLInfoWindowRendererUtil;
+import com.googlecode.gmaps4jsf.util.MapControlRendererUtil;
 import com.googlecode.gmaps4jsf.util.MapRendererUtil;
 import com.googlecode.gmaps4jsf.util.MarkerRendererUtil;
 
@@ -51,8 +52,7 @@ public class MapRenderer extends Renderer {
 		
 		declareJSVariables(facesContext, mapComponent, writer);
 
-		startEncodingBrowserCompatabilityChecking(facesContext, component,
-				writer);
+		startEncodingBrowserCompatabilityChecking(facesContext, component, writer);
 		
 		encodeMapRendererWrapper(facesContext, mapComponent, writer);
 		
@@ -104,6 +104,7 @@ public class MapRenderer extends Renderer {
 	
 	/*
 	 * This is the core method that is responsible for the whole map rendering.
+	 * It encodes the scripts that would be used for rendering the map objects.
 	 * @param facesContext
 	 * @param mapComponent
 	 * @param writer
@@ -112,18 +113,21 @@ public class MapRenderer extends Renderer {
 	private void encodeMapRendererWrapper(FacesContext facesContext,
 			Map mapComponent, ResponseWriter writer) throws IOException {
 
-		writer.write("function " + ComponentConstants.JS_RENDER_MAP_FUNC + mapComponent.getId()
-				+ "(){");
-		
+		writer.write("function " + ComponentConstants.JS_RENDER_MAP_FUNC
+				+ mapComponent.getId() + "(){");
+
 		MarkerRendererUtil.encodeMarkersFunctionScript(facesContext,
 				mapComponent, writer);
 
 		HTMLInfoWindowRendererUtil.encodeHTMLInfoWindowsFunctionScript(
 				facesContext, mapComponent, writer);
 
+		MapControlRendererUtil.encodeMapControlsFunctionScript(facesContext,
+				mapComponent, writer);
+
 		encodeMap(facesContext, mapComponent, writer);
-		
-		writer.write("}");		
+
+		writer.write("}");
 	}
 	
 	/*
