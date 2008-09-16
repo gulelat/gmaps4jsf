@@ -64,5 +64,25 @@ the mapControl component should be a child of the map component.
 		    * G_ANCHOR_BOTTOM_LEFT	
 			</description>
 		</attribute>
+		
+		<attribute>
+			<name>offsetWidth</name>
+			<required>false</required>	
+			<type>java.lang.String</type>
+			<defaultValue>10</defaultValue>						
+			<description>
+				This attribute lets you specify the offset width of the map control position.
+			</description>
+		</attribute>
+		
+		<attribute>
+			<name>offsetHeight</name>
+			<required>false</required>	
+			<type>java.lang.String</type>
+			<defaultValue>10</defaultValue>			
+			<description>
+				This attribute lets you specify the offset height of the map control position.
+			</description>
+		</attribute>				
 	</attributes>
 </component>
