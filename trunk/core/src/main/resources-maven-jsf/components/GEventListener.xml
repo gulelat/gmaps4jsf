@@ -22,7 +22,7 @@
 //-->
 
 <!--
-the gEventListener component can be a child of any visual component (map, marker, htmlInfoWindow).
+the gEventListener component can be a child of any visual component (map, marker).
 //-->
 
 <!DOCTYPE component SYSTEM "../misc/component.dtd" [
