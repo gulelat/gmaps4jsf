@@ -14,12 +14,34 @@
 	<body onunload="GUnload()">
 	<f:view>
     	<h:form id="form">
-    		<m:map width="500px" height="500px" latitude="30.01" longitude="31.14">
-    			<m:marker latitude="30.01" longitude="31.14"/>
-    			<m:htmlInformationWindow latitude="30.01" longitude="31.14" htmlText="Egypt"/>
-    			<m:mapControl name="GLargeMapControl" position="G_ANCHOR_BOTTOM_RIGHT"/>
-    			<m:mapControl name="GMapTypeControl"/>    			
+		  	<div>Drag the map and click the marker</div>    	
+    		<m:map width="90%" height="90%" latitude="24" longitude="15" jsVariable="map1" zoom="2">
+    			<m:marker latitude="30.01" longitude="31.14" jsVariable="marker1">
+					<m:gEventListener eventName="click" jsFunction="marker1ClickHandler"/>    				
+    			</m:marker>
+    			<m:marker latitude="39" longitude="-101" jsVariable="marker2">
+					<m:gEventListener eventName="click" jsFunction="marker2ClickHandler"/>    				
+    			</m:marker>    			
+				<m:gEventListener eventName="moveend" jsFunction="mapMoveEndHandler"/>		
     		</m:map>
+
+		    <script>
+		   	function mapMoveEndHandler() {
+			   var center = map1.getCenter();
+			   document.getElementById("message").innerHTML = "Center of map is " + center.toString();    	
+		   	}
+		   	function marker1ClickHandler() {
+		   		alert("You clicked on Egypt marker");  	
+		   	}	
+		   	function marker2ClickHandler() {
+		   		alert("You clicked on US marker");  	
+		   	}		   	
+		   	function mapClickHandler(overlay,  latlng,  overlaylatlng) {
+				  alert("You click on (lat, lng): " + latlng);
+		   	}		   		   	
+		    </script>    		
+
+		    <div id="message"/>    		
     	</h:form>
 	</f:view>
 	<%@include file="../templates/footer.jspf" %>   	
