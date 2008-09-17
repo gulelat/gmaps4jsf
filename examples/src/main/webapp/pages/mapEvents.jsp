@@ -14,7 +14,7 @@
 	<body onunload="GUnload()">
 	<f:view>
     	<h:form id="form">
-		  	<div>Drag the map and click the marker</div>    	
+		  	<div>Drag the map and click the marker!!!</div>    	
     		<m:map width="90%" height="90%" latitude="24" longitude="15" jsVariable="map1" zoom="2">
     			<m:marker latitude="30.01" longitude="31.14" jsVariable="marker1">
 					<m:gEventListener eventName="click" jsFunction="marker1ClickHandler"/>    				
