@@ -11,42 +11,42 @@
 	<%@include file="../templates/header.jspf" %>           
         <f:view> 
 	        <h:form>	                
-	                <h:outputText value="Simple Map" />
+	                <h:outputText value="Simple" />
 	                <h:panelGrid style="padding-left:25px">
 	                    <h:outputLink value="pages/simple.jsf">
 	                        <f:verbatim>A simple map with no other components</f:verbatim>
 	                    </h:outputLink>
 	                </h:panelGrid>         
 	                
-	                <h:outputText value="Using Markers and Information Windows" />
+	                <h:outputText value="Markers and Information Windows" />
 	                <h:panelGrid style="padding-left:25px">                
 	                    <h:outputLink value="pages/mapWithMarkersAndInfoWindows.jsf">
 	                    	<f:verbatim>A map with both markers and Information windows</f:verbatim>
 	                    </h:outputLink>                     
 	                </h:panelGrid>
 	                
-	                <h:outputText value="Adding controls to your map" />
+	                <h:outputText value="Controls" />
 	                <h:panelGrid style="padding-left:25px">                
 	                    <h:outputLink value="pages/mapWithControls.jsf">
 	                    	<f:verbatim>Adding controls to your map</f:verbatim>
 	                    </h:outputLink>                     
 	                </h:panelGrid>	                
 	                
-	                <h:outputText value="Adding events on your map" />
+	                <h:outputText value="EventListeners" />
 	                <h:panelGrid style="padding-left:25px">                
 	                    <h:outputLink value="pages/mapEvents.jsf">
-	                    	<f:verbatim>Adding events to your map</f:verbatim>
+	                    	<f:verbatim>Listening to events on your map and markers</f:verbatim>
 	                    </h:outputLink>                     
 	                </h:panelGrid>	  	                
 	                
-	                <h:outputText value="Get My Location Example" />
+	                <h:outputText value="Geocoding" />
 	                <h:panelGrid style="padding-left:25px">          
 	                    <h:outputLink value="pages/getMyLocation.jsf">
 	                    	<f:verbatim>An example that demonstrates the usage of the address attribute of the map</f:verbatim>
 	                    </h:outputLink>                     
 	                </h:panelGrid>         	
 	                
-	                <h:outputText value="Access your GMaps4JSF map using JavaScript" />
+	                <h:outputText value="JavaScript Customization" />
 	                <h:panelGrid style="padding-left:25px">                
 	                    <h:outputLink value="pages/jsVariableExample.jsf">
 	                    	<f:verbatim>An example that demonstrates the ability to use map and markers using JavaScript using the (jsVariable) attribute</f:verbatim>
