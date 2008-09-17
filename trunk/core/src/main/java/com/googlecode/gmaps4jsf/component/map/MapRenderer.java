@@ -29,10 +29,7 @@ import javax.faces.render.Renderer;
 import com.googlecode.gmaps4jsf.component.marker.Marker;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
-import com.googlecode.gmaps4jsf.util.HTMLInfoWindowRendererUtil;
-import com.googlecode.gmaps4jsf.util.MapControlRendererUtil;
 import com.googlecode.gmaps4jsf.util.MapRendererUtil;
-import com.googlecode.gmaps4jsf.util.MarkerRendererUtil;
 
 /**
  * @author Hazem Saleh
@@ -116,14 +113,17 @@ public class MapRenderer extends Renderer {
 		writer.write("function " + ComponentConstants.JS_RENDER_MAP_FUNC
 				+ mapComponent.getId() + "(){");
 
-		MarkerRendererUtil.encodeMarkersFunctionScript(facesContext,
+		MarkerEncoder.encodeMarkersFunctionScript(facesContext,
 				mapComponent, writer);
 
-		HTMLInfoWindowRendererUtil.encodeHTMLInfoWindowsFunctionScript(
+		HTMLInfoWindowEncoder.encodeHTMLInfoWindowsFunctionScript(
 				facesContext, mapComponent, writer);
 
-		MapControlRendererUtil.encodeMapControlsFunctionScript(facesContext,
+		MapControlEncoder.encodeMapControlsFunctionScript(facesContext,
 				mapComponent, writer);
+		
+		GEventEncoder.encodeEventListenersFunctionScript(facesContext,
+				mapComponent, writer, ComponentConstants.JS_GMAP_BASE_VARIABLE);
 
 		encodeMap(facesContext, mapComponent, writer);
 
