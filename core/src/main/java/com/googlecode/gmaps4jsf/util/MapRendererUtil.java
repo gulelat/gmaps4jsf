@@ -23,7 +23,11 @@ import java.io.IOException;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import com.googlecode.gmaps4jsf.component.map.GEventEncoder;
+import com.googlecode.gmaps4jsf.component.map.HTMLInfoWindowEncoder;
 import com.googlecode.gmaps4jsf.component.map.Map;
+import com.googlecode.gmaps4jsf.component.map.MapControlEncoder;
+import com.googlecode.gmaps4jsf.component.map.MarkerEncoder;
 
 /**
  * @author Hazem Saleh
@@ -57,20 +61,23 @@ public class MapRendererUtil {
 	
 	/*
 	 * Completing the map rendering stuff like 
-	 * (markers, notes, controls, ...etc).
+	 * (markers, notes, controls, eventHandlers' creator function...etc).
 	 */
 	private static void completeMapRendering(FacesContext facesContext,
 			Map mapComponent, ResponseWriter writer) throws IOException {
 
-		HTMLInfoWindowRendererUtil.encodeHTMLInfoWindowsFunctionScriptCall(
+		HTMLInfoWindowEncoder.encodeHTMLInfoWindowsFunctionScriptCall(
 				facesContext, mapComponent, writer);
 
-		MarkerRendererUtil.encodeMarkersFunctionScriptCall(facesContext,
+		MarkerEncoder.encodeMarkersFunctionScriptCall(facesContext,
 				mapComponent, writer);
 
 		encodeMapType(facesContext, mapComponent, writer);
+		
+		GEventEncoder.encodeEventListenersFunctionScriptCall(facesContext,
+				mapComponent, writer, ComponentConstants.JS_GMAP_BASE_VARIABLE);
 
-		MapControlRendererUtil.encodeMapControlsFunctionScriptCall(
+		MapControlEncoder.encodeMapControlsFunctionScriptCall(
 				facesContext, mapComponent, writer);
 
 		updateMapJSVariable(facesContext, mapComponent, writer);

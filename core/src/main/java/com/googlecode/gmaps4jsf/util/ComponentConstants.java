@@ -26,10 +26,12 @@ public interface ComponentConstants {
 	final String HTML_ATTR_ID = "id";
 	final String HTML_ATTR_NAME = "name";
 	final String HTML_ATTR_STYLE = "style";
+	final String JS_GEVENT_OBJECT = "GEvent";	
 	final String JS_GMAP_BASE_VARIABLE = "map";
 	final String JS_GBrowserIsCompatible_OBJECT = "GBrowserIsCompatible";
 	final String JS_RENDER_MAP_FUNC = "renderMap";	
 	final String JS_CREATE_HTMLINFOWINDOWS_FUNCTION_PREFIX = "createHTMLInfoWindowsFunction";
 	final String JS_CREATE_MARKERS_FUNCTION_PREFIX = "createMarkersFunction";
-	final String JS_CREATE_MAP_CONTROLS_FUNCTION_PREFIX = "createMapControlsFunction";	
+	final String JS_CREATE_MAP_CONTROLS_FUNCTION_PREFIX = "createMapControlsFunction";
+	final String JS_CREATE_EVENT_LISTENERS_FUNCTION_PREFIX = "createEventListenersFunction";		
 }
