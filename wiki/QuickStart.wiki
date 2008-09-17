@@ -1,10 +1,10 @@
 *Quick start:*
- * Before starting, you should include the tag library in your JSF page as follows :
+ * Before starting, you should include the tag library in your JSF page as follows:
 {{{
  <%@ taglib uri="http://code.google.com/p/gmaps4jsf/" prefix="m" %>
 }}}
 
- and NEVER forget to include the Google maps script include in your HEAD tag like :
+ and NEVER forget to include the Google maps script include in your HEAD tag like:
 {{{
 <script
 
@@ -15,22 +15,22 @@ type="text/javascript">
 </script>     
 }}}
 
- * To create a simple map (Using longitude and latitude), do the following :
+ * To create a simple map (Using longitude and latitude), do the following:
 {{{
- <m:map width="500" height="500" latitude="30.01" longitude="31.14" />
+ <m:map width="500px" height="500px" latitude="30.01" longitude="31.14" />
 }}}
 
 This will create a simple map of height = 500 and width = 500, and the map will point to latitude = 30.01 and longitude = 31.41.
 
- * To create a map with markers and HTML information windows, do the following :
+ * To create a map with markers and HTML information windows, do the following:
 {{{
- <m:map width="500" height="500" latitude="30.01" longitude="31.14">
+ <m:map width="500px" height="500px" latitude="30.01" longitude="31.14">
 
     	<m:marker latitude="30.01" longitude="31.14"/>
 
     	<m:htmlInformationWindow latitude="30.01" longitude="31.14" 
 
-    	htmlText="<center>Welcome to Cairo, Egypt<br><img height='30' width='50'  src='http://www.appliedlanguage.com/flags_of_the_world/large_flag_of_egypt.gif'></center>"/>
+    	htmlText="<B>Egypt</B>"/>
 
 </m:map>
 }}}
@@ -39,7 +39,7 @@ This will add a marker and an HTML information window to your map at latitude = 
 longitude = 31.41, and the HTML information window will display the value in the 
 (htmlText) attribute.
 
- * To create a simple map (Using address), do the following :
+ * To create a simple map (Using address), do the following:
 {{{
   <m:map address="#{addressBean.address}">
 	 <m:marker/>
@@ -48,5 +48,25 @@ longitude = 31.41, and the HTML information window will display the value in the
 }}}
 
 This will create a simple map that will point to the specific address with the marker and an information window containing the address.
+
+
+ * To add controls to your map, use the <m:mapControl .../> tag:
+{{{
+    	<m:map width="500px" height="500px" latitude="30.01" longitude="31.14">
+    	       <m:mapControl name="GLargeMapControl" position="G_ANCHOR_BOTTOM_RIGHT"/>
+    	       <m:mapControl name="GMapTypeControl"/>    			
+    	</m:map>
+}}}
+
+This will add two controls on the map. The first control is the (GLargeMapControl) -its position will be in the bottom right of the map- , and the second control is the (GMapTypeControl) which enables switching between map types.
+
+ * To attach events to your map or marker, use the <m:gEventListener.../> tag:
+{{{
+    <m:map width="90%" height="90%" latitude="24" longitude="15">   			
+	<m:gEventListener eventName="moveend" jsFunction="mapMoveEndHandler"/>		
+    </m:map>
+}}}
+
+This will create an event listener to the map, which will execute the (mapMoveEndHandler) function when the map (moveend) event occurs.
 
  * For more information, please see the examples in the demo.
