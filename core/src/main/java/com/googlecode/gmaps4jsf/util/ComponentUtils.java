@@ -18,6 +18,8 @@
  */
 package com.googlecode.gmaps4jsf.util;
 
+import java.io.IOException;
+
 import javax.faces.component.ActionSource;
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UICommand;
@@ -25,6 +27,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
 import javax.faces.component.ValueHolder;
 import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
@@ -303,6 +306,43 @@ public class ComponentUtils {
 			throw new NullPointerException(
 					ComponentConstants.CONTEXT_CANNOT_BE_NULL);
 		}
+	}
+
+	public static void startEncodingBrowserCompatabilityChecking(
+			FacesContext facesContext, UIComponent component,
+			ResponseWriter writer) throws IOException {
+		
+		writer.write("if (" + ComponentConstants.JS_GBrowserIsCompatible_OBJECT
+				+ "()) {");
+	}
+
+	public static void endEncodingBrowserCompatabilityChecking(
+			FacesContext facesContext, UIComponent component,
+			ResponseWriter writer) throws IOException {
+		
+		writer.write("}");
+	}	
+	
+	public static void encodeJSFunctionInWindowOnLoad(ResponseWriter writer,
+			String funcName) throws IOException {
+
+		String jsFunctionInWindowOnLoad = "\r\n// Inject code on the load of the window\r\n"
+				+ "var oldonload = window.onload;\r\n"
+				+ "if (typeof window.onload != 'function') {\r\n"
+				+ "window.onload = "
+				+ funcName
+				+ ";\r\n"
+				+ "} else {\r\n"
+				+ "window.onload = function() {\r\n"
+				+ "if (oldonload) {\r\n"
+				+ "oldonload();\r\n"
+				+ "}\r\n"
+				+ funcName
+				+ "();\r\n"
+				+ "}\r\n"
+				+ "}\r\n";
+
+		writer.write(jsFunctionInWindowOnLoad);
 	}	
 
 }
