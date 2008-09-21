@@ -1,3 +1,4 @@
+# These are the GMaps4JSF components:
   * [mapComponent]
   * Headings, paragraphs, and lists
   * Automatic links to other wiki pages
