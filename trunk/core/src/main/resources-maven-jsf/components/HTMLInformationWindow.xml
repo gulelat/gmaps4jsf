@@ -48,8 +48,7 @@
 		<attribute>
 			<name>htmlText</name>
 			<required>true</required>
-			<type>java.lang.String</type>
-			<defaultValue>This is a place to point to</defaultValue>					
+			<type>java.lang.String</type>					
 			<description>The Information Window HTML Text.</description>
 		</attribute>	
 		
