@@ -5,7 +5,7 @@
  <%@ taglib uri="http://code.google.com/p/gmaps4jsf/" prefix="m" %>
 }}}
 
- and NEVER forget to include the Google maps script include in your HEAD tag like:
+ and NEVER forget to include the Google maps script include in your page HEAD tag like:
 {{{
 <script
 
