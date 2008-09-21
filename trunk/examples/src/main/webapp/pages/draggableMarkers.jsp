@@ -10,37 +10,29 @@
       type="text/javascript"></script>
 	<style>
 		html, body { height: 100% }
-	</style>  
+	</style>
     </HEAD>
 	
 	<body onunload="GUnload()">
 	<f:view>
     	<h:form id="form">
-		  	<div>Drag the map and click the marker!!!</div>    	
+		  	<div>Drag the markers!!!</div>    	
     		<m:map width="90%" height="90%" latitude="24" longitude="15" jsVariable="map1" zoom="2">
-    			<m:marker latitude="30.01" longitude="31.14" jsVariable="marker1">
-					<m:gEventListener eventName="click" jsFunction="marker1ClickHandler"/>    				
+    			<m:marker latitude="30.01" longitude="31.14" jsVariable="marker1" draggable="true">
+					<m:gEventListener eventName="dragend" jsFunction="marker1DragHandler"/>    				
     			</m:marker>
-    			<m:marker latitude="39" longitude="-101" jsVariable="marker2">
-					<m:gEventListener eventName="click" jsFunction="marker2ClickHandler"/>    				
-    			</m:marker>    			
-				<m:gEventListener eventName="moveend" jsFunction="mapMoveEndHandler"/>		
+    			<m:marker latitude="39" longitude="-101" jsVariable="marker2" draggable="true">
+					<m:gEventListener eventName="dragend" jsFunction="marker2DragHandler"/>    				
+    			</m:marker>    				
     		</m:map>
 
 		    <script>
-		   	function mapMoveEndHandler() {
-			   var center = map1.getCenter();
-			   document.getElementById("message").innerHTML = "Center of map is " + center.toString();    	
-		   	}
-		   	function marker1ClickHandler() {
-		   		alert("You clicked on Egypt marker");  	
+		   	function marker1DragHandler(latlng) {
+		   		alert("Current marker1 latlng is: " + latlng);  	
 		   	}	
-		   	function marker2ClickHandler() {
-		   		alert("You clicked on US marker");  	
-		   	}		   	
-		   	function mapClickHandler(overlay,  latlng,  overlaylatlng) {
-				  alert("You click on (lat, lng): " + latlng);
-		   	}		   		   	
+		   	function marker2DragHandler(latlng) {
+		   		alert("Current marker2 latlng is: " + latlng);  	
+		   	}		   		   		   	
 		    </script>    		
 
 		    <div id="message"/>    		
