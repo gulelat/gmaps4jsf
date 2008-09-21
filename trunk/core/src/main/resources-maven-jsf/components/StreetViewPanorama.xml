@@ -119,7 +119,7 @@
 			<description>
 			This flag determines whether to render the StreetViewPanaroma on window load.
 			This flag should be set to false if the map is inside a zone that will 
-			be updated by Ajax
+			be updated by Ajax.
 			</description>
 		</attribute>					
 		
