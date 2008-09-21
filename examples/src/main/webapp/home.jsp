@@ -23,6 +23,13 @@
 	                    <h:outputLink value="pages/mapWithMarkersAndInfoWindows.jsf">
 	                    	<f:verbatim>A map with both markers and Information windows</f:verbatim>
 	                    </h:outputLink>                     
+	                </h:panelGrid>	                
+	                
+	                <h:outputText value="Draggable Markers" />
+	                <h:panelGrid style="padding-left:25px">                
+	                    <h:outputLink value="pages/draggableMarkers.jsf">
+	                    	<f:verbatim>Map with draggable markers</f:verbatim>
+	                    </h:outputLink>                     
 	                </h:panelGrid>
 	                
 	                <h:outputText value="Controls" />
@@ -44,14 +51,54 @@
 	                    <h:outputLink value="pages/getMyLocation.jsf">
 	                    	<f:verbatim>An example that demonstrates the usage of the address attribute of the map</f:verbatim>
 	                    </h:outputLink>                     
-	                </h:panelGrid>         	
+	                </h:panelGrid>      
+	                
+	                <h:outputText value="Polylines" />
+	                <h:panelGrid style="padding-left:25px">          
+	                    <h:outputLink value="pages/mapSimplePolyline.jsf">
+	                    	<f:verbatim>Draw a simple polyline on your map</f:verbatim>
+	                    </h:outputLink>     
+	                    <h:outputLink value="pages/mapGeodesicPolyline.jsf">
+	                    	<f:verbatim>Draw a geodesic polyline on your map</f:verbatim>
+	                    </h:outputLink>  	
+	                    <h:outputLink value="pages/mapMixedPolylines.jsf">
+	                    	<f:verbatim>Draw mixed polylines on your map</f:verbatim>
+	                    </h:outputLink>  	                                       
+	                </h:panelGrid>    	 
+	                
+	                <h:outputText value="Polygons" />
+	                <h:panelGrid style="padding-left:25px">          
+	                    <h:outputLink value="pages/mapPolygon.jsf">
+	                    	<f:verbatim>Draw a polygon on your map</f:verbatim>
+	                    </h:outputLink> 	
+	                    <h:outputLink value="pages/mapPolygons.jsf">
+	                    	<f:verbatim>Draw many polygons on your map</f:verbatim>
+	                    </h:outputLink> 	                                        
+	                </h:panelGrid>    
+	                
+	                <h:outputText value="GroundOverlay" />
+	                <h:panelGrid style="padding-left:25px">          
+	                    <h:outputLink value="pages/groundoverlay.jsf">
+	                    	<f:verbatim>Place GMaps4JSF logo on the earth</f:verbatim>
+	                    </h:outputLink> 	                                        
+	                </h:panelGrid>   	                		                               	                   	
 	                
 	                <h:outputText value="JavaScript Customization" />
 	                <h:panelGrid style="padding-left:25px">                
 	                    <h:outputLink value="pages/jsVariableExample.jsf">
 	                    	<f:verbatim>An example that demonstrates the ability to use map and markers using JavaScript using the (jsVariable) attribute</f:verbatim>
 	                    </h:outputLink>                     
-	                </h:panelGrid>  	                
+	                </h:panelGrid>  	
+	                
+	                <h:outputText value="StreetViewPanorama" />
+	                <h:panelGrid style="padding-left:25px">          
+	                    <h:outputLink value="pages/streetViewPanorama.jsf">
+	                    	<f:verbatim>An example that shows the street view panorama</f:verbatim>
+	                    </h:outputLink> 	                  
+	                    <h:outputLink value="pages/showMyStreet.jsf">
+	                    	<f:verbatim>An example that uses the street view panorama to show the map streets</f:verbatim>
+	                    </h:outputLink> 	                                                  
+	                </h:panelGrid>   	 	                                
 	                
 	                <h:outputText value="Web 2.0 Mashup Demo" />
 	                <h:panelGrid style="padding-left:25px">                
