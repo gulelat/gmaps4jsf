@@ -25,7 +25,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import com.googlecode.gmaps4jsf.component.line.Line;
+import com.googlecode.gmaps4jsf.component.point.Point;
 import com.googlecode.gmaps4jsf.component.polyline.Polyline;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
 
@@ -48,16 +48,16 @@ public class PolylineEncoder {
 				.hasNext();) {
 			UIComponent component = (UIComponent) iterator.next();
 
-			if (component instanceof Line) {
+			if (component instanceof Point) {
 
-				Line line = (Line) component;
+				Point point = (Point) component;
 
 				if (!polyLinesStr.equals("")) {
 					polyLinesStr += ",";
 				}
 
-				polyLinesStr += "new GLatLng(" + line.getLatitude() + ", "
-						+ line.getLongitude() + ")";
+				polyLinesStr += "new GLatLng(" + point.getLatitude() + ", "
+						+ point.getLongitude() + ")";
 			}
 		}
 
