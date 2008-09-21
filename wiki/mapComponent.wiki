@@ -1,1 +1,1 @@
-|| table || cells ||
+|| Component Attribute   ||                         Description                    ||
