@@ -23,7 +23,7 @@ import java.io.IOException;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import com.googlecode.gmaps4jsf.component.map.GEventEncoder;
+import com.googlecode.gmaps4jsf.component.map.EventEncoder;
 import com.googlecode.gmaps4jsf.component.map.GroundOverlayEncoder;
 import com.googlecode.gmaps4jsf.component.map.HTMLInfoWindowEncoder;
 import com.googlecode.gmaps4jsf.component.map.Map;
@@ -98,7 +98,7 @@ public class MapRendererUtil {
 		
 		encodeMapStreetOverlay(facesContext, mapComponent, writer);
 		
-		GEventEncoder.encodeEventListenersFunctionScriptCall(facesContext,
+		EventEncoder.encodeEventListenersFunctionScriptCall(facesContext,
 				mapComponent, writer, ComponentConstants.JS_GMAP_BASE_VARIABLE);
 
 		MapControlEncoder.encodeMapControlsFunctionScriptCall(
