@@ -108,6 +108,6 @@ This will attach the GMaps4JSF logo to the map, placing the image in the box sta
     			  latitude="42.345573" longitude="-71.098326" />
 
 }}}
-This will create a simple street view panorama of height = 500px and width = 500px, and the map will panorama to latitude = 42.345573 and longitude = -71.098326.
+This will create a simple street view panorama of height = 500px and width = 500px, and the panorama will point to latitude = 42.345573 and longitude = -71.098326.
 
  * For more information about how to use the several components, please see the examples in the demo.
