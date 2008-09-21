@@ -78,7 +78,7 @@ GMaps4JSF can work with Facelets, Here are the instructions :
         <param-value>/WEB-INF/gmaps4jsf-facelets-taglib.xml</param-value>
     </context-param>
 }}}
-  * Add the following declaration to your Facelets XHTML file:
+  * Add the following declaration to your Facelets XHTML file, and try the map ;):
 {{{
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
