@@ -19,9 +19,9 @@
 		  	<div>A simple Polyline.</div>    	
     		<m:map width="90%" height="90%" latitude="24" longitude="15" zoom="2">
     			<m:polyline lineWidth="10" hexaColor="#ff0000" geodesic="false">
-    				<m:line latitude="30.01" longitude="31.14"/>
-    				<m:line latitude="-33" longitude="19"/>    				
-    				<m:line latitude="39" longitude="-101"/> 					
+    				<m:point latitude="30.01" longitude="31.14"/>
+    				<m:point latitude="-33" longitude="19"/>    				
+    				<m:point latitude="39" longitude="-101"/> 					
     			</m:polyline>
     		</m:map>		
     	</h:form>
