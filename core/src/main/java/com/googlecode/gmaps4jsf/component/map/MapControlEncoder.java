@@ -43,8 +43,10 @@ public class MapControlEncoder {
 		if (mapControl.getPosition() != null) {
 
 			writer.write("var mapControlPosition_" + mapControl.getId()
-					+ " = new GControlPosition(" + mapControl.getPosition()
-					+ ", new GSize(" + mapControl.getOffsetWidth() + ","
+					+ " = new " + ComponentConstants.JS_GControlPosition_OBJECT
+					+ "(" + mapControl.getPosition() + ", new "
+					+ ComponentConstants.JS_GSize_OBJECT + "("
+					+ mapControl.getOffsetWidth() + ","
 					+ mapControl.getOffsetHeight() + ")" + ");");
 
 			writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
