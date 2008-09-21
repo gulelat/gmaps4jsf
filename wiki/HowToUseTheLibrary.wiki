@@ -80,7 +80,7 @@ This will create an event listener to the map, which will execute the (mapMoveEn
    		<m:point latitude="30.01" longitude="31.14"/>
     	</m:polygon>
 }}}
-This will attach a polygon of (the listed four points) to the map.
+This will attach a polygon of (the listed four points) to the map. Note that the first point should be the same as the last one.
 
  * To attach a polyline (an opened set of lines) to your map, use the <m:polyline .../> tag:
 {{{
