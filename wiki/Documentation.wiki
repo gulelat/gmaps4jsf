@@ -1,4 +1,11 @@
-# These are the GMaps4JSF components:
+# The GMaps4JSF components are:
   * [mapComponent]
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+  * [markerComponent]
+  * [htmlInformationWindowComponent]
+  * [mapControlComponent]
+  * [groundoverlayComponent]
+  * [polygonComponent]
+  * [polylineComponent]
+  * [pointComponent]
+  * [streetViewPanoramaComponent]
+  * [eventListenerComponent]
