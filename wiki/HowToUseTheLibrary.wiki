@@ -23,7 +23,7 @@ type="text/javascript">
  <m:map width="500px" height="500px" latitude="30.01" longitude="31.14" />
 }}}
 
-This will create a simple map of height = 500 and width = 500, and the map will point to latitude = 30.01 and longitude = 31.41.
+This will create a simple map of height = 500px and width = 500px, and the map will point to latitude = 30.01 and longitude = 31.41.
 
  * To create a map with markers and HTML information windows, do the following:
 {{{
@@ -69,10 +69,9 @@ This will add two controls on the map. The first control is the (GLargeMapContro
 	<m:eventListener eventName="moveend" jsFunction="mapMoveEndHandler"/>		
     </m:map>
 }}}
-
- * To attach events to your map or marker, use the <m:eventListener.../> tag:
 This will create an event listener to the map, which will execute the (mapMoveEndHandler) function when the map (moveend) event occurs.
 
+ * To attach a polygon (a closed set of lines) to your map, use the <m:polygon .../> tag:
 {{{
    	<m:polygon lineWidth="4">
    		<m:line latitude="30.01" longitude="31.14"/>
@@ -81,5 +80,34 @@ This will create an event listener to the map, which will execute the (mapMoveEn
    		<m:line latitude="30.01" longitude="31.14"/>
     	</m:polygon>
 }}}
+This will attach a polygon of (the listed three lines) to the map.
+
+ * To attach a polyline (an opened set of lines) to your map, use the <m:polyline .../> tag:
+{{{
+    	<m:polyline>
+    		<m:line latitude="30.01" longitude="31.14"/>
+    		<m:line latitude="-33" longitude="19"/>    				
+    		<m:line latitude="39" longitude="-101"/>
+    	</m:polyline>
+}}}
+This will attach a polyline of (the listed three lines) to the map.
+
+ * To attach an image to your map, use the <m:groundoverlay .../> tag:
+{{{
+    <m:map width="90%" height="90%" latitude="24" longitude="15" zoom="2">
+                 <m:groundoverlay imageURL="http://www.jroller.com/HazemBlog/resource/gmaps4jsf-logo.png" 
+                  startLatitude="7" endLatitude="23" 
+    		  startLongitude="-54" endLongitude="84" />    			
+    </m:map>
+}}}
+This will attach the GMaps4JSF logo to the map, placing the image in the box starting from latlng(7, -54), and ending at latlng(23, 84).
+
+ * To create a street view panorama, use the <m:streetViewPanorama .../> tag:
+{{{
+    <m:streetViewPanorama width="500px" height="500px" 
+    			  latitude="42.345573" longitude="-71.098326" />
+
+}}}
+This will create a simple street view panorama of height = 500px and width = 500px, and the map will panorama to latitude = 42.345573 and longitude = -71.098326.
 
  * For more information about how to use the several components, please see the examples in the demo.
