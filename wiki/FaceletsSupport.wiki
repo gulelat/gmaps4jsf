@@ -26,8 +26,48 @@ GMaps4JSF can work with Facelets, Here are the instructions :
 			<component-type>com.googlecode.gmaps4jsf.HTMLInformationWindow</component-type>
 		</component>
     </tag>
-
-    <!-- Do the same with other components -->
+    <tag>
+                <tag-name>eventListener</tag-name>
+                <component>
+                        <component-type>com.googlecode.gmaps4jsf.EventListener</component-type>
+                </component>
+    </tag>
+    <tag>
+                <tag-name>groundoverlay</tag-name>
+                <component>
+                        <component-type>com.googlecode.gmaps4jsf.Groundoverlay</component-type>
+                </component>
+    </tag>
+    <tag>
+                <tag-name>mapControl</tag-name>
+                <component>
+                        <component-type>com.googlecode.gmaps4jsf.MapControl</component-type>
+                </component>
+    </tag>
+    <tag>
+                <tag-name>point</tag-name>
+                <component>
+                        <component-type>com.googlecode.gmaps4jsf.Point</component-type>
+                </component>
+    </tag>
+    <tag>
+                <tag-name>polygon</tag-name>
+                <component>
+                        <component-type>com.googlecode.gmaps4jsf.Polygon</component-type>
+                </component>
+    </tag>
+    <tag>
+                <tag-name>polyline</tag-name>
+                <component>
+                        <component-type>com.googlecode.gmaps4jsf.Polyline</component-type>
+                </component>
+    </tag>
+    <tag>
+                <tag-name>streetViewPanorama</tag-name>
+                <component>
+                        <component-type>com.googlecode.gmaps4jsf.StreetViewPanorama</component-type>
+                </component>
+    </tag>
 </facelet-taglib>
 }}}
   * Copy the (gmaps4jsf-facelets-taglib.xml) file to the WEB-INF folder of your application.
