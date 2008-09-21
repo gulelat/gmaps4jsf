@@ -74,23 +74,23 @@ This will create an event listener to the map, which will execute the (mapMoveEn
  * To attach a polygon (a closed set of lines) to your map, use the <m:polygon .../> tag:
 {{{
    	<m:polygon lineWidth="4">
-   		<m:line latitude="30.01" longitude="31.14"/>
-   		<m:line latitude="-33" longitude="19"/>    				
-   		<m:line latitude="39" longitude="-101"/>  	
-   		<m:line latitude="30.01" longitude="31.14"/>
+   		<m:point latitude="30.01" longitude="31.14"/>
+   		<m:point latitude="-33" longitude="19"/>    				
+   		<m:point latitude="39" longitude="-101"/>  	
+   		<m:point latitude="30.01" longitude="31.14"/>
     	</m:polygon>
 }}}
-This will attach a polygon of (the listed three lines) to the map.
+This will attach a polygon of (the listed four points) to the map.
 
  * To attach a polyline (an opened set of lines) to your map, use the <m:polyline .../> tag:
 {{{
     	<m:polyline>
-    		<m:line latitude="30.01" longitude="31.14"/>
-    		<m:line latitude="-33" longitude="19"/>    				
-    		<m:line latitude="39" longitude="-101"/>
+    		<m:point latitude="30.01" longitude="31.14"/>
+    		<m:point latitude="-33" longitude="19"/>    				
+    		<m:point latitude="39" longitude="-101"/>
     	</m:polyline>
 }}}
-This will attach a polyline of (the listed three lines) to the map.
+This will attach a polyline of (the listed three points) to the map.
 
  * To attach an image to your map, use the <m:groundoverlay .../> tag:
 {{{
