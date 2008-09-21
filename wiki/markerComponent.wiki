@@ -1,0 +1,6 @@
+Beside the JSF UIComponent standard attributes
+|| Component Attribute   || Required || Description || Default value ||
+|| longitude || false || The longitude of the marker. If not set then the parent map longitude will be taken. || NA ||
+|| latitude|| false || The latitude of the marker. If not set then the parent map latitude will be taken. || NA ||
+|| draggable || false || This flag determines whether the marker is draggable. || false ||
+|| jsVariable || false || This flag determines the JavaScript variable you want to use for referring to the marker. Use this attribute if you want to use write additional JavaScript code for the marker to customize it. || NA ||
