@@ -1,5 +1,6 @@
 *Quick start:*
- * Before starting, you should include the tag library in your JSF page as follows:
+ * Place the "gmaps4jsf-core-1.1.jar" in your web application WEB-INF/lib folder.
+ * Include the tag library in your JSF page as follows:
 {{{
  <%@ taglib uri="http://code.google.com/p/gmaps4jsf/" prefix="m" %>
 }}}
@@ -60,13 +61,23 @@ This will create a simple map that will point to the specific address with the m
 
 This will add two controls on the map. The first control is the (GLargeMapControl) -its position will be in the bottom right of the map- , and the second control is the (GMapTypeControl) which enables switching between map types.
 
- * To attach events to your map or marker, use the <m:gEventListener.../> tag:
+ * To attach events to your map or marker, use the <m:eventListener.../> tag:
 {{{
     <m:map width="90%" height="90%" latitude="24" longitude="15">   			
-	<m:gEventListener eventName="moveend" jsFunction="mapMoveEndHandler"/>		
+	<m:eventListener eventName="moveend" jsFunction="mapMoveEndHandler"/>		
     </m:map>
 }}}
 
+ * To attach events to your map or marker, use the <m:eventListener.../> tag:
 This will create an event listener to the map, which will execute the (mapMoveEndHandler) function when the map (moveend) event occurs.
 
- * For more information, please see the examples in the demo.
+{{{
+   	<m:polygon lineWidth="4">
+   		<m:line latitude="30.01" longitude="31.14"/>
+   		<m:line latitude="-33" longitude="19"/>    				
+   		<m:line latitude="39" longitude="-101"/>  	
+   		<m:line latitude="30.01" longitude="31.14"/>
+    	</m:polygon>
+}}}
+
+ * For more information about how to use the several components, please see the examples in the demo.
