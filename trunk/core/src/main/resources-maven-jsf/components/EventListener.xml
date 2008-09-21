@@ -21,10 +21,6 @@
  */
 //-->
 
-<!--
-the gEventListener component can be a child of any visual component (map, marker).
-//-->
-
 <!DOCTYPE component SYSTEM "../misc/component.dtd" [
 <!ENTITY standard_uicomponent_attributes		SYSTEM "../entities/standard_uicomponent_attributes.xml">
 ]>

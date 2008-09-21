@@ -26,7 +26,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 
+import com.googlecode.gmaps4jsf.component.groundoverlay.GroundOverlay;
 import com.googlecode.gmaps4jsf.component.marker.Marker;
+import com.googlecode.gmaps4jsf.component.polygon.Polygon;
+import com.googlecode.gmaps4jsf.component.polyline.Polyline;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
 import com.googlecode.gmaps4jsf.util.MapRendererUtil;
@@ -70,12 +73,11 @@ public class MapRenderer extends Renderer {
 
 	/*
 	 * Declare the JS variables for the map and its related objects 
-	 * such as markers.
+	 * such as markers, polygons, polylines ...
 	 */
 	private void declareJSVariables(FacesContext facesContext, Map map,
 			ResponseWriter writer) throws IOException {
 
-		// declare the map and markers variables.
 		if (map.getJsVariable() != null) {
 			writer.write("\r\n var " + map.getJsVariable() + ";");
 		}
@@ -86,11 +88,25 @@ public class MapRenderer extends Renderer {
 
 			if (component instanceof Marker) {
 				Marker marker = (Marker) component;
-
 				if (marker.getJsVariable() != null) {
 					writer.write("\r\n var " + marker.getJsVariable() + ";");
 				}
-			}
+			} else if (component instanceof Polyline) {
+				Polyline polyline = (Polyline) component;
+				if (polyline.getJsVariable() != null) {
+					writer.write("\r\n var " + polyline.getJsVariable() + ";");
+				}
+			} else if (component instanceof Polygon) {
+				Polygon polygon = (Polygon) component;
+				if (polygon.getJsVariable() != null) {
+					writer.write("\r\n var " + polygon.getJsVariable() + ";");
+				}
+			} else if (component instanceof GroundOverlay) {
+				GroundOverlay groundOverlay = (GroundOverlay) component;
+				if (groundOverlay.getJsVariable() != null) {
+					writer.write("\r\n var " + groundOverlay.getJsVariable() + ";");
+				}
+			}			
 		}
 	}
 	

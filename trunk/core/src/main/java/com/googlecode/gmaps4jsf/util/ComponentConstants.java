@@ -38,8 +38,8 @@ public interface ComponentConstants {
 	final String JS_GControlPosition_OBJECT = "GControlPosition";
 	final String JS_GPolygon_OBJECT = "GPolygon";
 	final String JS_GPolyline_OBJECT = "GPolyline";
-	final String JS_GMAP_BASE_VARIABLE = "map";
-	final String JS_GSTREET_VIEW_PANORAMA_VARIABLE = "pano";	
+	final String JS_GMAP_BASE_VARIABLE = "map_base_variable";
+	final String JS_GSTREET_VIEW_PANORAMA_VARIABLE = "pano_base_variable";	
 	final String JS_GBrowserIsCompatible_OBJECT = "GBrowserIsCompatible";
 	final String JS_RENDER_MAP_FUNC = "renderMap";
 	final String JS_RENDER_STREET_VIEW_PANORAMA_FUNC = "renderStreetViewPanorama";		

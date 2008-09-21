@@ -26,7 +26,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import com.googlecode.gmaps4jsf.component.htmlInformationWindow.HTMLInformationWindow;
-import com.googlecode.gmaps4jsf.component.map.Map;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
 
 /**
@@ -58,8 +57,9 @@ public class HTMLInfoWindowEncoder {
 		}
 
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-				+ ".openInfoWindowHtml(new GLatLng(" + latitude + ", "
-				+ longitude + "), \"" + window.getHtmlText() + "\");");
+				+ ".openInfoWindowHtml(new "
+				+ ComponentConstants.JS_GLatLng_OBJECT + "(" + latitude + ", "
+				+ longitude + "), \"" + window.getHtmlText() + "\");");		
 	}
 	
 	public static void encodeHTMLInfoWindowsFunctionScript(FacesContext facesContext,
