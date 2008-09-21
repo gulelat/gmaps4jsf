@@ -76,6 +76,13 @@
 	                    </h:outputLink> 	                                        
 	                </h:panelGrid>    
 	                
+	                <h:outputText value="Polygons + Polylines + Events" />
+	                <h:panelGrid style="padding-left:25px">          
+	                    <h:outputLink value="pages/mixedGraphics.jsf">
+	                    	<f:verbatim>Draw polygons, polylines on your map and listen to their events</f:verbatim>
+	                    </h:outputLink> 	                                        
+	                </h:panelGrid>    	                
+	                
 	                <h:outputText value="GroundOverlay" />
 	                <h:panelGrid style="padding-left:25px">          
 	                    <h:outputLink value="pages/groundoverlay.jsf">
@@ -94,10 +101,13 @@
 	                <h:panelGrid style="padding-left:25px">          
 	                    <h:outputLink value="pages/streetViewPanorama.jsf">
 	                    	<f:verbatim>An example that shows the street view panorama</f:verbatim>
-	                    </h:outputLink> 	                  
+	                    </h:outputLink>
+	                    <h:outputLink value="pages/streetViewPanoramaEvents.jsf">
+	                    	<f:verbatim>An event listener example that listens to the street view panorama</f:verbatim>
+	                    </h:outputLink> 	                    
 	                    <h:outputLink value="pages/showMyStreet.jsf">
 	                    	<f:verbatim>An example that uses the street view panorama to show the map streets</f:verbatim>
-	                    </h:outputLink> 	                                                  
+	                    </h:outputLink> 	                     	                  	                                                  
 	                </h:panelGrid>   	 	                                
 	                
 	                <h:outputText value="Web 2.0 Mashup Demo" />
