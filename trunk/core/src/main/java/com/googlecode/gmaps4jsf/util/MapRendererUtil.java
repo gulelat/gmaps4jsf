@@ -24,14 +24,18 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import com.googlecode.gmaps4jsf.component.map.GEventEncoder;
+import com.googlecode.gmaps4jsf.component.map.GroundOverlayEncoder;
 import com.googlecode.gmaps4jsf.component.map.HTMLInfoWindowEncoder;
 import com.googlecode.gmaps4jsf.component.map.Map;
 import com.googlecode.gmaps4jsf.component.map.MapControlEncoder;
 import com.googlecode.gmaps4jsf.component.map.MarkerEncoder;
+import com.googlecode.gmaps4jsf.component.map.PolygonEncoder;
+import com.googlecode.gmaps4jsf.component.map.PolylineEncoder;
 
 /**
  * @author Hazem Saleh
  * @date Aug 13, 2008
+ * @last modified Sep 20, 2008 
  * The MapRendererUtil is a utility class for the map.
  */
 public class MapRendererUtil {
@@ -49,14 +53,26 @@ public class MapRendererUtil {
 		if (!"true".equalsIgnoreCase(mapComponent.getEnableDragging())) {
 			writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
 					+ ".disableDragging();");
-		}
+		}		
 	}
 	
 	private static void encodeMapType(FacesContext facesContext,
 			Map mapComponent, ResponseWriter writer) throws IOException {
 		
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE + ".setMapType("
-				+ mapComponent.getType() + ");");
+				+ mapComponent.getType() + ");");	
+	}
+	
+	
+	private static void encodeMapStreetOverlay(FacesContext facesContext,
+			Map mapComponent, ResponseWriter writer) throws IOException {
+		
+		if ("true".equalsIgnoreCase(mapComponent.getAddStreetOverlay())) {
+			writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
+					+ ".addOverlay(new "
+					+ ComponentConstants.JS_GSTREET_VIEW_PANORAMA_Overlay_OBJECT
+					+ "()) ;");
+		}		
 	}
 	
 	/*
@@ -71,13 +87,24 @@ public class MapRendererUtil {
 
 		MarkerEncoder.encodeMarkersFunctionScriptCall(facesContext,
 				mapComponent, writer);
-
+		
+		PolylineEncoder.encodePolylinesFunctionScriptCall(facesContext,
+				mapComponent, writer);
+		
+		PolygonEncoder.encodePolygonsFunctionScriptCall(facesContext,
+				mapComponent, writer);
+		
 		encodeMapType(facesContext, mapComponent, writer);
+		
+		encodeMapStreetOverlay(facesContext, mapComponent, writer);
 		
 		GEventEncoder.encodeEventListenersFunctionScriptCall(facesContext,
 				mapComponent, writer, ComponentConstants.JS_GMAP_BASE_VARIABLE);
 
 		MapControlEncoder.encodeMapControlsFunctionScriptCall(
+				facesContext, mapComponent, writer);
+		
+		GroundOverlayEncoder.encodeGroundOverlaysFunctionScriptCall(
 				facesContext, mapComponent, writer);
 
 		updateMapJSVariable(facesContext, mapComponent, writer);
@@ -96,7 +123,8 @@ public class MapRendererUtil {
 			Map mapComponent, ResponseWriter writer) throws IOException {
 
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-				+ ".setCenter(new GLatLng(" + mapComponent.getLatitude() + ", "
+				+ ".setCenter(new " + ComponentConstants.JS_GLatLng_OBJECT
+				+ "(" + mapComponent.getLatitude() + ", "
 				+ mapComponent.getLongitude() + "), " + mapComponent.getZoom()
 				+ ");");
 		completeMapRendering(facesContext, mapComponent, writer);
@@ -105,10 +133,11 @@ public class MapRendererUtil {
 	private static void renderMapUsingAddress(FacesContext facesContext, Map mapComponent,
 			ResponseWriter writer) throws IOException {
 
-		writer.write("var geocoder_" + mapComponent.getId()
-				+ " = new GClientGeocoder();");
+		writer.write("var geocoder_" + mapComponent.getId() + " = new "
+				+ ComponentConstants.JS_GClientGeocoder_OBJECT + "();");
 
-		// send XHR request to get the address location and write to the response.
+		// send XHR request to get the address location and write to the
+		// response.
 		writer.write("geocoder_" + mapComponent.getId() + ".getLatLng(\""
 				+ mapComponent.getAddress() + "\"," + "function(location) {\n"
 				+ "if (!location) {\n" + "alert(\""
@@ -116,8 +145,8 @@ public class MapRendererUtil {
 				+ "} else {\n");
 		
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-				+ ".setCenter(location, " + mapComponent.getZoom() + ");\n");		
-		
+				+ ".setCenter(location, " + mapComponent.getZoom() + ");\n");	
+					
 		completeMapRendering(facesContext, mapComponent, writer);
 				
 		writer.write("}" + "}\n" + ");\n");
@@ -126,7 +155,7 @@ public class MapRendererUtil {
 	public static void renderMap(FacesContext facesContext, Map mapComponent,
 			ResponseWriter writer) throws IOException {
 
-		createMapJSObject(facesContext, mapComponent, writer);
+		createMapJSObject(facesContext, mapComponent, writer);	
 		
 		if (mapComponent.getAddress() == null) {
 
