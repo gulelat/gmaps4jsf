@@ -19,9 +19,9 @@
     			   latitude="41.033386" longitude="-73.781755" 
     			   type="G_NORMAL_MAP" zoom="14" 
     			   addStreetOverlay="true" > 			
-				<m:gEventListener eventName="click" jsFunction="showStreet" />		
+				<m:eventListener eventName="click" jsFunction="showStreet" />		
     		</m:map>
-    		
+    		<br>
     		<m:streetViewPanorama width="500px" height="200px" 
     							  latitude="41.033386" longitude="-73.781755" 
     							  jsVariable="pano1" />
