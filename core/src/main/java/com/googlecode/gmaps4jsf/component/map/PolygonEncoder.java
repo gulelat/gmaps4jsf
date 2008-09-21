@@ -24,8 +24,7 @@ import java.util.Iterator;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-
-import com.googlecode.gmaps4jsf.component.line.Line;
+import com.googlecode.gmaps4jsf.component.point.Point;
 import com.googlecode.gmaps4jsf.component.polygon.Polygon;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
 
@@ -47,16 +46,16 @@ public class PolygonEncoder {
 				.hasNext();) {
 			UIComponent component = (UIComponent) iterator.next();
 
-			if (component instanceof Line) {
+			if (component instanceof Point) {
 
-				Line line = (Line) component;
+				Point point = (Point) component;
 
 				if (!polygonLinesStr.equals("")) {
 					polygonLinesStr += ",";
 				}
 
-				polygonLinesStr += "new GLatLng(" + line.getLatitude() + ", "
-						+ line.getLongitude() + ")";
+				polygonLinesStr += "new GLatLng(" + point.getLatitude() + ", "
+						+ point.getLongitude() + ")";
 			}
 		}
 
