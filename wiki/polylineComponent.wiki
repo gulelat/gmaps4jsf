@@ -1,4 +1,4 @@
-Beside the JSF UIComponent standard attributes
+Beside the JSF UIComponent standard attributes. It can be a child of the (map) component. 
 || Component Attribute   || Required || Description || Default value ||
 || lineWidth || false || The polyline line width. || 10 ||
 || hexaColor || false || The hexa color of the polyline. || #ff0000 ||
