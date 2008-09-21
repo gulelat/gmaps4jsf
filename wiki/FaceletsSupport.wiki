@@ -26,6 +26,8 @@ GMaps4JSF can work with Facelets, Here are the instructions :
 			<component-type>com.googlecode.gmaps4jsf.HTMLInformationWindow</component-type>
 		</component>
     </tag>
+
+    <!-- Do the same with other components -->
 </facelet-taglib>
 }}}
   * Copy the (gmaps4jsf-facelets-taglib.xml) file to the WEB-INF folder of your application.
