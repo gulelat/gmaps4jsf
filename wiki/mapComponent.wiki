@@ -1,2 +1,3 @@
 || Component Attribute   ||                         Description                    ||
-|| ss || xz ||
+|| Standard Attributes||
+|| attr||                         desc||
