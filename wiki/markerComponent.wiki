@@ -1,4 +1,7 @@
-Beside the JSF UIComponent standard attributes. It can be a child of the (map) component.
+It can be a child of the (map) component.
+
+==Attributes==
+Beside the JSF UIComponent standard attributes. 
 || Component Attribute   || Required || Description || Default value ||
 || longitude || false || The longitude of the marker. If not set then the parent map longitude will be taken. || NA ||
 || latitude|| false || The latitude of the marker. If not set then the parent map latitude will be taken. || NA ||
