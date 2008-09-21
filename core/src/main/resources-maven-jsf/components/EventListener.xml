@@ -29,10 +29,10 @@ the gEventListener component can be a child of any visual component (map, marker
 <!ENTITY standard_uicomponent_attributes		SYSTEM "../entities/standard_uicomponent_attributes.xml">
 ]>
 <component>
-	<tag>gEventListener</tag>
-	<tagClass>com.googlecode.gmaps4jsf.component.geventlistener.GEventListenerTag</tagClass>
-	<componentClass>com.googlecode.gmaps4jsf.component.geventlistener.GEventListener</componentClass>
-	<componentType>com.googlecode.gmaps4jsf.GEventListener</componentType>
+	<tag>eventListener</tag>
+	<tagClass>com.googlecode.gmaps4jsf.component.eventlistener.EventListenerTag</tagClass>
+	<componentClass>com.googlecode.gmaps4jsf.component.eventlistener.EventListener</componentClass>
+	<componentType>com.googlecode.gmaps4jsf.EventListener</componentType>
 	<componentFamily>com.googlecode.gmaps4jsf</componentFamily>
 	<parent>javax.faces.component.UIComponentBase</parent>
 	<attributes>
