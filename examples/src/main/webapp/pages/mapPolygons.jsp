@@ -19,16 +19,16 @@
 		  	<div>Many Polygons.</div>    	
     		<m:map width="90%" height="90%" latitude="24" longitude="15" zoom="2">
     			<m:polygon lineWidth="1">
-    				<m:line latitude="30.01" longitude="31.14"/>
-    				<m:line latitude="-33" longitude="19"/>    				
-    				<m:line latitude="39" longitude="-101"/>  	
-    				<m:line latitude="30.01" longitude="31.14"/>    								
+    				<m:point latitude="30.01" longitude="31.14"/>
+    				<m:point latitude="-33" longitude="19"/>    				
+    				<m:point latitude="39" longitude="-101"/>  	
+    				<m:point latitude="30.01" longitude="31.14"/>    								
     			</m:polygon>
     			<m:polygon lineWidth="1">
-    				<m:line latitude="30.01" longitude="31.14"/>
-    				<m:line latitude="48" longitude="2"/>    				
-    				<m:line latitude="43" longitude="141"/>  	
-    				<m:line latitude="30.01" longitude="31.14"/>    								
+    				<m:point latitude="30.01" longitude="31.14"/>
+    				<m:point latitude="48" longitude="2"/>    				
+    				<m:point latitude="43" longitude="141"/>  	
+    				<m:point latitude="30.01" longitude="31.14"/>    								
     			</m:polygon>     				
     		</m:map>		
     	</h:form>
