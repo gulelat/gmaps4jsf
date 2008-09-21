@@ -28,7 +28,7 @@
 	<tag>groundoverlay</tag>
 	<tagClass>com.googlecode.gmaps4jsf.component.groundoverlay.GroundOverlayTag</tagClass>
 	<componentClass>com.googlecode.gmaps4jsf.component.groundoverlay.GroundOverlay</componentClass>
-	<componentType>com.googlecode.gmaps4jsf.groundoverlay</componentType>
+	<componentType>com.googlecode.gmaps4jsf.Groundoverlay</componentType>
 	<componentFamily>com.googlecode.gmaps4jsf</componentFamily>
 	<parent>javax.faces.component.UIComponentBase</parent>
 	<attributes>

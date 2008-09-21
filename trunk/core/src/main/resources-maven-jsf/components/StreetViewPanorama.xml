@@ -28,7 +28,7 @@
 	<tag>streetViewPanorama</tag>
 	<tagClass>com.googlecode.gmaps4jsf.component.streetviewpanorama.StreetViewPanoramaTag</tagClass>
 	<componentClass>com.googlecode.gmaps4jsf.component.streetviewpanorama.StreetViewPanorama</componentClass>
-	<componentType>com.googlecode.gmaps4jsf.streetviewpanorama</componentType>
+	<componentType>com.googlecode.gmaps4jsf.StreetViewPanorama</componentType>
 	<componentFamily>com.googlecode.gmaps4jsf</componentFamily>
 	<rendererType>com.googlecode.gmaps4jsf.component.streetviewpanorama.StreetViewPanoramaRenderer</rendererType>
 	<rendererClass>com.googlecode.gmaps4jsf.component.streetviewpanorama.StreetViewPanoramaRenderer</rendererClass>
