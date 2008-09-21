@@ -25,45 +25,45 @@
 <!ENTITY standard_uicomponent_attributes		SYSTEM "../entities/standard_uicomponent_attributes.xml">
 ]>
 <component>
-	<tag>marker</tag>
-	<tagClass>com.googlecode.gmaps4jsf.component.marker.MarkerTag</tagClass>
-	<componentClass>com.googlecode.gmaps4jsf.component.marker.Marker</componentClass>
-	<componentType>com.googlecode.gmaps4jsf.Marker</componentType>
+	<tag>polyline</tag>
+	<tagClass>com.googlecode.gmaps4jsf.component.polyline.PolylineTag</tagClass>
+	<componentClass>com.googlecode.gmaps4jsf.component.polyline.Polyline</componentClass>
+	<componentType>com.googlecode.gmaps4jsf.polyline</componentType>
 	<componentFamily>com.googlecode.gmaps4jsf</componentFamily>
 	<parent>javax.faces.component.UIComponentBase</parent>
 	<attributes>
 		&standard_uicomponent_attributes;
 		<attribute>
-			<name>longitude</name>
+			<name>lineWidth</name>
 			<required>false</required>
 			<type>java.lang.String</type>
-			<description>The longitude of the marker. If not set then the parent map longitude will be taken.</description>
+			<defaultValue>10</defaultValue>			
+			<description>The polyline line width.</description>
 		</attribute>
+		
 		<attribute>
-			<name>latitude</name>
+			<name>hexaColor</name>
 			<required>false</required>	
 			<type>java.lang.String</type>
-			<description>The latitude of the marker. If not set then the parent map latitude will be taken.</description>
+			<defaultValue>#ff0000</defaultValue>					
+			<description>The hexa color of the polyline.</description>
 		</attribute>
 		
 		<attribute>
-			<name>jsVariable</name>
-			<required>false</required>
-			<type>java.lang.String</type>				
-			<description>
-			This flag determines the JavaScript variable you want to use for referring to the marker.
-			Use this attribute if you want to use write additional JavaScript
-			code for the marker to customize it.
-			</description>
-		</attribute>				
+			<name>opacity</name>
+			<required>false</required>	
+			<type>java.lang.String</type>
+			<defaultValue>1</defaultValue>					
+			<description>The opacity of the polyline.</description>
+		</attribute>		
 		
 		<attribute>
-			<name>draggable</name>
+			<name>geodesic</name>
 			<required>false</required>
-			<type>java.lang.String</type>		
-			<defaultValue>false</defaultValue>					
+			<type>java.lang.String</type>	
+			<defaultValue>false</defaultValue>						
 			<description>
-			This flag determines whether the marker is draggable.
+			This flag determines whether the polyline is geodesic.
 			</description>
 		</attribute>			
 				

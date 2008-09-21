@@ -104,7 +104,7 @@
 			<type>java.lang.String</type>
 			<defaultValue>true</defaultValue>					
 			<description>
-			This flag determines whether to render the window on window load.
+			This flag determines whether to render the map on window load.
 			This flag should be set to false if the map is inside a zone that will 
 			be updated by Ajax
 			</description>
@@ -119,7 +119,17 @@
 			<description>
 			This flag determines whether to support map dragging. Default is true.
 			</description>
-		</attribute>		
+		</attribute>	
+		
+		<attribute>
+			<name>addStreetOverlay</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<defaultValue>false</defaultValue>					
+			<description>
+			Setting this flag to true enables the map to work directly with the streetViewPanorama component.
+			</description>
+		</attribute>					
 		
 		<attribute>
 			<name>jsVariable</name>
@@ -127,7 +137,7 @@
 			<type>java.lang.String</type>				
 			<description>
 			This flag determines the JavaScript variable you want to use for referring to the map.
-			It should unique per map. Use this attribute if you want to use write additional JavaScript
+			It should unique. Use this attribute if you want to use write additional JavaScript
 			code for the map to customize it.
 			</description>
 		</attribute>				

@@ -25,47 +25,25 @@
 <!ENTITY standard_uicomponent_attributes		SYSTEM "../entities/standard_uicomponent_attributes.xml">
 ]>
 <component>
-	<tag>marker</tag>
-	<tagClass>com.googlecode.gmaps4jsf.component.marker.MarkerTag</tagClass>
-	<componentClass>com.googlecode.gmaps4jsf.component.marker.Marker</componentClass>
-	<componentType>com.googlecode.gmaps4jsf.Marker</componentType>
+	<tag>line</tag>
+	<tagClass>com.googlecode.gmaps4jsf.component.line.LineTag</tagClass>
+	<componentClass>com.googlecode.gmaps4jsf.component.line.Line</componentClass>
+	<componentType>com.googlecode.gmaps4jsf.line</componentType>
 	<componentFamily>com.googlecode.gmaps4jsf</componentFamily>
 	<parent>javax.faces.component.UIComponentBase</parent>
 	<attributes>
 		&standard_uicomponent_attributes;
 		<attribute>
 			<name>longitude</name>
-			<required>false</required>
+			<required>true</required>
 			<type>java.lang.String</type>
-			<description>The longitude of the marker. If not set then the parent map longitude will be taken.</description>
+			<description>The longitude of the line.</description>
 		</attribute>
 		<attribute>
 			<name>latitude</name>
-			<required>false</required>	
+			<required>true</required>	
 			<type>java.lang.String</type>
-			<description>The latitude of the marker. If not set then the parent map latitude will be taken.</description>
+			<description>The latitude of the line.</description>
 		</attribute>
-		
-		<attribute>
-			<name>jsVariable</name>
-			<required>false</required>
-			<type>java.lang.String</type>				
-			<description>
-			This flag determines the JavaScript variable you want to use for referring to the marker.
-			Use this attribute if you want to use write additional JavaScript
-			code for the marker to customize it.
-			</description>
-		</attribute>				
-		
-		<attribute>
-			<name>draggable</name>
-			<required>false</required>
-			<type>java.lang.String</type>		
-			<defaultValue>false</defaultValue>					
-			<description>
-			This flag determines whether the marker is draggable.
-			</description>
-		</attribute>			
-				
 	</attributes>
 </component>
