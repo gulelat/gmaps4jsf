@@ -1,0 +1,3 @@
+  * mapComponent
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
