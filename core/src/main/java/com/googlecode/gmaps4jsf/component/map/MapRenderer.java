@@ -117,7 +117,7 @@ public class MapRenderer extends Renderer {
 		MapControlEncoder.encodeMapControlsFunctionScript(facesContext,
 				mapComponent, writer);
 		
-		GEventEncoder.encodeEventListenersFunctionScript(facesContext,
+		EventEncoder.encodeEventListenersFunctionScript(facesContext,
 				mapComponent, writer, ComponentConstants.JS_GMAP_BASE_VARIABLE);
 		
 		PolylineEncoder.encodePolylinesFunctionScript(facesContext,

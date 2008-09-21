@@ -25,7 +25,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import com.googlecode.gmaps4jsf.component.geventlistener.GEventListener;
+import com.googlecode.gmaps4jsf.component.eventlistener.EventListener;
 import com.googlecode.gmaps4jsf.component.map.Map;
 import com.googlecode.gmaps4jsf.component.marker.Marker;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
@@ -81,10 +81,10 @@ public class MarkerEncoder {
 				.hasNext();) {
 			UIComponent component = (UIComponent) iterator.next();
 
-			if (component instanceof GEventListener) {
-				GEventEncoder.encodeEventListenersFunctionScript(facesContext,
+			if (component instanceof EventListener) {
+				EventEncoder.encodeEventListenersFunctionScript(facesContext,
 						marker, writer, "marker_" + marker.getId());
-				GEventEncoder.encodeEventListenersFunctionScriptCall(
+				EventEncoder.encodeEventListenersFunctionScriptCall(
 						facesContext, marker, writer, "marker_"
 								+ marker.getId());
 			}

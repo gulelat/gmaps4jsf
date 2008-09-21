@@ -25,7 +25,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import com.googlecode.gmaps4jsf.component.geventlistener.GEventListener;
+import com.googlecode.gmaps4jsf.component.eventlistener.EventListener;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
 
 /**
@@ -33,16 +33,16 @@ import com.googlecode.gmaps4jsf.util.ComponentConstants;
  * @date Sep 17, 2008
  * The GEventEncoder is used for encoding the event listeners for all the event sources.
  */
-public class GEventEncoder {
+public class EventEncoder {
 
 	private static void encodeEventListener(FacesContext facesContext,
-			GEventListener gEventListener, ResponseWriter writer,
+			EventListener eventListener, ResponseWriter writer,
 			String eventSourceBaseVariable) throws IOException {
 
 		writer.write(ComponentConstants.JS_GEVENT_OBJECT + ".addListener("
 				+ eventSourceBaseVariable + ", \""
-				+ gEventListener.getEventName() + "\", "
-				+ gEventListener.getJsFunction()
+				+ eventListener.getEventName() + "\", "
+				+ eventListener.getJsFunction()
 				+ ");");
 
 	}
@@ -59,8 +59,8 @@ public class GEventEncoder {
 				.hasNext();) {
 			UIComponent component = (UIComponent) iterator.next();
 
-			if (component instanceof GEventListener) {
-				encodeEventListener(facesContext, (GEventListener) component,
+			if (component instanceof EventListener) {
+				encodeEventListener(facesContext, (EventListener) component,
 						writer, eventSourceBaseVariable);
 			}
 		}
