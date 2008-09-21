@@ -1,4 +1,7 @@
-Beside the JSF UIComponent standard attributes. It can be a child of the (map) component. 
+It can be a child of the (map) component.
+
+==Attributes==
+Beside the JSF UIComponent standard attributes. 
 || Component Attribute   || Required || Description || Default value ||
 || imageURL || true || The Groundoverlay image url. || NA ||
 || startLatitude || true || The Groundoverlay image box left upper start latitude. || NA ||
