@@ -19,10 +19,10 @@
 		  	<div>Drag the markers!!!</div>    	
     		<m:map width="90%" height="90%" latitude="24" longitude="15" jsVariable="map1" zoom="2">
     			<m:marker latitude="30.01" longitude="31.14" jsVariable="marker1" draggable="true">
-					<m:gEventListener eventName="dragend" jsFunction="marker1DragHandler"/>    				
+					<m:eventListener eventName="dragend" jsFunction="marker1DragHandler"/>    				
     			</m:marker>
     			<m:marker latitude="39" longitude="-101" jsVariable="marker2" draggable="true">
-					<m:gEventListener eventName="dragend" jsFunction="marker2DragHandler"/>    				
+					<m:eventListener eventName="dragend" jsFunction="marker2DragHandler"/>    				
     			</m:marker>    				
     		</m:map>
 
