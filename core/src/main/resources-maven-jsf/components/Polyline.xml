@@ -65,7 +65,18 @@
 			<description>
 			This flag determines whether the polyline is geodesic.
 			</description>
-		</attribute>			
+		</attribute>		
+			
+		<attribute>
+			<name>jsVariable</name>
+			<required>false</required>
+			<type>java.lang.String</type>				
+			<description>
+			This flag determines the JavaScript variable you want to use for referring to the polyline.
+			Use this attribute if you want to use write additional JavaScript
+			code for the polyline to customize it.
+			</description>
+		</attribute>					
 				
 	</attributes>
 </component>

@@ -24,6 +24,8 @@ import java.util.Iterator;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+
+import com.googlecode.gmaps4jsf.component.eventlistener.EventListener;
 import com.googlecode.gmaps4jsf.component.point.Point;
 import com.googlecode.gmaps4jsf.component.polygon.Polygon;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
@@ -60,7 +62,7 @@ public class PolygonEncoder {
 		}
 
 		// encode the polygon.
-		writer.write("var polygon = new "
+		writer.write("var polygon_" + polygon.getId() + "  = new "
 				+ ComponentConstants.JS_GPolygon_OBJECT + "(["
 				+ polygonLinesStr + "], \"" + polygon.getHexStrokeColor()
 				+ "\", " + polygon.getLineWidth() + ","
@@ -69,8 +71,34 @@ public class PolygonEncoder {
 				+ ");");
 
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-				+ ".addOverlay(polygon);");
+				+ ".addOverlay(polygon_" + polygon.getId() + ");");
+		
+		// encode polygon events.
+		for (Iterator iterator = polygon.getChildren().iterator(); iterator
+				.hasNext();) {
+			UIComponent component = (UIComponent) iterator.next();
+
+			if (component instanceof EventListener) {
+				EventEncoder.encodeEventListenersFunctionScript(facesContext,
+						polygon, writer, "polygon_" + polygon.getId());
+				EventEncoder.encodeEventListenersFunctionScriptCall(
+						facesContext, polygon, writer, "polygon_"
+								+ polygon.getId());
+			}
+		}				
+
+		// update polygon user variable.
+		updatePolygonJSVariable(facesContext, polygon, writer);
 	}
+	
+	private static void updatePolygonJSVariable(FacesContext facesContext,
+			Polygon polygon, ResponseWriter writer) throws IOException {
+
+		if (polygon.getJsVariable() != null) {
+			writer.write("\r\n" + polygon.getJsVariable() + " = " + "polygon_"
+					+ polygon.getId() + ";\r\n");
+		}
+	}	
 	
 	public static void encodePolygonsFunctionScript(FacesContext facesContext,
 			Map mapComponent, ResponseWriter writer) throws IOException {

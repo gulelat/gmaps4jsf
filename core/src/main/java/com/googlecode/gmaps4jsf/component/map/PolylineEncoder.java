@@ -25,6 +25,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import com.googlecode.gmaps4jsf.component.eventlistener.EventListener;
 import com.googlecode.gmaps4jsf.component.point.Point;
 import com.googlecode.gmaps4jsf.component.polyline.Polyline;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
@@ -69,15 +70,41 @@ public class PolylineEncoder {
 		}
 
 		// encode the polyline.
-		writer.write("var polyline = new "
+		writer.write("var polyline_" + polyline.getId() + " = new "
 				+ ComponentConstants.JS_GPolyline_OBJECT + "([" + polyLinesStr
 				+ "], \"" + polyline.getHexaColor() + "\", "
 				+ polyline.getLineWidth() + "," + polyline.getOpacity() + ", "
 				+ polyOptionsStr + ");");
 
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-				+ ".addOverlay(polyline);");
+				+ ".addOverlay(polyline_" + polyline.getId() + ");");
+		
+		// encode polyline events.
+		for (Iterator iterator = polyline.getChildren().iterator(); iterator
+				.hasNext();) {
+			UIComponent component = (UIComponent) iterator.next();
+
+			if (component instanceof EventListener) {
+				EventEncoder.encodeEventListenersFunctionScript(facesContext,
+						polyline, writer, "polyline_" + polyline.getId());
+				EventEncoder.encodeEventListenersFunctionScriptCall(
+						facesContext, polyline, writer, "polyline_"
+								+ polyline.getId());
+			}
+		}			
+		
+		// update polyline user variable.
+		updatePolylineJSVariable(facesContext, polyline, writer);
 	}
+	
+	private static void updatePolylineJSVariable(FacesContext facesContext,
+			Polyline polyline, ResponseWriter writer) throws IOException {
+
+		if (polyline.getJsVariable() != null) {
+			writer.write("\r\n" + polyline.getJsVariable() + " = " + "polyline_"
+					+ polyline.getId() + ";\r\n");
+		}
+	}	
 	
 	public static void encodePolylinesFunctionScript(FacesContext facesContext,
 			Map mapComponent, ResponseWriter writer) throws IOException {

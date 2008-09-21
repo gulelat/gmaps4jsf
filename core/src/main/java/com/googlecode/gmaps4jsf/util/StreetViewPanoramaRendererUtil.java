@@ -19,10 +19,14 @@
 package com.googlecode.gmaps4jsf.util;
 
 import java.io.IOException;
+import java.util.Iterator;
 
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import com.googlecode.gmaps4jsf.component.eventlistener.EventListener;
+import com.googlecode.gmaps4jsf.component.map.EventEncoder;
 import com.googlecode.gmaps4jsf.component.streetviewpanorama.StreetViewPanorama;
 
 /**
@@ -46,11 +50,30 @@ public class StreetViewPanoramaRendererUtil {
 		
 		writer.write("var "
 				+ ComponentConstants.JS_GSTREET_VIEW_PANORAMA_VARIABLE
-				+ " = new "
+				+ streetViewPanoramaComponent.getId() + " = new "
 				+ ComponentConstants.JS_GSTREET_VIEW_PANORAMA_CORE_OBJECT
 				+ "(document.getElementById(\""
 				+ streetViewPanoramaComponent.getClientId(facesContext)
 				+ "\")," + streetViewPanoramaOptions + ");");
+		
+		// encode StreetViewPanorama events.
+		for (Iterator iterator = streetViewPanoramaComponent.getChildren()
+				.iterator(); iterator.hasNext();) {
+			UIComponent component = (UIComponent) iterator.next();
+
+			if (component instanceof EventListener) {
+				
+				EventEncoder.encodeEventListenersFunctionScript(facesContext,
+						streetViewPanoramaComponent, writer,
+						ComponentConstants.JS_GSTREET_VIEW_PANORAMA_VARIABLE
+								+ streetViewPanoramaComponent.getId());
+				
+				EventEncoder.encodeEventListenersFunctionScriptCall(
+						facesContext, streetViewPanoramaComponent, writer,
+						ComponentConstants.JS_GSTREET_VIEW_PANORAMA_VARIABLE
+								+ streetViewPanoramaComponent.getId());
+			}
+		}			
 		
 		updateStreetViewPanoramaJSVariable(facesContext,
 				streetViewPanoramaComponent, writer);
@@ -65,7 +88,7 @@ public class StreetViewPanoramaRendererUtil {
 			writer.write("\r\n" + streetViewPanoramaComponent.getJsVariable()
 					+ "="
 					+ ComponentConstants.JS_GSTREET_VIEW_PANORAMA_VARIABLE
-					+ ";\r\n");
+					+ streetViewPanoramaComponent.getId() + ";\r\n");
 		}
 	}	
 

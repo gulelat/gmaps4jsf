@@ -25,6 +25,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import com.googlecode.gmaps4jsf.component.eventlistener.EventListener;
 import com.googlecode.gmaps4jsf.component.groundoverlay.GroundOverlay;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
 
@@ -49,13 +50,40 @@ public class GroundOverlayEncoder {
 				+ groundOverlay.getEndLatitude() + ","
 				+ groundOverlay.getEndLongitude() + "));");
 
-		writer.write("var groundOverlay = new "
+		writer.write("var groundOverlay_" + groundOverlay.getId() + " = new "
 				+ ComponentConstants.JS_GGroundOverlay_OBJECT + "(\""
 				+ groundOverlay.getImageURL() + "\", boundaries);");
 
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-				+ ".addOverlay(groundOverlay);");
+				+ ".addOverlay(groundOverlay" + groundOverlay.getId() + ");");
+
+		// encode GroundOverlay events.
+		for (Iterator iterator = groundOverlay.getChildren().iterator(); iterator
+				.hasNext();) {
+			UIComponent component = (UIComponent) iterator.next();
+
+			if (component instanceof EventListener) {
+				EventEncoder.encodeEventListenersFunctionScript(facesContext,
+						groundOverlay, writer, "groundOverlay_"
+								+ groundOverlay.getId());
+				EventEncoder.encodeEventListenersFunctionScriptCall(
+						facesContext, groundOverlay, writer, "groundOverlay_"
+								+ groundOverlay.getId());
+			}
+		}			
+		
+		// update GroundOverlay user variable.
+		updateGroundOverlayJSVariable(facesContext, groundOverlay, writer);
 	}
+	
+	private static void updateGroundOverlayJSVariable(FacesContext facesContext,
+			GroundOverlay groundOverlay, ResponseWriter writer) throws IOException {
+
+		if (groundOverlay.getJsVariable() != null) {
+			writer.write("\r\n" + groundOverlay.getJsVariable() + " = " + "groundOverlay_"
+					+ groundOverlay.getId() + ";\r\n");
+		}
+	}	
 	
 	public static void encodeGroundOverlaysFunctionScript(
 			FacesContext facesContext, Map mapComponent, ResponseWriter writer)

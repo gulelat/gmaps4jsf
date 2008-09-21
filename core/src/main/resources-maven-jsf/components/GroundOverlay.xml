@@ -67,7 +67,18 @@
 			<required>true</required>
 			<type>java.lang.String</type>		
 			<description>The GroundOverlay image box right bottom end longitude.</description>
-		</attribute>									
+		</attribute>				
+		
+		<attribute>
+			<name>jsVariable</name>
+			<required>false</required>
+			<type>java.lang.String</type>				
+			<description>
+			This flag determines the JavaScript variable you want to use for referring to the GroundOverlay.
+			Use this attribute if you want to use write additional JavaScript code for the 
+			GroundOverlay to customize it.
+			</description>
+		</attribute>								
 				
 	</attributes>
 </component>
