@@ -25,10 +25,10 @@
 <!ENTITY standard_uicomponent_attributes		SYSTEM "../entities/standard_uicomponent_attributes.xml">
 ]>
 <component>
-	<tag>line</tag>
-	<tagClass>com.googlecode.gmaps4jsf.component.line.LineTag</tagClass>
-	<componentClass>com.googlecode.gmaps4jsf.component.line.Line</componentClass>
-	<componentType>com.googlecode.gmaps4jsf.line</componentType>
+	<tag>point</tag>
+	<tagClass>com.googlecode.gmaps4jsf.component.point.PointTag</tagClass>
+	<componentClass>com.googlecode.gmaps4jsf.component.point.Point</componentClass>
+	<componentType>com.googlecode.gmaps4jsf.Point</componentType>
 	<componentFamily>com.googlecode.gmaps4jsf</componentFamily>
 	<parent>javax.faces.component.UIComponentBase</parent>
 	<attributes>
@@ -37,13 +37,13 @@
 			<name>longitude</name>
 			<required>true</required>
 			<type>java.lang.String</type>
-			<description>The longitude of the line.</description>
+			<description>The longitude of the point.</description>
 		</attribute>
 		<attribute>
 			<name>latitude</name>
 			<required>true</required>	
 			<type>java.lang.String</type>
-			<description>The latitude of the line.</description>
+			<description>The latitude of the point.</description>
 		</attribute>
 	</attributes>
 </component>
