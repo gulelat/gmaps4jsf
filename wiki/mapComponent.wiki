@@ -1,3 +1,14 @@
 Beside the JSF UIComponent standard attributes
 || Component Attribute   || Required || Description || Default value ||
-|| longitude || false || The longitude you wish the map to point to || 31.14 ||
+|| longitude || false || The longitude you wish the map to point to || 30.01 ||
+|| latitude|| false || The latitude you wish the map to point to || 31.14 ||
+|| address|| false || The address you wish the map to point to. If you use this attribute donot longitude or latitude attributes. || NA ||
+|| locationNotFoundErrorMessage || false || The error message that should appear if the address location doesnot exist || (GClientGeocoder) service not found the address location ||
+|| width|| false || The width of the map || 500 ||
+|| height|| false || The height of the map || 500 ||
+|| zoom || false || The zoom value of the map || 11 ||
+|| type || false || The type of the map. It can be one of the following values (G_NORMAL_MAP, G_SATELLITE_MAP and G_HYBRID_MAP)|| G_HYBRID_MAP ||
+|| renderOnWindowLoad || false || This flag determines whether to render the map on window load. This flag should be set to false if the map is inside a zone that will be updated by Ajax|| true ||
+|| enableDragging || false || This flag determines whether to support map dragging || true ||
+|| addStreetOverlay || false || Setting this flag to true enables the map to work directly with the streetViewPanorama component || false ||
+|| jsVariable || false || This flag determines the JavaScript variable you want to use for referring to the map. It should unique. Use this attribute if you want to use write additional JavaScript code for the map to customize it || NA ||
