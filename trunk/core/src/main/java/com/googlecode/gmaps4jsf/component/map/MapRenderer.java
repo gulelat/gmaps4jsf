@@ -36,7 +36,7 @@ import com.googlecode.gmaps4jsf.util.MapRendererUtil;
  * @date Jul 13, 2008
  * last modified at Jul 31, 2008 
  * The (MapRenderer) renders a google map with all its children 
- * (markers, informationWindows ...etc).
+ * (markers, informationWindows, polygons, polylines, ...etc).
  */
 public class MapRenderer extends Renderer {
 
@@ -49,18 +49,21 @@ public class MapRenderer extends Renderer {
 		
 		declareJSVariables(facesContext, mapComponent, writer);
 
-		startEncodingBrowserCompatabilityChecking(facesContext, component, writer);
+		ComponentUtils.startEncodingBrowserCompatabilityChecking(facesContext,
+				component, writer);
 		
 		encodeMapRendererWrapper(facesContext, mapComponent, writer);
 		
 		// determines whether to render map on window onload.
 		if ("true".equals(mapComponent.getRenderOnWindowLoad())) {
-			injectMapCodeInWindowOnLoad(facesContext, component, writer);
+			ComponentUtils.encodeJSFunctionInWindowOnLoad(writer,
+					ComponentConstants.JS_RENDER_MAP_FUNC + component.getId());
 		} else {
 			callMapRendererWrapper(facesContext, component, writer);
 		}
 
-		endEncodingBrowserCompatabilityChecking(facesContext, component, writer);
+		ComponentUtils.endEncodingBrowserCompatabilityChecking(facesContext,
+				component, writer);
 
 		writer.endElement(ComponentConstants.HTML_SCRIPT);
 	}
@@ -90,14 +93,6 @@ public class MapRenderer extends Renderer {
 			}
 		}
 	}
-
-	private void startEncodingBrowserCompatabilityChecking(
-			FacesContext facesContext, UIComponent component,
-			ResponseWriter writer) throws IOException {
-		
-		writer.write("if (" + ComponentConstants.JS_GBrowserIsCompatible_OBJECT
-				+ "()) {");
-	}
 	
 	/*
 	 * This is the core method that is responsible for the whole map rendering.
@@ -124,38 +119,20 @@ public class MapRenderer extends Renderer {
 		
 		GEventEncoder.encodeEventListenersFunctionScript(facesContext,
 				mapComponent, writer, ComponentConstants.JS_GMAP_BASE_VARIABLE);
+		
+		PolylineEncoder.encodePolylinesFunctionScript(facesContext,
+				mapComponent, writer);
+		
+		PolygonEncoder.encodePolygonsFunctionScript(facesContext, mapComponent,
+				writer);
+		
+		GroundOverlayEncoder.encodeGroundOverlaysFunctionScript(facesContext,
+				mapComponent, writer);
 
-		encodeMap(facesContext, mapComponent, writer);
+		encodeMapScript(facesContext, mapComponent, writer);
 
 		writer.write("}");
 	}
-	
-	/*
-	 * The injectMapCodeInWindowOnLoad method is used for injecting the map code 
-	 * executes in the window onload (IE will complain without this method). 
-	 */
-	private void injectMapCodeInWindowOnLoad(
-			FacesContext facesContext, UIComponent component,
-			ResponseWriter writer) throws IOException {
-
-		 String injectMapCodeInWindowOnLoadScript = "\r\n// Inject code on the load of the window\r\n"
-				+ "var oldonload = window.onload;\r\n"
-				+ "if (typeof window.onload != 'function') {\r\n"
-				+ "window.onload = "
-				+ ComponentConstants.JS_RENDER_MAP_FUNC
-				+ component.getId()
-				+ ";\r\n"
-				+ "} else {\r\n"
-				+ "window.onload = function() {\r\n"
-				+ "if (oldonload) {\r\n"
-				+ "oldonload();\r\n"
-				+ "}\r\n"
-				+ ComponentConstants.JS_RENDER_MAP_FUNC
-				+ component.getId()
-				+ "();\r\n" + "}\r\n" + "}\r\n";
-		 
-		 writer.write(injectMapCodeInWindowOnLoadScript);
-	}	
 	
 	private void callMapRendererWrapper(FacesContext facesContext,
 			UIComponent component, ResponseWriter writer) throws IOException {
@@ -164,14 +141,7 @@ public class MapRenderer extends Renderer {
 				+ "();\r\n");
 	}		
 
-	private void endEncodingBrowserCompatabilityChecking(
-			FacesContext facesContext, UIComponent component,
-			ResponseWriter writer) throws IOException {
-		
-		writer.write("}");
-	}
-
-	private void encodeMap(FacesContext facesContext, Map mapComponent,
+	private void encodeMapScript(FacesContext facesContext, Map mapComponent,
 			ResponseWriter writer) throws IOException {
 
 		MapRendererUtil.renderMap(facesContext, mapComponent, writer);

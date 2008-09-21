@@ -43,6 +43,7 @@ public class MarkerEncoder {
 
 		String longitude;
 		String latitude;
+		String markerOptions;
 
 		// encode marker script.
 		if (marker.getLatitude() != null) {
@@ -59,9 +60,18 @@ public class MarkerEncoder {
 					+ ".getCenter().lng()";
 		}
 
-		writer.write("var marker_" + marker.getId()
-				+ " = new GMarker(new GLatLng(" + latitude + ", " + longitude
-				+ "));");
+		// check dragability.
+		if ("true".equalsIgnoreCase(marker.getDraggable())) {
+			markerOptions = "{draggable: true}";
+		} else {
+			markerOptions = "{draggable: false}";		
+		}		
+		
+		// construct the marker.
+		writer.write("var marker_" + marker.getId() + " = new "
+				+ ComponentConstants.JS_GMarker_OBJECT + "(new "
+				+ ComponentConstants.JS_GLatLng_OBJECT + "(" + latitude + ", "
+				+ longitude + ")," + markerOptions + ");");
 
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
 				+ ".addOverlay(marker_" + marker.getId() + ");");
