@@ -1,3 +1,4 @@
 # The features:
 
   * Adding the iconComponent to simplify the marker customization.
+  * Adding the showInformationEvent attribute to the marker component.
