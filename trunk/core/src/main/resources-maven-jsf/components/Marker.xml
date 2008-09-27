@@ -55,7 +55,7 @@
 			Use this attribute if you want to use write additional JavaScript
 			code for the marker to customize it.
 			</description>
-		</attribute>				
+		</attribute>			
 		
 		<attribute>
 			<name>draggable</name>

@@ -55,7 +55,7 @@ public class GroundOverlayEncoder {
 				+ groundOverlay.getImageURL() + "\", boundaries);");
 
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-				+ ".addOverlay(groundOverlay" + groundOverlay.getId() + ");");
+				+ ".addOverlay(groundOverlay_" + groundOverlay.getId() + ");");
 
 		// encode GroundOverlay events.
 		for (Iterator iterator = groundOverlay.getChildren().iterator(); iterator

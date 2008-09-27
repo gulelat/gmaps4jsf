@@ -26,7 +26,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import com.googlecode.gmaps4jsf.component.eventlistener.EventListener;
-import com.googlecode.gmaps4jsf.component.map.Map;
+import com.googlecode.gmaps4jsf.component.icon.Icon;
 import com.googlecode.gmaps4jsf.component.marker.Marker;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
 
@@ -43,7 +43,6 @@ public class MarkerEncoder {
 
 		String longitude;
 		String latitude;
-		String markerOptions;
 
 		// encode marker script.
 		if (marker.getLatitude() != null) {
@@ -58,20 +57,14 @@ public class MarkerEncoder {
 		} else {
 			longitude = ComponentConstants.JS_GMAP_BASE_VARIABLE
 					+ ".getCenter().lng()";
-		}
-
-		// check dragability.
-		if ("true".equalsIgnoreCase(marker.getDraggable())) {
-			markerOptions = "{draggable: true}";
-		} else {
-			markerOptions = "{draggable: false}";		
-		}		
-		
-		// construct the marker.
+		}	
+				
+		// create the marker.
 		writer.write("var marker_" + marker.getId() + " = new "
 				+ ComponentConstants.JS_GMarker_OBJECT + "(new "
 				+ ComponentConstants.JS_GLatLng_OBJECT + "(" + latitude + ", "
-				+ longitude + ")," + markerOptions + ");");
+				+ longitude + "),"
+				+ getMarkerOptions(facesContext, marker, writer) + ");");
 
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
 				+ ".addOverlay(marker_" + marker.getId() + ");");
@@ -102,6 +95,43 @@ public class MarkerEncoder {
 					+ marker.getId() + ";\r\n");
 		}
 	}	
+	
+	private static String getMarkerOptions(FacesContext facesContext,
+			Marker marker, ResponseWriter writer) throws IOException {
+
+		String markerOptions = "{";
+
+		// check dragability.
+		if ("true".equalsIgnoreCase(marker.getDraggable())) {
+			markerOptions += "draggable: true";
+		} else {
+			markerOptions += "draggable: false";
+		}
+
+		// check if the marker has an icon.
+		for (Iterator iterator = marker.getChildren().iterator(); iterator
+				.hasNext();) {
+			UIComponent component = (UIComponent) iterator.next();
+
+			if (component instanceof Icon) {
+
+				Icon icon = (Icon) component;
+
+				// encode the marker icon script.
+				IconEncoder.encodeIconFunctionScript(facesContext, icon, writer);
+
+				// call the icon script.
+				markerOptions += ", icon: "
+						+ IconEncoder.getIconFunctionScriptCall(facesContext,
+								icon, writer);
+				break;
+			}
+		}
+
+		markerOptions += "}";
+		
+		return markerOptions;
+	}
 	
 	public static void encodeMarkersFunctionScript(FacesContext facesContext,
 			Map mapComponent, ResponseWriter writer) throws IOException {
