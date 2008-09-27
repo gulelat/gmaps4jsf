@@ -28,6 +28,7 @@ public interface ComponentConstants {
 	final String HTML_ATTR_ID = "id";
 	final String HTML_ATTR_NAME = "name";
 	final String HTML_ATTR_STYLE = "style";
+	final String CONST_MARKER_PREFIX = "marker_";
 	final String JS_GEVENT_OBJECT = "GEvent";	
 	final String JS_GMarker_OBJECT = "GMarker";
 	final String JS_GLatLng_OBJECT = "GLatLng";

@@ -26,6 +26,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import com.googlecode.gmaps4jsf.component.eventlistener.EventListener;
+import com.googlecode.gmaps4jsf.component.htmlInformationWindow.HTMLInformationWindow;
 import com.googlecode.gmaps4jsf.component.icon.Icon;
 import com.googlecode.gmaps4jsf.component.marker.Marker;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
@@ -44,7 +45,7 @@ public class MarkerEncoder {
 		String longitude;
 		String latitude;
 
-		// encode marker script.
+		// create the marker.
 		if (marker.getLatitude() != null) {
 			latitude = marker.getLatitude();
 		} else {
@@ -59,8 +60,8 @@ public class MarkerEncoder {
 					+ ".getCenter().lng()";
 		}	
 				
-		// create the marker.
-		writer.write("var marker_" + marker.getId() + " = new "
+		writer.write("var " + ComponentConstants.CONST_MARKER_PREFIX
+				+ marker.getId() + " = new "
 				+ ComponentConstants.JS_GMarker_OBJECT + "(new "
 				+ ComponentConstants.JS_GLatLng_OBJECT + "(" + latitude + ", "
 				+ longitude + "),"
@@ -69,6 +70,16 @@ public class MarkerEncoder {
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
 				+ ".addOverlay(marker_" + marker.getId() + ");");
 		
+		// process marker events.
+		encodeMarkerChildren(facesContext, marker, writer);
+		
+		// update marker user variable.
+		updateMarkerJSVariable(facesContext, marker, writer);
+	}
+	
+	private static void encodeMarkerChildren(FacesContext facesContext,
+			Marker marker, ResponseWriter writer) throws IOException {
+
 		// encode marker events.
 		for (Iterator iterator = marker.getChildren().iterator(); iterator
 				.hasNext();) {
@@ -76,23 +87,46 @@ public class MarkerEncoder {
 
 			if (component instanceof EventListener) {
 				EventEncoder.encodeEventListenersFunctionScript(facesContext,
-						marker, writer, "marker_" + marker.getId());
-				EventEncoder.encodeEventListenersFunctionScriptCall(
-						facesContext, marker, writer, "marker_"
+						marker, writer, ComponentConstants.CONST_MARKER_PREFIX
 								+ marker.getId());
+				EventEncoder
+						.encodeEventListenersFunctionScriptCall(facesContext,
+								marker, writer,
+								ComponentConstants.CONST_MARKER_PREFIX
+										+ marker.getId());
 			}
-		}		
-		
-		// update marker user variable.
-		updateMarkerJSVariable(facesContext, marker, writer);
+		}
+
+		// encode marker information.
+		for (Iterator iterator = marker.getChildren().iterator(); iterator
+				.hasNext();) {
+			UIComponent component = (UIComponent) iterator.next();
+
+			if (component instanceof HTMLInformationWindow) {
+
+				HTMLInformationWindow informationWindow = (HTMLInformationWindow) component;
+
+				writer.write(ComponentConstants.JS_GEVENT_OBJECT
+						+ ".addListener("
+						+ ComponentConstants.CONST_MARKER_PREFIX
+						+ marker.getId() + ", \""
+						+ marker.getShowInformationEvent() + "\", function() {"
+						+ ComponentConstants.CONST_MARKER_PREFIX
+						+ marker.getId() + ".openInfoWindowHtml(\""
+						+ informationWindow.getHtmlText() + "\");" + "});");
+
+				break;
+			}
+		}
 	}
-	
+
 	private static void updateMarkerJSVariable(FacesContext facesContext,
 			Marker marker, ResponseWriter writer) throws IOException {
 
 		if (marker.getJsVariable() != null) {
-			writer.write("\r\n" + marker.getJsVariable() + " = " + "marker_"
-					+ marker.getId() + ";\r\n");
+			writer.write("\r\n" + marker.getJsVariable() + " = "
+					+ ComponentConstants.CONST_MARKER_PREFIX + marker.getId()
+					+ ";\r\n");
 		}
 	}	
 	
@@ -129,7 +163,7 @@ public class MarkerEncoder {
 		}
 
 		markerOptions += "}";
-		
+
 		return markerOptions;
 	}
 	
