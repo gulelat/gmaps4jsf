@@ -1,0 +1,3 @@
+# The features:
+
+  * Adding the iconComponent to simplify the marker customization.
