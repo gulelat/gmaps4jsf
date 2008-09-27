@@ -65,7 +65,18 @@
 			<description>
 			This flag determines whether the marker is draggable.
 			</description>
-		</attribute>			
+		</attribute>		
+		
+		<attribute>
+			<name>showInformationEvent</name>
+			<required>false</required>
+			<type>java.lang.String</type>		
+			<defaultValue>click</defaultValue>					
+			<description>
+			This attribute determines the event on which the marker information will be shown. 
+			The marker information should be represented as a child htmlInformationWindow component of the marker component.
+			</description>
+		</attribute>				
 				
 	</attributes>
 </component>
