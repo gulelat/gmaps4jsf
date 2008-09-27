@@ -34,10 +34,13 @@ public interface ComponentConstants {
 	final String JS_GSize_OBJECT = "GSize";
 	final String JS_GLatLngBounds_OBJECT = "GLatLngBounds";
 	final String JS_GClientGeocoder_OBJECT = "GClientGeocoder";
+	final String JS_GIcon_OBJECT = "GIcon";	
+	final String JS_CONST_G_DEFAULT_ICON_OBJECT = "G_DEFAULT_ICON";
 	final String JS_GGroundOverlay_OBJECT = "GGroundOverlay";
 	final String JS_GControlPosition_OBJECT = "GControlPosition";
 	final String JS_GPolygon_OBJECT = "GPolygon";
 	final String JS_GPolyline_OBJECT = "GPolyline";
+	final String JS_GPoint_OBJECT = "GPoint";
 	final String JS_GMAP_BASE_VARIABLE = "map_base_variable";
 	final String JS_GSTREET_VIEW_PANORAMA_VARIABLE = "pano_base_variable";	
 	final String JS_GBrowserIsCompatible_OBJECT = "GBrowserIsCompatible";
@@ -48,6 +51,7 @@ public interface ComponentConstants {
 	final String JS_CREATE_MAP_CONTROLS_FUNCTION_PREFIX = "createMapControlsFunction";
 	final String JS_CREATE_EVENT_LISTENERS_FUNCTION_PREFIX = "createEventListenersFunction";
 	final String JS_CREATE_POLYLINES_FUNCTION_PREFIX = "createPolylinesFunction";
-	final String JS_CREATE_POLYGONS_FUNCTION_PREFIX = "createPolygonsFunction";
-	final String JS_CREATE_GROUND_OVERLAYS_FUNCTION_PREFIX = "createGroundOverlaysFunction";		
+	final String JS_CREATE_POLYGONS_FUNCTION_PREFIX = "createPolygonsFunction";	
+	final String JS_CREATE_GROUND_OVERLAYS_FUNCTION_PREFIX = "createGroundOverlaysFunction";
+	final String JS_CREATE_ICON_FUNCTION_PREFIX = "createIconFunction";	
 }

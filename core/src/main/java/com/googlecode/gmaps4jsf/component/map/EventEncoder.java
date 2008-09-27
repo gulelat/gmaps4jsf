@@ -31,7 +31,7 @@ import com.googlecode.gmaps4jsf.util.ComponentConstants;
 /**
  * @author Hazem Saleh
  * @date Sep 17, 2008
- * The GEventEncoder is used for encoding the event listeners for all the event sources.
+ * The EventEncoder is used for encoding the event listeners for all the event sources.
  */
 public class EventEncoder {
 
