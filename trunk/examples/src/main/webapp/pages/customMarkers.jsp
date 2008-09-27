@@ -16,22 +16,25 @@
 	<body onunload="GUnload()">
 	<f:view>
     	<h:form id="form">
-		  	<div>Custom markers!!!</div>
+		  	<div>Custom markers (Click and drag the markers)!!!</div>
     		<m:map width="90%" height="90%" latitude="24" longitude="15" jsVariable="map1" zoom="2">
     			<m:marker latitude="30.01" longitude="31.14" jsVariable="marker1" draggable="true">
 					<m:eventListener eventName="dragend" jsFunction="marker1DragHandler"/> 
 					<m:icon shadowImageURL="http://www.google.com/mapfiles/shadow50.png" 
-					imageURL="http://www.google.com/mapfiles/markerA.png"/> 					   				
+					imageURL="http://www.google.com/mapfiles/markerA.png"/> 	
+    			    <m:htmlInformationWindow htmlText="Iam Marker A"/>									   				
     			</m:marker>
     			<m:marker latitude="39" longitude="-101" jsVariable="marker2" draggable="true">
 					<m:eventListener eventName="dragend" jsFunction="marker2DragHandler"/>    
 					<m:icon shadowImageURL="http://www.google.com/mapfiles/shadow50.png" 
 					imageURL="http://www.google.com/mapfiles/markerB.png"/> 										
+    			    <m:htmlInformationWindow htmlText="Iam Marker B"/>					
     			</m:marker>    				
     			<m:marker latitude="-33" longitude="19" jsVariable="marker3" draggable="true">
 					<m:eventListener eventName="dragend" jsFunction="marker3DragHandler"/>    
 					<m:icon shadowImageURL="http://www.google.com/mapfiles/shadow50.png" 
 					imageURL="http://www.google.com/mapfiles/markerC.png"/> 										
+    			    <m:htmlInformationWindow htmlText="Iam Marker C"/>					
     			</m:marker>        			
     		</m:map>
 
