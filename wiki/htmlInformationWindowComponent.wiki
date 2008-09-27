@@ -1,4 +1,4 @@
-It can be a child of the (map) component.
+It can be a child of the (map or marker) components.
 
 ==Attributes==
 Beside the JSF UIComponent standard attributes.  
