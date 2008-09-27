@@ -32,6 +32,13 @@
 	                    </h:outputLink>                     
 	                </h:panelGrid>
 	                
+	                <h:outputText value="Custom Markers" />
+	                <h:panelGrid style="padding-left:25px">                
+	                    <h:outputLink value="pages/customMarkers.jsf">
+	                    	<f:verbatim>Map with custom draggable markers</f:verbatim>
+	                    </h:outputLink>                     
+	                </h:panelGrid>	                
+	                
 	                <h:outputText value="Controls" />
 	                <h:panelGrid style="padding-left:25px">                
 	                    <h:outputLink value="pages/mapWithControls.jsf">
