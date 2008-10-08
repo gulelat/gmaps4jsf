@@ -63,6 +63,12 @@ GMaps4JSF can work with Facelets, Here are the instructions :
                 </component>
     </tag>
     <tag>
+                <tag-name>icon</tag-name>
+                <component>
+                        <component-type>com.googlecode.gmaps4jsf.Icon</component-type>
+                </component>
+    </tag>
+    <tag>
                 <tag-name>streetViewPanorama</tag-name>
                 <component>
                         <component-type>com.googlecode.gmaps4jsf.StreetViewPanorama</component-type>
