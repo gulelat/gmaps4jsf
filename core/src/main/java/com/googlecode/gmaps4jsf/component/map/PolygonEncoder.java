@@ -111,7 +111,7 @@ public class PolygonEncoder {
 				.hasNext();) {
 			UIComponent component = (UIComponent) iterator.next();
 
-			if (component instanceof Polygon) {
+			if (component instanceof Polygon && component.isRendered()) {
 				encodePolygon(facesContext, mapComponent,
 						(Polygon) component, writer);
 			}

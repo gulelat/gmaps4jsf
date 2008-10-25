@@ -178,7 +178,8 @@ public class MarkerEncoder {
 				.hasNext();) {
 			UIComponent component = (UIComponent) iterator.next();
 
-			if (component instanceof Marker) {
+			if (component instanceof Marker && component.isRendered()) {
+				
 				encodeMarker(facesContext, mapComponent, (Marker) component,
 						writer);
 			}

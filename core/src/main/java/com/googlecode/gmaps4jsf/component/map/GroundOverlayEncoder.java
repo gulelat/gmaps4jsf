@@ -98,7 +98,7 @@ public class GroundOverlayEncoder {
 				.hasNext();) {
 			UIComponent component = (UIComponent) iterator.next();
 
-			if (component instanceof GroundOverlay) {
+			if (component instanceof GroundOverlay && component.isRendered()) {
 				encodeGroundOverlay(facesContext, mapComponent,
 						(GroundOverlay) component, writer);
 			}

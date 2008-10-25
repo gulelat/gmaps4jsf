@@ -72,7 +72,7 @@ public class MapControlEncoder {
 				.hasNext();) {
 			UIComponent component = (UIComponent) iterator.next();
 
-			if (component instanceof MapControl) {
+			if (component instanceof MapControl  && component.isRendered()) {
 				encodeMapControl(facesContext, mapComponent,
 						(MapControl) component, writer);
 			}
