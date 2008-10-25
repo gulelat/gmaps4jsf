@@ -73,7 +73,7 @@ public class HTMLInfoWindowEncoder {
 				.hasNext();) {
 			UIComponent component = (UIComponent) iterator.next();
 
-			if (component instanceof HTMLInformationWindow) {
+			if (component instanceof HTMLInformationWindow && component.isRendered()) {
 				encodeHTMLInfoWindow(facesContext, mapComponent,
 						(HTMLInformationWindow) component, writer);
 			}

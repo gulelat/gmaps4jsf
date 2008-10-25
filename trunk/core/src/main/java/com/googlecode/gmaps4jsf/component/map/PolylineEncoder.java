@@ -117,7 +117,7 @@ public class PolylineEncoder {
 				.hasNext();) {
 			UIComponent component = (UIComponent) iterator.next();
 
-			if (component instanceof Polyline) {
+			if (component instanceof Polyline && component.isRendered()) {
 				encodePolyline(facesContext, mapComponent,
 						(Polyline) component, writer);
 			}
