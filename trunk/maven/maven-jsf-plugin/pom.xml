@@ -7,7 +7,7 @@
 	<groupId>com.googlecode.gmaps4jsf</groupId>
 	<artifactId>maven-jsf-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
-	<version>1.1</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>maven-jsf-plugin Maven Mojo</name>
 	<url>http://code.google.com/p/gmaps4jsf/</url>
 	<description>
