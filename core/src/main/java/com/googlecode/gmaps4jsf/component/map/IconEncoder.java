@@ -61,13 +61,13 @@ public class IconEncoder {
 
 		writer.write("iconObject.iconAnchor = new "
 				+ ComponentConstants.JS_GPoint_OBJECT + "("
-				+ iconComponent.getXCoordAnchor() + ", "
-				+ iconComponent.getYCoordAnchor() + ");");
+				+ iconComponent.getXcoordAnchor() + ", "
+				+ iconComponent.getYcoordAnchor() + ");");
 
 		writer.write("iconObject.infoWindowAnchor = new "
 				+ ComponentConstants.JS_GPoint_OBJECT + "("
-				+ iconComponent.getXCoordInfoWindowAnchor() + ", "
-				+ iconComponent.getYCoordInfoWindowAnchor() + ");");
+				+ iconComponent.getXcoordInfoWindowAnchor() + ", "
+				+ iconComponent.getYcoordInfoWindowAnchor() + ");");
 
 		writer.write("iconObject.image = \"" + iconComponent.getImageURL()
 				+ "\";");
