@@ -92,7 +92,7 @@
 		</attribute>		
 		
 		<attribute>
-			<name>xCoordAnchor</name>
+			<name>xcoordAnchor</name>
 			<required>false</required>
 			<type>java.lang.String</type>	
 			<defaultValue>9</defaultValue>							
@@ -103,7 +103,7 @@
 		</attribute>	
 		
 		<attribute>
-			<name>yCoordAnchor</name>
+			<name>ycoordAnchor</name>
 			<required>false</required>
 			<type>java.lang.String</type>	
 			<defaultValue>34</defaultValue>							
@@ -114,7 +114,7 @@
 		</attribute>
 		
 		<attribute>
-			<name>xCoordInfoWindowAnchor</name>
+			<name>xcoordInfoWindowAnchor</name>
 			<required>false</required>
 			<type>java.lang.String</type>
 			<defaultValue>9</defaultValue>								
@@ -125,7 +125,7 @@
 		</attribute>	
 		
 		<attribute>
-			<name>yCoordInfoWindowAnchor</name>
+			<name>ycoordInfoWindowAnchor</name>
 			<required>false</required>
 			<type>java.lang.String</type>	
 			<defaultValue>2</defaultValue>							
