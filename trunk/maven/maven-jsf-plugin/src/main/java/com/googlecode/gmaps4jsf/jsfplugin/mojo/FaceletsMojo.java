@@ -30,8 +30,8 @@ import org.apache.maven.plugin.MojoFailureException;
 /**
  * Generates taglib for facelets
  *
- * @author Latest modification by $Author: cagatay_civici $
- * @version $Revision: 868 $ $Date: 2007-07-08 10:22:16 +0300 (Sun, 08 Jul 2007) $
+ * @author Latest modification by $Author: hazems $
+ * @version $Revision: 868 $ $Date: 2008-12-28
  *
  * @goal generate-facelets-taglib
  */
@@ -53,7 +53,7 @@ public class FaceletsMojo extends BaseFacesMojo{
 		FileWriter fileWriter;
 		BufferedWriter writer;
 		String outputPath = project.getBuild().getOutputDirectory() + File.separator + "META-INF";
-		String outputFile =  "gmaps4jsf-facelets.xml";
+		String outputFile =  "gmaps4jsf.taglib.xml";
 
 		File outputDirectory = new File(outputPath);
 		if(!outputDirectory.exists())
