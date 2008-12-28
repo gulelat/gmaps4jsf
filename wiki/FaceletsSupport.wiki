@@ -1,4 +1,6 @@
-GMaps4JSF can work with Facelets, Here are the instructions :
+*In GMaps4JSF 1.1.1, Facelets is automatically supported. No extra configurations are needed!*
+----
+*In GMaps4JSF 1.1.0,* GMaps4JSF can work with Facelets with the following instructions:
   * Create an XML file (gmaps4jsf-facelets-taglib.xml), then copy the following content to it:
 {{{
 <?xml version="1.0"?>
