@@ -16,15 +16,29 @@
 	<body onunload="GUnload()">
 	<f:view>
     	<h:form id="form">
-		  	<div>Drag the map and click the marker!!!</div>    	
+		  	<div>Drag the map, close the window and click the marker!!!</div>    	
+
     		<m:map width="90%" height="90%" latitude="24" longitude="15" jsVariable="map1" zoom="2">
+
     			<m:marker latitude="30.01" longitude="31.14" jsVariable="marker1">
-					<m:eventListener eventName="click" jsFunction="marker1ClickHandler"/>    				
+				<m:eventListener eventName="click" jsFunction="marker1ClickHandler"/>    
+					
+	    			<m:htmlInformationWindow htmlText="Close the marker window!!!">	
+					<m:eventListener eventName="closeclick" jsFunction="markerWindowClosed"/>   								
+				</m:htmlInformationWindow>
     			</m:marker>
+
     			<m:marker latitude="39" longitude="-101" jsVariable="marker2">
-					<m:eventListener eventName="click" jsFunction="marker2ClickHandler"/>    				
-    			</m:marker>    			
-				<m:eventListener eventName="moveend" jsFunction="mapMoveEndHandler"/>		
+				<m:eventListener eventName="click" jsFunction="marker2ClickHandler"/>    				
+    			</m:marker>    		
+
+    			<m:htmlInformationWindow latitude="-26.745610382199007" longitude="119.8828125" 
+    						 htmlText="Close the map window!!!">
+				<m:eventListener eventName="closeclick" jsFunction="mapWindowClosed"/>     			
+    			</m:htmlInformationWindow>
+    			
+			<m:eventListener eventName="moveend" jsFunction="mapMoveEndHandler"/>		
+
     		</m:map>
 
 		    <script>
@@ -40,7 +54,25 @@
 		   	}		   	
 		   	function mapClickHandler(overlay,  latlng,  overlaylatlng) {
 				  alert("You click on (lat, lng): " + latlng);
-		   	}		   		   	
+		   	}	
+		   	function markerWindowClosed() {
+		   		alert("You closed the marker window");
+		   		
+		   		//Incase of the HTMLInfoWindow "closeclick" event, you should call the Map 
+		   		//closeInfoWindow() method.
+		   		//It is a Google Maps bug, Google Maps APIs do not execute the window close 
+		   		//when removing the "closeclick" event listener as it depends on the event.
+		   		map1.closeInfoWindow();	
+		   	}	   		   	
+		   	function mapWindowClosed() {
+		   		alert("You closed the map window");
+		   		
+		   		//Incase of the HTMLInfoWindow "closeclick" event, you should call the Map 
+		   		//closeInfoWindow() method.
+		   		//It is a Google Maps bug, Google Maps APIs do not execute the window close 
+		   		//when removing the "closeclick" event listener as it depends on the event.		   		
+		   		map1.closeInfoWindow();
+		   	}			   	
 		    </script>    		
 
 		    <div id="message"/>    		
