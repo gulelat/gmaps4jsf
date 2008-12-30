@@ -1,4 +1,4 @@
-It can be a child to any GMaps4JSF component except the (htmlInformationWindow) component.
+It can be a child to any GMaps4JSF component.
 
 ==Attributes==
 
