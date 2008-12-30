@@ -26,6 +26,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import com.googlecode.gmaps4jsf.component.eventlistener.EventListener;
+import com.googlecode.gmaps4jsf.component.htmlInformationWindow.HTMLInformationWindow;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
 
 /**
@@ -36,14 +37,23 @@ import com.googlecode.gmaps4jsf.util.ComponentConstants;
 public class EventEncoder {
 
 	private static void encodeEventListener(FacesContext facesContext,
-			EventListener eventListener, ResponseWriter writer,
-			String eventSourceBaseVariable) throws IOException {
+			UIComponent eventSource, EventListener eventListener,
+			ResponseWriter writer, String eventSourceBaseVariable)
+			throws IOException {
 
+		if (eventSource instanceof HTMLInformationWindow) {
+			
+			// Incase of HTMLInformationWindow, all of the previous event listeners
+			// should be removed
+			writer.write(ComponentConstants.JS_GEVENT_OBJECT
+					+ ".clearInstanceListeners(" + eventSourceBaseVariable
+					+ ");");
+		}
+		
 		writer.write(ComponentConstants.JS_GEVENT_OBJECT + ".addListener("
 				+ eventSourceBaseVariable + ", \""
 				+ eventListener.getEventName() + "\", "
-				+ eventListener.getJsFunction()
-				+ ");");
+				+ eventListener.getJsFunction() + ");");
 
 	}
 
@@ -60,13 +70,13 @@ public class EventEncoder {
 			UIComponent component = (UIComponent) iterator.next();
 
 			if (component instanceof EventListener) {
-				encodeEventListener(facesContext, (EventListener) component,
+				encodeEventListener(facesContext, eventSource, (EventListener) component,
 						writer, eventSourceBaseVariable);
 			}
 		}
 		writer.write("}");
-	}
-
+	}	
+	
 	public static void encodeEventListenersFunctionScriptCall(
 			FacesContext facesContext, UIComponent eventSource,
 			ResponseWriter writer, String eventSourceBaseVariable)
