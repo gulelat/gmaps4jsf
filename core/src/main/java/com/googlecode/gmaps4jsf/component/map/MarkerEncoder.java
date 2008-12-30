@@ -104,16 +104,17 @@ public class MarkerEncoder {
 
 			if (component instanceof HTMLInformationWindow) {
 
-				HTMLInformationWindow informationWindow = (HTMLInformationWindow) component;
+				HTMLInformationWindow window = (HTMLInformationWindow) component;
 
 				writer.write(ComponentConstants.JS_GEVENT_OBJECT
 						+ ".addListener("
 						+ ComponentConstants.CONST_MARKER_PREFIX
 						+ marker.getId() + ", \""
-						+ marker.getShowInformationEvent() + "\", function() {"
-						+ ComponentConstants.CONST_MARKER_PREFIX
-						+ marker.getId() + ".openInfoWindowHtml(\""
-						+ informationWindow.getHtmlText() + "\");" + "});");
+						+ marker.getShowInformationEvent() + "\", function() {");
+				
+				HTMLInfoWindowEncoder.encodeMarkerHTMLInfoWindow(facesContext, marker, window, writer);
+				
+				writer.write("});");
 
 				break;
 			}
