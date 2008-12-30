@@ -25,7 +25,9 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import com.googlecode.gmaps4jsf.component.eventlistener.EventListener;
 import com.googlecode.gmaps4jsf.component.htmlInformationWindow.HTMLInformationWindow;
+import com.googlecode.gmaps4jsf.component.marker.Marker;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
 
 /**
@@ -35,7 +37,7 @@ import com.googlecode.gmaps4jsf.util.ComponentConstants;
  */
 public class HTMLInfoWindowEncoder {
 
-	private static void encodeHTMLInfoWindow(FacesContext facesContext,
+	private static void encodeMapHTMLInfoWindow(FacesContext facesContext,
 			Map mapComponent, HTMLInformationWindow window,
 			ResponseWriter writer) throws IOException {
 
@@ -59,8 +61,62 @@ public class HTMLInfoWindowEncoder {
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
 				+ ".openInfoWindowHtml(new "
 				+ ComponentConstants.JS_GLatLng_OBJECT + "(" + latitude + ", "
-				+ longitude + "), \"" + window.getHtmlText() + "\");");		
+				+ longitude + "), \"" + window.getHtmlText() + "\");");	
+		
+		writer.write("var window_" + window.getId() + " = "
+				+ ComponentConstants.JS_GMAP_BASE_VARIABLE
+				+ ".getInfoWindow();");	
+	
+		// encode window events.
+		for (Iterator iterator = window.getChildren().iterator(); iterator
+				.hasNext();) {
+			UIComponent component = (UIComponent) iterator.next();
+
+			if (component instanceof EventListener) {
+				EventEncoder.encodeEventListenersFunctionScript(facesContext,
+						window, writer, "window_"
+								+ window.getId());
+				EventEncoder.encodeEventListenersFunctionScriptCall(
+						facesContext, window, writer, "window_"
+								+ window.getId());
+			}
+		}			
 	}
+	
+	/**
+	 * The (encodeMarkerHTMLInfoWindow) method is used for encoding the 
+	 * HTMLInfoWindow when its parent is the marker. 
+	 * @param facesContext
+	 * @param marker
+	 * @param window
+	 * @param writer
+	 * @throws IOException
+	 */
+	public static void encodeMarkerHTMLInfoWindow(FacesContext facesContext,
+			Marker marker, HTMLInformationWindow window, ResponseWriter writer)
+			throws IOException {
+
+		writer.write(ComponentConstants.CONST_MARKER_PREFIX + marker.getId()
+				+ ".openInfoWindowHtml(\"" + window.getHtmlText() + "\");");
+
+		writer.write("var window_" + window.getId() + " = "
+				+ ComponentConstants.JS_GMAP_BASE_VARIABLE
+				+ ".getInfoWindow();");
+
+		// encode window events.
+		for (Iterator iterator = window.getChildren().iterator(); iterator
+				.hasNext();) {
+			UIComponent component = (UIComponent) iterator.next();
+
+			if (component instanceof EventListener) {
+				EventEncoder.encodeEventListenersFunctionScript(facesContext,
+						window, writer, "window_" + window.getId());
+				EventEncoder.encodeEventListenersFunctionScriptCall(
+						facesContext, window, writer, "window_"
+								+ window.getId());
+			}
+		}
+	}	
 	
 	public static void encodeHTMLInfoWindowsFunctionScript(FacesContext facesContext,
 			Map mapComponent, ResponseWriter writer) throws IOException {
@@ -74,7 +130,7 @@ public class HTMLInfoWindowEncoder {
 			UIComponent component = (UIComponent) iterator.next();
 
 			if (component instanceof HTMLInformationWindow && component.isRendered()) {
-				encodeHTMLInfoWindow(facesContext, mapComponent,
+				encodeMapHTMLInfoWindow(facesContext, mapComponent,
 						(HTMLInformationWindow) component, writer);
 			}
 		}
