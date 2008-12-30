@@ -1,4 +1,4 @@
-It can be a child to any GMaps4JSF component.
+It can be a child to any event source GMaps4JSF component.
 
 ==Attributes==
 
