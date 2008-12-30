@@ -106,7 +106,7 @@ public class MapRenderer extends Renderer {
 				if (groundOverlay.getJsVariable() != null) {
 					writer.write("\r\n var " + groundOverlay.getJsVariable() + ";");
 				}
-			}			
+			}		
 		}
 	}
 	
