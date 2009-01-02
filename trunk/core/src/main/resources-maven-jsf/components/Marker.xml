@@ -45,7 +45,22 @@
 			<type>java.lang.String</type>
 			<description>The latitude of the marker. If not set then the parent map latitude will be taken.</description>
 		</attribute>
-		
+		<attribute>
+			<name>address</name>
+			<required>false</required>
+			<type>java.lang.String</type>				
+			<description>
+						The address you wish the marker to point to. 
+						If you use this attribute donot longitude or latitude attributes.
+			</description>
+		</attribute>	
+		<attribute>
+			<name>locationNotFoundErrorMessage</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<defaultValue>(GClientGeocoder) service not found the address location</defaultValue>					
+			<description>The error message that should appear if the address location doesnot exist</description>
+		</attribute>		
 		<attribute>
 			<name>jsVariable</name>
 			<required>false</required>

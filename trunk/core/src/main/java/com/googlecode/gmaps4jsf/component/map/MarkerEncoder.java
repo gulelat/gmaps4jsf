@@ -42,37 +42,67 @@ public class MarkerEncoder {
 			Map mapComponent, Marker marker, ResponseWriter writer)
 			throws IOException {
 
-		String longitude;
-		String latitude;
+		// create the marker instance either from address or from latlng.
+		if (marker.getAddress() != null) {
 
-		// create the marker.
-		if (marker.getLatitude() != null) {
-			latitude = marker.getLatitude();
+			writer.write("var geocoder_" + marker.getId() + " = new "
+					+ ComponentConstants.JS_GClientGeocoder_OBJECT + "();");
+
+			// send XHR request to get the address location and write to the
+			// response.
+			writer.write("geocoder_" + marker.getId() + ".getLatLng(\""
+					+ marker.getAddress() + "\"," + "function(location) {\n"
+					+ "if (!location) {\n" + "alert(\""
+					+ marker.getLocationNotFoundErrorMessage() + "\");\n"
+					+ "} else {\n");
+
+			writer.write("var " + ComponentConstants.CONST_MARKER_PREFIX
+					+ marker.getId() + " = new "
+					+ ComponentConstants.JS_GMarker_OBJECT + "(location, "
+					+ getMarkerOptions(facesContext, marker, writer) + ");");
+
+			completeMarkerRendering(facesContext, marker, writer);
+
+			writer.write("}" + "}\n" + ");\n");
 		} else {
-			latitude = ComponentConstants.JS_GMAP_BASE_VARIABLE
-					+ ".getCenter().lat()";
+
+			String longitude;
+			String latitude;			
+			
+			if (marker.getLatitude() != null) {
+				latitude = marker.getLatitude();
+			} else {
+				latitude = ComponentConstants.JS_GMAP_BASE_VARIABLE
+						+ ".getCenter().lat()";
+			}
+
+			if (marker.getLongitude() != null) {
+				longitude = marker.getLongitude();
+			} else {
+				longitude = ComponentConstants.JS_GMAP_BASE_VARIABLE
+						+ ".getCenter().lng()";
+			}
+
+			writer.write("var " + ComponentConstants.CONST_MARKER_PREFIX
+					+ marker.getId() + " = new "
+					+ ComponentConstants.JS_GMarker_OBJECT + "(new "
+					+ ComponentConstants.JS_GLatLng_OBJECT + "(" + latitude
+					+ ", " + longitude + "),"
+					+ getMarkerOptions(facesContext, marker, writer) + ");");
+
+			completeMarkerRendering(facesContext, marker, writer);
 		}
-
-		if (marker.getLongitude() != null) {
-			longitude = marker.getLongitude();
-		} else {
-			longitude = ComponentConstants.JS_GMAP_BASE_VARIABLE
-					+ ".getCenter().lng()";
-		}	
-				
-		writer.write("var " + ComponentConstants.CONST_MARKER_PREFIX
-				+ marker.getId() + " = new "
-				+ ComponentConstants.JS_GMarker_OBJECT + "(new "
-				+ ComponentConstants.JS_GLatLng_OBJECT + "(" + latitude + ", "
-				+ longitude + "),"
-				+ getMarkerOptions(facesContext, marker, writer) + ");");
-
-		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-				+ ".addOverlay(marker_" + marker.getId() + ");");
+	}
+	
+	private static void completeMarkerRendering(FacesContext facesContext,
+			Marker marker, ResponseWriter writer) throws IOException {
 		
+		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
+				+ ".addOverlay(marker_" + marker.getId() + ");");		
+
 		// process marker events.
 		encodeMarkerChildren(facesContext, marker, writer);
-		
+
 		// update marker user variable.
 		updateMarkerJSVariable(facesContext, marker, writer);
 	}
