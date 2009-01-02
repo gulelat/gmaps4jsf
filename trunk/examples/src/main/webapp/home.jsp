@@ -107,8 +107,11 @@
 	                <h:outputText value="StreetViewPanorama" />
 	                <h:panelGrid style="padding-left:25px">          
 	                    <h:outputLink value="pages/streetViewPanorama.jsf">
-	                    	<f:verbatim>An example that shows the street view panorama</f:verbatim>
+	                    	<f:verbatim>An example that shows the street view panorama using latitude and longitude</f:verbatim>
 	                    </h:outputLink>
+	                    <h:outputLink value="pages/streetViewPanoramaUsingAddress.jsf">
+	                    	<f:verbatim>An example that shows the street view panorama using address</f:verbatim>
+	                    </h:outputLink>	                    
 	                    <h:outputLink value="pages/streetViewPanoramaEvents.jsf">
 	                    	<f:verbatim>An event listener example that listens to the street view panorama</f:verbatim>
 	                    </h:outputLink> 	                    
