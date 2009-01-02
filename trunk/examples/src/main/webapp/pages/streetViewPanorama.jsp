@@ -13,7 +13,7 @@
 	<body onunload="GUnload()">
 	<f:view>
     	<h:form id="form">
-		  	<div>Street View Panorama using latitude and longitude.</div>       	
+		  	<div>Street View Panorama using latitude and longitude</div>       	
     		<m:streetViewPanorama width="500px" height="500px" 
     							  latitude="42.345573" longitude="-71.098326" />
     	</h:form>

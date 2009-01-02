@@ -16,7 +16,7 @@
 	<body onunload="GUnload()">
 	<f:view>
     	<h:form id="form">
-		  	<div>A simple Polyline.</div>    	
+		  	<div>A simple Polyline</div>    	
     		<m:map width="90%" height="90%" latitude="24" longitude="15" zoom="2">
     			<m:polyline lineWidth="10" hexaColor="#ff0000" geodesic="false">
     				<m:point latitude="30.01" longitude="31.14"/>

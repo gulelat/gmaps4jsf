@@ -16,7 +16,7 @@
 	<body onunload="GUnload()">
 	<f:view>
     	<h:form id="form">
-		  	<div>Ground Overlay.</div>    	
+		  	<div>Ground Overlay</div>    	
     		<m:map width="90%" height="90%" latitude="24" longitude="15" zoom="2">
     			<m:groundoverlay imageURL="http://www.jroller.com/HazemBlog/resource/gmaps4jsf-logo.png" 
     			startLatitude="7" endLatitude="23" 
