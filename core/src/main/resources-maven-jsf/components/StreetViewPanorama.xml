@@ -41,7 +41,7 @@
 			<required>false</required>
 			<type>java.lang.String</type>
 			<defaultValue>-71.098326</defaultValue>				
-			<description>The longitude you wish the StreetViewPanaroma to point to</description>
+			<description>The longitude you wish the StreetViewPanorama to point to</description>
 		</attribute>
 
 		<attribute>
@@ -49,15 +49,33 @@
 			<required>false</required>	
 			<type>java.lang.String</type>
 			<defaultValue>42.345573</defaultValue>				
-			<description>The latitude you wish the StreetViewPanaroma to point to</description>
+			<description>The latitude you wish the StreetViewPanorama to point to</description>
 		</attribute>					
+		
+		<attribute>
+			<name>address</name>
+			<required>false</required>
+			<type>java.lang.String</type>				
+			<description>
+						The address you wish the StreetViewPanorama to point to. 
+						If you use this attribute donot longitude or latitude attributes.
+			</description>
+		</attribute>	
+		
+		<attribute>
+			<name>locationNotFoundErrorMessage</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<defaultValue>(GClientGeocoder) service not found the address location</defaultValue>					
+			<description>The error message that should appear if the address location doesnot exist</description>
+		</attribute>			
 
 		<attribute>
 			<name>width</name>
 			<required>false</required>
 			<type>java.lang.String</type>
 			<defaultValue>500</defaultValue>					
-			<description>The width of the StreetViewPanaroma. Default value is 500.</description>
+			<description>The width of the StreetViewPanorama. Default value is 500.</description>
 		</attribute>	
 
 		<attribute>
@@ -65,7 +83,7 @@
 			<required>false</required>
 			<type>java.lang.String</type>
 			<defaultValue>500</defaultValue>					
-			<description>The height of the StreetViewPanaroma. Default value is 500.</description>
+			<description>The height of the StreetViewPanorama. Default value is 500.</description>
 		</attribute>							
 		
 		<attribute>
@@ -87,7 +105,7 @@
 			<type>java.lang.String</type>
 			<defaultValue>0</defaultValue>					
 			<description>
-			The yaw value of the StreetViewPanaroma. 
+			The yaw value of the StreetViewPanorama. 
 			yaw defines the rotation angle around the camera locus in degrees relative from true north. 
 			Yaw angles are measured clockwise (90 degrees is true east).
 			Default value is 0.
