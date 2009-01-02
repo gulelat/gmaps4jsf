@@ -32,6 +32,13 @@
 	                    </h:outputLink>                     
 	                </h:panelGrid>
 	                
+	                <h:outputText value="Addressable Markers" />
+	                <h:panelGrid style="padding-left:25px">                
+	                    <h:outputLink value="pages/addressableMarkers.jsf">
+	                    	<f:verbatim>Map with addressable markers</f:verbatim>
+	                    </h:outputLink>                     
+	                </h:panelGrid>	                
+	                
 	                <h:outputText value="Custom Markers" />
 	                <h:panelGrid style="padding-left:25px">                
 	                    <h:outputLink value="pages/customMarkers.jsf">
