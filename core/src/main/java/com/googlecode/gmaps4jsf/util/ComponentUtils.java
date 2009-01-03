@@ -35,6 +35,8 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.webapp.UIComponentTag;
 
+import com.googlecode.gmaps4jsf.component.map.Map;
+
 
 public class ComponentUtils {
 
@@ -307,6 +309,16 @@ public class ComponentUtils {
 					ComponentConstants.CONTEXT_CANNOT_BE_NULL);
 		}
 	}
+	
+	public static UIComponent findParentMap(FacesContext context, UIComponent component) {
+		UIComponent parent = component;
+		
+		while(!(parent instanceof Map)) {
+			parent = parent.getParent();
+		}
+		
+		return parent;
+	}		
 
 	public static void startEncodingBrowserCompatabilityChecking(
 			FacesContext facesContext, UIComponent component,
