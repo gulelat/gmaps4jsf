@@ -28,7 +28,6 @@ import com.googlecode.gmaps4jsf.component.map.GroundOverlayEncoder;
 import com.googlecode.gmaps4jsf.component.map.HTMLInfoWindowEncoder;
 import com.googlecode.gmaps4jsf.component.map.Map;
 import com.googlecode.gmaps4jsf.component.map.MapControlEncoder;
-import com.googlecode.gmaps4jsf.component.map.MarkerEncoder;
 import com.googlecode.gmaps4jsf.component.map.PolygonEncoder;
 import com.googlecode.gmaps4jsf.component.map.PolylineEncoder;
 
@@ -77,16 +76,13 @@ public class MapRendererUtil {
 	
 	/*
 	 * Completing the map rendering stuff like 
-	 * (markers, notes, controls, eventHandlers' creator function...etc).
+	 * (notes, controls, eventHandlers' creator function...etc).
 	 */
 	private static void completeMapRendering(FacesContext facesContext,
 			Map mapComponent, ResponseWriter writer) throws IOException {
 
 		HTMLInfoWindowEncoder.encodeHTMLInfoWindowsFunctionScriptCall(
 				facesContext, mapComponent, writer);
-
-		MarkerEncoder.encodeMarkersFunctionScriptCall(facesContext,
-				mapComponent, writer);
 		
 		PolylineEncoder.encodePolylinesFunctionScriptCall(facesContext,
 				mapComponent, writer);
@@ -130,7 +126,7 @@ public class MapRendererUtil {
 		completeMapRendering(facesContext, mapComponent, writer);
 	}	
 	
-	private static void renderMapUsingAddress(FacesContext facesContext, Map mapComponent,
+	private static void startRenderingMapUsingAddress(FacesContext facesContext, Map mapComponent,
 			ResponseWriter writer) throws IOException {
 
 		writer.write("var geocoder_" + mapComponent.getId() + " = new "
@@ -148,22 +144,31 @@ public class MapRendererUtil {
 				+ ".setCenter(location, " + mapComponent.getZoom() + ");\n");	
 					
 		completeMapRendering(facesContext, mapComponent, writer);
-				
-		writer.write("}" + "}\n" + ");\n");
 	}	
 	
-	public static void renderMap(FacesContext facesContext, Map mapComponent,
+	private static void endRenderingMapUsingAddress(FacesContext facesContext, Map mapComponent,
+			ResponseWriter writer) throws IOException {
+
+		writer.write("}" + "}\n" + ");\n");
+	}		
+	
+	public static void startEncodingMapScript(FacesContext facesContext, Map mapComponent,
 			ResponseWriter writer) throws IOException {
 
 		createMapJSObject(facesContext, mapComponent, writer);	
 		
 		if (mapComponent.getAddress() == null) {
-
 			renderMapUsingLatLng(facesContext, mapComponent, writer);
-
 		} else {
-
-			renderMapUsingAddress(facesContext, mapComponent, writer);
+			startRenderingMapUsingAddress(facesContext, mapComponent, writer);
 		}
 	}
+	
+	public static void endEncodingMapScript(FacesContext facesContext, Map mapComponent,
+			ResponseWriter writer) throws IOException {
+		
+		if (mapComponent.getAddress() != null) {
+			endRenderingMapUsingAddress(facesContext, mapComponent, writer);
+		}
+	}	
 }
