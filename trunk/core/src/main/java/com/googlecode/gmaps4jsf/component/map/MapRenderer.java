@@ -43,34 +43,6 @@ import com.googlecode.gmaps4jsf.util.MapRendererUtil;
  */
 public class MapRenderer extends Renderer {
 
-	private void encodeScripts(FacesContext facesContext,
-			UIComponent component, ResponseWriter writer) throws IOException {
-
-		Map mapComponent = (Map) component;
-
-		writer.startElement(ComponentConstants.HTML_SCRIPT, component);
-		
-		declareJSVariables(facesContext, mapComponent, writer);
-
-		ComponentUtils.startEncodingBrowserCompatabilityChecking(facesContext,
-				component, writer);
-		
-		encodeMapRendererWrapper(facesContext, mapComponent, writer);
-		
-		// determines whether to render map on window onload.
-		if ("true".equals(mapComponent.getRenderOnWindowLoad())) {
-			ComponentUtils.encodeJSFunctionInWindowOnLoad(writer,
-					ComponentConstants.JS_RENDER_MAP_FUNC + component.getId());
-		} else {
-			callMapRendererWrapper(facesContext, component, writer);
-		}
-
-		ComponentUtils.endEncodingBrowserCompatabilityChecking(facesContext,
-				component, writer);
-
-		writer.endElement(ComponentConstants.HTML_SCRIPT);
-	}
-
 	/*
 	 * Declare the JS variables for the map and its related objects 
 	 * such as markers, polygons, polylines ...
@@ -118,14 +90,11 @@ public class MapRenderer extends Renderer {
 	 * @param writer
 	 * @throws IOException
 	 */
-	private void encodeMapRendererWrapper(FacesContext facesContext,
+	private void startEncodingMapRendererWrapper(FacesContext facesContext,
 			Map mapComponent, ResponseWriter writer) throws IOException {
 
 		writer.write("function " + ComponentConstants.JS_RENDER_MAP_FUNC
 				+ mapComponent.getId() + "(){");
-
-		MarkerEncoder.encodeMarkersFunctionScript(facesContext,
-				mapComponent, writer);
 
 		HTMLInfoWindowEncoder.encodeHTMLInfoWindowsFunctionScript(
 				facesContext, mapComponent, writer);
@@ -144,10 +113,16 @@ public class MapRenderer extends Renderer {
 		
 		GroundOverlayEncoder.encodeGroundOverlaysFunctionScript(facesContext,
 				mapComponent, writer);
+		
+		MapRendererUtil.startEncodingMapScript(facesContext, mapComponent, writer);		
+	}
+	
+	private void endEncodingMapRendererWrapper(FacesContext facesContext,
+			Map mapComponent, ResponseWriter writer) throws IOException {
+		
+		MapRendererUtil.endEncodingMapScript(facesContext, mapComponent, writer);	
 
-		encodeMapScript(facesContext, mapComponent, writer);
-
-		writer.write("}");
+		writer.write("}");		
 	}
 	
 	private void callMapRendererWrapper(FacesContext facesContext,
@@ -156,12 +131,6 @@ public class MapRenderer extends Renderer {
 		writer.write(ComponentConstants.JS_RENDER_MAP_FUNC + component.getId()
 				+ "();\r\n");
 	}		
-
-	private void encodeMapScript(FacesContext facesContext, Map mapComponent,
-			ResponseWriter writer) throws IOException {
-
-		MapRendererUtil.renderMap(facesContext, mapComponent, writer);
-	}
 
 	private void encodeHTMLModel(FacesContext facesContext,
 			UIComponent component, ResponseWriter writer) throws IOException {
@@ -180,9 +149,57 @@ public class MapRenderer extends Renderer {
 
 		writer.endElement(ComponentConstants.HTML_DIV);
 	}
+	
+	private void startEncodingMapWorld(FacesContext context,
+			UIComponent component, ResponseWriter writer) throws IOException {
 
+		Map map = (Map) component;
+
+		writer.startElement(ComponentConstants.HTML_SCRIPT, component);
+
+		declareJSVariables(context, map, writer);
+
+		ComponentUtils.startEncodingBrowserCompatabilityChecking(context,
+				component, writer);
+
+		startEncodingMapRendererWrapper(context, map, writer);
+	}
+	
+	private void endEncodingMapWorld(FacesContext context,
+			UIComponent component, ResponseWriter writer) throws IOException {
+
+		Map mapComponent = (Map) component;
+
+		endEncodingMapRendererWrapper(context, mapComponent, writer);
+
+		// determines whether to render map on window onload.
+		if ("true".equals(mapComponent.getRenderOnWindowLoad())) {
+			ComponentUtils.encodeJSFunctionInWindowOnLoad(writer,
+					ComponentConstants.JS_RENDER_MAP_FUNC + component.getId());
+		} else {
+			callMapRendererWrapper(context, component, writer);
+		}
+
+		ComponentUtils.endEncodingBrowserCompatabilityChecking(context,
+				component, writer);
+
+		writer.endElement(ComponentConstants.HTML_SCRIPT);
+	}	
+
+	public boolean getRendersChildren() {
+		return true;
+	}	
+	
 	public void encodeBegin(FacesContext context, UIComponent component)
 			throws IOException {
+
+		ComponentUtils.assertValidContext(context);
+
+		ResponseWriter writer = context.getResponseWriter();
+
+		encodeHTMLModel(context, component, writer);
+
+		startEncodingMapWorld(context, component, writer);
 	}
 
 	public void encodeEnd(FacesContext context, UIComponent component)
@@ -192,11 +209,6 @@ public class MapRenderer extends Renderer {
 
 		ResponseWriter writer = context.getResponseWriter();
 
-		encodeHTMLModel(context, component, writer);
-
-		encodeScripts(context, component, writer);
-	}
-
-	public void decode(FacesContext context, UIComponent component) {
+		endEncodingMapWorld(context, component, writer);
 	}
 }
