@@ -6,3 +6,4 @@
   * Enable adding events to the HTMLInformationWindow component using the eventListener component.
   * Adding (address) attribute to the streetViewPanorama component.
   * Adding (address) attribute to the marker component.
+  * Facelets <ui:repeat> support.
