@@ -30,6 +30,8 @@
 	<componentClass>com.googlecode.gmaps4jsf.component.marker.Marker</componentClass>
 	<componentType>com.googlecode.gmaps4jsf.Marker</componentType>
 	<componentFamily>com.googlecode.gmaps4jsf</componentFamily>
+	<rendererType>com.googlecode.gmaps4jsf.component.marker.MarkerRenderer</rendererType>	
+	<rendererClass>com.googlecode.gmaps4jsf.component.marker.MarkerRenderer</rendererClass>	
 	<parent>javax.faces.component.UIComponentBase</parent>
 	<attributes>
 		&standard_uicomponent_attributes;
