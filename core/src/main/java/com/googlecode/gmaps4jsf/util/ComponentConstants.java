@@ -48,7 +48,7 @@ public interface ComponentConstants {
 	final String JS_RENDER_MAP_FUNC = "renderMap";
 	final String JS_RENDER_STREET_VIEW_PANORAMA_FUNC = "renderStreetViewPanorama";		
 	final String JS_CREATE_HTMLINFOWINDOWS_FUNCTION_PREFIX = "createHTMLInfoWindowsFunction";
-	final String JS_CREATE_MARKERS_FUNCTION_PREFIX = "createMarkersFunction";
+	final String JS_CREATE_MARKER_FUNCTION_PREFIX = "createMarkerFunction";
 	final String JS_CREATE_MAP_CONTROLS_FUNCTION_PREFIX = "createMapControlsFunction";
 	final String JS_CREATE_EVENT_LISTENERS_FUNCTION_PREFIX = "createEventListenersFunction";
 	final String JS_CREATE_POLYLINES_FUNCTION_PREFIX = "createPolylinesFunction";
