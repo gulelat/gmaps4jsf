@@ -1,5 +1,5 @@
 *How to configure the library:*
- * Place the "gmaps4jsf-core-1.1.jar" in your web application WEB-INF/lib folder.
+ * Place the the latest library jar in your web application WEB-INF/lib folder.
  * Include the tag library in your JSF page as follows:
 {{{
  <%@ taglib uri="http://code.google.com/p/gmaps4jsf/" prefix="m" %>
