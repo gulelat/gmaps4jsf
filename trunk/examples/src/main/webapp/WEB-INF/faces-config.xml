@@ -37,4 +37,33 @@
   		<managed-bean-class>com.googlecode.gmaps4jsf.example.beans.MashupBean</managed-bean-class>
 	  	<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+
+    <managed-bean>
+  		<managed-bean-name>place1</managed-bean-name>
+  		<managed-bean-class>com.googlecode.gmaps4jsf.example.beans.FavoritePlace</managed-bean-class>
+	  	<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+		    <property-name>longitude</property-name>
+		    <value>31.14</value>
+		</managed-property>
+		<managed-property>
+		    <property-name>latitude</property-name>
+		    <value>30.01</value>
+		</managed-property>
+	</managed-bean>	
+
+    <managed-bean>
+  		<managed-bean-name>place2</managed-bean-name>
+  		<managed-bean-class>com.googlecode.gmaps4jsf.example.beans.FavoritePlace</managed-bean-class>
+	  	<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+		    <property-name>longitude</property-name>
+		    <value>-101</value>
+		</managed-property>
+		<managed-property>
+		    <property-name>latitude</property-name>
+		    <value>39</value>
+		</managed-property>	  	
+	</managed-bean>
+
 </faces-config>
