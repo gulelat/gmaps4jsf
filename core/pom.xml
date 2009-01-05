@@ -5,13 +5,13 @@
 	<parent>
 		<groupId>com.googlecode.gmaps4jsf</groupId>
 		<artifactId>gmaps4jsf-project</artifactId>
-		<version>1.1.1-SNAPSHOT</version>
+		<version>1.1.2-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.googlecode.gmaps4jsf</groupId>
 	<artifactId>gmaps4jsf-core</artifactId>
 	<packaging>jar</packaging>
-	<version>1.1.1-SNAPSHOT</version>
+	<version>1.1.2-SNAPSHOT</version>
 	<name>Core GMaps4JSF Project</name>
 	<url>http://maven.apache.org</url>
 
