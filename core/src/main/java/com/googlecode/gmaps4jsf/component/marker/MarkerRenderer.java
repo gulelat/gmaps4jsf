@@ -52,7 +52,4 @@ public class MarkerRenderer extends Renderer {
 		MarkerEncoder.encodeMarkerFunctionScriptCall(context, parentMap,
 				marker, writer);
 	}
-
-	public void decode(FacesContext context, UIComponent component) {
-	}
 }

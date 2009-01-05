@@ -32,8 +32,8 @@ import com.googlecode.gmaps4jsf.component.map.EventEncoder;
 import com.googlecode.gmaps4jsf.component.map.HTMLInfoWindowEncoder;
 import com.googlecode.gmaps4jsf.component.map.IconEncoder;
 import com.googlecode.gmaps4jsf.component.map.Map;
-import com.googlecode.gmaps4jsf.component.marker.Marker;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
+import com.googlecode.gmaps4jsf.util.ComponentUtils;
 
 /**
  * @author Hazem Saleh
@@ -41,13 +41,43 @@ import com.googlecode.gmaps4jsf.util.ComponentConstants;
  * The MarkerEncoder is used for encoding the map markers.
  */
 public class MarkerEncoder {
-
-	private static void encodeMarker(FacesContext facesContext, Map map,
+	
+	private static String getMarkerState(String markerID, Object mapState) {
+		if (mapState == null) {
+			return null;
+		}
+		
+		String[] markersState = ((String) mapState).split("&");
+		
+		for (int i = 0; i < markersState.length; ++i) {
+			if (markersState[i].contains(markerID)) {
+				return markersState[i].split("=")[1];
+			}
+		}
+		
+		return null;
+	}
+	
+	private static void encodeMarker(FacesContext context, Map map,
 			Marker marker, ResponseWriter writer) throws IOException {
+		
+		Object mapState = ComponentUtils.getValueToRender(context, map);
+		String markerState = getMarkerState(marker.getId(), mapState);
+		
+		if (markerState != null) {		
+			
+			// update marker model.
+			updateMarkerModel(context, markerState , marker);
+			
+			writer.write("var " + ComponentConstants.CONST_MARKER_PREFIX
+					+ marker.getId() + " = new "
+					+ ComponentConstants.JS_GMarker_OBJECT + "(new "
+					+ ComponentConstants.JS_GLatLng_OBJECT + markerState + ","
+					+ getMarkerOptions(context, marker, writer) + ");");
 
-		// create the marker instance either from address or from latlng.
-		if (marker.getAddress() != null) {
-
+		} else if (marker.getAddress() != null) {
+			
+			// create the marker instance from address.
 			writer.write("var geocoder_" + marker.getId() + " = new "
 					+ ComponentConstants.JS_GClientGeocoder_OBJECT + "();");
 
@@ -62,13 +92,10 @@ public class MarkerEncoder {
 			writer.write("var " + ComponentConstants.CONST_MARKER_PREFIX
 					+ marker.getId() + " = new "
 					+ ComponentConstants.JS_GMarker_OBJECT + "(location, "
-					+ getMarkerOptions(facesContext, marker, writer) + ");");
-
-			completeMarkerRendering(facesContext, marker, writer);
-
-			writer.write("}" + "}\n" + ");\n");
+					+ getMarkerOptions(context, marker, writer) + ");");
 		} else {
-
+			
+			// create the marker instance from latlng.
 			String longitude;
 			String latitude;
 
@@ -91,23 +118,86 @@ public class MarkerEncoder {
 					+ ComponentConstants.JS_GMarker_OBJECT + "(new "
 					+ ComponentConstants.JS_GLatLng_OBJECT + "(" + latitude
 					+ ", " + longitude + "),"
-					+ getMarkerOptions(facesContext, marker, writer) + ");");
+					+ getMarkerOptions(context, marker, writer) + ");");
+		}
+		
+		completeMarkerRendering(context, map, marker, writer);
 
-			completeMarkerRendering(facesContext, marker, writer);
+		if (marker.getAddress() != null) {
+			writer.write("}" + "}\n" + ");\n");
 		}
 	}
 	
+	private static void updateMarkerModel(FacesContext context,
+			String markerState, Marker marker) {
+
+		if (marker.getValueBinding(ComponentConstants.MARKER_ATTR_LATITUDE) != null) {			
+			marker.getValueBinding(ComponentConstants.MARKER_ATTR_LATITUDE)
+					.setValue(context, markerState.split(",")[0].substring(1));
+		}
+
+		if (marker.getValueBinding(ComponentConstants.MARKER_ATTR_LONGITUDE) != null) {
+			marker.getValueBinding(ComponentConstants.MARKER_ATTR_LONGITUDE)
+					.setValue(
+							context,
+							markerState.split(",")[1].substring(0, markerState
+									.split(",")[1].length() - 1));
+		}
+	}
+
 	private static void completeMarkerRendering(FacesContext facesContext,
-			Marker marker, ResponseWriter writer) throws IOException {
-		
+			Map map, Marker marker, ResponseWriter writer) throws IOException {
+
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-				+ ".addOverlay(marker_" + marker.getId() + ");");		
+				+ ".addOverlay(marker_" + marker.getId() + ");");
+
+		// save the marker state.
+		saveMarkerState(facesContext, map, marker, writer);
 
 		// process marker events.
 		encodeMarkerChildren(facesContext, marker, writer);
 
 		// update marker user variable.
 		updateMarkerJSVariable(facesContext, marker, writer);
+	}
+	
+	private static void saveMarkerState(FacesContext facesContext, Map map,
+			Marker marker, ResponseWriter writer) throws IOException {
+
+		String markerDragEndHandler = "function " + "marker_" + marker.getId()
+				+ "_dragEnd(latlng) " + "{\r\n" +
+
+				"var markersState = document.getElementById(\""
+				+ ComponentUtils.getMapStateHiddenFieldId(map) + "\").value;\r\n" +
+
+				"if (markersState.indexOf('" + marker.getId()
+				+ "=') != -1) {\r\n"
+				+ "var markersArray = markersState.split('&');\r\n"
+				+ "var updatedMarkersState = \"\";\r\n" +
+
+				"for (i = 0; i < markersArray.length; ++i) {\r\n" +
+
+				"if (markersArray[i].indexOf('" + marker.getId()
+				+ "=') == -1) {\r\n"
+				+ "updatedMarkersState += markersArray[i];\r\n"
+				+ "if (i != 0 && i < markersArray.length - 1) {\r\n"
+				+ "updatedMarkersState += \"&\";\r\n" + "}\r\n" + "}\r\n"
+				+ "}\r\n" + "markersState = updatedMarkersState;\r\n" + "}\r\n"
+				+
+
+				"if (markersState != \"\") {\r\n" + "markersState += '&';\r\n"
+				+ "}\r\n" +
+
+				"markersState += \"" + marker.getId() + "=\" + latlng;\r\n" +
+
+				"document.getElementById(\""
+				+ ComponentUtils.getMapStateHiddenFieldId(map)
+				+ "\").value = markersState;" + "}"
+				+ ComponentConstants.JS_GEVENT_OBJECT + ".addListener("
+				+ "marker_" + marker.getId() + ", \"dragend\", " + "marker_"
+				+ marker.getId() + "_dragEnd" + ");";
+		
+		writer.write(markerDragEndHandler);
 	}
 	
 	private static void encodeMarkerChildren(FacesContext facesContext,
@@ -162,8 +252,14 @@ public class MarkerEncoder {
 					+ ComponentConstants.CONST_MARKER_PREFIX + marker.getId()
 					+ ";\r\n");
 		}
-	}	
+	}
 	
+	private static String getUniqueMarkerId(FacesContext facesContext, Marker marker) {
+		String markerID = marker.getClientId(facesContext);
+		
+		return markerID.replace(":", "_");
+	}
+
 	private static String getMarkerOptions(FacesContext facesContext,
 			Marker marker, ResponseWriter writer) throws IOException {
 
@@ -215,12 +311,6 @@ public class MarkerEncoder {
 		}
 
 		writer.write("}");
-	}
-	
-	private static String getUniqueMarkerId(FacesContext facesContext, Marker marker) {
-		String markerID = marker.getClientId(facesContext);
-		
-		return markerID.replace(":", "_");
 	}
 	
 	public static void encodeMarkerFunctionScriptCall(
