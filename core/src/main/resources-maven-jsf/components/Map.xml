@@ -32,7 +32,7 @@
 	<componentFamily>com.googlecode.gmaps4jsf</componentFamily>
 	<rendererType>com.googlecode.gmaps4jsf.component.map.MapRenderer</rendererType>
 	<rendererClass>com.googlecode.gmaps4jsf.component.map.MapRenderer</rendererClass>
-	<parent>javax.faces.component.UIComponentBase</parent>
+	<parent>javax.faces.component.UIInput</parent>
 	<attributes>
 		&standard_uicomponent_attributes;
 		<attribute>
