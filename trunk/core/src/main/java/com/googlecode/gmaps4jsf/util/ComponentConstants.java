@@ -25,9 +25,14 @@ public interface ComponentConstants {
 	final String JS_GSTREET_VIEW_PANORAMA_CORE_OBJECT = "GStreetviewPanorama";
 	final String JS_GSTREET_VIEW_PANORAMA_Overlay_OBJECT = "GStreetviewOverlay";
 	final String HTML_DIV = "DIV";
+	final String HTML_INPUT = "input";
 	final String HTML_ATTR_ID = "id";
 	final String HTML_ATTR_NAME = "name";
 	final String HTML_ATTR_STYLE = "style";
+	final String HTML_ATTR_HIDDEN = "hidden";
+	final String HTML_ATTR_TYPE = "type";
+	final String HTML_ATTR_TYPE_HIDDEN = "hidden";	
+	final String HTML_ATTR_VALUE = "value";	
 	final String CONST_MARKER_PREFIX = "marker_";
 	final String JS_GEVENT_OBJECT = "GEvent";	
 	final String JS_GMarker_OBJECT = "GMarker";
@@ -55,4 +60,7 @@ public interface ComponentConstants {
 	final String JS_CREATE_POLYGONS_FUNCTION_PREFIX = "createPolygonsFunction";	
 	final String JS_CREATE_GROUND_OVERLAYS_FUNCTION_PREFIX = "createGroundOverlaysFunction";
 	final String JS_CREATE_ICON_FUNCTION_PREFIX = "createIconFunction";	
+	final String HTML_MAP_STATE_PREFIX = "com.googlecode.gmaps4jsf.mapState";
+	final String MARKER_ATTR_LATITUDE = "latitude";
+	final String MARKER_ATTR_LONGITUDE = "longitude";	
 }
