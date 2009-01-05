@@ -286,6 +286,10 @@ public class ComponentUtils {
 
 		return valueExpression.substring(2, valueExpression.length() - 1);
 	}
+	
+	public static ValueBinding getValueBinding(FacesContext context, String value) {
+		return context.getApplication().createValueBinding(value);		
+	}
 
 	/**
 	 * Traverses the component tree beginning from the given component instance, stops when finds the enclosing form
@@ -355,6 +359,10 @@ public class ComponentUtils {
 				+ "}\r\n";
 
 		writer.write(jsFunctionInWindowOnLoad);
+	}
+
+	public static String getMapStateHiddenFieldId(Map map) {
+		return ComponentConstants.HTML_MAP_STATE_PREFIX + map.getId();
 	}	
 
 }
