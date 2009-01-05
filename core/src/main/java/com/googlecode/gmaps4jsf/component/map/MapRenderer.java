@@ -132,22 +132,42 @@ public class MapRenderer extends Renderer {
 				+ "();\r\n");
 	}		
 
-	private void encodeHTMLModel(FacesContext facesContext,
-			UIComponent component, ResponseWriter writer) throws IOException {
+	private void encodeHTMLModel(FacesContext context, UIComponent component,
+			ResponseWriter writer) throws IOException {
 
-		Map mapComponent = (Map) component;
+		Map map = (Map) component;
 
-		writer.startElement(ComponentConstants.HTML_DIV, mapComponent);
+		// encode map model.
+		writer.startElement(ComponentConstants.HTML_DIV, map);
 
-		writer.writeAttribute(ComponentConstants.HTML_ATTR_ID, mapComponent
-				.getClientId(facesContext), ComponentConstants.HTML_ATTR_ID);
-		writer.writeAttribute(ComponentConstants.HTML_ATTR_NAME, mapComponent
-				.getClientId(facesContext), ComponentConstants.HTML_ATTR_NAME);
+		writer.writeAttribute(ComponentConstants.HTML_ATTR_ID, map
+				.getClientId(context), ComponentConstants.HTML_ATTR_ID);
+		writer.writeAttribute(ComponentConstants.HTML_ATTR_NAME, map
+				.getClientId(context), ComponentConstants.HTML_ATTR_NAME);
 		writer.writeAttribute(ComponentConstants.HTML_ATTR_STYLE, "width: "
-				+ mapComponent.getWidth() + "; height: "
-				+ mapComponent.getHeight(), ComponentConstants.HTML_ATTR_STYLE);
+				+ map.getWidth() + "; height: " + map.getHeight(),
+				ComponentConstants.HTML_ATTR_STYLE);
 
 		writer.endElement(ComponentConstants.HTML_DIV);
+
+		// encode map state holder.
+		writer.startElement(ComponentConstants.HTML_INPUT, map);
+
+		writer.writeAttribute(ComponentConstants.HTML_ATTR_ID, ComponentUtils
+						.getMapStateHiddenFieldId(map),
+						ComponentConstants.HTML_ATTR_ID);
+		writer.writeAttribute(ComponentConstants.HTML_ATTR_NAME, ComponentUtils
+				.getMapStateHiddenFieldId(map),
+				ComponentConstants.HTML_ATTR_NAME);
+		writer.writeAttribute(ComponentConstants.HTML_ATTR_TYPE,
+				ComponentConstants.HTML_ATTR_TYPE_HIDDEN,
+				ComponentConstants.HTML_ATTR_TYPE);
+		
+		writer.writeAttribute(ComponentConstants.HTML_ATTR_VALUE,
+				ComponentUtils.getValueToRender(context, map),
+				ComponentConstants.HTML_ATTR_VALUE);
+
+		writer.endElement(ComponentConstants.HTML_INPUT);
 	}
 	
 	private void startEncodingMapWorld(FacesContext context,
@@ -211,4 +231,13 @@ public class MapRenderer extends Renderer {
 
 		endEncodingMapWorld(context, component, writer);
 	}
+	
+	public void decode(FacesContext context, UIComponent component) {
+		Map map = (Map) component;
+		String submittedValue = (String) context.getExternalContext()
+				.getRequestParameterMap().get(
+						ComponentUtils.getMapStateHiddenFieldId(map));
+		
+		map.setSubmittedValue(submittedValue);
+	}	
 }
