@@ -151,6 +151,8 @@ public class MapRenderer extends Renderer {
 		writer.endElement(ComponentConstants.HTML_DIV);
 
 		// encode map state holder.
+		Object mapState = ComponentUtils.getValueToRender(context, map);
+		
 		writer.startElement(ComponentConstants.HTML_INPUT, map);
 
 		writer.writeAttribute(ComponentConstants.HTML_ATTR_ID, ComponentUtils
@@ -163,9 +165,10 @@ public class MapRenderer extends Renderer {
 				ComponentConstants.HTML_ATTR_TYPE_HIDDEN,
 				ComponentConstants.HTML_ATTR_TYPE);
 		
-		writer.writeAttribute(ComponentConstants.HTML_ATTR_VALUE,
-				ComponentUtils.getValueToRender(context, map),
-				ComponentConstants.HTML_ATTR_VALUE);
+		if (null != mapState) {
+			writer.writeAttribute(ComponentConstants.HTML_ATTR_VALUE, mapState,
+					ComponentConstants.HTML_ATTR_VALUE);
+		}
 
 		writer.endElement(ComponentConstants.HTML_INPUT);
 	}

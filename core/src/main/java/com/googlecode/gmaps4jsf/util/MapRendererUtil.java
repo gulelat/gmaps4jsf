@@ -126,23 +126,33 @@ public class MapRendererUtil {
 		completeMapRendering(facesContext, mapComponent, writer);
 	}	
 	
-	private static void startRenderingMapUsingAddress(FacesContext facesContext, Map mapComponent,
-			ResponseWriter writer) throws IOException {
+	private static void startRenderingMapUsingAddress(
+			FacesContext facesContext, Map mapComponent, ResponseWriter writer)
+			throws IOException {
 
+		String errorMessageScript = "";
 		writer.write("var geocoder_" + mapComponent.getId() + " = new "
 				+ ComponentConstants.JS_GClientGeocoder_OBJECT + "();");
+		
+		if ("true".equalsIgnoreCase(mapComponent
+				.getShowLocationNotFoundMessage())) {
+			errorMessageScript = "alert(\""
+					+ mapComponent.getLocationNotFoundErrorMessage() + "\");\n";
+		}
 
 		// send XHR request to get the address location and write to the
 		// response.
 		writer.write("geocoder_" + mapComponent.getId() + ".getLatLng(\""
 				+ mapComponent.getAddress() + "\"," + "function(location) {\n"
-				+ "if (!location) {\n" + "alert(\""
-				+ mapComponent.getLocationNotFoundErrorMessage() + "\");\n"
+				+ "if (!location) {\n" +
+
+				errorMessageScript
+
 				+ "} else {\n");
-		
+
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-				+ ".setCenter(location, " + mapComponent.getZoom() + ");\n");	
-					
+				+ ".setCenter(location, " + mapComponent.getZoom() + ");\n");
+
 		completeMapRendering(facesContext, mapComponent, writer);
 	}	
 	
