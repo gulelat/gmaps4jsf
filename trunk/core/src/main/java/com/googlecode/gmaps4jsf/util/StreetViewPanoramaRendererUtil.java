@@ -43,9 +43,16 @@ public class StreetViewPanoramaRendererUtil {
 		String streetViewPanoramaOptions = "";
 
 		if (streetViewPanoramaComponent.getAddress() != null) {
+			String errorMessageScript = "";	
 			writer.write("var geocoder_" + streetViewPanoramaComponent.getId()
 					+ " = new " + ComponentConstants.JS_GClientGeocoder_OBJECT
 					+ "();");
+			
+			if ("true".equalsIgnoreCase(streetViewPanoramaComponent
+					.getShowLocationNotFoundMessage())) {
+				errorMessageScript = "alert(\""
+						+ streetViewPanoramaComponent.getLocationNotFoundErrorMessage() + "\");\n";
+			}				
 
 			// send XHR request to get the address location and write to the
 			// response.
@@ -56,9 +63,7 @@ public class StreetViewPanoramaRendererUtil {
 					+ "\","
 					+ "function(location) {\n"
 					+ "if (!location) {\n"
-					+ "alert(\""
-					+ streetViewPanoramaComponent
-							.getLocationNotFoundErrorMessage() + "\");\n"
+					+ errorMessageScript
 					+ "} else {\n");
 
 			streetViewPanoramaOptions = "{latlng:location, pov:{yaw:"

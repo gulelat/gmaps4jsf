@@ -62,7 +62,14 @@
 			<type>java.lang.String</type>
 			<defaultValue>(GClientGeocoder) service not found the address location</defaultValue>					
 			<description>The error message that should appear if the address location doesnot exist</description>
-		</attribute>		
+		</attribute>	
+	    <attribute>
+			<name>showLocationNotFoundMessage</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<defaultValue>false</defaultValue>					
+			<description>This attribute determines whether to show an error message when the location is not found</description>
+		</attribute>			
 		<attribute>
 			<name>jsVariable</name>
 			<required>false</required>

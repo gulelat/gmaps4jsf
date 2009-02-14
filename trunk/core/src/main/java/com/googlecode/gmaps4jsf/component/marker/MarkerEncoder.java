@@ -76,17 +76,26 @@ public class MarkerEncoder {
 					+ getMarkerOptions(context, marker, writer) + ");");
 
 		} else if (marker.getAddress() != null) {
+			String errorMessageScript = "";		
 			
 			// create the marker instance from address.
 			writer.write("var geocoder_" + marker.getId() + " = new "
 					+ ComponentConstants.JS_GClientGeocoder_OBJECT + "();");
+			
+			if ("true".equalsIgnoreCase(marker
+					.getShowLocationNotFoundMessage())) {
+				errorMessageScript = "alert(\""
+						+ marker.getLocationNotFoundErrorMessage() + "\");\n";
+			}	
 
 			// send XHR request to get the address location and write to the
 			// response.
 			writer.write("geocoder_" + marker.getId() + ".getLatLng(\""
 					+ marker.getAddress() + "\"," + "function(location) {\n"
-					+ "if (!location) {\n" + "alert(\""
-					+ marker.getLocationNotFoundErrorMessage() + "\");\n"
+					+ "if (!location) {\n" + 
+
+					errorMessageScript
+					
 					+ "} else {\n");
 
 			writer.write("var " + ComponentConstants.CONST_MARKER_PREFIX
