@@ -31,7 +31,7 @@
 
 		<repository>            
 			<uniqueVersion>false</uniqueVersion>            
-			<id>google-maven-snapshot-repository</id>            
+			<id>googlecode.com</id>            
 			<url>svn:https://gmaps4jsf.googlecode.com/svn/trunk</url>        
 		</repository> 		
 		
