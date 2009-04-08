@@ -17,7 +17,9 @@
 	
 	
 	<!-- This is added for releases management -->
-	<repositories>        
+	<repositories>       
+
+		<!--
 		<repository>
 		  <id>google-maven-repository</id>
 		  <name>Google Maven Repository</name>
@@ -31,9 +33,9 @@
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
-		</repository>
+		</repository> -->
 		
-		
+		<!-- defined for the wagon plugin -->
 		<repository>            
 			<id>maven2-repository.dev.java.net</id>            
 			<name>Java.net Repository for Maven</name>            
@@ -43,14 +45,16 @@
 	</repositories>    
 	
 	
-	<distributionManagement>        
+	<distributionManagement>   
+
+		<!--	
 		<repository>
 		  <id>google-maven-repository</id>
 		  <name>Google Maven Repository</name>
 		  <url>http://google-maven-repository.googlecode.com/svn/repository</url>
 		</repository>		
 		
-		<!--
+		
 		<snapshotRepository>
 			<id>google-maven-snapshot-repository</id>
 			<name>Google Maven Snapshot Repository</name>
@@ -59,11 +63,11 @@
 		-->
 		
 		
-		<snapshotRepository>            
+		<repository>            
 			<uniqueVersion>false</uniqueVersion>            
 			<id>google-maven-snapshot-repository</id>            
 			<url>svn:https://gmaps4jsf.googlecode.com/svn/trunk/</url>        
-		</snapshotRepository> 		
+		</repository> 		
 		
 	</distributionManagement>    	
 	<!-- END -->	
@@ -131,6 +135,17 @@
 	</dependencies>
 
 	<build>
+	
+		<!-- START: The wagon plugin allows deploying the SVN repo -->
+		<extensions>            
+			<extension>                
+				<groupId>org.jvnet.wagon-svn</groupId>                
+				<artifactId>wagon-svn</artifactId>                
+				<version>1.8</version>            
+			</extension>        
+		</extensions>   
+		<!-- END: The wagon plugin allows deploying the SVN repo -->
+		
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
