@@ -13,12 +13,7 @@
   <modules>
 	<module>maven</module>
   	<module>core</module>
-    	<module>examples</module>
+    <module>examples</module>
   </modules>
-
-  <build>
-    <defaultGoal>install</defaultGoal>
-  </build>
-
 
 </project>
