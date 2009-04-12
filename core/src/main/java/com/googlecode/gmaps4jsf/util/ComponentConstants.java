@@ -20,7 +20,9 @@ package com.googlecode.gmaps4jsf.util;
 
 public interface ComponentConstants {
 	final String CONTEXT_CANNOT_BE_NULL = "context cannot be null";
-	final String HTML_SCRIPT = "script";
+	final String HTML_SCRIPT = "SCRIPT";
+	final String HTML_SCRIPT_TYPE = "type";
+	final String HTML_SCRIPT_LANGUAGE = "JavaScript";		
 	final String JS_GMAP_CORE_OBJECT = "GMap2";
 	final String JS_GSTREET_VIEW_PANORAMA_CORE_OBJECT = "GStreetviewPanorama";
 	final String JS_GSTREET_VIEW_PANORAMA_Overlay_OBJECT = "GStreetviewOverlay";
