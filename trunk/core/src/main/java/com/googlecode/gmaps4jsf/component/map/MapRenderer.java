@@ -105,11 +105,11 @@ public class MapRenderer extends Renderer {
 		EventEncoder.encodeEventListenersFunctionScript(facesContext,
 				mapComponent, writer, ComponentConstants.JS_GMAP_BASE_VARIABLE);
 		
-		PolylineEncoder.encodePolylinesFunctionScript(facesContext,
-				mapComponent, writer);
+		//PolylineEncoder.encodePolylinesFunctionScript(facesContext,
+		//		mapComponent, writer);
 		
-		PolygonEncoder.encodePolygonsFunctionScript(facesContext, mapComponent,
-				writer);
+		//PolygonEncoder.encodePolygonsFunctionScript(facesContext, mapComponent,
+		//		writer);
 		
 		GroundOverlayEncoder.encodeGroundOverlaysFunctionScript(facesContext,
 				mapComponent, writer);
