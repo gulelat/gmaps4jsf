@@ -22,7 +22,7 @@ public interface ComponentConstants {
 	final String CONTEXT_CANNOT_BE_NULL = "context cannot be null";
 	final String HTML_SCRIPT = "SCRIPT";
 	final String HTML_SCRIPT_TYPE = "type";
-	final String HTML_SCRIPT_LANGUAGE = "JavaScript";		
+	final String HTML_SCRIPT_LANGUAGE = "text/javascript";		
 	final String JS_GMAP_CORE_OBJECT = "GMap2";
 	final String JS_GSTREET_VIEW_PANORAMA_CORE_OBJECT = "GStreetviewPanorama";
 	final String JS_GSTREET_VIEW_PANORAMA_Overlay_OBJECT = "GStreetviewOverlay";
@@ -58,8 +58,10 @@ public interface ComponentConstants {
 	final String JS_CREATE_MARKER_FUNCTION_PREFIX = "createMarkerFunction";
 	final String JS_CREATE_MAP_CONTROLS_FUNCTION_PREFIX = "createMapControlsFunction";
 	final String JS_CREATE_EVENT_LISTENERS_FUNCTION_PREFIX = "createEventListenersFunction";
-	final String JS_CREATE_POLYLINES_FUNCTION_PREFIX = "createPolylinesFunction";
-	final String JS_CREATE_POLYGONS_FUNCTION_PREFIX = "createPolygonsFunction";	
+	//final String JS_CREATE_POLYLINES_FUNCTION_PREFIX = "createPolylinesFunction";
+	final String JS_CREATE_POLYLINE_FUNCTION_PREFIX = "createPolylineFunction";
+	//final String JS_CREATE_POLYGONS_FUNCTION_PREFIX = "createPolygonsFunction";	
+	final String JS_CREATE_POLYGON_FUNCTION_PREFIX = "createPolygonFunction";	
 	final String JS_CREATE_GROUND_OVERLAYS_FUNCTION_PREFIX = "createGroundOverlaysFunction";
 	final String JS_CREATE_ICON_FUNCTION_PREFIX = "createIconFunction";	
 	final String HTML_MAP_STATE_PREFIX = "com.googlecode.gmaps4jsf.mapState";
