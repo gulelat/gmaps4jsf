@@ -28,8 +28,6 @@ import com.googlecode.gmaps4jsf.component.map.GroundOverlayEncoder;
 import com.googlecode.gmaps4jsf.component.map.HTMLInfoWindowEncoder;
 import com.googlecode.gmaps4jsf.component.map.Map;
 import com.googlecode.gmaps4jsf.component.map.MapControlEncoder;
-import com.googlecode.gmaps4jsf.component.map.PolygonEncoder;
-import com.googlecode.gmaps4jsf.component.map.PolylineEncoder;
 
 /**
  * @author Hazem Saleh
@@ -84,11 +82,11 @@ public class MapRendererUtil {
 		HTMLInfoWindowEncoder.encodeHTMLInfoWindowsFunctionScriptCall(
 				facesContext, mapComponent, writer);
 		
-		PolylineEncoder.encodePolylinesFunctionScriptCall(facesContext,
-				mapComponent, writer);
+		//PolylineEncoder.encodePolylinesFunctionScriptCall(facesContext,
+		//		mapComponent, writer);
 		
-		PolygonEncoder.encodePolygonsFunctionScriptCall(facesContext,
-				mapComponent, writer);
+		//PolygonEncoder.encodePolygonsFunctionScriptCall(facesContext,
+		//		mapComponent, writer);
 		
 		encodeMapType(facesContext, mapComponent, writer);
 		
