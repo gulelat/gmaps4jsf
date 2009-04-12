@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.googlecode.gmaps4jsf.component.map;
+package com.googlecode.gmaps4jsf.component.polyline;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -26,8 +26,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import com.googlecode.gmaps4jsf.component.eventlistener.EventListener;
+import com.googlecode.gmaps4jsf.component.map.EventEncoder;
+import com.googlecode.gmaps4jsf.component.map.Map;
 import com.googlecode.gmaps4jsf.component.point.Point;
-import com.googlecode.gmaps4jsf.component.polyline.Polyline;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
 
 /**
@@ -36,6 +37,31 @@ import com.googlecode.gmaps4jsf.util.ComponentConstants;
  * The PolylineEncoder is used for encoding the map polylines.
  */
 public class PolylineEncoder {
+
+	public static void encodePolylineFunctionScript(FacesContext facesContext,
+			Map parentMap, Polyline polyline, ResponseWriter writer)
+			throws IOException {
+
+		writer.write("function "
+				+ ComponentConstants.JS_CREATE_POLYLINE_FUNCTION_PREFIX
+				+ getUniquePolylineId(facesContext, polyline) + "("
+				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ") {");
+
+		if (polyline.isRendered()) {
+			encodePolyline(facesContext, parentMap, polyline, writer);
+		}
+
+		writer.write("}");
+	}
+
+	public static void encodePolylineFunctionScriptCall(FacesContext context,
+			Map parentMap, Polyline polyline, ResponseWriter writer)
+			throws IOException {
+
+		writer.write(ComponentConstants.JS_CREATE_POLYLINE_FUNCTION_PREFIX
+				+ getUniquePolylineId(context, polyline) + "("
+				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");");
+	}
 
 	private static void encodePolyline(FacesContext facesContext,
 			Map mapComponent, Polyline polyline, ResponseWriter writer)
@@ -78,7 +104,7 @@ public class PolylineEncoder {
 
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
 				+ ".addOverlay(polyline_" + polyline.getId() + ");");
-		
+
 		// encode polyline events.
 		for (Iterator iterator = polyline.getChildren().iterator(); iterator
 				.hasNext();) {
@@ -91,46 +117,26 @@ public class PolylineEncoder {
 						facesContext, polyline, writer, "polyline_"
 								+ polyline.getId());
 			}
-		}			
-		
+		}
+
 		// update polyline user variable.
 		updatePolylineJSVariable(facesContext, polyline, writer);
 	}
-	
+
 	private static void updatePolylineJSVariable(FacesContext facesContext,
 			Polyline polyline, ResponseWriter writer) throws IOException {
 
 		if (polyline.getJsVariable() != null) {
-			writer.write("\r\n" + polyline.getJsVariable() + " = " + "polyline_"
-					+ polyline.getId() + ";\r\n");
+			writer.write("\r\n" + polyline.getJsVariable() + " = "
+					+ "polyline_" + polyline.getId() + ";\r\n");
 		}
-	}	
-	
-	public static void encodePolylinesFunctionScript(FacesContext facesContext,
-			Map mapComponent, ResponseWriter writer) throws IOException {
-
-		writer.write("function "
-				+ ComponentConstants.JS_CREATE_POLYLINES_FUNCTION_PREFIX
-				+ mapComponent.getId() + "("
-				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ") {");
-		for (Iterator iterator = mapComponent.getChildren().iterator(); iterator
-				.hasNext();) {
-			UIComponent component = (UIComponent) iterator.next();
-
-			if (component instanceof Polyline && component.isRendered()) {
-				encodePolyline(facesContext, mapComponent,
-						(Polyline) component, writer);
-			}
-		}
-		writer.write("}");
 	}
-	
-	public static void encodePolylinesFunctionScriptCall(
-			FacesContext facesContext, Map mapComponent, ResponseWriter writer)
-			throws IOException {
 
-		writer.write(ComponentConstants.JS_CREATE_POLYLINES_FUNCTION_PREFIX
-				+ mapComponent.getId() + "("
-				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");");
+	private static String getUniquePolylineId(FacesContext facesContext,
+			Polyline polyline) {
+
+		String polylineID = polyline.getClientId(facesContext);
+
+		return polylineID.replace(":", "_");
 	}
 }
