@@ -30,6 +30,8 @@
 	<componentClass>com.googlecode.gmaps4jsf.component.polygon.Polygon</componentClass>
 	<componentType>com.googlecode.gmaps4jsf.Polygon</componentType>
 	<componentFamily>com.googlecode.gmaps4jsf</componentFamily>
+	<rendererType>com.googlecode.gmaps4jsf.component.polygon.PolygonRenderer</rendererType>	
+	<rendererClass>com.googlecode.gmaps4jsf.component.polygon.PolygonRenderer</rendererClass>	
 	<parent>javax.faces.component.UIComponentBase</parent>
 	<attributes>
 		&standard_uicomponent_attributes;
