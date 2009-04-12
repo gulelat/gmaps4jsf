@@ -142,8 +142,8 @@ public class MapRenderer extends Renderer {
 
 		writer.writeAttribute(ComponentConstants.HTML_ATTR_ID, map
 				.getClientId(context), ComponentConstants.HTML_ATTR_ID);
-		writer.writeAttribute(ComponentConstants.HTML_ATTR_NAME, map
-				.getClientId(context), ComponentConstants.HTML_ATTR_NAME);
+		//writer.writeAttribute(ComponentConstants.HTML_ATTR_NAME, map
+		//		.getClientId(context), ComponentConstants.HTML_ATTR_NAME);
 		writer.writeAttribute(ComponentConstants.HTML_ATTR_STYLE, "width: "
 				+ map.getWidth() + "; height: " + map.getHeight(),
 				ComponentConstants.HTML_ATTR_STYLE);
@@ -179,6 +179,10 @@ public class MapRenderer extends Renderer {
 		Map map = (Map) component;
 
 		writer.startElement(ComponentConstants.HTML_SCRIPT, component);
+		
+		writer.writeAttribute(ComponentConstants.HTML_SCRIPT_TYPE,
+				ComponentConstants.HTML_SCRIPT_LANGUAGE,
+				ComponentConstants.HTML_SCRIPT_TYPE);
 
 		declareJSVariables(context, map, writer);
 
