@@ -30,6 +30,8 @@
 	<componentClass>com.googlecode.gmaps4jsf.component.polyline.Polyline</componentClass>
 	<componentType>com.googlecode.gmaps4jsf.Polyline</componentType>
 	<componentFamily>com.googlecode.gmaps4jsf</componentFamily>
+	<rendererType>com.googlecode.gmaps4jsf.component.polyline.PolylineRenderer</rendererType>	
+	<rendererClass>com.googlecode.gmaps4jsf.component.polyline.PolylineRenderer</rendererClass>		
 	<parent>javax.faces.component.UIComponentBase</parent>
 	<attributes>
 		&standard_uicomponent_attributes;
