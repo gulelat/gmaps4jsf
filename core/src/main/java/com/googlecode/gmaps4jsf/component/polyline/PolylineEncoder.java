@@ -60,7 +60,7 @@ public class PolylineEncoder {
 
 		writer.write(ComponentConstants.JS_CREATE_POLYLINE_FUNCTION_PREFIX
 				+ getUniquePolylineId(context, polyline) + "("
-				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");");
+				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");\r\n");
 	}
 
 	private static void encodePolyline(FacesContext facesContext,
@@ -100,10 +100,10 @@ public class PolylineEncoder {
 				+ ComponentConstants.JS_GPolyline_OBJECT + "([" + polyLinesStr
 				+ "], \"" + polyline.getHexaColor() + "\", "
 				+ polyline.getLineWidth() + "," + polyline.getOpacity() + ", "
-				+ polyOptionsStr + ");");
+				+ polyOptionsStr + ");\r\n");
 
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-				+ ".addOverlay(polyline_" + polyline.getId() + ");");
+				+ ".addOverlay(polyline_" + polyline.getId() + ");\r\n");
 
 		// encode polyline events.
 		for (Iterator iterator = polyline.getChildren().iterator(); iterator

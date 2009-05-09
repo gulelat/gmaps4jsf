@@ -60,7 +60,7 @@ public class PolygonEncoder {
 
 		writer.write(ComponentConstants.JS_CREATE_POLYGON_FUNCTION_PREFIX
 				+ getUniquePolygonId(facesContext, polygon) + "("
-				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");");
+				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");\r\n");
 
 	}
 
@@ -95,10 +95,10 @@ public class PolygonEncoder {
 				+ "\", " + polygon.getLineWidth() + ","
 				+ polygon.getStrokeOpacity() + ", \""
 				+ polygon.getHexFillColor() + "\", " + polygon.getFillOpacity()
-				+ ");");
+				+ ");\r\n");
 
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-				+ ".addOverlay(polygon_" + polygon.getId() + ");");
+				+ ".addOverlay(polygon_" + polygon.getId() + ");\r\n");
 
 		// encode polygon events.
 		for (Iterator iterator = polygon.getChildren().iterator(); iterator

@@ -71,7 +71,7 @@ public class StreetViewPanoramaRenderer extends Renderer {
 
 		// declare the streetViewPanorama
 		if (streetViewPanorama.getJsVariable() != null) {
-			writer.write("\r\n var " + streetViewPanorama.getJsVariable() + ";");
+			writer.write("\r\n var " + streetViewPanorama.getJsVariable() + ";\r\n");
 		}
 	}
 
