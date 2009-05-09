@@ -142,6 +142,16 @@
 		</attribute>					
 		
 		<attribute>
+			<name>autoReshape</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<defaultValue>false</defaultValue>					
+			<description>
+			Setting this flag to true enables the map to be resized to view all of the markers on it.
+			</description>
+		</attribute>		
+		
+		<attribute>
 			<name>jsVariable</name>
 			<required>false</required>
 			<type>java.lang.String</type>				
