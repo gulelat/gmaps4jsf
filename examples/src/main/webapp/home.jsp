@@ -16,7 +16,14 @@
 	                    <h:outputLink value="pages/simple.jsf">
 	                        <f:verbatim>A simple map with no other components</f:verbatim>
 	                    </h:outputLink>
-	                </h:panelGrid>         
+	                </h:panelGrid>      
+	                
+	                <h:outputText value="Auto-Arrange Map" />
+	                <h:panelGrid style="padding-left:25px">
+	                    <h:outputLink value="pages/autoReshape.jsf">
+	                        <f:verbatim>A map that is reshaped according to its markers' positions</f:verbatim>
+	                    </h:outputLink>
+	                </h:panelGrid>   	                   
 	                
 	                <h:outputText value="Markers and Information Windows" />
 	                <h:panelGrid style="padding-left:25px">                
