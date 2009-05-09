@@ -46,7 +46,7 @@ public class StreetViewPanoramaRendererUtil {
 			String errorMessageScript = "";	
 			writer.write("var geocoder_" + streetViewPanoramaComponent.getId()
 					+ " = new " + ComponentConstants.JS_GClientGeocoder_OBJECT
-					+ "();");
+					+ "();\r\n");
 			
 			if ("true".equalsIgnoreCase(streetViewPanoramaComponent
 					.getShowLocationNotFoundMessage())) {
@@ -77,7 +77,7 @@ public class StreetViewPanoramaRendererUtil {
 					+ ComponentConstants.JS_GSTREET_VIEW_PANORAMA_CORE_OBJECT
 					+ "(document.getElementById(\""
 					+ streetViewPanoramaComponent.getClientId(facesContext)
-					+ "\")," + streetViewPanoramaOptions + ");");
+					+ "\")," + streetViewPanoramaOptions + ");\r\n");
 
 			writer.write("}" + "}\n" + ");\n");
 		} else {
@@ -95,7 +95,7 @@ public class StreetViewPanoramaRendererUtil {
 					+ ComponentConstants.JS_GSTREET_VIEW_PANORAMA_CORE_OBJECT
 					+ "(document.getElementById(\""
 					+ streetViewPanoramaComponent.getClientId(facesContext)
-					+ "\")," + streetViewPanoramaOptions + ");");
+					+ "\")," + streetViewPanoramaOptions + ");\r\n");
 		}
 
 		// encode StreetViewPanorama events.
