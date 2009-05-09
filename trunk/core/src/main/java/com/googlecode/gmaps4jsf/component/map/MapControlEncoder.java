@@ -47,15 +47,15 @@ public class MapControlEncoder {
 					+ "(" + mapControl.getPosition() + ", new "
 					+ ComponentConstants.JS_GSize_OBJECT + "("
 					+ mapControl.getOffsetWidth() + ","
-					+ mapControl.getOffsetHeight() + ")" + ");");
+					+ mapControl.getOffsetHeight() + ")" + ");\r\n");
 
 			writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
 					+ ".addControl(new " + mapControl.getName()
-					+ "(), mapControlPosition_" + mapControl.getId() + ");");
+					+ "(), mapControlPosition_" + mapControl.getId() + ");\r\n");
 		} else {
 
 			writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-					+ ".addControl(new " + mapControl.getName() + "());");
+					+ ".addControl(new " + mapControl.getName() + "());\r\n");
 
 		}
 	}
@@ -86,6 +86,6 @@ public class MapControlEncoder {
 
 		writer.write(ComponentConstants.JS_CREATE_MAP_CONTROLS_FUNCTION_PREFIX
 				+ mapComponent.getId() + "("
-				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");");
+				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");\r\n");
 	}
 }

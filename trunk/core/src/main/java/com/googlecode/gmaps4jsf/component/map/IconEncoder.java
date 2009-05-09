@@ -42,37 +42,37 @@ public class IconEncoder {
 
 		writer.write("var iconObject = new "
 				+ ComponentConstants.JS_GIcon_OBJECT + "("
-				+ ComponentConstants.JS_CONST_G_DEFAULT_ICON_OBJECT + ");");
+				+ ComponentConstants.JS_CONST_G_DEFAULT_ICON_OBJECT + ");\r\n");
 
 		if (iconComponent.getShadowImageURL() != null) {
 			writer.write("iconObject.shadow = " + "\""
-					+ iconComponent.getShadowImageURL() + "\";");
+					+ iconComponent.getShadowImageURL() + "\";\r\n");
 		}
 
 		writer.write("iconObject.iconSize = " + "new "
 				+ ComponentConstants.JS_GSize_OBJECT + "("
 				+ iconComponent.getWidth() + ", " + iconComponent.getHeight()
-				+ ");");
+				+ ");\r\n");
 
 		writer.write("iconObject.shadowSize = new "
 				+ ComponentConstants.JS_GSize_OBJECT + "("
 				+ iconComponent.getShadowWidth() + ", "
-				+ iconComponent.getShadowHeight() + ");");
+				+ iconComponent.getShadowHeight() + ");\r\n");
 
 		writer.write("iconObject.iconAnchor = new "
 				+ ComponentConstants.JS_GPoint_OBJECT + "("
 				+ iconComponent.getXcoordAnchor() + ", "
-				+ iconComponent.getYcoordAnchor() + ");");
+				+ iconComponent.getYcoordAnchor() + ");\r\n");
 
 		writer.write("iconObject.infoWindowAnchor = new "
 				+ ComponentConstants.JS_GPoint_OBJECT + "("
 				+ iconComponent.getXcoordInfoWindowAnchor() + ", "
-				+ iconComponent.getYcoordInfoWindowAnchor() + ");");
+				+ iconComponent.getYcoordInfoWindowAnchor() + ");\r\n");
 
 		writer.write("iconObject.image = \"" + iconComponent.getImageURL()
-				+ "\";");
+				+ "\";\r\n");
 
-		writer.write("return iconObject;");
+		writer.write("return iconObject;\r\n");
 		writer.write("}");
 	}
 
