@@ -51,7 +51,7 @@ public class MapRenderer extends Renderer {
 			ResponseWriter writer) throws IOException {
 
 		if (map.getJsVariable() != null) {
-			writer.write("\r\n var " + map.getJsVariable() + ";");
+			writer.write("\r\n var " + map.getJsVariable() + ";\r\n");
 		}
 
 		for (Iterator iterator = map.getChildren().iterator(); iterator
@@ -61,22 +61,22 @@ public class MapRenderer extends Renderer {
 			if (component instanceof Marker) {
 				Marker marker = (Marker) component;
 				if (marker.getJsVariable() != null) {
-					writer.write("\r\n var " + marker.getJsVariable() + ";");
+					writer.write("\r\n var " + marker.getJsVariable() + ";\r\n");
 				}
 			} else if (component instanceof Polyline) {
 				Polyline polyline = (Polyline) component;
 				if (polyline.getJsVariable() != null) {
-					writer.write("\r\n var " + polyline.getJsVariable() + ";");
+					writer.write("\r\n var " + polyline.getJsVariable() + ";\r\n");
 				}
 			} else if (component instanceof Polygon) {
 				Polygon polygon = (Polygon) component;
 				if (polygon.getJsVariable() != null) {
-					writer.write("\r\n var " + polygon.getJsVariable() + ";");
+					writer.write("\r\n var " + polygon.getJsVariable() + ";\r\n");
 				}
 			} else if (component instanceof GroundOverlay) {
 				GroundOverlay groundOverlay = (GroundOverlay) component;
 				if (groundOverlay.getJsVariable() != null) {
-					writer.write("\r\n var " + groundOverlay.getJsVariable() + ";");
+					writer.write("\r\n var " + groundOverlay.getJsVariable() + ";\r\n");
 				}
 			}		
 		}
@@ -91,38 +91,40 @@ public class MapRenderer extends Renderer {
 	 * @throws IOException
 	 */
 	private void startEncodingMapRendererWrapper(FacesContext facesContext,
-			Map mapComponent, ResponseWriter writer) throws IOException {
+			Map map, ResponseWriter writer) throws IOException {
 
 		writer.write("function " + ComponentConstants.JS_RENDER_MAP_FUNC
-				+ mapComponent.getId() + "(){");
+				+ map.getId() + "(){");
+		
+		if (MapRendererUtil.isAutoReshapeMap(map)) {
+			MapRendererUtil.encodeMapAutoReshapeFunctionScript(map, writer);
+		}
 
 		HTMLInfoWindowEncoder.encodeHTMLInfoWindowsFunctionScript(
-				facesContext, mapComponent, writer);
+				facesContext, map, writer);
 
 		MapControlEncoder.encodeMapControlsFunctionScript(facesContext,
-				mapComponent, writer);
+				map, writer);
 		
 		EventEncoder.encodeEventListenersFunctionScript(facesContext,
-				mapComponent, writer, ComponentConstants.JS_GMAP_BASE_VARIABLE);
-		
-		//PolylineEncoder.encodePolylinesFunctionScript(facesContext,
-		//		mapComponent, writer);
-		
-		//PolygonEncoder.encodePolygonsFunctionScript(facesContext, mapComponent,
-		//		writer);
+				map, writer, ComponentConstants.JS_GMAP_BASE_VARIABLE);
 		
 		GroundOverlayEncoder.encodeGroundOverlaysFunctionScript(facesContext,
-				mapComponent, writer);
+				map, writer);
 		
-		MapRendererUtil.startEncodingMapScript(facesContext, mapComponent, writer);		
+		MapRendererUtil.startEncodingMapScript(facesContext, map, writer);		
 	}
 	
 	private void endEncodingMapRendererWrapper(FacesContext facesContext,
-			Map mapComponent, ResponseWriter writer) throws IOException {
-		
-		MapRendererUtil.endEncodingMapScript(facesContext, mapComponent, writer);	
+			Map map, ResponseWriter writer) throws IOException {
 
-		writer.write("}");		
+		MapRendererUtil.endEncodingMapScript(facesContext, map, writer);
+		
+		if (MapRendererUtil.isAutoReshapeMap(map)) {
+			MapRendererUtil.reshapeMapToCurrentBounds(map, writer);
+		}
+		
+		writer.write("}");
 	}
 	
 	private void callMapRendererWrapper(FacesContext facesContext,

@@ -47,13 +47,13 @@ public class EventEncoder {
 			// should be removed
 			writer.write(ComponentConstants.JS_GEVENT_OBJECT
 					+ ".clearInstanceListeners(" + eventSourceBaseVariable
-					+ ");");
+					+ ");\r\n");
 		}
 		
 		writer.write(ComponentConstants.JS_GEVENT_OBJECT + ".addListener("
 				+ eventSourceBaseVariable + ", \""
 				+ eventListener.getEventName() + "\", "
-				+ eventListener.getJsFunction() + ");");
+				+ eventListener.getJsFunction() + ");\r\n");
 
 	}
 
@@ -86,6 +86,6 @@ public class EventEncoder {
 						+ eventSource.getId()
 						+ "("
 						+ eventSourceBaseVariable
-						+ ");");
+						+ ");\r\n");
 	}
 }

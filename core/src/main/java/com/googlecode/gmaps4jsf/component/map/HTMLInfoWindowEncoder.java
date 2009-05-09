@@ -61,11 +61,11 @@ public class HTMLInfoWindowEncoder {
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
 				+ ".openInfoWindowHtml(new "
 				+ ComponentConstants.JS_GLatLng_OBJECT + "(" + latitude + ", "
-				+ longitude + "), \"" + window.getHtmlText() + "\");");	
+				+ longitude + "), \"" + window.getHtmlText() + "\");\r\n");	
 		
 		writer.write("var window_" + window.getId() + " = "
 				+ ComponentConstants.JS_GMAP_BASE_VARIABLE
-				+ ".getInfoWindow();");	
+				+ ".getInfoWindow();\r\n");	
 	
 		// encode window events.
 		for (Iterator iterator = window.getChildren().iterator(); iterator
@@ -97,11 +97,11 @@ public class HTMLInfoWindowEncoder {
 			throws IOException {
 
 		writer.write(ComponentConstants.CONST_MARKER_PREFIX + marker.getId()
-				+ ".openInfoWindowHtml(\"" + window.getHtmlText() + "\");");
+				+ ".openInfoWindowHtml(\"" + window.getHtmlText() + "\");\r\n");
 
 		writer.write("var window_" + window.getId() + " = "
 				+ ComponentConstants.JS_GMAP_BASE_VARIABLE
-				+ ".getInfoWindow();");
+				+ ".getInfoWindow();\r\n");
 
 		// encode window events.
 		for (Iterator iterator = window.getChildren().iterator(); iterator
@@ -144,6 +144,6 @@ public class HTMLInfoWindowEncoder {
 		writer.write(ComponentConstants.JS_CREATE_HTMLINFOWINDOWS_FUNCTION_PREFIX
 						+ mapComponent.getId()
 						+ "("
-						+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");");
+						+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");\r\n");
 	}	
 }
