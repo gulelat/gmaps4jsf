@@ -24,6 +24,7 @@ import java.util.Iterator;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.event.ValueChangeListener;
 
 import com.googlecode.gmaps4jsf.component.eventlistener.EventListener;
 import com.googlecode.gmaps4jsf.component.htmlInformationWindow.HTMLInformationWindow;
@@ -192,6 +193,9 @@ public class MarkerEncoder {
 	private static void saveMarkerState(FacesContext facesContext, Map map,
 			Marker marker, ResponseWriter writer) throws IOException {
 
+		UIComponent parentForm = ComponentUtils.findParentForm(facesContext, marker);
+		
+		// Start creating the drag end listener.
 		String markerDragEndHandler = "function " + "marker_" + marker.getId()
 				+ "_dragEnd(latlng) " + "{\r\n" +
 
@@ -219,19 +223,26 @@ public class MarkerEncoder {
 				+ "}\r\n" 
 				
 				
-				//+ "alert(\"The old marker state before: \" + markersState);\r\n"					
-				
 				+ "if (markersState != '' && markersState.charAt(markersState.length - 1) != '&') {\r\n" 
 					+ "markersState += '&';\r\n"
 				+ "}\r\n" 
 				
 				+ "markersState += \"" + marker.getId() + "=\" + latlng;\r\n" +
 				
-				//"alert(\"states are: \" + markersState);\r\n" +
-
+				// Save the marker state.
 				"document.getElementById(\""
 				+ ComponentUtils.getMapStateHiddenFieldId(map)
-				+ "\").value = markersState;\r\n" + "}"
+				+ "\").value = markersState;\r\n" 
+				
+				// Submit the form on marker value change if required.
+				+ ("true".equalsIgnoreCase(marker.getSubmitOnValueChange()) ? 
+						"document.getElementById('" + parentForm.getId() + "')." + "submit();\n\r;"
+						: "") 
+				
+				// End the drag end listener.
+				+ "}\r\n"
+				
+				// Attach the listener to the marker drag end event.
 				+ ComponentConstants.JS_GEVENT_OBJECT + ".addListener("
 				+ "marker_" + marker.getId() + ", \"dragend\", " + "marker_"
 				+ marker.getId() + "_dragEnd" + ");\r\n";
@@ -242,7 +253,7 @@ public class MarkerEncoder {
 	private static void encodeMarkerChildren(FacesContext facesContext,
 			Marker marker, ResponseWriter writer) throws IOException {
 
-		// encode marker events.
+		// encode marker client side events.
 		for (Iterator iterator = marker.getChildren().iterator(); iterator
 				.hasNext();) {
 			UIComponent component = (UIComponent) iterator.next();
