@@ -60,12 +60,19 @@
 	                    </h:outputLink>                     
 	                </h:panelGrid>	                
 	                
-	                <h:outputText value="EventListeners" />
+	                <h:outputText value="Client-side EventListeners" />
 	                <h:panelGrid style="padding-left:25px">                
 	                    <h:outputLink value="pages/mapEvents.jsf">
-	                    	<f:verbatim>Listening to events on your map and markers</f:verbatim>
+	                    	<f:verbatim>Listening to client-side events on your map and markers</f:verbatim>
 	                    </h:outputLink>                     
-	                </h:panelGrid>	  	                
+	                </h:panelGrid>	  	  
+	                
+	                <h:outputText value="Server-side EventListeners" />
+	                <h:panelGrid style="padding-left:25px">                
+	                    <h:outputLink value="pages/markersServerSideEvents.jsf">
+	                    	<f:verbatim>Listening to server-side events on markers</f:verbatim>
+	                    </h:outputLink>                     
+	                </h:panelGrid>	  	   	                              
 	                
 	                <h:outputText value="Geocoding" />
 	                <h:panelGrid style="padding-left:25px">          

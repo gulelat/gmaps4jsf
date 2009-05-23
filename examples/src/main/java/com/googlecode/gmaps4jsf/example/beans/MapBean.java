@@ -23,26 +23,34 @@ import javax.faces.event.ValueChangeEvent;
 
 /**
  * @author Hazem Saleh
- * @date Jan 4, 2009
- * The FavoritePlace is used as a bean for the draggable marker example.
+ * @date May 23, 2009
+ * The MapBean is used for the server side events example of GMaps4JSF.
  */
-public class FavoritePlace {
-	String longitude;
-	String latitude;
-	
-	public String getLatitude() {
-		return latitude;
-	}
-	
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
-	
-	public String getLongitude() {
-		return longitude;
-	}
+public class MapBean {
+    String firstMarkerStatus;
+    String secondMarkerStatus;
 
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
-	}
+    public String getFirstMarkerStatus() {
+        return firstMarkerStatus;
+    }
+
+    public void setFirstMarkerStatus(String firstMarkerStatus) {
+        this.firstMarkerStatus = firstMarkerStatus;
+    }
+
+    public String getSecondMarkerStatus() {
+        return secondMarkerStatus;
+    }
+
+    public void setSecondMarkerStatus(String secondMarkerStatus) {
+        this.secondMarkerStatus = secondMarkerStatus;
+    }
+   
+    public void processValueChangeForFirstMarker(ValueChangeEvent event) throws AbortProcessingException {
+        firstMarkerStatus = event.getNewValue().toString();
+    }
+
+    public void processValueChangeForSecondMarker(ValueChangeEvent event) throws AbortProcessingException {
+        secondMarkerStatus = event.getNewValue().toString();
+    }    
 }
