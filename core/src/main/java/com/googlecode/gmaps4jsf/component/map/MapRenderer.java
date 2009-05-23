@@ -43,210 +43,186 @@ import com.googlecode.gmaps4jsf.util.MapRendererUtil;
  */
 public class MapRenderer extends Renderer {
 
-	/*
-	 * Declare the JS variables for the map and its related objects 
-	 * such as markers, polygons, polylines ...
-	 */
-	private void declareJSVariables(FacesContext facesContext, Map map,
-			ResponseWriter writer) throws IOException {
+    /*
+     * Declare the JS variables for the map and its related objects such as
+     * markers, polygons, polylines ...
+     */
+    private void declareJSVariables(FacesContext facesContext, Map map, ResponseWriter writer) throws IOException {
 
-		if (map.getJsVariable() != null) {
-			writer.write("\r\n var " + map.getJsVariable() + ";\r\n");
-		}
+        if (map.getJsVariable() != null) {
+            writer.write("\r\n var " + map.getJsVariable() + ";\r\n");
+        }
 
-		for (Iterator iterator = map.getChildren().iterator(); iterator
-				.hasNext();) {
-			UIComponent component = (UIComponent) iterator.next();
+        for (Iterator iterator = map.getChildren().iterator(); iterator.hasNext();) {
+            UIComponent component = (UIComponent) iterator.next();
 
-			if (component instanceof Marker) {
-				Marker marker = (Marker) component;
-				if (marker.getJsVariable() != null) {
-					writer.write("\r\n var " + marker.getJsVariable() + ";\r\n");
-				}
-			} else if (component instanceof Polyline) {
-				Polyline polyline = (Polyline) component;
-				if (polyline.getJsVariable() != null) {
-					writer.write("\r\n var " + polyline.getJsVariable() + ";\r\n");
-				}
-			} else if (component instanceof Polygon) {
-				Polygon polygon = (Polygon) component;
-				if (polygon.getJsVariable() != null) {
-					writer.write("\r\n var " + polygon.getJsVariable() + ";\r\n");
-				}
-			} else if (component instanceof GroundOverlay) {
-				GroundOverlay groundOverlay = (GroundOverlay) component;
-				if (groundOverlay.getJsVariable() != null) {
-					writer.write("\r\n var " + groundOverlay.getJsVariable() + ";\r\n");
-				}
-			}		
-		}
-	}
-	
-	/*
-	 * This is the core method that is responsible for the whole map rendering.
-	 * It encodes the scripts that would be used for rendering the map objects.
-	 * @param facesContext
-	 * @param mapComponent
-	 * @param writer
-	 * @throws IOException
-	 */
-	private void startEncodingMapRendererWrapper(FacesContext facesContext,
-			Map map, ResponseWriter writer) throws IOException {
+            if (component instanceof Marker) {
+                Marker marker = (Marker) component;
+                if (marker.getJsVariable() != null) {
+                    writer.write("\r\n var " + marker.getJsVariable() + ";\r\n");
+                }
+            } else if (component instanceof Polyline) {
+                Polyline polyline = (Polyline) component;
+                if (polyline.getJsVariable() != null) {
+                    writer.write("\r\n var " + polyline.getJsVariable() + ";\r\n");
+                }
+            } else if (component instanceof Polygon) {
+                Polygon polygon = (Polygon) component;
+                if (polygon.getJsVariable() != null) {
+                    writer.write("\r\n var " + polygon.getJsVariable() + ";\r\n");
+                }
+            } else if (component instanceof GroundOverlay) {
+                GroundOverlay groundOverlay = (GroundOverlay) component;
+                if (groundOverlay.getJsVariable() != null) {
+                    writer.write("\r\n var " + groundOverlay.getJsVariable() + ";\r\n");
+                }
+            }
+        }
+    }
 
-		writer.write("function " + ComponentConstants.JS_RENDER_MAP_FUNC
-				+ map.getId() + "(){");
-		
-		if (MapRendererUtil.isAutoReshapeMap(map)) {
-			MapRendererUtil.encodeMapAutoReshapeFunctionScript(map, writer);
-		}
+    /*
+     * This is the core method that is responsible for the whole map rendering.
+     * It encodes the scripts that would be used for rendering the map objects.
+     * @param facesContext @param mapComponent @param writer @throws IOException
+     */
+    private void startEncodingMapRendererWrapper(FacesContext facesContext, Map map, ResponseWriter writer)
+            throws IOException {
 
-		HTMLInfoWindowEncoder.encodeHTMLInfoWindowsFunctionScript(
-				facesContext, map, writer);
+        writer.write("function " + ComponentConstants.JS_RENDER_MAP_FUNC + map.getId() + "(){");
 
-		MapControlEncoder.encodeMapControlsFunctionScript(facesContext,
-				map, writer);
-		
-		EventEncoder.encodeEventListenersFunctionScript(facesContext,
-				map, writer, ComponentConstants.JS_GMAP_BASE_VARIABLE);
-		
-		GroundOverlayEncoder.encodeGroundOverlaysFunctionScript(facesContext,
-				map, writer);
-		
-		MapRendererUtil.startEncodingMapScript(facesContext, map, writer);		
-	}
-	
-	private void endEncodingMapRendererWrapper(FacesContext facesContext,
-			Map map, ResponseWriter writer) throws IOException {
+        if (MapRendererUtil.isAutoReshapeMap(map)) {
+            MapRendererUtil.encodeMapAutoReshapeFunctionScript(map, writer);
+        }
 
-		MapRendererUtil.endEncodingMapScript(facesContext, map, writer);
-		
-		if (MapRendererUtil.isAutoReshapeMap(map)) {
-			MapRendererUtil.reshapeMapToCurrentBounds(map, writer);
-		}
-		
-		writer.write("}");
-	}
-	
-	private void callMapRendererWrapper(FacesContext facesContext,
-			UIComponent component, ResponseWriter writer) throws IOException {
+        HTMLInfoWindowEncoder.encodeHTMLInfoWindowsFunctionScript(facesContext, map, writer);
 
-		writer.write(ComponentConstants.JS_RENDER_MAP_FUNC + component.getId()
-				+ "();\r\n");
-	}		
+        MapControlEncoder.encodeMapControlsFunctionScript(facesContext, map, writer);
 
-	private void encodeHTMLModel(FacesContext context, UIComponent component,
-			ResponseWriter writer) throws IOException {
+        EventEncoder.encodeEventListenersFunctionScript(facesContext, map, writer,
+                ComponentConstants.JS_GMAP_BASE_VARIABLE);
 
-		Map map = (Map) component;
+        GroundOverlayEncoder.encodeGroundOverlaysFunctionScript(facesContext, map, writer);
 
-		// encode map model.
-		writer.startElement(ComponentConstants.HTML_DIV, map);
+        MapRendererUtil.startEncodingMapScript(facesContext, map, writer);
+    }
 
-		writer.writeAttribute(ComponentConstants.HTML_ATTR_ID, map
-				.getClientId(context), ComponentConstants.HTML_ATTR_ID);
-		//writer.writeAttribute(ComponentConstants.HTML_ATTR_NAME, map
-		//		.getClientId(context), ComponentConstants.HTML_ATTR_NAME);
-		writer.writeAttribute(ComponentConstants.HTML_ATTR_STYLE, "width: "
-				+ map.getWidth() + "; height: " + map.getHeight(),
-				ComponentConstants.HTML_ATTR_STYLE);
+    private void endEncodingMapRendererWrapper(FacesContext facesContext, Map map, ResponseWriter writer)
+            throws IOException {
 
-		writer.endElement(ComponentConstants.HTML_DIV);
+        MapRendererUtil.endEncodingMapScript(facesContext, map, writer);
 
-		// encode map state holder.
-		Object mapState = ComponentUtils.getValueToRender(context, map);
-		
-		writer.startElement(ComponentConstants.HTML_INPUT, map);
+        if (MapRendererUtil.isAutoReshapeMap(map)) {
+            MapRendererUtil.reshapeMapToCurrentBounds(map, writer);
+        }
 
-		writer.writeAttribute(ComponentConstants.HTML_ATTR_ID, ComponentUtils
-						.getMapStateHiddenFieldId(map),
-						ComponentConstants.HTML_ATTR_ID);
-		writer.writeAttribute(ComponentConstants.HTML_ATTR_NAME, ComponentUtils
-				.getMapStateHiddenFieldId(map),
-				ComponentConstants.HTML_ATTR_NAME);
-		writer.writeAttribute(ComponentConstants.HTML_ATTR_TYPE,
-				ComponentConstants.HTML_ATTR_TYPE_HIDDEN,
-				ComponentConstants.HTML_ATTR_TYPE);
-		
-		if (null != mapState) {
-			writer.writeAttribute(ComponentConstants.HTML_ATTR_VALUE, mapState,
-					ComponentConstants.HTML_ATTR_VALUE);
-		}
+        writer.write("}");
+    }
 
-		writer.endElement(ComponentConstants.HTML_INPUT);
-	}
-	
-	private void startEncodingMapWorld(FacesContext context,
-			UIComponent component, ResponseWriter writer) throws IOException {
+    private void callMapRendererWrapper(FacesContext facesContext, UIComponent component, ResponseWriter writer)
+            throws IOException {
 
-		Map map = (Map) component;
+        writer.write(ComponentConstants.JS_RENDER_MAP_FUNC + component.getId() + "();\r\n");
+    }
 
-		writer.startElement(ComponentConstants.HTML_SCRIPT, component);
-		
-		writer.writeAttribute(ComponentConstants.HTML_SCRIPT_TYPE,
-				ComponentConstants.HTML_SCRIPT_LANGUAGE,
-				ComponentConstants.HTML_SCRIPT_TYPE);
+    private void encodeHTMLModel(FacesContext context, UIComponent component, ResponseWriter writer) throws IOException {
 
-		declareJSVariables(context, map, writer);
+        Map map = (Map) component;
 
-		ComponentUtils.startEncodingBrowserCompatabilityChecking(context,
-				component, writer);
+        // encode map model.
+        writer.startElement(ComponentConstants.HTML_DIV, map);
 
-		startEncodingMapRendererWrapper(context, map, writer);
-	}
-	
-	private void endEncodingMapWorld(FacesContext context,
-			UIComponent component, ResponseWriter writer) throws IOException {
+        writer.writeAttribute(ComponentConstants.HTML_ATTR_ID, map.getClientId(context),
+                ComponentConstants.HTML_ATTR_ID);
+        writer.writeAttribute(ComponentConstants.HTML_ATTR_STYLE, "width: " + map.getWidth() + "; height: "
+                + map.getHeight(), ComponentConstants.HTML_ATTR_STYLE);
 
-		Map mapComponent = (Map) component;
+        writer.endElement(ComponentConstants.HTML_DIV);
 
-		endEncodingMapRendererWrapper(context, mapComponent, writer);
+        // encode map state holder.
+        Object mapState = ComponentUtils.getValueToRender(context, map);
 
-		// determines whether to render map on window onload.
-		if ("true".equals(mapComponent.getRenderOnWindowLoad())) {
-			ComponentUtils.encodeJSFunctionInWindowOnLoad(writer,
-					ComponentConstants.JS_RENDER_MAP_FUNC + component.getId());
-		} else {
-			callMapRendererWrapper(context, component, writer);
-		}
+        writer.startElement(ComponentConstants.HTML_INPUT, map);
 
-		ComponentUtils.endEncodingBrowserCompatabilityChecking(context,
-				component, writer);
+        writer.writeAttribute(ComponentConstants.HTML_ATTR_ID, ComponentUtils.getMapStateHiddenFieldId(map),
+                ComponentConstants.HTML_ATTR_ID);
+        writer.writeAttribute(ComponentConstants.HTML_ATTR_NAME, ComponentUtils.getMapStateHiddenFieldId(map),
+                ComponentConstants.HTML_ATTR_NAME);
+        writer.writeAttribute(ComponentConstants.HTML_ATTR_TYPE, ComponentConstants.HTML_ATTR_TYPE_HIDDEN,
+                ComponentConstants.HTML_ATTR_TYPE);
 
-		writer.endElement(ComponentConstants.HTML_SCRIPT);
-	}	
+        if (null != mapState) {
+            writer.writeAttribute(ComponentConstants.HTML_ATTR_VALUE, mapState, ComponentConstants.HTML_ATTR_VALUE);
+        }
 
-	public boolean getRendersChildren() {
-		return true;
-	}	
-	
-	public void encodeBegin(FacesContext context, UIComponent component)
-			throws IOException {
+        writer.endElement(ComponentConstants.HTML_INPUT);
+    }
 
-		ComponentUtils.assertValidContext(context);
+    private void startEncodingMapWorld(FacesContext context, UIComponent component, ResponseWriter writer)
+            throws IOException {
 
-		ResponseWriter writer = context.getResponseWriter();
+        Map map = (Map) component;
 
-		encodeHTMLModel(context, component, writer);
+        writer.startElement(ComponentConstants.HTML_SCRIPT, component);
 
-		startEncodingMapWorld(context, component, writer);
-	}
+        writer.writeAttribute(ComponentConstants.HTML_SCRIPT_TYPE, ComponentConstants.HTML_SCRIPT_LANGUAGE,
+                ComponentConstants.HTML_SCRIPT_TYPE);
 
-	public void encodeEnd(FacesContext context, UIComponent component)
-			throws IOException {
+        declareJSVariables(context, map, writer);
 
-		ComponentUtils.assertValidContext(context);
+        ComponentUtils.startEncodingBrowserCompatabilityChecking(context, component, writer);
 
-		ResponseWriter writer = context.getResponseWriter();
+        startEncodingMapRendererWrapper(context, map, writer);
+    }
 
-		endEncodingMapWorld(context, component, writer);
-	}
-	
-	public void decode(FacesContext context, UIComponent component) {
-		Map map = (Map) component;
-		String submittedValue = (String) context.getExternalContext()
-				.getRequestParameterMap().get(
-						ComponentUtils.getMapStateHiddenFieldId(map));
-		
-		map.setSubmittedValue(submittedValue);
-	}	
+    private void endEncodingMapWorld(FacesContext context, UIComponent component, ResponseWriter writer)
+            throws IOException {
+
+        Map mapComponent = (Map) component;
+
+        endEncodingMapRendererWrapper(context, mapComponent, writer);
+
+        // determines whether to render map on window onload.
+        if ("true".equals(mapComponent.getRenderOnWindowLoad())) {
+            ComponentUtils.encodeJSFunctionInWindowOnLoad(writer, ComponentConstants.JS_RENDER_MAP_FUNC
+                    + component.getId());
+        } else {
+            callMapRendererWrapper(context, component, writer);
+        }
+
+        ComponentUtils.endEncodingBrowserCompatabilityChecking(context, component, writer);
+
+        writer.endElement(ComponentConstants.HTML_SCRIPT);
+    }
+
+    public boolean getRendersChildren() {
+        return true;
+    }
+
+    public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
+
+        ComponentUtils.assertValidContext(context);
+
+        ResponseWriter writer = context.getResponseWriter();
+
+        encodeHTMLModel(context, component, writer);
+
+        startEncodingMapWorld(context, component, writer);
+    }
+
+    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
+
+        ComponentUtils.assertValidContext(context);
+
+        ResponseWriter writer = context.getResponseWriter();
+
+        endEncodingMapWorld(context, component, writer);
+    }
+
+    public void decode(FacesContext context, UIComponent component) {
+        Map map = (Map) component;
+        String submittedValue = (String) context.getExternalContext().getRequestParameterMap().get(
+                ComponentUtils.getMapStateHiddenFieldId(map));
+
+        map.setSubmittedValue(submittedValue);
+    }
 }
