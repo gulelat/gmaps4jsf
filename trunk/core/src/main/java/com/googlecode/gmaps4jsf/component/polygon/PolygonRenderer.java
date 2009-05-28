@@ -47,9 +47,9 @@ public class PolygonRenderer extends Renderer {
 		Map parentMap = (Map) ComponentUtils.findParentMap(context, polygon);
 
 		PolygonEncoder.encodePolygonFunctionScript(context, parentMap, polygon,
-				writer);
+				                                   writer);
 
 		PolygonEncoder.encodePolygonFunctionScriptCall(context, parentMap,
-				polygon, writer);
+				                                       polygon, writer);
 	}
 }

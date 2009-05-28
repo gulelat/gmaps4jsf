@@ -60,7 +60,7 @@ public class PolygonEncoder {
 
 		writer.write(ComponentConstants.JS_CREATE_POLYGON_FUNCTION_PREFIX
 				+ getUniquePolygonId(facesContext, polygon) + "("
-				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");\r\n");
+				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");     ");
 
 	}
 
@@ -91,14 +91,14 @@ public class PolygonEncoder {
 		// encode the polygon.
 		writer.write("var polygon_" + polygon.getId() + "  = new "
 				+ ComponentConstants.JS_GPolygon_OBJECT + "(["
-				+ polygonLinesStr + "], \"" + polygon.getHexStrokeColor()
-				+ "\", " + polygon.getLineWidth() + ","
-				+ polygon.getStrokeOpacity() + ", \""
-				+ polygon.getHexFillColor() + "\", " + polygon.getFillOpacity()
-				+ ");\r\n");
+				+ polygonLinesStr + "], '" + polygon.getHexStrokeColor()
+				+ "', " + polygon.getLineWidth() + ","
+				+ polygon.getStrokeOpacity() + ", '"
+				+ polygon.getHexFillColor() + "', " + polygon.getFillOpacity()
+				+ ");     ");
 
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-				+ ".addOverlay(polygon_" + polygon.getId() + ");\r\n");
+				+ ".addOverlay(polygon_" + polygon.getId() + ");     ");
 
 		// encode polygon events.
 		for (Iterator iterator = polygon.getChildren().iterator(); iterator
@@ -122,8 +122,8 @@ public class PolygonEncoder {
 			Polygon polygon, ResponseWriter writer) throws IOException {
 
 		if (polygon.getJsVariable() != null) {
-			writer.write("\r\n" + polygon.getJsVariable() + " = " + "polygon_"
-					+ polygon.getId() + ";\r\n");
+			writer.write("     " + polygon.getJsVariable() + " = " + "polygon_"
+					+ polygon.getId() + ";     ");
 		}
 	}
 

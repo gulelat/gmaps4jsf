@@ -57,8 +57,10 @@ public class MarkerRenderer extends Renderer {
         Marker marker = (Marker) component;
         Map map = (Map) ComponentUtils.findParentMap(context, marker);
         String mapState = (String) context.getExternalContext()
-                .getRequestParameterMap().get(
-                        ComponentUtils.getMapStateHiddenFieldId(map));
+                          .getRequestParameterMap().get
+                          (
+                          ComponentUtils.getMapStateHiddenFieldId(map)
+                          );
 
         decodeMarker(marker, mapState);
     }
@@ -76,7 +78,7 @@ public class MarkerRenderer extends Renderer {
     }
 
     private void decodeMarker(Marker marker, String mapState) {
-        if (mapState.indexOf(marker.getId()) != -1) {
+        if (mapState != null && mapState.indexOf(marker.getId()) != -1) {
             int start = mapState.indexOf(marker.getId() + "=");
             int end = mapState.indexOf(")", start);
             String markerState = mapState.substring(start, end + 1);

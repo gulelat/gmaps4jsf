@@ -36,6 +36,38 @@ import com.googlecode.gmaps4jsf.util.ComponentConstants;
  */
 public class EventEncoder {
 
+    public static void encodeEventListenersFunctionScript(
+            FacesContext facesContext, UIComponent eventSource,
+            ResponseWriter writer, String eventSourceBaseVariable)
+            throws IOException {
+
+        writer.write("function "
+                + ComponentConstants.JS_CREATE_EVENT_LISTENERS_FUNCTION_PREFIX
+                + eventSource.getId() + "(" + eventSourceBaseVariable + ") {");
+        for (Iterator iterator = eventSource.getChildren().iterator(); iterator
+                .hasNext();) {
+            UIComponent component = (UIComponent) iterator.next();
+
+            if (component instanceof EventListener) {
+                encodeEventListener(facesContext, eventSource, (EventListener) component,
+                        writer, eventSourceBaseVariable);
+            }
+        }
+        writer.write("}");
+    }   
+    
+    public static void encodeEventListenersFunctionScriptCall(
+            FacesContext facesContext, UIComponent eventSource,
+            ResponseWriter writer, String eventSourceBaseVariable)
+            throws IOException {
+
+        writer.write(ComponentConstants.JS_CREATE_EVENT_LISTENERS_FUNCTION_PREFIX
+                        + eventSource.getId()
+                        + "("
+                        + eventSourceBaseVariable
+                        + "); ");
+    }    
+    
 	private static void encodeEventListener(FacesContext facesContext,
 			UIComponent eventSource, EventListener eventListener,
 			ResponseWriter writer, String eventSourceBaseVariable)
@@ -47,45 +79,13 @@ public class EventEncoder {
 			// should be removed
 			writer.write(ComponentConstants.JS_GEVENT_OBJECT
 					+ ".clearInstanceListeners(" + eventSourceBaseVariable
-					+ ");\r\n");
+					+ "); ");
 		}
 		
 		writer.write(ComponentConstants.JS_GEVENT_OBJECT + ".addListener("
-				+ eventSourceBaseVariable + ", \""
-				+ eventListener.getEventName() + "\", "
-				+ eventListener.getJsFunction() + ");\r\n");
+				+ eventSourceBaseVariable + ", '"
+				+ eventListener.getEventName() + "', "
+				+ eventListener.getJsFunction() + "); ");
 
-	}
-
-	public static void encodeEventListenersFunctionScript(
-			FacesContext facesContext, UIComponent eventSource,
-			ResponseWriter writer, String eventSourceBaseVariable)
-			throws IOException {
-
-		writer.write("function "
-				+ ComponentConstants.JS_CREATE_EVENT_LISTENERS_FUNCTION_PREFIX
-				+ eventSource.getId() + "(" + eventSourceBaseVariable + ") {");
-		for (Iterator iterator = eventSource.getChildren().iterator(); iterator
-				.hasNext();) {
-			UIComponent component = (UIComponent) iterator.next();
-
-			if (component instanceof EventListener) {
-				encodeEventListener(facesContext, eventSource, (EventListener) component,
-						writer, eventSourceBaseVariable);
-			}
-		}
-		writer.write("}");
-	}	
-	
-	public static void encodeEventListenersFunctionScriptCall(
-			FacesContext facesContext, UIComponent eventSource,
-			ResponseWriter writer, String eventSourceBaseVariable)
-			throws IOException {
-
-		writer.write(ComponentConstants.JS_CREATE_EVENT_LISTENERS_FUNCTION_PREFIX
-						+ eventSource.getId()
-						+ "("
-						+ eventSourceBaseVariable
-						+ ");\r\n");
 	}
 }
