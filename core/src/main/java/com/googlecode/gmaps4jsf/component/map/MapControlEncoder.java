@@ -36,30 +36,6 @@ import com.googlecode.gmaps4jsf.util.ComponentConstants;
  */
 public class MapControlEncoder {
 
-	private static void encodeMapControl(FacesContext facesContext,
-			Map mapComponent, MapControl mapControl, ResponseWriter writer)
-			throws IOException {
-
-		if (mapControl.getPosition() != null) {
-
-			writer.write("var mapControlPosition_" + mapControl.getId()
-					+ " = new " + ComponentConstants.JS_GControlPosition_OBJECT
-					+ "(" + mapControl.getPosition() + ", new "
-					+ ComponentConstants.JS_GSize_OBJECT + "("
-					+ mapControl.getOffsetWidth() + ","
-					+ mapControl.getOffsetHeight() + ")" + ");\r\n");
-
-			writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-					+ ".addControl(new " + mapControl.getName()
-					+ "(), mapControlPosition_" + mapControl.getId() + ");\r\n");
-		} else {
-
-			writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-					+ ".addControl(new " + mapControl.getName() + "());\r\n");
-
-		}
-	}
-
 	public static void encodeMapControlsFunctionScript(
 			FacesContext facesContext, Map mapComponent, ResponseWriter writer)
 			throws IOException {
@@ -86,6 +62,30 @@ public class MapControlEncoder {
 
 		writer.write(ComponentConstants.JS_CREATE_MAP_CONTROLS_FUNCTION_PREFIX
 				+ mapComponent.getId() + "("
-				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");\r\n");
+				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");     ");
 	}
+    
+    private static void encodeMapControl(FacesContext facesContext,
+            Map mapComponent, MapControl mapControl, ResponseWriter writer)
+            throws IOException {
+
+        if (mapControl.getPosition() != null) {
+
+            writer.write("var mapControlPosition_" + mapControl.getId()
+                    + " = new " + ComponentConstants.JS_GControlPosition_OBJECT
+                    + "(" + mapControl.getPosition() + ", new "
+                    + ComponentConstants.JS_GSize_OBJECT + "("
+                    + mapControl.getOffsetWidth() + ","
+                    + mapControl.getOffsetHeight() + ")" + ");     ");
+
+            writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
+                    + ".addControl(new " + mapControl.getName()
+                    + "(), mapControlPosition_" + mapControl.getId() + ");     ");
+        } else {
+
+            writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
+                    + ".addControl(new " + mapControl.getName() + "());     ");
+
+        }
+    }    
 }

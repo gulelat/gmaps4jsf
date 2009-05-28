@@ -36,53 +36,7 @@ import com.googlecode.gmaps4jsf.util.ComponentConstants;
  * The HTMLInfoWindowEncoder is used for encpding the map info windows.
  */
 public class HTMLInfoWindowEncoder {
-
-	private static void encodeMapHTMLInfoWindow(FacesContext facesContext,
-			Map mapComponent, HTMLInformationWindow window,
-			ResponseWriter writer) throws IOException {
-
-		String longitude;
-		String latitude;
-
-		if (window.getLatitude() != null) {
-			latitude = window.getLatitude();
-		} else {
-			latitude = ComponentConstants.JS_GMAP_BASE_VARIABLE
-					+ ".getCenter().lat()";
-		}
-
-		if (window.getLongitude() != null) {
-			longitude = window.getLongitude();
-		} else {
-			longitude = ComponentConstants.JS_GMAP_BASE_VARIABLE
-					+ ".getCenter().lng()";
-		}
-
-		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-				+ ".openInfoWindowHtml(new "
-				+ ComponentConstants.JS_GLatLng_OBJECT + "(" + latitude + ", "
-				+ longitude + "), \"" + window.getHtmlText() + "\");\r\n");	
-		
-		writer.write("var window_" + window.getId() + " = "
-				+ ComponentConstants.JS_GMAP_BASE_VARIABLE
-				+ ".getInfoWindow();\r\n");	
-	
-		// encode window events.
-		for (Iterator iterator = window.getChildren().iterator(); iterator
-				.hasNext();) {
-			UIComponent component = (UIComponent) iterator.next();
-
-			if (component instanceof EventListener) {
-				EventEncoder.encodeEventListenersFunctionScript(facesContext,
-						window, writer, "window_"
-								+ window.getId());
-				EventEncoder.encodeEventListenersFunctionScriptCall(
-						facesContext, window, writer, "window_"
-								+ window.getId());
-			}
-		}			
-	}
-	
+    
 	/**
 	 * The (encodeMarkerHTMLInfoWindow) method is used for encoding the 
 	 * HTMLInfoWindow when its parent is the marker. 
@@ -97,11 +51,11 @@ public class HTMLInfoWindowEncoder {
 			throws IOException {
 
 		writer.write(ComponentConstants.CONST_MARKER_PREFIX + marker.getId()
-				+ ".openInfoWindowHtml(\"" + window.getHtmlText() + "\");\r\n");
+				+ ".openInfoWindowHtml('" + window.getHtmlText() + "');    ");
 
 		writer.write("var window_" + window.getId() + " = "
 				+ ComponentConstants.JS_GMAP_BASE_VARIABLE
-				+ ".getInfoWindow();\r\n");
+				+ ".getInfoWindow();    ");
 
 		// encode window events.
 		for (Iterator iterator = window.getChildren().iterator(); iterator
@@ -144,6 +98,52 @@ public class HTMLInfoWindowEncoder {
 		writer.write(ComponentConstants.JS_CREATE_HTMLINFOWINDOWS_FUNCTION_PREFIX
 						+ mapComponent.getId()
 						+ "("
-						+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");\r\n");
-	}	
+						+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");    ");
+	}
+    
+    private static void encodeMapHTMLInfoWindow(FacesContext facesContext,
+            Map mapComponent, HTMLInformationWindow window,
+            ResponseWriter writer) throws IOException {
+
+        String longitude;
+        String latitude;
+
+        if (window.getLatitude() != null) {
+            latitude = window.getLatitude();
+        } else {
+            latitude = ComponentConstants.JS_GMAP_BASE_VARIABLE
+                    + ".getCenter().lat()";
+        }
+
+        if (window.getLongitude() != null) {
+            longitude = window.getLongitude();
+        } else {
+            longitude = ComponentConstants.JS_GMAP_BASE_VARIABLE
+                    + ".getCenter().lng()";
+        }
+
+        writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
+                + ".openInfoWindowHtml(new "
+                + ComponentConstants.JS_GLatLng_OBJECT + "(" + latitude + ", "
+                + longitude + "), '" + window.getHtmlText() + "');    ");   
+        
+        writer.write("var window_" + window.getId() + " = "
+                + ComponentConstants.JS_GMAP_BASE_VARIABLE
+                + ".getInfoWindow();    "); 
+    
+        // encode window events.
+        for (Iterator iterator = window.getChildren().iterator(); iterator
+                .hasNext();) {
+            UIComponent component = (UIComponent) iterator.next();
+
+            if (component instanceof EventListener) {
+                EventEncoder.encodeEventListenersFunctionScript(facesContext,
+                        window, writer, "window_"
+                                + window.getId());
+                EventEncoder.encodeEventListenersFunctionScriptCall(
+                        facesContext, window, writer, "window_"
+                                + window.getId());
+            }
+        }           
+    }    
 }

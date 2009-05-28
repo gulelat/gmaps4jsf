@@ -48,9 +48,9 @@ public class PolylineRenderer extends Renderer {
 		Map parentMap = (Map) ComponentUtils.findParentMap(context, polyline);
 
 		PolylineEncoder.encodePolylineFunctionScript(context, parentMap, polyline,
-				writer);
+				                                     writer);
 
-		PolylineEncoder.encodePolylineFunctionScriptCall(context, parentMap,
-				polyline, writer);
+		PolylineEncoder.encodePolylineFunctionScriptCall(context, parentMap, polyline, 
+                                                         writer);
 	}
 }

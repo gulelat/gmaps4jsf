@@ -300,9 +300,13 @@ public class ComponentUtils {
 	public static UIComponent findParentForm(FacesContext context, UIComponent component) {
 		UIComponent parent = component;
 
-		while(!(parent instanceof UIForm)) {
+		while(parent != null && (!(parent instanceof UIForm))) {
 			parent = parent.getParent();
 		}
+        
+        if (parent == null) {
+            throw new RuntimeException("cannot find a standard parent form for gmaps4jsf component");
+        }
 
 		return parent;
 	}
@@ -342,21 +346,21 @@ public class ComponentUtils {
 	public static void encodeJSFunctionInWindowOnLoad(ResponseWriter writer,
 			String funcName) throws IOException {
 
-		String jsFunctionInWindowOnLoad = "\r\n// Inject code on the load of the window\r\n"
-				+ "var oldonload = window.onload;\r\n"
-				+ "if (typeof window.onload != 'function') {\r\n"
+		String jsFunctionInWindowOnLoad = "     /* Inject code on the load of the window */    "
+				+ "var oldonload = window.onload;     "
+				+ "if (typeof window.onload != 'function') {     "
 				+ "window.onload = "
 				+ funcName
-				+ ";\r\n"
-				+ "} else {\r\n"
-				+ "window.onload = function() {\r\n"
-				+ "if (oldonload) {\r\n"
-				+ "oldonload();\r\n"
-				+ "}\r\n"
+				+ ";     "
+				+ "} else {     "
+				+ "window.onload = function() {     "
+				+ "if (oldonload) {     "
+				+ "oldonload();     "
+				+ "}     "
 				+ funcName
-				+ "();\r\n"
-				+ "}\r\n"
-				+ "}\r\n";
+				+ "();     "
+				+ "}     "
+				+ "}     ";
 
 		writer.write(jsFunctionInWindowOnLoad);
 	}

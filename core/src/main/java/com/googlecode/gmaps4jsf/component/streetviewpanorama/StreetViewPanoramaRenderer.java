@@ -71,7 +71,7 @@ public class StreetViewPanoramaRenderer extends Renderer {
 
 		// declare the streetViewPanorama
 		if (streetViewPanorama.getJsVariable() != null) {
-			writer.write("\r\n var " + streetViewPanorama.getJsVariable() + ";\r\n");
+			writer.write("      var " + streetViewPanorama.getJsVariable() + ";     ");
 		}
 	}
 
@@ -97,7 +97,7 @@ public class StreetViewPanoramaRenderer extends Renderer {
 			UIComponent component, ResponseWriter writer) throws IOException {
 
 		writer.write(ComponentConstants.JS_RENDER_STREET_VIEW_PANORAMA_FUNC + component.getId()
-				+ "();\r\n");
+				+ "();     ");
 	}		
 
 	private void encodeStreetViewPanoramaScript(FacesContext facesContext,

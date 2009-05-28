@@ -60,7 +60,7 @@ public class PolylineEncoder {
 
 		writer.write(ComponentConstants.JS_CREATE_POLYLINE_FUNCTION_PREFIX
 				+ getUniquePolylineId(context, polyline) + "("
-				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");\r\n");
+				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");     ");
 	}
 
 	private static void encodePolyline(FacesContext facesContext,
@@ -79,12 +79,12 @@ public class PolylineEncoder {
 
 				Point point = (Point) component;
 
-				if (!polyLinesStr.equals("")) {
+				if (! polyLinesStr.equals("")) {
 					polyLinesStr += ",";
 				}
 
 				polyLinesStr += "new GLatLng(" + point.getLatitude() + ", "
-						+ point.getLongitude() + ")";
+						     + point.getLongitude() + ")";
 			}
 		}
 
@@ -98,12 +98,12 @@ public class PolylineEncoder {
 		// encode the polyline.
 		writer.write("var polyline_" + polyline.getId() + " = new "
 				+ ComponentConstants.JS_GPolyline_OBJECT + "([" + polyLinesStr
-				+ "], \"" + polyline.getHexaColor() + "\", "
+				+ "], '" + polyline.getHexaColor() + "', "
 				+ polyline.getLineWidth() + "," + polyline.getOpacity() + ", "
-				+ polyOptionsStr + ");\r\n");
+				+ polyOptionsStr + ");     ");
 
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-				+ ".addOverlay(polyline_" + polyline.getId() + ");\r\n");
+				    + ".addOverlay(polyline_" + polyline.getId() + ");     ");
 
 		// encode polyline events.
 		for (Iterator iterator = polyline.getChildren().iterator(); iterator
@@ -111,11 +111,19 @@ public class PolylineEncoder {
 			UIComponent component = (UIComponent) iterator.next();
 
 			if (component instanceof EventListener) {
-				EventEncoder.encodeEventListenersFunctionScript(facesContext,
-						polyline, writer, "polyline_" + polyline.getId());
-				EventEncoder.encodeEventListenersFunctionScriptCall(
-						facesContext, polyline, writer, "polyline_"
-								+ polyline.getId());
+				EventEncoder.encodeEventListenersFunctionScript(
+                                                                facesContext,
+						                                        polyline, 
+                                                                writer, 
+                                                                "polyline_" + polyline.getId()
+                                                                );
+				EventEncoder.encodeEventListenersFunctionScriptCall
+                                                                (
+                                                                 facesContext, 
+                                                                 polyline, 
+                                                                 writer, 
+                                                                 "polyline_"+ polyline.getId()
+                                                                 );
 			}
 		}
 
@@ -127,8 +135,8 @@ public class PolylineEncoder {
 			Polyline polyline, ResponseWriter writer) throws IOException {
 
 		if (polyline.getJsVariable() != null) {
-			writer.write("\r\n" + polyline.getJsVariable() + " = "
-					+ "polyline_" + polyline.getId() + ";\r\n");
+			writer.write("     " + polyline.getJsVariable() + " = "
+					    + "polyline_" + polyline.getId() + ";     ");
 		}
 	}
 

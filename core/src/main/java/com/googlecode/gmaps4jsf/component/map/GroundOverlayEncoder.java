@@ -35,56 +35,7 @@ import com.googlecode.gmaps4jsf.util.ComponentConstants;
  * The GroundOverlayEncoder is used for encoding the map ground overlay.
  */
 public class GroundOverlayEncoder {
-
-	private static void encodeGroundOverlay(FacesContext facesContext,
-			Map mapComponent, GroundOverlay groundOverlay, ResponseWriter writer)
-			throws IOException {
-	
-		// encode the groundOverlay.
-		writer.write("var boundaries = new "
-				+ ComponentConstants.JS_GLatLngBounds_OBJECT + "(new "
-				+ ComponentConstants.JS_GLatLng_OBJECT + "("
-				+ groundOverlay.getStartLatitude() + ","
-				+ groundOverlay.getStartLongitude() + "), " + "new "
-				+ ComponentConstants.JS_GLatLng_OBJECT + "("
-				+ groundOverlay.getEndLatitude() + ","
-				+ groundOverlay.getEndLongitude() + "));");
-
-		writer.write("var groundOverlay_" + groundOverlay.getId() + " = new "
-				+ ComponentConstants.JS_GGroundOverlay_OBJECT + "(\""
-				+ groundOverlay.getImageURL() + "\", boundaries);");
-
-		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-				+ ".addOverlay(groundOverlay_" + groundOverlay.getId() + ");");
-
-		// encode GroundOverlay events.
-		for (Iterator iterator = groundOverlay.getChildren().iterator(); iterator
-				.hasNext();) {
-			UIComponent component = (UIComponent) iterator.next();
-
-			if (component instanceof EventListener) {
-				EventEncoder.encodeEventListenersFunctionScript(facesContext,
-						groundOverlay, writer, "groundOverlay_"
-								+ groundOverlay.getId());
-				EventEncoder.encodeEventListenersFunctionScriptCall(
-						facesContext, groundOverlay, writer, "groundOverlay_"
-								+ groundOverlay.getId());
-			}
-		}			
-		
-		// update GroundOverlay user variable.
-		updateGroundOverlayJSVariable(facesContext, groundOverlay, writer);
-	}
-	
-	private static void updateGroundOverlayJSVariable(FacesContext facesContext,
-			GroundOverlay groundOverlay, ResponseWriter writer) throws IOException {
-
-		if (groundOverlay.getJsVariable() != null) {
-			writer.write("\r\n" + groundOverlay.getJsVariable() + " = " + "groundOverlay_"
-					+ groundOverlay.getId() + ";\r\n");
-		}
-	}	
-	
+    
 	public static void encodeGroundOverlaysFunctionScript(
 			FacesContext facesContext, Map mapComponent, ResponseWriter writer)
 			throws IOException {
@@ -114,4 +65,53 @@ public class GroundOverlayEncoder {
 				+ mapComponent.getId() + "("
 				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");");
 	}
+    
+    private static void encodeGroundOverlay(FacesContext facesContext,
+            Map mapComponent, GroundOverlay groundOverlay, ResponseWriter writer)
+            throws IOException {
+    
+        // encode the groundOverlay.
+        writer.write("var boundaries = new "
+                + ComponentConstants.JS_GLatLngBounds_OBJECT + "(new "
+                + ComponentConstants.JS_GLatLng_OBJECT + "("
+                + groundOverlay.getStartLatitude() + ","
+                + groundOverlay.getStartLongitude() + "), " + "new "
+                + ComponentConstants.JS_GLatLng_OBJECT + "("
+                + groundOverlay.getEndLatitude() + ","
+                + groundOverlay.getEndLongitude() + "));");
+
+        writer.write("var groundOverlay_" + groundOverlay.getId() + " = new "
+                + ComponentConstants.JS_GGroundOverlay_OBJECT + "('"
+                + groundOverlay.getImageURL() + "', boundaries);");
+
+        writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
+                + ".addOverlay(groundOverlay_" + groundOverlay.getId() + ");");
+
+        // encode GroundOverlay events.
+        for (Iterator iterator = groundOverlay.getChildren().iterator(); iterator
+                .hasNext();) {
+            UIComponent component = (UIComponent) iterator.next();
+
+            if (component instanceof EventListener) {
+                EventEncoder.encodeEventListenersFunctionScript(facesContext,
+                        groundOverlay, writer, "groundOverlay_"
+                                + groundOverlay.getId());
+                EventEncoder.encodeEventListenersFunctionScriptCall(
+                        facesContext, groundOverlay, writer, "groundOverlay_"
+                                + groundOverlay.getId());
+            }
+        }           
+        
+        // update GroundOverlay user variable.
+        updateGroundOverlayJSVariable(facesContext, groundOverlay, writer);
+    }
+    
+    private static void updateGroundOverlayJSVariable(FacesContext facesContext,
+            GroundOverlay groundOverlay, ResponseWriter writer) throws IOException {
+
+        if (groundOverlay.getJsVariable() != null) {
+            writer.write("    " + groundOverlay.getJsVariable() + " = " + "groundOverlay_"
+                    + groundOverlay.getId() + ";    ");
+        }
+    }    
 }

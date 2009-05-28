@@ -118,8 +118,7 @@
 			This flag should be set to false if the map is inside a zone that will 
 			be updated by Ajax
 			</description>
-		</attribute>			
-		
+		</attribute>		
 		
 		<attribute>
 			<name>enableDragging</name>
@@ -160,7 +159,7 @@
 			It should unique. Use this attribute if you want to use write additional JavaScript
 			code for the map to customize it.
 			</description>
-		</attribute>				
+		</attribute>					
 				
 	</attributes>
 </component>
