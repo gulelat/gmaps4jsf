@@ -19,7 +19,7 @@
     		<m:map width="500px" height="500px" latitude="30.01" longitude="31.14">
     			<m:marker latitude="30.01" longitude="31.14"/>
     			<m:htmlInformationWindow latitude="30.01" longitude="31.14" 
-    			   htmlText="<center>Welcome to Cairo, Egypt<br><img height='30' width='50' src='http://www.appliedlanguage.com/flags_of_the_world/large_flag_of_egypt.gif'></center>"/>
+    			   htmlText="<center>Welcome to Cairo, Egypt<br><img height=30 width=50 src=http://www.appliedlanguage.com/flags_of_the_world/large_flag_of_egypt.gif></center>"/>
     		</m:map>
     	</h:form>
 	</f:view>
