@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+//-->
+
+<!DOCTYPE component SYSTEM "../misc/component.dtd" [
+<!ENTITY standard_uicomponent_attributes		SYSTEM "../entities/standard_uicomponent_attributes.xml">
+]>
+<component>
+	<tag>map</tag>
+	<tagClass>com.googlecode.gmaps4jsf.component.map.MapTag</tagClass>
+	<componentClass>com.googlecode.gmaps4jsf.component.map.Map</componentClass>
+	<componentType>com.googlecode.gmaps4jsf.Map</componentType>
+	<componentFamily>com.googlecode.gmaps4jsf</componentFamily>
+	<rendererType>com.googlecode.gmaps4jsf.component.map.MapRenderer</rendererType>
+	<rendererClass>com.googlecode.gmaps4jsf.component.map.MapRenderer</rendererClass>
+	<parent>javax.faces.component.UIInput</parent>
+	<attributes>
+		&standard_uicomponent_attributes;
+		<attribute>
+			<name>longitude</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<defaultValue>31.14</defaultValue>				
+			<description>The longitude you wish the map to point to</description>
+		</attribute>
+		<attribute>
+			<name>latitude</name>
+			<required>false</required>	
+			<type>java.lang.String</type>
+			<defaultValue>30.01</defaultValue>				
+			<description>The latitude you wish the map to point to</description>
+		</attribute>	
+		<attribute>
+			<name>address</name>
+			<required>false</required>
+			<type>java.lang.String</type>				
+			<description>
+						The address you wish the map to point to. 
+						If you use this attribute donot longitude or latitude attributes.
+			</description>
+		</attribute>	
+		<attribute>
+			<name>locationNotFoundErrorMessage</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<defaultValue>(GClientGeocoder) service not found the address location</defaultValue>					
+			<description>The error message that should appear if the address location doesnot exist</description>
+		</attribute>					
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<defaultValue>500</defaultValue>					
+			<description>The width of the map. Default value is 500.</description>
+		</attribute>	
+		<attribute>
+			<name>height</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<defaultValue>500</defaultValue>					
+			<description>The height of the map. Default value is 500.</description>
+		</attribute>		
+		<attribute>
+			<name>zoom</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<defaultValue>11</defaultValue>					
+			<description>The zoom value of the map. Default value is 11.</description>
+		</attribute>								
+		<attribute>
+			<name>type</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<defaultValue>G_HYBRID_MAP</defaultValue>					
+			<description>
+			The type of the map. 
+			It can be one of the following values (G_NORMAL_MAP, G_SATELLITE_MAP and G_HYBRID_MAP).
+			Default value is (G_HYBRID_MAP).
+			</description>
+		</attribute>		
+		
+		<attribute>
+			<name>renderOnWindowLoad</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<defaultValue>true</defaultValue>					
+			<description>
+			This flag determines whether to render the map on window load.
+			This flag should be set to false if the map is inside a zone that will 
+			be updated by Ajax
+			</description>
+		</attribute>			
+		
+		
+		<attribute>
+			<name>enableDragging</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<defaultValue>true</defaultValue>					
+			<description>
+			This flag determines whether to support map dragging. Default is true.
+			</description>
+		</attribute>	
+		
+		<attribute>
+			<name>addStreetOverlay</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<defaultValue>false</defaultValue>					
+			<description>
+			Setting this flag to true enables the map to work directly with the streetViewPanorama component.
+			</description>
+		</attribute>					
+		
+		<attribute>
+			<name>jsVariable</name>
+			<required>false</required>
+			<type>java.lang.String</type>				
+			<description>
+			This flag determines the JavaScript variable you want to use for referring to the map.
+			It should unique. Use this attribute if you want to use write additional JavaScript
+			code for the map to customize it.
+			</description>
+		</attribute>				
+				
+	</attributes>
+</component>
