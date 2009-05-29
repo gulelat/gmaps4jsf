@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: hazems
+Build-Jdk: 1.6.0_01
+Extension-Name: gmaps4jsf-examples-1.1.2-SNAPSHOT
+Implementation-Title: gmaps4jsf-examples-1.1.2-SNAPSHOT
+Implementation-Version: 1.1.2-SNAPSHOT
+
