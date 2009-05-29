@@ -11,8 +11,8 @@
   <url>http://code.google.com/p/gmaps4jsf/</url>
 
   <modules>
-	<module>maven</module>
-  	<module>core</module>
+    <module>maven</module>
+    <module>core</module>
     <module>examples</module>
   </modules>
 
