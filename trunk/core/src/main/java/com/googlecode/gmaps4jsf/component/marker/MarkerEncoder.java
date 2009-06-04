@@ -327,7 +327,7 @@ public class MarkerEncoder {
             Marker marker) {
         String markerID = marker.getClientId(facesContext);
 
-        return markerID.replace(":", "_");
+        return markerID.replace(':', '_');
     }
 
     private static String getMarkerOptions(FacesContext facesContext,
