@@ -77,7 +77,7 @@ public class MarkerEncoder {
         String[] markersState = ((String) mapState).split("&");
 
         for (int i = 0; i < markersState.length; ++i) {
-            if (markersState[i].contains(markerID)) {
+            if (markersState[i].indexOf(markerID) >= 0) {
                 return markersState[i].split("=")[1];
             }
         }
