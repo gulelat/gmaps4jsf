@@ -73,7 +73,12 @@ public class StreetViewPanoramaRendererUtil {
 
 			writer.write("var "
 					+ ComponentConstants.JS_GSTREET_VIEW_PANORAMA_VARIABLE
-					+ streetViewPanoramaComponent.getId() + " = new "
+					+ streetViewPanoramaComponent.getId());
+
+			updateStreetViewPanoramaJSVariable(facesContext,
+				streetViewPanoramaComponent, writer);
+
+			writer.write(" = new "
 					+ ComponentConstants.JS_GSTREET_VIEW_PANORAMA_CORE_OBJECT
 					+ "(document.getElementById('"
 					+ streetViewPanoramaComponent.getClientId(facesContext)
@@ -91,7 +96,12 @@ public class StreetViewPanoramaRendererUtil {
 
 			writer.write("var "
 					+ ComponentConstants.JS_GSTREET_VIEW_PANORAMA_VARIABLE
-					+ streetViewPanoramaComponent.getId() + " = new "
+					+ streetViewPanoramaComponent.getId());
+
+			updateStreetViewPanoramaJSVariable(facesContext,
+				streetViewPanoramaComponent, writer);
+
+			 writer.write(" = new "
 					+ ComponentConstants.JS_GSTREET_VIEW_PANORAMA_CORE_OBJECT
 					+ "(document.getElementById('"
 					+ streetViewPanoramaComponent.getClientId(facesContext)
@@ -117,8 +127,7 @@ public class StreetViewPanoramaRendererUtil {
 			}
 		}
 
-		updateStreetViewPanoramaJSVariable(facesContext,
-				streetViewPanoramaComponent, writer);
+
 	}
 	
 	private static void updateStreetViewPanoramaJSVariable(
@@ -127,10 +136,7 @@ public class StreetViewPanoramaRendererUtil {
 			ResponseWriter writer) throws IOException {
 
 		if (streetViewPanoramaComponent.getJsVariable() != null) {
-			writer.write("     " + streetViewPanoramaComponent.getJsVariable()
-					+ "="
-					+ ComponentConstants.JS_GSTREET_VIEW_PANORAMA_VARIABLE
-					+ streetViewPanoramaComponent.getId() + ";     ");
+			writer.write(" = " + streetViewPanoramaComponent.getJsVariable());
 		}
 	}	
 
