@@ -52,7 +52,7 @@ public class MarkerEncoder {
 				+ getUniqueMarkerId(facesContext, marker) + "("
 				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ") {");
 
-		if (marker instanceof Marker && marker.isRendered()) {
+		if (marker.isRendered()) {
 			encodeMarker(facesContext, map, marker, writer);
 		}
 
@@ -165,8 +165,9 @@ public class MarkerEncoder {
                     + getMarkerOptions(context, marker, writer) + ");     ");
             
             if (MapRendererUtil.isAutoReshapeMap(map)) {
-                writer.write("setBounds" + map.getId() + "(" + latitude + ", "
-                        + longitude + ");     ");
+                writer.write("reshapeMap" + map.getId() + "(" + 
+					ComponentConstants.JS_GMAP_BASE_VARIABLE + ", " + latitude
+					+ ", " + longitude + ");     ");
             }           
         }
 

@@ -59,19 +59,21 @@ public class MapRendererUtil {
 
 	public static void encodeMapAutoReshapeFunctionScript(Map map,
 			ResponseWriter writer) throws IOException {
-
-		writer.write("var bounds" + map.getId() + " = new "
-				+ ComponentConstants.JS_GLatLngBounds_OBJECT + "();     ");
-
+	    
+        // initialize map bounds to null
+        writer.write("var bounds" + map.getId() + " = null;     ");
+        
+        // encode reshapeMap function script
 		writer.write("function reshapeMap" + map.getId() + "("
 						+ ComponentConstants.JS_GMAP_BASE_VARIABLE
 						+ ", lat, lng){     ");
-		writer.write("bounds" + map.getId()
-				+ ".extend(new GLatLng(lat, lng));     ");
+		writer.write("setBounds" + map.getId() + "(lat, lng);     ");
 		reshapeMapToCurrentBounds(map, writer);
 		writer.write("}     ");
-				
+        
+        // encode setBounds function script
 		writer.write("function setBounds" + map.getId() + "(lat, lng){     ");
+        getMapBoundsJSInstance(map, writer);
 		writer.write("bounds" + map.getId()
 				+ ".extend(new GLatLng(lat, lng));     ");
 		writer.write("}     ");		
@@ -80,19 +82,19 @@ public class MapRendererUtil {
 	public static void reshapeMapToCurrentBounds(Map map, ResponseWriter writer)
 			throws IOException {
 		
+        writer.write("if (bounds" + map.getId() + " != null) {     ");
+                
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE + ".setZoom("
 				+ ComponentConstants.JS_GMAP_BASE_VARIABLE
 				+ ".getBoundsZoomLevel(" + "bounds" + map.getId() + "));     ");
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE + ".setCenter("
 				+ "bounds" + map.getId() + ".getCenter());     ");
+        
+        writer.write("}");
 	}
 
 	public static boolean isAutoReshapeMap(Map map) {
-		if ("true".equalsIgnoreCase(map.getAutoReshape())) {
-			return true;
-		}
-
-		return false;
+		return "true".equalsIgnoreCase(map.getAutoReshape());
 	}
     
     private static void createMapJSObject(FacesContext facesContext,
@@ -163,6 +165,12 @@ public class MapRendererUtil {
                     + ComponentConstants.JS_GMAP_BASE_VARIABLE + ";     ");
         }
     }
+    
+    private static void getMapBoundsJSInstance(Map map, ResponseWriter writer) throws IOException {
+        writer.write("if (bounds" + map.getId() + " == null) {     ");
+        writer.write("bounds" + map.getId() + " = new " + ComponentConstants.JS_GLatLngBounds_OBJECT + "();     ");
+        writer.write("}      ");
+    }    
 
     private static void renderMapUsingLatLng(FacesContext facesContext,
             Map map, ResponseWriter writer) throws IOException {
