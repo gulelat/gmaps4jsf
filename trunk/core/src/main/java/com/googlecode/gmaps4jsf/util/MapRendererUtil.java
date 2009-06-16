@@ -42,7 +42,8 @@ public class MapRendererUtil {
 
 		createMapJSObject(facesContext, mapComponent, writer);
 
-		if (mapComponent.getAddress() == null) {
+		if ((mapComponent.getAddress() == null)
+			|| (mapComponent.getAddress().trim().length() <= 0)) {
 			renderMapUsingLatLng(facesContext, mapComponent, writer);
 		} else {
 			renderMapUsingAddress(facesContext, mapComponent, writer);
@@ -52,7 +53,8 @@ public class MapRendererUtil {
 	public static void endEncodingMapScript(FacesContext facesContext, Map map,
 			ResponseWriter writer) throws IOException {
 
-		if (map.getAddress() != null) {
+		if ((map.getAddress() != null)
+			&& (map.getAddress().trim().length() > 0)) {
 			endRenderingMapUsingAddress(facesContext, map, writer);
 		}
 	}
@@ -76,7 +78,7 @@ public class MapRendererUtil {
         getMapBoundsJSInstance(map, writer);
 		writer.write("bounds" + map.getId()
 				+ ".extend(new GLatLng(lat, lng));     ");
-		writer.write("}     ");		
+		writer.write("}     ");
 	}
 
 	public static void reshapeMapToCurrentBounds(Map map, ResponseWriter writer)
