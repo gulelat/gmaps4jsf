@@ -4,7 +4,7 @@
 <%@ taglib uri="https://ajax4jsf.dev.java.net/ajax" prefix="a4j" %>
 <%@ taglib uri="http://code.google.com/p/gmaps4jsf/" prefix="m" %>
 
-<!DOCTYPE PUBLIC html "-//W3C//DTD Xhtml 1.0 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
