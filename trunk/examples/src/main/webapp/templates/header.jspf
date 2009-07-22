@@ -2,7 +2,7 @@
 <table class="pageHeader">
 	<tr>
 		<td>
-			<img src="<%= request.getContextPath() %>/images/site/logo.png">
+			<img src="<%= request.getContextPath() %>/images/site/logo.png" alt="GMaps4JSF logo">
 		</td>
 		<td width="100%">
 	         <span style="font-size:15px;color:#FFFFFF"> The GMaps and JavaServer&#8482; Faces Integration Library</span>
