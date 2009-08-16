@@ -37,19 +37,31 @@ public class PolygonRenderer extends Renderer {
 
 	public void encodeBegin(FacesContext context, UIComponent component)
 			throws IOException {	
+        
+        Polygon        polygon   = (Polygon) component;
+        ResponseWriter writer    = context.getResponseWriter();
+        Map            parentMap = (Map) ComponentUtils.findParentMap(context, polygon);
+
+        PolygonEncoder.startEncodingPolygonFunctionScript(context, parentMap, polygon,
+                                                          writer);        
 	}
 
 	public void encodeEnd(FacesContext context, UIComponent component)
 			throws IOException {
 
-		Polygon polygon = (Polygon) component;
-		ResponseWriter writer = context.getResponseWriter();
-		Map parentMap = (Map) ComponentUtils.findParentMap(context, polygon);
+		Polygon        polygon   = (Polygon) component;
+		ResponseWriter writer    = context.getResponseWriter();
+		Map            parentMap = (Map) ComponentUtils.findParentMap(context, polygon);
 
-		PolygonEncoder.encodePolygonFunctionScript(context, parentMap, polygon,
-				                                   writer);
+		PolygonEncoder.endEncodingPolygonFunctionScript(context, parentMap, polygon,
+				                                        writer);
 
-		PolygonEncoder.encodePolygonFunctionScriptCall(context, parentMap,
-				                                       polygon, writer);
+		PolygonEncoder.encodePolygonFunctionScriptCall(context, parentMap, polygon, 
+                                                       writer);
 	}
+
+    public boolean getRendersChildren() {
+        return true;
+    }
+    
 }

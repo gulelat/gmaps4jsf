@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.googlecode.gmaps4jsf.component.polyline;
+package com.googlecode.gmaps4jsf.component.point;
 
 import java.io.IOException;
 
@@ -25,42 +25,27 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 
-import com.googlecode.gmaps4jsf.component.map.Map;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
 
 /**
  * @author Hazem Saleh
- * @date April 12, 2009
- * The (PolylineRenderer) renders a google map polyline.
+ * @date August 16, 2009
+ * The (PointRenderer) renders a google map polygon.
  */
-public class PolylineRenderer extends Renderer {
+public class PointRenderer extends Renderer {
 
 	public void encodeBegin(FacesContext context, UIComponent component)
 			throws IOException {	
-        
-        Polyline       polyline  = (Polyline) component;
-        ResponseWriter writer    = context.getResponseWriter();
-        Map            parentMap = (Map) ComponentUtils.findParentMap(context, polyline);
-
-        PolylineEncoder.startEncodingPolylineFunctionScript(context, parentMap, polyline,
-                                                            writer);  		
+		
 	}
 
 	public void encodeEnd(FacesContext context, UIComponent component)
 			throws IOException {
 
-        Polyline       polyline  = (Polyline) component;
-        ResponseWriter writer    = context.getResponseWriter();
-        Map            parentMap = (Map) ComponentUtils.findParentMap(context, polyline);
+		Point          point       = (Point) component;
+		ResponseWriter writer      = context.getResponseWriter();
+		UIComponent    pointParent = ComponentUtils.findParentPolygonOrPolyline(context, point);
 
-        PolylineEncoder.endEncodingPolylineFunctionScript(context, parentMap, polyline,
-                                                          writer);
-
-        PolylineEncoder.encodePolylineFunctionScriptCall(context, parentMap, polyline, 
-                                                         writer);
+        PointEncoder.encodePoint(context, pointParent, point, writer);
 	}
-
-    public boolean getRendersChildren() {
-        return true;
-    }    
 }

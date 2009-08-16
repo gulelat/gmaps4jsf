@@ -28,8 +28,8 @@ import javax.faces.context.ResponseWriter;
 import com.googlecode.gmaps4jsf.component.eventlistener.EventListener;
 import com.googlecode.gmaps4jsf.component.map.EventEncoder;
 import com.googlecode.gmaps4jsf.component.map.Map;
-import com.googlecode.gmaps4jsf.component.point.Point;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
+import com.googlecode.gmaps4jsf.util.ComponentUtils;
 
 /**
  * @author Hazem Saleh
@@ -38,7 +38,7 @@ import com.googlecode.gmaps4jsf.util.ComponentConstants;
  */
 public class PolylineEncoder {
 
-	public static void encodePolylineFunctionScript(FacesContext facesContext,
+	public static void startEncodingPolylineFunctionScript(FacesContext facesContext,
 			Map parentMap, Polyline polyline, ResponseWriter writer)
 			throws IOException {
 
@@ -48,11 +48,20 @@ public class PolylineEncoder {
 				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ") {");
 
 		if (polyline.isRendered()) {
-			encodePolyline(facesContext, parentMap, polyline, writer);
+			declarePolylineJSArray(facesContext, parentMap, polyline, writer);
 		}
-
-		writer.write("}");
 	}
+    
+    public static void endEncodingPolylineFunctionScript(FacesContext facesContext,
+            Map parentMap, Polyline polyline, ResponseWriter writer)
+            throws IOException {
+
+        if (polyline.isRendered()) {
+            encodePolyline(facesContext, parentMap, polyline, writer);
+        }
+
+        writer.write("}");
+    }    
 
 	public static void encodePolylineFunctionScriptCall(FacesContext context,
 			Map parentMap, Polyline polyline, ResponseWriter writer)
@@ -63,73 +72,55 @@ public class PolylineEncoder {
 				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");     ");
 	}
 
-	private static void encodePolyline(FacesContext facesContext,
+	private static void declarePolylineJSArray(FacesContext facesContext,
 			Map mapComponent, Polyline polyline, ResponseWriter writer)
 			throws IOException {
-
-		String polyOptionsStr = "";
-		String polyLinesStr = "";
-
-		// Go through all the lines and consolidate them.
-		for (Iterator iterator = polyline.getChildren().iterator(); iterator
-				.hasNext();) {
-			UIComponent component = (UIComponent) iterator.next();
-
-			if (component instanceof Point) {
-
-				Point point = (Point) component;
-
-				if (! polyLinesStr.equals("")) {
-					polyLinesStr += ",";
-				}
-
-				polyLinesStr += "new GLatLng(" + point.getLatitude() + ", "
-						     + point.getLongitude() + ")";
-			}
-		}
-
-		// Is a Geodesic polyline.
-		if ("true".equalsIgnoreCase(polyline.getGeodesic())) {
-			polyOptionsStr = "{geodesic:true}";
-		} else {
-			polyOptionsStr = "{geodesic:false}";
-		}
-
-		// encode the polyline.
-		writer.write("var polyline_" + polyline.getId() + " = new "
-				+ ComponentConstants.JS_GPolyline_OBJECT + "([" + polyLinesStr
-				+ "], '" + polyline.getHexaColor() + "', "
-				+ polyline.getLineWidth() + "," + polyline.getOpacity() + ", "
-				+ polyOptionsStr + ");     ");
-
-		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-				    + ".addOverlay(polyline_" + polyline.getId() + ");     ");
-
-		// encode polyline events.
-		for (Iterator iterator = polyline.getChildren().iterator(); iterator
-				.hasNext();) {
-			UIComponent component = (UIComponent) iterator.next();
-
-			if (component instanceof EventListener) {
-				EventEncoder.encodeEventListenersFunctionScript(
-                                                                facesContext,
-						                                        polyline, 
-                                                                writer, 
-                                                                "polyline_" + polyline.getId()
-                                                                );
-				EventEncoder.encodeEventListenersFunctionScriptCall
-                                                                (
-                                                                 facesContext, 
-                                                                 polyline, 
-                                                                 writer, 
-                                                                 "polyline_"+ polyline.getId()
-                                                                 );
-			}
-		}
-
-		// update polyline user variable.
-		updatePolylineJSVariable(facesContext, polyline, writer);
+        
+        // declare the polyline array.
+        writer.write("var " + ComponentUtils.getComponentArrayVariable(polyline) + " = new Array();    ");        
 	}
+    
+    private static void encodePolyline(FacesContext facesContext,
+            Map mapComponent, Polyline polyline, ResponseWriter writer)
+            throws IOException {
+        
+        String polyOptionsStr = "";
+
+        // Is a Geodesic polyline.
+        if ("true".equalsIgnoreCase(polyline.getGeodesic())) {
+            polyOptionsStr = "{geodesic:true}";
+        } else {
+            polyOptionsStr = "{geodesic:false}";
+        }
+
+        // encode the polyline.
+        writer.write("var polyline_" + polyline.getId() + " = new "
+                + ComponentConstants.JS_GPolyline_OBJECT + "(" 
+                + ComponentUtils.getComponentArrayVariable(polyline)
+                + ", '" + polyline.getHexaColor() + "', "
+                + polyline.getLineWidth() + "," + polyline.getOpacity() + ", "
+                + polyOptionsStr + ");     ");
+
+        // add to the map.        
+        writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
+                    + ".addOverlay(polyline_" + polyline.getId() + ");     ");
+
+        // encode polyline events.
+        for (Iterator iterator = polyline.getChildren().iterator(); iterator
+                .hasNext();) {
+            UIComponent component = (UIComponent) iterator.next();
+
+            if (component instanceof EventListener) {
+                EventEncoder.encodeEventListenersFunctionScript(facesContext, polyline, writer, "polyline_"
+                        + polyline.getId());
+                EventEncoder.encodeEventListenersFunctionScriptCall(facesContext, polyline, writer, "polyline_"
+                        + polyline.getId());
+            }
+        }
+
+        // update polyline user variable.
+        updatePolylineJSVariable(facesContext, polyline, writer);        
+    }
 
 	private static void updatePolylineJSVariable(FacesContext facesContext,
 			Polyline polyline, ResponseWriter writer) throws IOException {
