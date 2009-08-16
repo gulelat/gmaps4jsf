@@ -131,6 +131,16 @@
 		</attribute>	
 		
 		<attribute>
+			<name>enableScrollWheelZoom</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<defaultValue>false</defaultValue>					
+			<description>
+			This flag determines whether to enable zooming on mouse scroll wheel.
+			</description>
+		</attribute>		
+		
+		<attribute>
 			<name>addStreetOverlay</name>
 			<required>false</required>
 			<type>java.lang.String</type>

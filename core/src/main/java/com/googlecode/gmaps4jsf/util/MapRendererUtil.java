@@ -108,11 +108,16 @@ public class MapRendererUtil {
                 + "(document.getElementById('"
                 + mapComponent.getClientId(facesContext) + "'));     ");
 
-        // attach properties to it.
+        // attach properties to the map.
         if (!"true".equalsIgnoreCase(mapComponent.getEnableDragging())) {
             writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
                     + ".disableDragging();     ");
         }
+        
+        if ("true".equalsIgnoreCase(mapComponent.getEnableScrollWheelZoom())) {
+            writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
+                    + ".enableScrollWheelZoom();     ");
+        }        
     }
 
     private static void encodeMapType(FacesContext facesContext,
