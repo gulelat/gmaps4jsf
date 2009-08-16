@@ -36,6 +36,8 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.webapp.UIComponentTag;
 
 import com.googlecode.gmaps4jsf.component.map.Map;
+import com.googlecode.gmaps4jsf.component.polygon.Polygon;
+import com.googlecode.gmaps4jsf.component.polyline.Polyline;
 
 
 public class ComponentUtils {
@@ -326,8 +328,22 @@ public class ComponentUtils {
 		}
 		
 		return parent;
-	}		
-
+	}
+    
+    public static UIComponent findParentPolygonOrPolyline(FacesContext context, UIComponent component) {
+        UIComponent parent = component;
+        
+        while (!(parent instanceof Polygon || parent instanceof Polyline)) {
+            parent = parent.getParent();
+        }
+        
+        return parent;
+    }    
+    
+    public static String getComponentArrayVariable(UIComponent component) {
+        return "component_" + component.getId() + "_Array";
+    }        
+    
 	public static void startEncodingBrowserCompatabilityChecking(
 			FacesContext facesContext, UIComponent component,
 			ResponseWriter writer) throws IOException {
