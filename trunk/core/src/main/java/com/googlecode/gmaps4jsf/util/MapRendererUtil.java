@@ -28,6 +28,7 @@ import com.googlecode.gmaps4jsf.component.map.GroundOverlayEncoder;
 import com.googlecode.gmaps4jsf.component.map.HTMLInfoWindowEncoder;
 import com.googlecode.gmaps4jsf.component.map.Map;
 import com.googlecode.gmaps4jsf.component.map.MapControlEncoder;
+import com.googlecode.gmaps4jsf.plugins.PluginEncoder;
 
 /**
  * @author Hazem Saleh
@@ -160,6 +161,9 @@ public class MapRendererUtil {
 
         GroundOverlayEncoder.encodeGroundOverlaysFunctionScriptCall(
                 facesContext, mapComponent, writer);
+
+        PluginEncoder.encodeMapPluginsFunctionCalls(facesContext,
+                mapComponent, writer);
 
         updateMapJSVariable(facesContext, mapComponent, writer);
     }

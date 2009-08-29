@@ -30,6 +30,7 @@ import com.googlecode.gmaps4jsf.component.groundoverlay.GroundOverlay;
 import com.googlecode.gmaps4jsf.component.marker.Marker;
 import com.googlecode.gmaps4jsf.component.polygon.Polygon;
 import com.googlecode.gmaps4jsf.component.polyline.Polyline;
+import com.googlecode.gmaps4jsf.plugins.PluginEncoder;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
 import com.googlecode.gmaps4jsf.util.MapRendererUtil;
@@ -131,6 +132,8 @@ public class MapRenderer extends Renderer {
                 ComponentConstants.JS_GMAP_BASE_VARIABLE);
 
         GroundOverlayEncoder.encodeGroundOverlaysFunctionScript(facesContext, map, writer);
+
+        PluginEncoder.encodeMapPluginsFunctionScripts(facesContext, map, writer);
 
         MapRendererUtil.startEncodingMapScript(facesContext, map, writer);
     }
