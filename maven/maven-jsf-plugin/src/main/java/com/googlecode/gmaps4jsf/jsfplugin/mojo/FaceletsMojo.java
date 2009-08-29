@@ -37,54 +37,58 @@ import org.apache.maven.plugin.MojoFailureException;
  */
 public class FaceletsMojo extends BaseFacesMojo{
 
-	public void execute() throws MojoExecutionException, MojoFailureException {
-		getLog().info("Generating facelets-taglib");
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        getLog().info("Generating facelets-taglib");
 
-		try {
-			writeFaceletsTaglib(getComponents());
-			getLog().info("facelets-taglib generated successfully");
-		} catch (Exception e) {
-			getLog().info("Exception in generating facelets-taglib:");
-			getLog().info(e.toString());
-		}
-	}
+        try {
+            writeFaceletsTaglib(getComponents());
+            getLog().info("facelets-taglib generated successfully");
+        } catch (Exception e) {
+            getLog().info("Exception in generating facelets-taglib:");
+            getLog().info(e.toString());
+        }
+    }
 
-	private void writeFaceletsTaglib(List components) throws IOException{
-		FileWriter fileWriter;
-		BufferedWriter writer;
-		String outputPath = project.getBuild().getOutputDirectory() + File.separator + "META-INF";
-		String outputFile =  "gmaps4jsf.taglib.xml";
+    private void writeFaceletsTaglib(List components) throws IOException{
+        FileWriter fileWriter;
+        BufferedWriter writer;
+        String outputPath = project.getBuild().getOutputDirectory() + File.separator + "META-INF";
+        String outputFile =  "gmaps4jsf.taglib.xml";
 
-		File outputDirectory = new File(outputPath);
-		if(!outputDirectory.exists())
-			outputDirectory.mkdirs();
+        File outputDirectory = new File(outputPath);
+        if(!outputDirectory.exists())
+            outputDirectory.mkdirs();
 
-		fileWriter = new FileWriter(outputPath + File.separator + outputFile);
-		writer = new BufferedWriter(fileWriter);
+        fileWriter = new FileWriter(outputPath + File.separator + outputFile);
+        writer = new BufferedWriter(fileWriter);
 
-		writer.write("<?xml version=\"1.0\"?>\n");
-		writer.write("<!DOCTYPE facelet-taglib PUBLIC \"-//Sun Microsystems, Inc.//DTD Facelet\n");
-		writer.write("Taglib 1.0//EN\" \"facelet-taglib_1_0.dtd\">\n");
-		writer.write("<facelet-taglib>\n\n");
-		writer.write("\t<namespace>http://code.google.com/p/gmaps4jsf/</namespace>\n\n");
+        writer.write("<?xml version=\"1.0\"?>\n");
+        writer.write("<!DOCTYPE facelet-taglib PUBLIC \"-//Sun Microsystems, Inc.//DTD Facelet\n");
+        writer.write("Taglib 1.0//EN\" \"facelet-taglib_1_0.dtd\">\n");
+        writer.write("<facelet-taglib>\n\n");
 
-		for (Iterator iterator = components.iterator(); iterator.hasNext();) {
-			Component component = (Component) iterator.next();
-			writer.write("\t<tag>\n");
-			writer.write("\t\t<tag-name>");
-			writer.write(component.getTag());
-			writer.write("</tag-name>\n");
-			writer.write("\t\t<component>\n");
-			writer.write("\t\t\t<component-type>");
-			writer.write(component.getComponentType());
-			writer.write("</component-type>\n");
-			writer.write("\t\t</component>\n");
-			writer.write("\t</tag>\n");
-		}
+        if (outputPath.indexOf("plugins") < 0) {
+            writer.write("\t<namespace>http://code.google.com/p/gmaps4jsf/</namespace>\n\n");
+        }
 
-		writer.write("</facelet-taglib>\n");
+        for (Iterator iterator = components.iterator(); iterator.hasNext();) {
+            Component component = (Component) iterator.next();
+            writer.write("\t<tag>\n");
+            writer.write("\t\t<tag-name>");
+            writer.write(component.getTag());
+            writer.write("</tag-name>\n");
+            writer.write("\t\t<component>\n");
+            writer.write("\t\t\t<component-type>");
+            writer.write(component.getComponentType());
+            writer.write("</component-type>\n");
+            writer.write("\t\t</component>\n");
+            writer.write("\t</tag>\n");
+        }
 
-		writer.close();
-		fileWriter.close();
-	}
+        writer.write("</facelet-taglib>\n");
+
+        writer.close();
+        fileWriter.close();
+    }
+
 }

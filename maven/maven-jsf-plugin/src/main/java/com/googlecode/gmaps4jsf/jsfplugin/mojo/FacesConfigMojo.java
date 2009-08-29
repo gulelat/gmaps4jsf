@@ -40,106 +40,113 @@ import org.apache.maven.plugin.MojoFailureException;
  */
 public class FacesConfigMojo extends BaseFacesMojo{
 
-	/**
-	 * @parameter
-	 */
-	protected String standardFacesConfig;
+    /**
+     * @parameter
+     */
+    protected String standardFacesConfig;
 
-	public void execute() throws MojoExecutionException, MojoFailureException {
-		getLog().info("Generating faces-config.xml");
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        getLog().info("Generating faces-config.xml");
 
-		try {
-			writeFacesConfig(getComponents());
-			getLog().info("faces-config.xml generated successfully");
-		} catch (Exception e) {
-			getLog().info("Error occured in generating faces-config.xml");
-			getLog().info(e.toString());
-		}
-	}
+        try {
+            writeFacesConfig(getComponents());
+            getLog().info("faces-config.xml generated successfully");
+        } catch (Exception e) {
+            getLog().info("Error occured in generating faces-config.xml");
+            getLog().info(e.toString());
+        }
+    }
 
-	private void writeFacesConfig(List components) {
-		FileWriter fileWriter;
-		BufferedWriter writer;
-		String outputPath = project.getBuild().getOutputDirectory() + File.separator + "META-INF";
-		String outputFile =  "faces-config.xml";
+    private void writeFacesConfig(List components) {
+        FileWriter fileWriter;
+        BufferedWriter writer;
+        String outputPath = project.getBuild().getOutputDirectory() + File.separator + "META-INF";
+        String outputFile =  "faces-config.xml";
 
-		try {
-			File tldDirectory = new File(outputPath);
-			tldDirectory.mkdirs();
+        try {
+            File tldDirectory = new File(outputPath);
+            tldDirectory.mkdirs();
 
-			fileWriter = new FileWriter(outputPath + File.separator + outputFile);
-			writer = new BufferedWriter(fileWriter);
+            fileWriter = new FileWriter(outputPath + File.separator + outputFile);
+            writer = new BufferedWriter(fileWriter);
 
-			writeFacesConfigBegin(writer, components);
-			writeStandardConfig(writer);
-			writeComponents(writer, components);
-			writeRenderers(writer, components);
-			writeFacesConfigEnd(writer, components);
+            writeFacesConfigBegin(writer, components);
+            writeStandardConfig(writer);
+            writeComponents(writer, components);
+            writeRenderers(writer, components);
+            writeFacesConfigEnd(writer, components);
 
-			writer.close();
-			fileWriter.close();
-		}
-		catch(Exception exception) {
-			getLog().error( exception.getMessage() );
-		}
-	}
+            writer.close();
+            fileWriter.close();
+        }
+        catch(Exception exception) {
+            getLog().error( exception.getMessage() );
+        }
+    }
 
-	private void writeFacesConfigBegin(BufferedWriter writer, List components) throws IOException {
-		writer.write("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n\n");
-		writer.write("<!DOCTYPE faces-config PUBLIC\n");
+    private void writeFacesConfigBegin(BufferedWriter writer, List components) throws IOException {
+        writer.write("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n\n");
+        writer.write("<!DOCTYPE faces-config PUBLIC\n");
         writer.write("\t\t\"-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN\"\n");
         writer.write("\t\t\"http://java.sun.com/dtd/web-facesconfig_1_1.dtd\">\n\n");
 
         writer.write("<faces-config xmlns=\"http://java.sun.com/JSF/Configuration\">\n\n");
-	}
+    }
 
-	private void writeStandardConfig(BufferedWriter writer) throws IOException{
-		try {
-			File template = new File(project.getBasedir() + File.separator + standardFacesConfig);
-			FileReader fileReader = new FileReader(template);
-			BufferedReader reader = new BufferedReader(fileReader);
-			String line = null;
+    private void writeStandardConfig(BufferedWriter writer) throws IOException{
+        try {
+            File template = new File(project.getBasedir() + File.separator + standardFacesConfig);
+            FileReader fileReader = new FileReader(template);
+            BufferedReader reader = new BufferedReader(fileReader);
+            String line = null;
 
-			while((line = reader.readLine()) != null) {
-				writer.write(line);
-				writer.write("\n\n");
-			}
-		}catch(FileNotFoundException fileNotFoundException) {
-			return;
-		}
-	}
+            while((line = reader.readLine()) != null) {
+                writer.write(line);
+                writer.write("\n\n");
+            }
+        }catch(FileNotFoundException fileNotFoundException) {
+            return;
+        }
+    }
 
-	private void writeFacesConfigEnd(BufferedWriter writer, List components) throws IOException {
-		writer.write("</faces-config>");
-	}
+    private void writeFacesConfigEnd(BufferedWriter writer, List components) throws IOException {
+        writer.write("</faces-config>");
+    }
 
-	private void writeComponents(BufferedWriter writer, List components) throws IOException {
-		for (Iterator iterator = components.iterator(); iterator.hasNext();) {
-			Component component = (Component) iterator.next();
+    private void writeComponents(BufferedWriter writer, List components) throws IOException {
+        for (Iterator iterator = components.iterator(); iterator.hasNext();) {
+            Component component = (Component) iterator.next();
 
-			writer.write("\t<component>\n");
-			writer.write("\t\t<component-type>" + component.getComponentType() + "</component-type>\n");
-			writer.write("\t\t<component-class>" + component.getComponentClass() + "</component-class>\n");
-			writer.write("\t</component>\n");
-			writer.write("\n");
-		}
-	}
+            writer.write("\t<component>\n");
+            writer.write("\t\t<component-type>" + component.getComponentType() + "</component-type>\n");
+            writer.write("\t\t<component-class>" + component.getComponentClass() + "</component-class>\n");
+            writer.write("\t</component>\n");
+            writer.write("\n");
+        }
+    }
 
-	private void writeRenderers(BufferedWriter writer, List components) throws IOException{
-		writer.write("\t<render-kit>\n");
+    private void writeRenderers(BufferedWriter writer, List components) throws IOException {
+        boolean writeParentTag = true;
+        for (Iterator iterator = components.iterator(); iterator.hasNext();) {
+            Component component = (Component) iterator.next();
 
-		for (Iterator iterator = components.iterator(); iterator.hasNext();) {
-			Component component = (Component) iterator.next();
-			if(component.getRendererType() == null)
-				continue;
+            if (component.getRendererType() == null) {
+                continue;
+            } else if (writeParentTag) {
+                writer.write("\t<render-kit>\n");
+                writeParentTag = false;
+            }
 
-			writer.write("\t\t<renderer>\n");
-			writer.write("\t\t\t<component-family>" + component.getComponentFamily() + "</component-family>\n");
-			writer.write("\t\t\t<renderer-type>" + component.getRendererType() + "</renderer-type>\n");
-			writer.write("\t\t\t<renderer-class>" + component.getRendererClass() + "</renderer-class>\n");
-			writer.write("\t\t</renderer>\n");
-		}
+            writer.write("\t\t<renderer>\n");
+            writer.write("\t\t\t<component-family>" + component.getComponentFamily() + "</component-family>\n");
+            writer.write("\t\t\t<renderer-type>" + component.getRendererType() + "</renderer-type>\n");
+            writer.write("\t\t\t<renderer-class>" + component.getRendererClass() + "</renderer-class>\n");
+            writer.write("\t\t</renderer>\n");
+        }
 
-		writer.write("\t</render-kit>\n\n");
-	}
+        if (!writeParentTag) {
+            writer.write("\t</render-kit>\n\n");
+        }
+    }
+
 }
