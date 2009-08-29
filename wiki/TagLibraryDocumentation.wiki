@@ -10,3 +10,4 @@
   * [streetViewPanoramaComponent]
   * [eventListenerComponent]
   * [iconComponent] (Added in 1.1.1)
+  * [dragZoom] (Experimental - Added in 1.1.3)
