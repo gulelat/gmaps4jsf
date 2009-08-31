@@ -13,6 +13,7 @@
     <url>http://code.google.com/p/gmaps-utility-library-dev/</url>
     <modules>
         <module>drag-zoom-control</module>
+        <module>tabbed-max-content</module>
     </modules>
     <dependencies>
         <dependency>
