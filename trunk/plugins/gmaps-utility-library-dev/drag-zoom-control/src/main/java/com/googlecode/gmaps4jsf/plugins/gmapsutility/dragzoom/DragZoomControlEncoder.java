@@ -59,13 +59,13 @@ public class DragZoomControlEncoder implements Plugin {
         return buffer.toString();
     }
 
-    private void encodeDragZoomControl(DragZoomControl mapControl, StringBuffer buffer) {
+    private void encodeDragZoomControl(DragZoomControl zoomControl, StringBuffer buffer) {
         buffer.append("var box = {opacity: .2, border: \\\"2px solid red\\\"};")
-            .append("var opts = {buttonHTML: '<img src=\\\"").append(mapControl.getImageURL())
+            .append("var opts = {buttonHTML: '<img src=\\\"").append(zoomControl.getImageURL())
             .append("\\\" />', buttonZoomingHTML: '<img src=\\\"")
-            .append(mapControl.getImageZoomingURL()).append("\\\" />', buttonStartingStyle: {")
-            .append("width: '").append(mapControl.getImageWidth()).append("', height: '")
-            .append(mapControl.getImageWidth()).append("'}};")
+            .append(zoomControl.getImageZoomingURL()).append("\\\" />', buttonStartingStyle: {")
+            .append("width: '").append(zoomControl.getImageWidth()).append("', height: '")
+            .append(zoomControl.getImageWidth()).append("'}};")
             .append(ComponentConstants.JS_GMAP_BASE_VARIABLE)
             .append(".addControl(new DragZoomControl(box, opts, {}));");
     }

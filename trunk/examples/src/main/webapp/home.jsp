@@ -149,6 +149,13 @@
                     </h:outputLink>
                 </h:panelGrid>
 
+                <h:outputText value="Max tabbed content (Extended Component - Experimental)" />
+                <h:panelGrid style="padding-left:25px">
+                    <h:outputLink value="pages/maxTabbed.jsf">
+                        <f:verbatim>An example that creates enhanced info windows.</f:verbatim>
+                    </h:outputLink>
+                </h:panelGrid>
+
                 <h:outputText value="Web 2.0 Mashup Demo" />
                 <h:panelGrid style="padding-left:25px">
                     <h:outputLink value="pages/mashups.jsf">
