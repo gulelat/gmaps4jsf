@@ -26,6 +26,7 @@ import javax.faces.component.UIComponent;
 import com.googlecode.gmaps4jsf.plugins.Plugin;
 import com.googlecode.gmaps4jsf.component.map.Map;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
+import com.googlecode.gmaps4jsf.plugins.gmapsutility.component.Tab;
 import com.googlecode.gmaps4jsf.plugins.gmapsutility.component.MaxInfoWindow;
 
 
@@ -64,7 +65,7 @@ public class MaxInfoWindowEncoder implements Plugin {
     private void encodeMaxInfoWindow(MaxInfoWindow maxInfoWindow, StringBuffer buffer) {
         buffer.append("var regular = \\\"").append(maxInfoWindow.getRegular())
             .append("\\\";var summary = \\\"").append(maxInfoWindow.getSummary())
-            .append("\\\";var tabs = ");
+            .append("\\\";");
         encodeTabs(maxInfoWindow, buffer);
         buffer.append("map.openMaxContentTabsHtml(map.getCenter(), regular, summary, tabs, {");
         buffer.append("maxTitle: \\\"").append(maxInfoWindow.getMaxTitle()).append("\\\",");
@@ -79,7 +80,53 @@ public class MaxInfoWindowEncoder implements Plugin {
     }
 
     private void encodeTabs(MaxInfoWindow maxInfoWindow, StringBuffer buffer) {
-        buffer.append("[];");
+        encondeOnSelectSupport(maxInfoWindow, buffer);
+        buffer.append("var tabs = [");
+        for (Iterator iterator = maxInfoWindow.getChildren().iterator(); iterator.hasNext();) {
+            UIComponent component = (UIComponent) iterator.next();
+            if (component instanceof Tab  && component.isRendered()) {
+                encodeTab(maxInfoWindow, (Tab) component, buffer);
+            }
+        }
+        int bufferLength = buffer.length() - 1;
+        if (',' == buffer.charAt(bufferLength)) {
+            buffer.deleteCharAt(bufferLength);
+        }
+        buffer.append("];");
+    }
+
+    private void encodeTab(MaxInfoWindow maxInfoWindow, Tab tab, StringBuffer buffer) {
+        buffer.append("(function() {var t = new MaxContentTab(\\\"")
+            .append(tab.getTitle()).append("\\\", ");
+        if ((tab.getContent() != null) && (tab.getContent().trim().length() > 0)) {
+            buffer.append("\\\"").append(tab.getContent()).append("\\\"");
+        } else if ((tab.getContentNode() != null) && (tab.getContentNode().trim().length() > 0)) {
+            buffer.append("(function() {window['gSelectTabFunctions']['")
+                .append(maxInfoWindow.getId()).append("']['")
+                .append(tab.getId()).append("'] = [function(tab){")
+                .append("var node = document.getElementById('").append(tab.getContentNode())
+                .append("');if (node) {node.style.display='block';")
+                .append("node.style.width='98%';node.style.height='98%';")
+                .append("tab.getContentNode().appendChild(node);}}];")
+                .append("return document.createElement('div');})()");
+        } else {
+            buffer.append("document.createElement('div')");
+        }
+        buffer.append(");t.id = '").append(tab.getId()).append("'; return t;})(),");
+    }
+
+    private void encondeOnSelectSupport(MaxInfoWindow maxInfoWindow, StringBuffer buffer) {
+        buffer.append("if (window['gSelectTabFunctions'] === undefined) {")
+            .append("window['gSelectTabFunctions'] = {};");
+        buffer.append("window['gSelectTabFunctions']['").append(maxInfoWindow.getId())
+            .append("'] = {};");
+        buffer.append("GEvent.addListener(").append(ComponentConstants.JS_GMAP_BASE_VARIABLE)
+            .append(".getTabbedMaxContent(), 'selecttab', function(tab) {")
+            .append("var selection = window['gSelectTabFunctions']['")
+            .append(maxInfoWindow.getId()).append("'][tab.id];if(selection) {")
+            .append("for (var index = 0; index < selection.length;index++) {")
+            .append("selection[index](tab);")
+            .append("}}})};");
     }
 
 }
