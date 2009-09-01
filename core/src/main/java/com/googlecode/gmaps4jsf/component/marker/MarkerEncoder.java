@@ -24,8 +24,8 @@ import java.util.Iterator;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.event.ValueChangeListener;
 
+import com.googlecode.gmaps4jsf.plugins.PluginEncoder;
 import com.googlecode.gmaps4jsf.component.eventlistener.EventListener;
 import com.googlecode.gmaps4jsf.component.htmlInformationWindow.HTMLInformationWindow;
 import com.googlecode.gmaps4jsf.component.icon.Icon;
@@ -54,18 +54,23 @@ public class MarkerEncoder {
 
 		if (marker.isRendered()) {
 			encodeMarker(facesContext, map, marker, writer);
+                        writer.write("return " + ComponentConstants.CONST_MARKER_PREFIX);
+                        writer.write(marker.getId() + ";");
 		}
 
 		writer.write("}");
+                PluginEncoder.encodeMarkerPluginsFunctionScripts(facesContext, marker, writer);
 	}
 
 	public static void encodeMarkerFunctionScriptCall(
 			FacesContext facesContext, Map map, Marker marker,
 			ResponseWriter writer) throws IOException {
-
+                writer.write("var " + ComponentConstants.CONST_MARKER_PREFIX);
+                writer.write(marker.getId() + " = ");
 		writer.write(ComponentConstants.JS_CREATE_MARKER_FUNCTION_PREFIX
 				+ getUniqueMarkerId(facesContext, marker) + "("
 				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");     ");
+                PluginEncoder.encodeMarkerPluginsFunctionCalls(facesContext, marker, writer);
 
 	}
     
