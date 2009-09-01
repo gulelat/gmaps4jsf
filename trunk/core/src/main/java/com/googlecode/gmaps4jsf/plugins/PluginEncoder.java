@@ -22,15 +22,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.googlecode.gmaps4jsf.component.map.Map;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.Scanner;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+
+import com.googlecode.gmaps4jsf.component.map.Map;
+import com.googlecode.gmaps4jsf.component.marker.Marker;
 
 /**
  * Enables plugins to register themselfes to be rendered by their parent
@@ -47,14 +47,15 @@ public final class PluginEncoder {
     }
 
     static {
-        plugins = new HashMap(1);
+        plugins = new HashMap(2);
         plugins.put(Map.class, new ArrayList());
+        plugins.put(Marker.class, new ArrayList());
         try {
             URL pluginsFile = PluginEncoder.class.getResource("/META-INF/plugins.txt");
             Scanner scanner = new Scanner(pluginsFile.openStream());
             while (scanner.hasNext()) {
                 String pluginClass = scanner.nextLine();
-                Plugin plugin = (Plugin) PluginEncoder.class.forName(pluginClass).newInstance();
+                Plugin plugin = (Plugin) Class.forName(pluginClass).newInstance();
                 register(plugin.getModifiedComponent(), plugin);
             }
         } catch (Exception ex) {
@@ -89,6 +90,25 @@ public final class PluginEncoder {
     public static void encodeMapPluginsFunctionCalls(FacesContext facesContext, Map map, ResponseWriter writer) throws IOException {
         for (Iterator it = ((List) plugins.get(Map.class)).iterator(); it.hasNext();) {
             writer.write(((Plugin) it.next()).encodeFunctionScriptCall(facesContext, map));
+        }
+    }
+
+    /**
+     * Invoked by MarkerEncoder to create the JS code required by Map plugins.
+     *
+     */
+    public static void encodeMarkerPluginsFunctionScripts(FacesContext facesContext, Marker marker, ResponseWriter writer) throws IOException {
+        for (Iterator it = ((List) plugins.get(Marker.class)).iterator(); it.hasNext();) {
+            writer.write(((Plugin) it.next()).encodeFunctionScript(facesContext, marker));
+        }
+    }
+
+    /**
+     * Invoked by MarkerEncoder to call the plugins build functions.
+     */
+    public static void encodeMarkerPluginsFunctionCalls(FacesContext facesContext, Marker marker, ResponseWriter writer) throws IOException {
+        for (Iterator it = ((List) plugins.get(Marker.class)).iterator(); it.hasNext();) {
+            writer.write(((Plugin) it.next()).encodeFunctionScriptCall(facesContext, marker));
         }
     }
 
