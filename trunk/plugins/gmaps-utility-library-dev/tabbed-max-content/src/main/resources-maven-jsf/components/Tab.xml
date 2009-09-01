@@ -59,7 +59,6 @@
             <name>onSelect</name>
             <required>false</required>
             <type>java.lang.String</type>
-            <defaultValue>void(0);</defaultValue>
             <description>Javascript code to execute on tab selection.</description>
         </attribute>
     </attributes>
