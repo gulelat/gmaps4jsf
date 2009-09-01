@@ -45,7 +45,7 @@
         </attribute>
         <attribute>
             <name>summary</name>
-            <required>true</required>
+            <required>false</required>
             <type>java.lang.String</type>
             <description>Content of the information window when in maximazed state.</description>
         </attribute>
