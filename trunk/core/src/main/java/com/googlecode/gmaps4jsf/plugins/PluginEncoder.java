@@ -18,14 +18,15 @@
  */
 package com.googlecode.gmaps4jsf.plugins;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import java.io.IOException;
 import java.net.URL;
+import java.util.List;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
@@ -52,14 +53,15 @@ public final class PluginEncoder {
         plugins.put(Marker.class, new ArrayList());
         try {
             URL pluginsFile = PluginEncoder.class.getResource("/META-INF/plugins.txt");
-            Scanner scanner = new Scanner(pluginsFile.openStream());
-            while (scanner.hasNext()) {
-                String pluginClass = scanner.nextLine();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(pluginsFile.openStream()));
+            String pluginClass = null;
+            while ((pluginClass = reader.readLine()) != null) {
                 Plugin plugin = (Plugin) Class.forName(pluginClass).newInstance();
                 register(plugin.getModifiedComponent(), plugin);
             }
+            reader.close();
         } catch (Exception ex) {
-            System.out.println("--->PLUGINS SYSTME FAILED: " + ex.getMessage());
+            System.out.println("Gmaps4Jsf plugin system failed to initialize properly: " + ex.getMessage());
         }
     }
 
