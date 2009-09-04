@@ -69,5 +69,11 @@
             <defaultValue>false</defaultValue>
             <description>Index or name of the selected tab once maximized.</description>
         </attribute>
+        <attribute>
+            <name>onClose</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <description>JS code to execute on window close.</description>
+        </attribute>
     </attributes>
 </component>
