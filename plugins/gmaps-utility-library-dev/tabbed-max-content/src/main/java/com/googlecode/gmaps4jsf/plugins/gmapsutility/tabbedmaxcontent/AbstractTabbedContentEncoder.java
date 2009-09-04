@@ -58,7 +58,8 @@ public abstract class AbstractTabbedContentEncoder implements Plugin {
     }
 
     private void encodeMaxInfoWindow(MaxInfoWindow maxInfoWindow, StringBuffer buffer) {
-        buffer.append("var regular = \\\"").append(maxInfoWindow.getRegular())
+        buffer.append("var regular = \\\"")
+            .append(maxInfoWindow.getRegular() == null ? "" : maxInfoWindow.getRegular())
             .append("\\\";var summary = \\\"")
             .append(maxInfoWindow.getSummary() == null ? "" : maxInfoWindow.getSummary())
             .append("\\\";").append("var maxTitle = \\\"")
@@ -75,20 +76,23 @@ public abstract class AbstractTabbedContentEncoder implements Plugin {
         encodeWindowCreation(maxInfoWindow, buffer);
         buffer.append("parent.openMaxContentTabsHtml(target, regular, summary, tabs, {")
             .append("maxTitle: maxTitle,").append("selectedTab: selectedTab,")
-            .append("maximized: maximized").append("});");
-        encodeWindowCreationEnd(maxInfoWindow, buffer);
+            .append("maximized: maximized, noCloseOnClick: true");
+        String onClose = maxInfoWindow.getOnClose();
+        if ((onClose != null) && (onClose.trim().length() > 0)) {
+            buffer.append(",onCloseFn: function() {")
+                .append(onClose).append("}");
+        }
+        encodeWindowCreationEnd(maxInfoWindow, buffer.append("});"));
 
     }
 
     private void encondeOnSelectSupport(MaxInfoWindow maxInfoWindow, StringBuffer buffer) {
         buffer.append("if (window.gSelectTabFunctions === undefined) {")
             .append("window.gSelectTabFunctions = {};");
-        buffer.append("window.gSelectTabFunctions['").append(maxInfoWindow.getId())
-            .append("'] = {};");
         buffer.append("GEvent.addListener(").append(ComponentConstants.JS_GMAP_BASE_VARIABLE)
             .append(".getTabbedMaxContent(), 'selecttab', function(tab) {")
-            .append("var selection = window.gSelectTabFunctions['")
-            .append(maxInfoWindow.getId()).append("'][tab.id];if(selection) {")
+            .append("var selection = window.gSelectTabFunctions")
+            .append("[tab.id];if(selection) {")
             .append("for (var index = 0; selection.length > index; index++) {")
             .append("if (selection[index]) selection[index](tab);")
             .append("}}});}");
@@ -117,7 +121,6 @@ public abstract class AbstractTabbedContentEncoder implements Plugin {
             buffer.append("\\\"").append(tab.getContent()).append("\\\"");
         } else if ((tab.getContentNode() != null) && (tab.getContentNode().trim().length() > 0)) {
             buffer.append("(function() {window.gSelectTabFunctions['")
-                .append(maxInfoWindow.getId()).append("']['")
                 .append(tab.getId()).append("'] = [function(tab){")
                 .append("var node = document.getElementById('").append(tab.getContentNode())
                 .append("');if (node) {node.style.display='block';")
@@ -130,13 +133,10 @@ public abstract class AbstractTabbedContentEncoder implements Plugin {
         buffer.append(");t.id = '").append(tab.getId()).append("';");
         if ((tab.getOnSelect() != null) && (tab.getOnSelect().trim().length() > 0)) {
             buffer.append("var selection = window.gSelectTabFunctions['")
-                .append(maxInfoWindow.getId()).append("']['")
                 .append(tab.getId()).append("'];if (!selection){")
                 .append("window.gSelectTabFunctions['")
-                .append(maxInfoWindow.getId()).append("']['")
                 .append(tab.getId()).append("'] = []; selection = ")
                 .append("window.gSelectTabFunctions['")
-                .append(maxInfoWindow.getId()).append("']['")
                 .append(tab.getId()).append("'];}selection.push(")
                 .append("function (tab) {").append(tab.getOnSelect())
                 .append("});");
