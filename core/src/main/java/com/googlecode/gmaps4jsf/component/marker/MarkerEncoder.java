@@ -70,7 +70,7 @@ public class MarkerEncoder {
 		writer.write(ComponentConstants.JS_CREATE_MARKER_FUNCTION_PREFIX
 				+ getUniqueMarkerId(facesContext, marker) + "("
 				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");     ");
-                PluginEncoder.encodeMarkerPluginsFunctionCalls(facesContext, marker, writer);
+                
 
 	}
     
@@ -232,12 +232,12 @@ public class MarkerEncoder {
                 + "var markersArray = markersState.split('&');     "
                 + "var updatedMarkersState = '';     " 
                 
-                + "for (i = 0; i < markersArray.length; ++i) {     " 
+                + "for (i = 0; markersArray.length > i; ++i) {     "
 
                     + "if (markersArray[i].indexOf('" + marker.getId() + "=') == -1) {     "
                     
                         + "updatedMarkersState += markersArray[i];     "
-                        + "if (markersArray.length != 1 && i < markersArray.length - 1) {     "
+                        + "if (markersArray.length != 1 && ((markersArray.length - 1) > i)) {     "
                             + "updatedMarkersState += '&';     " 
                         + "}     " 
                     
@@ -317,6 +317,7 @@ public class MarkerEncoder {
                 break;
             }
         }
+        PluginEncoder.encodeMarkerPluginsFunctionCalls(facesContext, marker, writer);
     }
 
     private static void updateMarkerJSVariable(FacesContext facesContext,
