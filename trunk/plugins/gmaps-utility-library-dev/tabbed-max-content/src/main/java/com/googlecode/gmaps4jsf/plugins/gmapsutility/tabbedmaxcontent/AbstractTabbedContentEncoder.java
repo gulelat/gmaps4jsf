@@ -46,12 +46,7 @@ public abstract class AbstractTabbedContentEncoder implements Plugin {
                 encodeMaxInfoWindow((MaxInfoWindow) component, buffer);
             }
         }
-        onEncodeFunctionScript(facesContext, parentComponent);
         return buffer.append("}").toString();
-    }
-
-    protected void onEncodeFunctionScript(FacesContext facesContext, UIComponent parentComponent) {
-        
     }
 
     protected void encodeWindowCreation(MaxInfoWindow maxInfoWindow, StringBuffer buffer) {
@@ -94,8 +89,8 @@ public abstract class AbstractTabbedContentEncoder implements Plugin {
             .append(".getTabbedMaxContent(), 'selecttab', function(tab) {")
             .append("var selection = window.gSelectTabFunctions['")
             .append(maxInfoWindow.getId()).append("'][tab.id];if(selection) {")
-            .append("for (var index = 0; index < selection.length;index++) {")
-            .append("selection[index](tab);")
+            .append("for (var index = 0; selection.length > index; index++) {")
+            .append("if (selection[index]) selection[index](tab);")
             .append("}}});}");
     }
 
