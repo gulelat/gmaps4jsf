@@ -76,7 +76,12 @@ public abstract class AbstractTabbedContentEncoder implements Plugin {
         encodeWindowCreation(maxInfoWindow, buffer);
         buffer.append("parent.openMaxContentTabsHtml(target, regular, summary, tabs, {")
             .append("maxTitle: maxTitle,").append("selectedTab: selectedTab,")
-            .append("maximized: maximized, noCloseOnClick: true");
+            .append("maximized: maximized, noCloseOnClick: true, buttons: {");
+        if (!maxInfoWindow.isShowCloseButton()) buffer.append("close:{show: 4},");
+        if (!maxInfoWindow.isShowMaximizeButton()) buffer.append("maximize:{show: 4},");
+        if (!maxInfoWindow.isShowMinimizeButton()) buffer.append("restore:{show: 4},");
+        if (buffer.charAt(buffer.length() - 1) == ',') buffer.deleteCharAt(buffer.length() - 1);
+        buffer.append("}");
         String onClose = maxInfoWindow.getOnClose();
         if ((onClose != null) && (onClose.trim().length() > 0)) {
             buffer.append(",onCloseFn: function() {")
