@@ -70,6 +70,27 @@
             <description>Index or name of the selected tab once maximized.</description>
         </attribute>
         <attribute>
+            <name>showCloseButton</name>
+            <required>false</required>
+            <type>boolean</type>
+            <defaultValue>true</defaultValue>
+            <description>Determines if the close button should be visible.</description>
+        </attribute>
+        <attribute>
+            <name>showMinimizeButton</name>
+            <required>false</required>
+            <type>boolean</type>
+            <defaultValue>true</defaultValue>
+            <description>Determines if the minimize button should be visible.</description>
+        </attribute>
+        <attribute>
+            <name>showMaximizeButton</name>
+            <required>false</required>
+            <type>boolean</type>
+            <defaultValue>true</defaultValue>
+            <description>Determines if the maximize button should be visible.</description>
+        </attribute>
+        <attribute>
             <name>onClose</name>
             <required>false</required>
             <type>java.lang.String</type>
