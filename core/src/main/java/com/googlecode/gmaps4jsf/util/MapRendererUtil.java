@@ -86,12 +86,18 @@ public class MapRendererUtil {
 			throws IOException {
 		
         writer.write("if (bounds" + map.getId() + " != null) {     ");
-                
+                writer.write("var sw = bounds" + map.getId() + ".getSouthWest();");
+                writer.write("sw = new GLatLng(sw.lat() - 0.005, sw.lng() - 0.005);");
+                writer.write("var ne = bounds" + map.getId() + ".getNorthEast();");
+                writer.write("ne = new GLatLng(ne.lat() + 0.005, ne.lng() + 0.005);");
+                writer.write("var extra = new GLatLngBounds(sw, ne);");
+
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE + ".setZoom("
 				+ ComponentConstants.JS_GMAP_BASE_VARIABLE
-				+ ".getBoundsZoomLevel(" + "bounds" + map.getId() + "));     ");
+				+ ".getBoundsZoomLevel(extra));     ");
+
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE + ".setCenter("
-				+ "bounds" + map.getId() + ".getCenter());     ");
+				+ "extra.getCenter());     ");
         
         writer.write("}");
 	}
