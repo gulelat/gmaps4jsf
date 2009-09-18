@@ -33,11 +33,11 @@ import com.googlecode.gmaps4jsf.plugins.PluginEncoder;
 /**
  * @author Hazem Saleh
  * @date Aug 13, 2008
- * @last modified May 09, 2009 
+ * @last modified September 18, 2009
  * The MapRendererUtil is a utility class for the map.
  */
 public class MapRendererUtil {
-    
+
 	public static void startEncodingMapScript(FacesContext facesContext,
 			Map mapComponent, ResponseWriter writer) throws IOException {
 
@@ -62,10 +62,10 @@ public class MapRendererUtil {
 
 	public static void encodeMapAutoReshapeFunctionScript(Map map,
 			ResponseWriter writer) throws IOException {
-	    
+
         // initialize map bounds to null
         writer.write("var bounds" + map.getId() + " = null;     ");
-        
+
         // encode reshapeMap function script
 		writer.write("function reshapeMap" + map.getId() + "("
 						+ ComponentConstants.JS_GMAP_BASE_VARIABLE
@@ -73,7 +73,7 @@ public class MapRendererUtil {
 		writer.write("setBounds" + map.getId() + "(lat, lng);     ");
 		reshapeMapToCurrentBounds(map, writer);
 		writer.write("}     ");
-        
+
         // encode setBounds function script
 		writer.write("function setBounds" + map.getId() + "(lat, lng){     ");
         getMapBoundsJSInstance(map, writer);
@@ -84,7 +84,7 @@ public class MapRendererUtil {
 
 	public static void reshapeMapToCurrentBounds(Map map, ResponseWriter writer)
 			throws IOException {
-		
+
         writer.write("if (bounds" + map.getId() + " != null) {     ");
                 writer.write("var sw = bounds" + map.getId() + ".getSouthWest();");
                 writer.write("sw = new GLatLng(sw.lat() - 0.005, sw.lng() - 0.005);");
@@ -98,14 +98,14 @@ public class MapRendererUtil {
 
 		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE + ".setCenter("
 				+ "extra.getCenter());     ");
-        
+
         writer.write("}");
 	}
 
 	public static boolean isAutoReshapeMap(Map map) {
 		return "true".equalsIgnoreCase(map.getAutoReshape());
 	}
-    
+
     private static void createMapJSObject(FacesContext facesContext,
             Map mapComponent, ResponseWriter writer) throws IOException {
 
@@ -120,11 +120,11 @@ public class MapRendererUtil {
             writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
                     + ".disableDragging();     ");
         }
-        
+
         if ("true".equalsIgnoreCase(mapComponent.getEnableScrollWheelZoom())) {
             writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
                     + ".enableScrollWheelZoom();     ");
-        }        
+        }
     }
 
     private static void encodeMapType(FacesContext facesContext,
@@ -146,7 +146,7 @@ public class MapRendererUtil {
     }
 
     /*
-     * Completing the map rendering stuff like 
+     * Completing the map rendering stuff like
      * (notes, controls, eventHandlers' creator function...etc).
      */
     private static void completeMapRendering(FacesContext facesContext,
@@ -176,18 +176,18 @@ public class MapRendererUtil {
 
     private static void updateMapJSVariable(FacesContext facesContext, Map map,
             ResponseWriter writer) throws IOException {
-        
+
         if (map.getJsVariable() != null) {
             writer.write("     " + map.getJsVariable() + "="
                     + ComponentConstants.JS_GMAP_BASE_VARIABLE + ";     ");
         }
     }
-    
+
     private static void getMapBoundsJSInstance(Map map, ResponseWriter writer) throws IOException {
         writer.write("if (bounds" + map.getId() + " == null) {     ");
         writer.write("bounds" + map.getId() + " = new " + ComponentConstants.JS_GLatLngBounds_OBJECT + "();     ");
         writer.write("}      ");
-    }    
+    }
 
     private static void renderMapUsingLatLng(FacesContext facesContext,
             Map map, ResponseWriter writer) throws IOException {
@@ -232,5 +232,5 @@ public class MapRendererUtil {
             Map mapComponent, ResponseWriter writer) throws IOException {
 
         writer.write("}" + "}     " + ");     ");
-    }    
+    }
 }
