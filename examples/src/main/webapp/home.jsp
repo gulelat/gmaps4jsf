@@ -8,7 +8,7 @@
         <title>Welcome to GMaps4JSF</title>
     </head>
     <body>
-        <%@include file="../templates/header.jspf" %>
+        <%@include file="templates/header.jspf" %>
         <f:view>
             <h:form>
 
