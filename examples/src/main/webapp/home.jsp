@@ -156,10 +156,10 @@
                     </h:outputLink>
                 </h:panelGrid>
 
-                <h:outputText value="Marker labels (Extended Component - Experimental)" />
+                <h:outputText value="PopupMarker(Extended Component - Experimental)" />
                 <h:panelGrid style="padding-left:25px">
                     <h:outputLink value="pages/popupMarkers.jsf">
-                        <f:verbatim>An example that creates popups beside markers.</f:verbatim>
+                        <f:verbatim>An example that creates popup markers.</f:verbatim>
                     </h:outputLink>
                 </h:panelGrid>
 
