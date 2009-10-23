@@ -7,7 +7,7 @@
         <version>1.1.3-SNAPSHOT</version>
     </parent>
     <artifactId>popup-marker</artifactId>
-    <name>Popup Maker</name>
+    <name>PopupMarker Component (Extended GMaps4JSF component)</name>
     <url>http://gmaps-utility-library-dev.googlecode.com/svn/tags/popupmarker</url>
     <build>
         <plugins>
