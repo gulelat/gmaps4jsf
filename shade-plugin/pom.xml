@@ -18,6 +18,12 @@
         </dependency>
         <dependency>
             <groupId>${groupId}</groupId>
+            <artifactId>popup-marker</artifactId>
+            <version>${version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>${groupId}</groupId>
             <artifactId>drag-zoom-control</artifactId>
             <version>${version}</version>
             <optional>true</optional>
