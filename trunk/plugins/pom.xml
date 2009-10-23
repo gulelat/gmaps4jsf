@@ -11,6 +11,7 @@
     <name>GMaps4JSF Plugins Project</name>
     <description>Includes all available GMaps4JSF plugins</description>
     <modules>
+        <module>popup-marker</module>
         <module>gmaps-utility-library-dev</module>
     </modules>
 </project>
