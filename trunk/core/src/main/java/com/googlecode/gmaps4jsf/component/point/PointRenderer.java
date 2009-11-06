@@ -34,18 +34,14 @@ import com.googlecode.gmaps4jsf.util.ComponentUtils;
  */
 public class PointRenderer extends Renderer {
 
-	public void encodeBegin(FacesContext context, UIComponent component)
-			throws IOException {	
-		
-	}
+    public void encodeBegin(FacesContext context, UIComponent component) throws IOException {    
+    }
 
-	public void encodeEnd(FacesContext context, UIComponent component)
-			throws IOException {
-
-		Point          point       = (Point) component;
-		ResponseWriter writer      = context.getResponseWriter();
-		UIComponent    pointParent = ComponentUtils.findParentPolygonOrPolyline(context, point);
+    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
+        Point          point       = (Point) component;
+        ResponseWriter writer      = context.getResponseWriter();
+        UIComponent    pointParent = ComponentUtils.findParentPolygonOrPolyline(context, point);
 
         PointEncoder.encodePoint(context, pointParent, point, writer);
-	}
+    }
 }

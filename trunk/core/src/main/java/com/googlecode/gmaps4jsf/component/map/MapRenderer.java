@@ -67,9 +67,9 @@ public class MapRenderer extends Renderer {
     }
 
     public void decode(FacesContext context, UIComponent component) {
-        Map map = (Map) component;
+        Map    map            = (Map)    component;
         String submittedValue = (String) context.getExternalContext().getRequestParameterMap().get(
-                ComponentUtils.getMapStateHiddenFieldId(map));
+                                         ComponentUtils.getMapStateHiddenFieldId(map));
 
         map.setSubmittedValue(submittedValue);
     }
@@ -115,10 +115,8 @@ public class MapRenderer extends Renderer {
      * It encodes the scripts that would be used for rendering the map objects.
      * @param facesContext @param mapComponent @param writer @throws IOException
      */
-    private void startEncodingMapRendererWrapper(FacesContext facesContext, Map map, ResponseWriter writer)
-            throws IOException {
-
-        writer.write("function " + ComponentConstants.JS_RENDER_MAP_FUNC + map.getId() + "(){");
+    private void startEncodingMapRendererWrapper(FacesContext facesContext, Map map, ResponseWriter writer) throws IOException {
+        writer.write(ComponentConstants.JS_FUNCTION + ComponentConstants.JS_RENDER_MAP_FUNC + map.getId() + "(){");
 
         if (MapRendererUtil.isAutoReshapeMap(map)) {
             MapRendererUtil.encodeMapAutoReshapeFunctionScript(map, writer);
@@ -128,8 +126,7 @@ public class MapRenderer extends Renderer {
 
         MapControlEncoder.encodeMapControlsFunctionScript(facesContext, map, writer);
 
-        EventEncoder.encodeEventListenersFunctionScript(facesContext, map, writer,
-                ComponentConstants.JS_GMAP_BASE_VARIABLE);
+        EventEncoder.encodeEventListenersFunctionScript(facesContext, map, writer, ComponentConstants.JS_GMAP_BASE_VARIABLE);
 
         GroundOverlayEncoder.encodeGroundOverlaysFunctionScript(facesContext, map, writer);
 
@@ -138,9 +135,7 @@ public class MapRenderer extends Renderer {
         MapRendererUtil.startEncodingMapScript(facesContext, map, writer);
     }
 
-    private void endEncodingMapRendererWrapper(FacesContext facesContext, Map map, ResponseWriter writer)
-            throws IOException {
-
+    private void endEncodingMapRendererWrapper(FacesContext facesContext, Map map, ResponseWriter writer) throws IOException {
         MapRendererUtil.endEncodingMapScript(facesContext, map, writer);
 
         if (MapRendererUtil.isAutoReshapeMap(map)) {
@@ -150,9 +145,7 @@ public class MapRenderer extends Renderer {
         writer.write("}");
     }
 
-    private void callMapRendererWrapper(FacesContext facesContext, UIComponent component, ResponseWriter writer)
-            throws IOException {
-
+    private void callMapRendererWrapper(FacesContext facesContext, UIComponent component, ResponseWriter writer) throws IOException {
         writer.write(ComponentConstants.JS_RENDER_MAP_FUNC + component.getId() + "();     ");
     }
 
@@ -163,9 +156,9 @@ public class MapRenderer extends Renderer {
         writer.startElement(ComponentConstants.HTML_DIV, map);
 
         writer.writeAttribute(ComponentConstants.HTML_ATTR_ID, map.getClientId(context),
-                ComponentConstants.HTML_ATTR_ID);
+                              ComponentConstants.HTML_ATTR_ID);
         writer.writeAttribute(ComponentConstants.HTML_ATTR_STYLE, "width: " + map.getWidth() + "; height: "
-                + map.getHeight(), ComponentConstants.HTML_ATTR_STYLE);
+                             + map.getHeight(), ComponentConstants.HTML_ATTR_STYLE);
 
         writer.endElement(ComponentConstants.HTML_DIV);
 
@@ -175,11 +168,11 @@ public class MapRenderer extends Renderer {
         writer.startElement(ComponentConstants.HTML_INPUT, map);
 
         writer.writeAttribute(ComponentConstants.HTML_ATTR_ID, ComponentUtils.getMapStateHiddenFieldId(map),
-                ComponentConstants.HTML_ATTR_ID);
+                              ComponentConstants.HTML_ATTR_ID);
         writer.writeAttribute(ComponentConstants.HTML_ATTR_NAME, ComponentUtils.getMapStateHiddenFieldId(map),
-                ComponentConstants.HTML_ATTR_NAME);
+                              ComponentConstants.HTML_ATTR_NAME);
         writer.writeAttribute(ComponentConstants.HTML_ATTR_TYPE, ComponentConstants.HTML_ATTR_TYPE_HIDDEN,
-                ComponentConstants.HTML_ATTR_TYPE);
+                              ComponentConstants.HTML_ATTR_TYPE);
 
         if (null != mapState) {
             writer.writeAttribute(ComponentConstants.HTML_ATTR_VALUE, mapState, ComponentConstants.HTML_ATTR_VALUE);
@@ -188,14 +181,12 @@ public class MapRenderer extends Renderer {
         writer.endElement(ComponentConstants.HTML_INPUT);
     }
 
-    private void startEncodingMapWorld(FacesContext context, UIComponent component, ResponseWriter writer)
-            throws IOException {
-
+    private void startEncodingMapWorld(FacesContext context, UIComponent component, ResponseWriter writer) throws IOException {
         Map map = (Map) component;
 
         writer.startElement(ComponentConstants.HTML_SCRIPT, component);
         writer.writeAttribute(ComponentConstants.HTML_SCRIPT_TYPE, ComponentConstants.HTML_SCRIPT_LANGUAGE,
-                ComponentConstants.HTML_SCRIPT_TYPE);
+                              ComponentConstants.HTML_SCRIPT_TYPE);
         
         writer.write("var renderingScript = \"");
 
@@ -206,9 +197,7 @@ public class MapRenderer extends Renderer {
         startEncodingMapRendererWrapper(context, map, writer);
     }
 
-    private void endEncodingMapWorld(FacesContext context, UIComponent component, ResponseWriter writer)
-            throws IOException {
-
+    private void endEncodingMapWorld(FacesContext context, UIComponent component, ResponseWriter writer) throws IOException {
         Map map = (Map) component;
 
         endEncodingMapRendererWrapper(context, map, writer);

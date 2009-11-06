@@ -24,46 +24,46 @@ package com.googlecode.gmaps4jsf.component.marker;
  * The MarkerValue is used as the inner data structure of the Marker.
  */
 public class MarkerValue implements java.io.Serializable {
-	String longitude;
-	String latitude;
-	
-	public MarkerValue() {	
-	}
-	
-	public MarkerValue(String longitude, String latitude) {
-		super();
-		this.longitude = longitude;
-		this.latitude  = latitude;
-	}
-	
-	public String getLatitude() {
-		return latitude;
-	}
-	
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
-	
-	public String getLongitude() {
-		return longitude;
-	}
-	
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
-	}
+    String longitude;
+    String latitude;
+    
+    public MarkerValue() {    
+    }
+    
+    public MarkerValue(String longitude, String latitude) {
+        super();
+        this.longitude = longitude;
+        this.latitude  = latitude;
+    }
+    
+    public String getLatitude() {
+        return latitude;
+    }
+    
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+    
+    public String getLongitude() {
+        return longitude;
+    }
+    
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
 
-	public boolean equals(Object object) {
-		if (object != null && object instanceof MarkerValue) {
+    public boolean equals(Object object) {
+        if (object != null && object instanceof MarkerValue) {
             MarkerValue marker = (MarkerValue) object;
             
-			return (longitude.equals(marker.getLongitude()) &&
-					latitude.equals(marker.getLatitude()));  
-		}
-		
-		return false;
-	}
+            return (longitude.equals(marker.getLongitude()) &&
+                    latitude.equals(marker.getLatitude()));  
+        }
+        
+        return false;
+    }
 
-	public String toString() {
-		return "(" + longitude + ", " + latitude + ")";
-	}
+    public String toString() {
+        return "(" + longitude + ", " + latitude + ")";
+    }
 }

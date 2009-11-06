@@ -38,53 +38,56 @@ import com.googlecode.gmaps4jsf.plugins.PluginEncoder;
  */
 public class MapRendererUtil {
 
-	public static void startEncodingMapScript(FacesContext facesContext,
-			Map mapComponent, ResponseWriter writer) throws IOException {
+    public static void startEncodingMapScript(FacesContext facesContext,
+                                              Map mapComponent, 
+                                              ResponseWriter writer) 
+                                              throws IOException {
 
-		createMapJSObject(facesContext, mapComponent, writer);
+        createMapJSObject(facesContext, mapComponent, writer);
 
-		if ((mapComponent.getAddress() == null)
-			|| (mapComponent.getAddress().trim().length() <= 0)) {
-			renderMapUsingLatLng(facesContext, mapComponent, writer);
-		} else {
-			renderMapUsingAddress(facesContext, mapComponent, writer);
-		}
-	}
+        if ((mapComponent.getAddress() == null)
+            || (mapComponent.getAddress().trim().length() <= 0)) {
+            renderMapUsingLatLng(facesContext, mapComponent, writer);
+        } else {
+            renderMapUsingAddress(facesContext, mapComponent, writer);
+        }
+    }
 
-	public static void endEncodingMapScript(FacesContext facesContext, Map map,
-			ResponseWriter writer) throws IOException {
+    public static void endEncodingMapScript(FacesContext facesContext, 
+                                            Map map,
+                                            ResponseWriter writer) 
+                                            throws IOException {
 
-		if ((map.getAddress() != null)
-			&& (map.getAddress().trim().length() > 0)) {
-			endRenderingMapUsingAddress(facesContext, map, writer);
-		}
-	}
+        if ((map.getAddress() != null)
+            && (map.getAddress().trim().length() > 0)) {
+            endRenderingMapUsingAddress(facesContext, map, writer);
+        }
+    }
 
-	public static void encodeMapAutoReshapeFunctionScript(Map map,
-			ResponseWriter writer) throws IOException {
+    public static void encodeMapAutoReshapeFunctionScript(Map map,
+                                                          ResponseWriter writer) 
+                                                          throws IOException {
 
         // initialize map bounds to null
         writer.write("var bounds" + map.getId() + " = null;     ");
 
         // encode reshapeMap function script
-		writer.write("function reshapeMap" + map.getId() + "("
-						+ ComponentConstants.JS_GMAP_BASE_VARIABLE
-						+ ", lat, lng){     ");
-		writer.write("setBounds" + map.getId() + "(lat, lng);     ");
-		reshapeMapToCurrentBounds(map, writer);
-		writer.write("}     ");
+        writer.write("function reshapeMap" + map.getId() + "("
+                    + ComponentConstants.JS_GMAP_BASE_VARIABLE
+                    + ", lat, lng){     ");
+        writer.write("setBounds" + map.getId() + "(lat, lng);     ");
+        reshapeMapToCurrentBounds(map, writer);
+        writer.write("}     ");
 
         // encode setBounds function script
-		writer.write("function setBounds" + map.getId() + "(lat, lng){     ");
+        writer.write("function setBounds" + map.getId() + "(lat, lng){     ");
         getMapBoundsJSInstance(map, writer);
-		writer.write("bounds" + map.getId()
-				+ ".extend(new GLatLng(lat, lng));     ");
-		writer.write("}     ");
-	}
+        writer.write("bounds" + map.getId()
+                    + ".extend(new GLatLng(lat, lng));     ");
+        writer.write("}     ");
+    }
 
-	public static void reshapeMapToCurrentBounds(Map map, ResponseWriter writer)
-			throws IOException {
-
+    public static void reshapeMapToCurrentBounds(Map map, ResponseWriter writer) throws IOException {
         writer.write("if (bounds" + map.getId() + " != null) {     ");
                 writer.write("var sw = bounds" + map.getId() + ".getSouthWest();");
                 writer.write("sw = new GLatLng(sw.lat() - 0.005, sw.lng() - 0.005);");
@@ -92,56 +95,62 @@ public class MapRendererUtil {
                 writer.write("ne = new GLatLng(ne.lat() + 0.005, ne.lng() + 0.005);");
                 writer.write("var extra = new GLatLngBounds(sw, ne);");
 
-		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE + ".setZoom("
-				+ ComponentConstants.JS_GMAP_BASE_VARIABLE
-				+ ".getBoundsZoomLevel(extra));     ");
+        writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE + ".setZoom("
+                + ComponentConstants.JS_GMAP_BASE_VARIABLE
+                + ".getBoundsZoomLevel(extra));     ");
 
-		writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE + ".setCenter("
-				+ "extra.getCenter());     ");
+        writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE + ".setCenter("
+                + "extra.getCenter());     ");
 
         writer.write("}");
-	}
+    }
 
-	public static boolean isAutoReshapeMap(Map map) {
-		return "true".equalsIgnoreCase(map.getAutoReshape());
-	}
+    public static boolean isAutoReshapeMap(Map map) {
+        return "true".equalsIgnoreCase(map.getAutoReshape());
+    }
 
     private static void createMapJSObject(FacesContext facesContext,
-            Map mapComponent, ResponseWriter writer) throws IOException {
+                                          Map mapComponent, 
+                                          ResponseWriter writer) 
+                                          throws IOException {
 
         // create the map object.
         writer.write("var " + ComponentConstants.JS_GMAP_BASE_VARIABLE
-                + " = new " + ComponentConstants.JS_GMAP_CORE_OBJECT
-                + "(document.getElementById('"
-                + mapComponent.getClientId(facesContext) + "'));     ");
+                    + " = new " + ComponentConstants.JS_GMAP_CORE_OBJECT
+                    + "(document.getElementById('"
+                    + mapComponent.getClientId(facesContext) + "'));     ");
 
         // attach properties to the map.
         if (!"true".equalsIgnoreCase(mapComponent.getEnableDragging())) {
             writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-                    + ".disableDragging();     ");
+                        + ".disableDragging();     ");
         }
 
         if ("true".equalsIgnoreCase(mapComponent.getEnableScrollWheelZoom())) {
             writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-                    + ".enableScrollWheelZoom();     ");
+                        + ".enableScrollWheelZoom();     ");
         }
     }
 
     private static void encodeMapType(FacesContext facesContext,
-            Map mapComponent, ResponseWriter writer) throws IOException {
+                                      Map mapComponent, 
+                                      ResponseWriter writer) 
+                                      throws IOException {
 
         writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE + ".setMapType("
-                + mapComponent.getType() + ");     ");
+                    + mapComponent.getType() + ");     ");
     }
 
     private static void encodeMapStreetOverlay(FacesContext facesContext,
-            Map mapComponent, ResponseWriter writer) throws IOException {
+                                               Map mapComponent, 
+                                               ResponseWriter writer) 
+                                               throws IOException {
 
         if ("true".equalsIgnoreCase(mapComponent.getAddStreetOverlay())) {
             writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-                            + ".addOverlay(new "
-                            + ComponentConstants.JS_GSTREET_VIEW_PANORAMA_Overlay_OBJECT
-                            + "()) ;     ");
+                        + ".addOverlay(new "
+                        + ComponentConstants.JS_GSTREET_VIEW_PANORAMA_Overlay_OBJECT
+                        + "()) ;     ");
         }
     }
 
@@ -150,32 +159,32 @@ public class MapRendererUtil {
      * (notes, controls, eventHandlers' creator function...etc).
      */
     private static void completeMapRendering(FacesContext facesContext,
-            Map mapComponent, ResponseWriter writer) throws IOException {
+                                             Map mapComponent, 
+                                             ResponseWriter writer) 
+                                             throws IOException {
 
-        HTMLInfoWindowEncoder.encodeHTMLInfoWindowsFunctionScriptCall(
-                facesContext, mapComponent, writer);
+        HTMLInfoWindowEncoder.encodeHTMLInfoWindowsFunctionScriptCall(facesContext, mapComponent, writer);
 
         encodeMapType(facesContext, mapComponent, writer);
 
         encodeMapStreetOverlay(facesContext, mapComponent, writer);
 
-        EventEncoder.encodeEventListenersFunctionScriptCall(facesContext,
-                mapComponent, writer, ComponentConstants.JS_GMAP_BASE_VARIABLE);
+        EventEncoder.encodeEventListenersFunctionScriptCall(facesContext, mapComponent, 
+                                                            writer, ComponentConstants.JS_GMAP_BASE_VARIABLE);
 
-        MapControlEncoder.encodeMapControlsFunctionScriptCall(facesContext,
-                mapComponent, writer);
+        MapControlEncoder.encodeMapControlsFunctionScriptCall(facesContext, mapComponent, writer);
 
-        GroundOverlayEncoder.encodeGroundOverlaysFunctionScriptCall(
-                facesContext, mapComponent, writer);
+        GroundOverlayEncoder.encodeGroundOverlaysFunctionScriptCall(facesContext, mapComponent, writer);
 
-        PluginEncoder.encodeMapPluginsFunctionCalls(facesContext,
-                mapComponent, writer);
+        PluginEncoder.encodeMapPluginsFunctionCalls(facesContext, mapComponent, writer);
 
         updateMapJSVariable(facesContext, mapComponent, writer);
     }
 
-    private static void updateMapJSVariable(FacesContext facesContext, Map map,
-            ResponseWriter writer) throws IOException {
+    private static void updateMapJSVariable(FacesContext facesContext, 
+                                            Map map,
+                                            ResponseWriter writer) 
+                                            throws IOException {
 
         if (map.getJsVariable() != null) {
             writer.write("     " + map.getJsVariable() + "="
@@ -190,46 +199,51 @@ public class MapRendererUtil {
     }
 
     private static void renderMapUsingLatLng(FacesContext facesContext,
-            Map map, ResponseWriter writer) throws IOException {
+                                             Map map, 
+                                             ResponseWriter writer) 
+                                             throws IOException {
 
         writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-                + ".setCenter(new " + ComponentConstants.JS_GLatLng_OBJECT
-                + "(" + map.getLatitude() + ", " + map.getLongitude() + "), "
-                + map.getZoom() + ");     ");
+                    + ".setCenter(new " + ComponentConstants.JS_GLatLng_OBJECT
+                    + "(" + map.getLatitude() + ", " + map.getLongitude() + "), "
+                    + map.getZoom() + ");     ");
 
         completeMapRendering(facesContext, map, writer);
     }
 
     private static void renderMapUsingAddress(FacesContext facesContext,
-            Map map, ResponseWriter writer) throws IOException {
+                                              Map map, 
+                                              ResponseWriter writer) 
+                                              throws IOException {
 
         String errorMessageScript = "";
         writer.write("var geocoder_" + map.getId() + " = new "
-                + ComponentConstants.JS_GClientGeocoder_OBJECT + "();     ");
+                    + ComponentConstants.JS_GClientGeocoder_OBJECT + "();     ");
 
         if ("true".equalsIgnoreCase(map.getShowLocationNotFoundMessage())) {
             errorMessageScript = "alert('"
-                    + map.getLocationNotFoundErrorMessage() + "');     ";
+                               + map.getLocationNotFoundErrorMessage() + "');     ";
         }
 
         // send XHR request to get the address location and write to the
         // response.
         writer.write("geocoder_" + map.getId() + ".getLatLng('"
-                + map.getAddress() + "'," + "function(location) {     "
-                + "if (!location) {     " +
+                    + map.getAddress() + "'," + "function(location) {     "
+                    + "if (!location) {     " +
+                       errorMessageScript
 
-                errorMessageScript
-
-                + "} else {     ");
+                    + "} else {     ");
 
         writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-                + ".setCenter(location, " + map.getZoom() + ");     ");
+                    + ".setCenter(location, " + map.getZoom() + ");     ");
 
         completeMapRendering(facesContext, map, writer);
     }
 
-    private static void endRenderingMapUsingAddress(FacesContext facesContext,
-            Map mapComponent, ResponseWriter writer) throws IOException {
+    private static void endRenderingMapUsingAddress(FacesContext facesContext, 
+                                                    Map mapComponent, 
+                                                    ResponseWriter writer) 
+                                                    throws IOException {
 
         writer.write("}" + "}     " + ");     ");
     }

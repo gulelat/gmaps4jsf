@@ -33,18 +33,18 @@ import com.googlecode.gmaps4jsf.util.ComponentUtils;
  */
 public class PointEncoder {
 
-	public static void encodePoint(FacesContext facesContext,
-			                       UIComponent parentComponent, 
+    public static void encodePoint(FacesContext facesContext,
+                                   UIComponent parentComponent, 
                                    Point point, 
                                    ResponseWriter writer)
-			                       throws IOException {
+                                   throws IOException {
 
         String parentComponentArrayVariable = ComponentUtils.getComponentArrayVariable(parentComponent);
         
-		writer.write( parentComponentArrayVariable + "["
+        writer.write( parentComponentArrayVariable + "["
                     + parentComponentArrayVariable + ".length] = "
                     + "new GLatLng(" + point.getLatitude() + ", "
                     + point.getLongitude() + ");    "
                     );
-	}
+    }
 }
