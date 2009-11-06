@@ -50,7 +50,7 @@ public class HTMLInfoWindowEncoder {
 			Marker marker, HTMLInformationWindow window, ResponseWriter writer)
 			throws IOException {
 
-		writer.write(ComponentConstants.CONST_MARKER_PREFIX + marker.getId()
+		writer.write(ComponentConstants.CONST_MARKER_PREFIX + marker.getClientId(facesContext).replace(':', '_')
 				+ ".openInfoWindowHtml('" + window.getHtmlText() + "');    ");
 
 		writer.write("var window_" + window.getId() + " = "

@@ -45,7 +45,8 @@ public class MarkerRenderer extends Renderer {
         Marker marker = (Marker) component;
         ResponseWriter writer = context.getResponseWriter();
         Map parentMap = (Map) ComponentUtils.findParentMap(context, marker);
-
+        
+        //System.err.println("Encoded marker ID: " + MarkerEncoder.getUniqueMarkerId(context, marker));        
         MarkerEncoder.encodeMarkerFunctionScript(context, parentMap, marker,
                 writer);
 

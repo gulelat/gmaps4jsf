@@ -55,23 +55,23 @@ public class MarkerEncoder {
 		if (marker.isRendered()) {
 			encodeMarker(facesContext, map, marker, writer);
                         writer.write("return " + ComponentConstants.CONST_MARKER_PREFIX);
-                        writer.write(marker.getId() + ";");
+                        writer.write(getUniqueMarkerId(facesContext, marker) + ";");
 		}
 
 		writer.write("}");
-                PluginEncoder.encodeMarkerPluginsFunctionScripts(facesContext, marker, writer);
+        
+        PluginEncoder.encodeMarkerPluginsFunctionScripts(facesContext, marker, writer);
 	}
 
 	public static void encodeMarkerFunctionScriptCall(
 			FacesContext facesContext, Map map, Marker marker,
 			ResponseWriter writer) throws IOException {
-                writer.write("var " + ComponentConstants.CONST_MARKER_PREFIX);
-                writer.write(marker.getId() + " = ");
+        
+        writer.write("var " + ComponentConstants.CONST_MARKER_PREFIX);
+        writer.write(getUniqueMarkerId(facesContext, marker) + " = ");
 		writer.write(ComponentConstants.JS_CREATE_MARKER_FUNCTION_PREFIX
-				+ getUniqueMarkerId(facesContext, marker) + "("
-				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");     ");
-                
-
+				    + getUniqueMarkerId(facesContext, marker) + "("
+				    + ComponentConstants.JS_GMAP_BASE_VARIABLE + ");     ");
 	}
     
     private static String getMarkerState(String markerID, Object mapState) {
@@ -94,7 +94,7 @@ public class MarkerEncoder {
             Marker marker, ResponseWriter writer) throws IOException {
 
         Object mapState = ComponentUtils.getValueToRender(context, map);
-        String markerState = getMarkerState(marker.getId(), mapState);
+        String markerState = getMarkerState(getUniqueMarkerId(context, marker), mapState);
 
         if (markerState != null) { /* Marker comes from postback and it has a state */ 
 
@@ -102,7 +102,7 @@ public class MarkerEncoder {
             updateMarkerModel(context, markerState, marker);
 
             writer.write("var " + ComponentConstants.CONST_MARKER_PREFIX
-                    + marker.getId() + " = new "
+                    + getUniqueMarkerId(context, marker) + " = new "
                     + ComponentConstants.JS_GMarker_OBJECT + "(new "
                     + ComponentConstants.JS_GLatLng_OBJECT + markerState + ","
                     + getMarkerOptions(context, marker, writer) + ");     ");
@@ -115,7 +115,7 @@ public class MarkerEncoder {
             String errorMessageScript = "";
 
             // create the marker instance from address.
-            writer.write("var geocoder_" + marker.getId() + " = new "
+            writer.write("var geocoder_" + getUniqueMarkerId(context, marker) + " = new "
                     + ComponentConstants.JS_GClientGeocoder_OBJECT + "();     ");
 
             if ("true".equalsIgnoreCase(marker.getShowLocationNotFoundMessage())) {
@@ -125,14 +125,14 @@ public class MarkerEncoder {
 
             // send XHR request to get the address location and write to the
             // response.
-            writer.write("geocoder_" + marker.getId() + ".getLatLng('"
+            writer.write("geocoder_" + getUniqueMarkerId(context, marker) + ".getLatLng('"
                     + marker.getAddress() + "'," + "function(location) {     "
                     + "if (!location) {     " 
                     + errorMessageScript
                     + "} else {     ");
 
             writer.write("var " + ComponentConstants.CONST_MARKER_PREFIX
-                    + marker.getId() + " = new "
+                    + getUniqueMarkerId(context, marker) + " = new "
                     + ComponentConstants.JS_GMarker_OBJECT + "(location, "
                     + getMarkerOptions(context, marker, writer) + ");     ");
             
@@ -163,7 +163,7 @@ public class MarkerEncoder {
             }
 
             writer.write("var " + ComponentConstants.CONST_MARKER_PREFIX
-                    + marker.getId() + " = new "
+                    + getUniqueMarkerId(context, marker) + " = new "
                     + ComponentConstants.JS_GMarker_OBJECT + "(new "
                     + ComponentConstants.JS_GLatLng_OBJECT + "(" + latitude
                     + ", " + longitude + "),"
@@ -204,7 +204,7 @@ public class MarkerEncoder {
             Map map, Marker marker, ResponseWriter writer) throws IOException {
 
         writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-                + ".addOverlay(marker_" + marker.getId() + ");     ");
+                + ".addOverlay(marker_" + getUniqueMarkerId(facesContext, marker) + ");     ");
 
         // save the marker state.
         saveMarkerState(facesContext, map, marker, writer);
@@ -220,7 +220,7 @@ public class MarkerEncoder {
             Marker marker, ResponseWriter writer) throws IOException {
         
         // Start creating the drag end listener.
-        String markerDragEndHandler = "function " + "marker_" + marker.getId()
+        String markerDragEndHandler = "function " + "marker_" + getUniqueMarkerId(facesContext, marker)
                 + "_dragEnd(latlng) " + "{     " +
 
                 "var markersState = document.getElementById('"
@@ -228,13 +228,13 @@ public class MarkerEncoder {
                 + "').value;     " 
                 
                 
-                + "if (markersState.indexOf('" + marker.getId() + "=') != -1) {     "
+                + "if (markersState.indexOf('" + getUniqueMarkerId(facesContext, marker) + "=') != -1) {     "
                 + "var markersArray = markersState.split('&');     "
                 + "var updatedMarkersState = '';     " 
                 
                 + "for (i = 0; markersArray.length > i; ++i) {     "
 
-                    + "if (markersArray[i].indexOf('" + marker.getId() + "=') == -1) {     "
+                    + "if (markersArray[i].indexOf('" + getUniqueMarkerId(facesContext, marker) + "=') == -1) {     "
                     
                         + "updatedMarkersState += markersArray[i];     "
                         + "if (markersArray.length != 1 && ((markersArray.length - 1) > i)) {     "
@@ -252,7 +252,7 @@ public class MarkerEncoder {
                     + "markersState += '&';     "
                 + "}     " 
                 
-                + "markersState += '" + marker.getId() + "=' + latlng;     "
+                + "markersState += '" + getUniqueMarkerId(facesContext, marker) + "=' + latlng;     "
                 
                 // Save the marker state.
                 + "document.getElementById('"
@@ -270,8 +270,8 @@ public class MarkerEncoder {
                 
                 // Attach the listener to the marker drag end event.
                 + ComponentConstants.JS_GEVENT_OBJECT + ".addListener("
-                + "marker_" + marker.getId() + ", 'dragend', " + "marker_"
-                + marker.getId() + "_dragEnd" + ");     ";
+                + "marker_" + getUniqueMarkerId(facesContext, marker) + ", 'dragend', " + "marker_"
+                + getUniqueMarkerId(facesContext, marker) + "_dragEnd" + ");     ";
 
         writer.write(markerDragEndHandler);
     }
@@ -287,11 +287,11 @@ public class MarkerEncoder {
             if (component instanceof EventListener) {
                 EventEncoder.encodeEventListenersFunctionScript(facesContext,
                         marker, writer, ComponentConstants.CONST_MARKER_PREFIX
-                                + marker.getId());
+                                + getUniqueMarkerId(facesContext, marker));
                 EventEncoder.encodeEventListenersFunctionScriptCall(facesContext,
                                 marker, writer,
                                 ComponentConstants.CONST_MARKER_PREFIX
-                                + marker.getId());
+                                + getUniqueMarkerId(facesContext, marker));
             }
         }
 
@@ -305,7 +305,7 @@ public class MarkerEncoder {
                 writer.write(ComponentConstants.JS_GEVENT_OBJECT
                                 + ".addListener("
                                 + ComponentConstants.CONST_MARKER_PREFIX
-                                + marker.getId() + ", '"
+                                + getUniqueMarkerId(facesContext, marker) + ", '"
                                 + marker.getShowInformationEvent()
                                 + "', function() {");
 
@@ -325,13 +325,12 @@ public class MarkerEncoder {
 
         if (marker.getJsVariable() != null) {
             writer.write("     " + marker.getJsVariable() + " = "
-                    + ComponentConstants.CONST_MARKER_PREFIX + marker.getId()
+                    + ComponentConstants.CONST_MARKER_PREFIX + getUniqueMarkerId(facesContext, marker)
                     + ";     ");
         }
     }
 
-    private static String getUniqueMarkerId(FacesContext facesContext,
-            Marker marker) {
+    public static String getUniqueMarkerId(FacesContext facesContext, Marker marker) {
         String markerID = marker.getClientId(facesContext);
 
         return markerID.replace(':', '_');
