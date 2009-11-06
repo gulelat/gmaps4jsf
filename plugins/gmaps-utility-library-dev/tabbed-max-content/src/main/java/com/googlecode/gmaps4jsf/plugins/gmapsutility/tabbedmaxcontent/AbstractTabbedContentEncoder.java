@@ -23,7 +23,9 @@ import java.util.Iterator;
 import javax.faces.context.FacesContext;
 import javax.faces.component.UIComponent;
 
+import com.googlecode.gmaps4jsf.component.marker.Marker;
 import com.googlecode.gmaps4jsf.plugins.Plugin;
+import com.googlecode.gmaps4jsf.plugins.PluginEncoder;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
 import com.googlecode.gmaps4jsf.plugins.gmapsutility.component.Tab;
 import com.googlecode.gmaps4jsf.plugins.gmapsutility.component.MaxInfoWindow;
@@ -38,8 +40,19 @@ public abstract class AbstractTabbedContentEncoder implements Plugin {
     protected static final String TABBED_INFO_WINDOW_FUNCTION = "tabbedContent";
 
     public final String encodeFunctionScript(FacesContext facesContext, UIComponent parentComponent) {
-        StringBuffer buffer = new StringBuffer("function ");
-        buffer.append(TABBED_INFO_WINDOW_FUNCTION).append(parentComponent.getId()).append("(map, parent) {");
+        StringBuffer buffer   = new StringBuffer("function ");
+        String       parentID = ""; 
+        
+        // Get the parent component identifier
+        if (parentComponent instanceof Marker) {
+            parentID = PluginEncoder.getUniqueMarkerId(facesContext, (Marker) parentComponent);
+        } else {
+            parentID = parentComponent.getId();          
+        }
+       
+        // create the function script
+        buffer.append(TABBED_INFO_WINDOW_FUNCTION).append(parentID).append("(map, parent) {");
+        
         for (Iterator iterator = parentComponent.getChildren().iterator(); iterator.hasNext();) {
             UIComponent component = (UIComponent) iterator.next();
             if (component instanceof MaxInfoWindow  && component.isRendered()) {

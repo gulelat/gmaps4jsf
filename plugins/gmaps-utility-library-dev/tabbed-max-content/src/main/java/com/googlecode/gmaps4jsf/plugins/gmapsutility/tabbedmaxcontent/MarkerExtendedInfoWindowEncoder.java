@@ -23,6 +23,7 @@ import javax.faces.component.UIComponent;
 
 import com.googlecode.gmaps4jsf.component.marker.Marker;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
+import com.googlecode.gmaps4jsf.plugins.PluginEncoder;
 import com.googlecode.gmaps4jsf.plugins.gmapsutility.component.MaxInfoWindow;
 
 /**
@@ -49,9 +50,9 @@ public class MarkerExtendedInfoWindowEncoder extends AbstractTabbedContentEncode
 
     public String encodeFunctionScriptCall(FacesContext facesContext, UIComponent markerComponent) {
         StringBuffer buffer = new StringBuffer();
-        buffer.append(TABBED_INFO_WINDOW_FUNCTION).append(markerComponent.getId())
+        buffer.append(TABBED_INFO_WINDOW_FUNCTION).append(PluginEncoder.getUniqueMarkerId(facesContext, (Marker) markerComponent))
             .append("(").append(ComponentConstants.JS_GMAP_BASE_VARIABLE).append(",")
-            .append(ComponentConstants.CONST_MARKER_PREFIX).append(markerComponent.getId())
+            .append(ComponentConstants.CONST_MARKER_PREFIX).append(PluginEncoder.getUniqueMarkerId(facesContext, (Marker) markerComponent))
             .append(");");
         return buffer.toString();
 
