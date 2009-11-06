@@ -36,112 +36,125 @@ import com.googlecode.gmaps4jsf.util.StreetViewPanoramaRendererUtil;
  */
 public class StreetViewPanoramaRenderer extends Renderer {
 
-	private void encodeScripts(FacesContext facesContext,
-			UIComponent component, ResponseWriter writer) throws IOException {
+    private void encodeScripts(FacesContext facesContext, 
+                               UIComponent component, 
+                               ResponseWriter writer) 
+                               throws IOException {
 
-		StreetViewPanorama streetViewPanoramaComponent = (StreetViewPanorama) component;
+        StreetViewPanorama streetViewPanoramaComponent = (StreetViewPanorama) component;
 
-		writer.startElement(ComponentConstants.HTML_SCRIPT, component);
-		
-		declareJSVariables(facesContext, streetViewPanoramaComponent, writer);
+        writer.startElement(ComponentConstants.HTML_SCRIPT, component);
+        
+        declareJSVariables(facesContext, streetViewPanoramaComponent, writer);
 
-		ComponentUtils.startEncodingBrowserCompatabilityChecking(facesContext, component, writer);
-		
-		encodeStreetViewPanoramaRendererWrapper(facesContext, streetViewPanoramaComponent, writer);
-		
-		// determines whether to render streetViewPanorama on window onload.
-		if ("true".equals(streetViewPanoramaComponent.getRenderOnWindowLoad())) {
-			ComponentUtils.encodeJSFunctionInWindowOnLoad(writer,
-					ComponentConstants.JS_RENDER_STREET_VIEW_PANORAMA_FUNC
-							+ component.getId());
-		} else {
-			callStreetViewPanoramaRendererWrapper(facesContext, component, writer);
-		}
+        ComponentUtils.startEncodingBrowserCompatabilityChecking(facesContext, component, writer);
+        
+        encodeStreetViewPanoramaRendererWrapper(facesContext, streetViewPanoramaComponent, writer);
+        
+        // determines whether to render streetViewPanorama on window onload.
+        if ("true".equals(streetViewPanoramaComponent.getRenderOnWindowLoad())) {
+            ComponentUtils.encodeJSFunctionInWindowOnLoad(writer,
+                                                          ComponentConstants.JS_RENDER_STREET_VIEW_PANORAMA_FUNC + component.getId());
+        } else {
+            callStreetViewPanoramaRendererWrapper(facesContext, component, writer);
+        }
 
-		ComponentUtils.endEncodingBrowserCompatabilityChecking(facesContext, component, writer);
+        ComponentUtils.endEncodingBrowserCompatabilityChecking(facesContext, component, writer);
 
-		writer.endElement(ComponentConstants.HTML_SCRIPT);
-	}
+        writer.endElement(ComponentConstants.HTML_SCRIPT);
+    }
 
-	/*
-	 * Declare the JS variables for the streetViewPanorama.
-	 */
-	private void declareJSVariables(FacesContext facesContext, StreetViewPanorama streetViewPanorama,
-			ResponseWriter writer) throws IOException {
+    /*
+     * Declare the JS variables for the streetViewPanorama.
+     */
+    private void declareJSVariables(FacesContext facesContext, 
+                                    StreetViewPanorama streetViewPanorama,
+                                    ResponseWriter writer) 
+                                    throws IOException {
 
-		// declare the streetViewPanorama
-		if (streetViewPanorama.getJsVariable() != null) {
-			writer.write("      var " + streetViewPanorama.getJsVariable() + ";     ");
-		}
-	}
+        // declare the streetViewPanorama
+        if (streetViewPanorama.getJsVariable() != null) {
+            writer.write("      var " + streetViewPanorama.getJsVariable() + ";     ");
+        }
+    }
 
-	/*
-	 * This is the core method that is responsible for the whole streetViewPanorama rendering.
-	 * @param facesContext
-	 * @param streetViewPanoramaComponent
-	 * @param writer
-	 * @throws IOException
-	 */
-	private void encodeStreetViewPanoramaRendererWrapper(FacesContext facesContext,
-			StreetViewPanorama streetViewPanoramaComponent, ResponseWriter writer) throws IOException {
+    /*
+     * This is the core method that is responsible for the whole streetViewPanorama rendering.
+     * @param facesContext
+     * @param streetViewPanoramaComponent
+     * @param writer
+     * @throws IOException
+     */
+    private void encodeStreetViewPanoramaRendererWrapper(FacesContext facesContext,
+                                                         StreetViewPanorama streetViewPanoramaComponent, 
+                                                         ResponseWriter writer) 
+                                                         throws IOException {
 
-		writer.write("function " + ComponentConstants.JS_RENDER_STREET_VIEW_PANORAMA_FUNC
-				+ streetViewPanoramaComponent.getId() + "(){");
+        writer.write(ComponentConstants.JS_FUNCTION 
+                    + ComponentConstants.JS_RENDER_STREET_VIEW_PANORAMA_FUNC
+                    + streetViewPanoramaComponent.getId() + "(){");
 
-		encodeStreetViewPanoramaScript(facesContext, streetViewPanoramaComponent, writer);
+        encodeStreetViewPanoramaScript(facesContext, streetViewPanoramaComponent, writer);
 
-		writer.write("}");
-	}	
-	
-	private void callStreetViewPanoramaRendererWrapper(FacesContext facesContext,
-			UIComponent component, ResponseWriter writer) throws IOException {
+        writer.write("}");
+    }    
+    
+    private void callStreetViewPanoramaRendererWrapper(FacesContext facesContext,
+                                                       UIComponent component, 
+                                                       ResponseWriter writer) 
+                                                       throws IOException {
 
-		writer.write(ComponentConstants.JS_RENDER_STREET_VIEW_PANORAMA_FUNC + component.getId()
-				+ "();     ");
-	}		
+        writer.write(ComponentConstants.JS_RENDER_STREET_VIEW_PANORAMA_FUNC + component.getId() + "();     ");
+    }        
 
-	private void encodeStreetViewPanoramaScript(FacesContext facesContext,
-			StreetViewPanorama streetViewPanoramaComponent,
-			ResponseWriter writer) throws IOException {
+    private void encodeStreetViewPanoramaScript(FacesContext facesContext,
+                                                StreetViewPanorama streetViewPanoramaComponent,
+                                                ResponseWriter writer) 
+                                                throws IOException {
 
-		StreetViewPanoramaRendererUtil.renderStreetViewPanorama(facesContext,
-				streetViewPanoramaComponent, writer);
-	}
+        StreetViewPanoramaRendererUtil.renderStreetViewPanorama(facesContext, 
+                                                                streetViewPanoramaComponent, 
+                                                                writer);
+    }
 
-	private void encodeHTMLModel(FacesContext facesContext,
-			UIComponent component, ResponseWriter writer) throws IOException {
+    private void encodeHTMLModel(FacesContext facesContext, 
+                                 UIComponent component, 
+                                 ResponseWriter writer) 
+                                 throws IOException {
 
-		StreetViewPanorama streetViewPanoramaComponent = (StreetViewPanorama) component;
+        StreetViewPanorama streetViewPanoramaComponent = (StreetViewPanorama) component;
 
-		writer.startElement(ComponentConstants.HTML_DIV, streetViewPanoramaComponent);
+        writer.startElement(ComponentConstants.HTML_DIV, streetViewPanoramaComponent);
 
-		writer.writeAttribute(ComponentConstants.HTML_ATTR_ID, streetViewPanoramaComponent
-				.getClientId(facesContext), ComponentConstants.HTML_ATTR_ID);
-		writer.writeAttribute(ComponentConstants.HTML_ATTR_NAME, streetViewPanoramaComponent
-				.getClientId(facesContext), ComponentConstants.HTML_ATTR_NAME);
-		writer.writeAttribute(ComponentConstants.HTML_ATTR_STYLE, "width: "
-				+ streetViewPanoramaComponent.getWidth() + "; height: "
-				+ streetViewPanoramaComponent.getHeight(), ComponentConstants.HTML_ATTR_STYLE);
+        writer.writeAttribute(ComponentConstants.HTML_ATTR_ID, 
+                              streetViewPanoramaComponent.getClientId(facesContext), 
+                              ComponentConstants.HTML_ATTR_ID);
+        
+        writer.writeAttribute(ComponentConstants.HTML_ATTR_NAME, 
+                              streetViewPanoramaComponent.getClientId(facesContext), 
+                              ComponentConstants.HTML_ATTR_NAME);
+        
+        writer.writeAttribute(ComponentConstants.HTML_ATTR_STYLE, 
+                              "width: " + streetViewPanoramaComponent.getWidth() 
+                              + "; height: " + streetViewPanoramaComponent.getHeight(), 
+                              ComponentConstants.HTML_ATTR_STYLE);
 
-		writer.endElement(ComponentConstants.HTML_DIV);
-	}
+        writer.endElement(ComponentConstants.HTML_DIV);
+    }
 
-	public void encodeBegin(FacesContext context, UIComponent component)
-			throws IOException {
-	}
+    public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
+    }
 
-	public void encodeEnd(FacesContext context, UIComponent component)
-			throws IOException {
+    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
+        ComponentUtils.assertValidContext(context);
 
-		ComponentUtils.assertValidContext(context);
+        ResponseWriter writer = context.getResponseWriter();
 
-		ResponseWriter writer = context.getResponseWriter();
+        encodeHTMLModel(context, component, writer);
 
-		encodeHTMLModel(context, component, writer);
+        encodeScripts(context, component, writer);
+    }
 
-		encodeScripts(context, component, writer);
-	}
-
-	public void decode(FacesContext context, UIComponent component) {
-	}
+    public void decode(FacesContext context, UIComponent component) {
+    }
 }

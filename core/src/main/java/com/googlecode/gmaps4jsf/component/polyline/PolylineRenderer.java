@@ -35,20 +35,16 @@ import com.googlecode.gmaps4jsf.util.ComponentUtils;
  */
 public class PolylineRenderer extends Renderer {
 
-	public void encodeBegin(FacesContext context, UIComponent component)
-			throws IOException {	
-        
+    public void encodeBegin(FacesContext context, UIComponent component) throws IOException {    
         Polyline       polyline  = (Polyline) component;
         ResponseWriter writer    = context.getResponseWriter();
         Map            parentMap = (Map) ComponentUtils.findParentMap(context, polyline);
 
         PolylineEncoder.startEncodingPolylineFunctionScript(context, parentMap, polyline,
-                                                            writer);  		
-	}
+                                                            writer);          
+    }
 
-	public void encodeEnd(FacesContext context, UIComponent component)
-			throws IOException {
-
+    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
         Polyline       polyline  = (Polyline) component;
         ResponseWriter writer    = context.getResponseWriter();
         Map            parentMap = (Map) ComponentUtils.findParentMap(context, polyline);
@@ -58,9 +54,9 @@ public class PolylineRenderer extends Renderer {
 
         PolylineEncoder.encodePolylineFunctionScriptCall(context, parentMap, polyline, 
                                                          writer);
-	}
+    }
 
     public boolean getRendersChildren() {
         return true;
-    }    
+    }
 }

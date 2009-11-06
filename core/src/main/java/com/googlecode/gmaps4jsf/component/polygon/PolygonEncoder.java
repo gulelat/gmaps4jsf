@@ -38,23 +38,27 @@ import com.googlecode.gmaps4jsf.util.ComponentUtils;
  */
 public class PolygonEncoder {
 
-	public static void startEncodingPolygonFunctionScript(FacesContext facesContext,
-			Map mapComponent, Polygon polygon, ResponseWriter writer)
-			throws IOException {
+    public static void startEncodingPolygonFunctionScript(FacesContext facesContext,
+                                                          Map mapComponent, 
+                                                          Polygon polygon, 
+                                                          ResponseWriter writer)
+                                                          throws IOException {
 
-		writer.write("function "
-				+ ComponentConstants.JS_CREATE_POLYGON_FUNCTION_PREFIX
-				+ getUniquePolygonId(facesContext, polygon) + "("
-				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ") {");
+        writer.write(ComponentConstants.JS_FUNCTION
+                    + ComponentConstants.JS_CREATE_POLYGON_FUNCTION_PREFIX
+                    + getUniquePolygonId(facesContext, polygon) + "("
+                    + ComponentConstants.JS_GMAP_BASE_VARIABLE + ") {");
 
-		if (polygon.isRendered()) {
-			declarePolygonJSArray(facesContext, mapComponent, polygon, writer);
-		}
-	}
+        if (polygon.isRendered()) {
+            declarePolygonJSArray(facesContext, mapComponent, polygon, writer);
+        }
+    }
     
     public static void endEncodingPolygonFunctionScript(FacesContext facesContext,
-            Map mapComponent, Polygon polygon, ResponseWriter writer)
-            throws IOException {
+                                                        Map mapComponent, 
+                                                        Polygon polygon, 
+                                                        ResponseWriter writer)
+                                                        throws IOException {
 
         if (polygon.isRendered()) {
             encodePolygon(facesContext, mapComponent, polygon, writer);
@@ -63,53 +67,62 @@ public class PolygonEncoder {
         writer.write("}");
     }    
 
-	public static void encodePolygonFunctionScriptCall(
-			FacesContext facesContext, Map parentMap, Polygon polygon,
-			ResponseWriter writer) throws IOException {
+    public static void encodePolygonFunctionScriptCall(FacesContext facesContext, 
+                                                       Map parentMap, 
+                                                       Polygon polygon,
+                                                       ResponseWriter writer) 
+                                                       throws IOException {
 
-		writer.write(ComponentConstants.JS_CREATE_POLYGON_FUNCTION_PREFIX
-				+ getUniquePolygonId(facesContext, polygon) + "("
-				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");     ");
+        writer.write(ComponentConstants.JS_CREATE_POLYGON_FUNCTION_PREFIX
+                    + getUniquePolygonId(facesContext, polygon) + "("
+                    + ComponentConstants.JS_GMAP_BASE_VARIABLE + ");     ");
 
-	}
+    }
 
-	private static void declarePolygonJSArray(FacesContext facesContext,
-			Map mapComponent, Polygon polygon, ResponseWriter writer)
-			throws IOException {
+    private static void declarePolygonJSArray(FacesContext facesContext,
+                                              Map mapComponent, 
+                                              Polygon polygon, 
+                                              ResponseWriter writer)
+                                              throws IOException {
 
         // declare the polygon array.
         writer.write("var " + ComponentUtils.getComponentArrayVariable(polygon) + " = new Array();    ");
-	}   
+    }   
     
     private static void encodePolygon(FacesContext facesContext,
-            Map mapComponent, Polygon polygon, ResponseWriter writer)
-            throws IOException {
+                                      Map mapComponent, 
+                                      Polygon polygon, 
+                                      ResponseWriter writer)
+                                      throws IOException {
         
         // encode the polygon.
         writer.write("var polygon_" + polygon.getId() + "  = new "
-                + ComponentConstants.JS_GPolygon_OBJECT + "("
-                + ComponentUtils.getComponentArrayVariable(polygon) 
-                + ", '" + polygon.getHexStrokeColor()
-                + "', " + polygon.getLineWidth() + ","
-                + polygon.getStrokeOpacity() + ", '"
-                + polygon.getHexFillColor() + "', " + polygon.getFillOpacity()
-                + ");     ");        
+                    + ComponentConstants.JS_GPolygon_OBJECT + "("
+                    + ComponentUtils.getComponentArrayVariable(polygon) 
+                    + ", '" + polygon.getHexStrokeColor()
+                    + "', " + polygon.getLineWidth() + ","
+                    + polygon.getStrokeOpacity() + ", '"
+                    + polygon.getHexFillColor() + "', " + polygon.getFillOpacity()
+                    + ");     ");        
 
         // add to the map.
         writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-                + ".addOverlay(polygon_" + polygon.getId() + ");     ");
+                    + ".addOverlay(polygon_" + polygon.getId() + ");     ");
 
         // encode polygon events.
-        for (Iterator iterator = polygon.getChildren().iterator(); iterator
-                .hasNext();) {
+        for (Iterator iterator = polygon.getChildren().iterator(); iterator.hasNext();) {
             UIComponent component = (UIComponent) iterator.next();
 
             if (component instanceof EventListener) {
                 EventEncoder.encodeEventListenersFunctionScript(facesContext,
-                        polygon, writer, "polygon_" + polygon.getId());
-                EventEncoder.encodeEventListenersFunctionScriptCall(
-                        facesContext, polygon, writer, "polygon_"
-                                + polygon.getId());
+                                                                polygon, 
+                                                                writer, 
+                                                                "polygon_" + polygon.getId());
+                
+                EventEncoder.encodeEventListenersFunctionScriptCall(facesContext, 
+                                                                    polygon, 
+                                                                    writer, 
+                                                                    "polygon_" + polygon.getId());
             }
         }
 
@@ -117,20 +130,20 @@ public class PolygonEncoder {
         updatePolygonJSVariable(facesContext, polygon, writer);      
     }    
 
-	private static void updatePolygonJSVariable(FacesContext facesContext,
-			Polygon polygon, ResponseWriter writer) throws IOException {
+    private static void updatePolygonJSVariable(FacesContext facesContext, 
+                                                Polygon polygon, 
+                                                ResponseWriter writer) 
+                                                throws IOException {
 
-		if (polygon.getJsVariable() != null) {
-			writer.write("     " + polygon.getJsVariable() + " = " + "polygon_"
-					+ polygon.getId() + ";     ");
-		}
-	}
+        if (polygon.getJsVariable() != null) {
+            writer.write("     " + polygon.getJsVariable() + " = " + "polygon_"
+                        + polygon.getId() + ";     ");
+        }
+    }
 
-	private static String getUniquePolygonId(FacesContext facesContext,
-			Polygon polygon) {
+    private static String getUniquePolygonId(FacesContext facesContext, Polygon polygon) {
+        String polygonID = polygon.getClientId(facesContext);
 
-		String polygonID = polygon.getClientId(facesContext);
-
-		return polygonID.replace(":", "_");
-	}
+        return polygonID.replace(":", "_");
+    }
 }

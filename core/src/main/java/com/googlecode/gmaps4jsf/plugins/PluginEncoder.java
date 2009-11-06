@@ -32,6 +32,7 @@ import javax.faces.context.ResponseWriter;
 
 import com.googlecode.gmaps4jsf.component.map.Map;
 import com.googlecode.gmaps4jsf.component.marker.Marker;
+import com.googlecode.gmaps4jsf.component.marker.MarkerEncoder;
 
 /**
  * Enables plugins to register themselfes to be rendered by their parent
@@ -113,5 +114,10 @@ public final class PluginEncoder {
             writer.write(((Plugin) it.next()).encodeFunctionScriptCall(facesContext, marker));
         }
     }
+    
+    
+    public static String getUniqueMarkerId(FacesContext facesContext, Marker marker) {
+        return MarkerEncoder.getUniqueMarkerId(facesContext, marker);
+    }       
 
 }
