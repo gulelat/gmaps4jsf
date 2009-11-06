@@ -43,20 +43,20 @@ public class PopupMarkerEncoder implements Plugin {
 
     public String encodeFunctionScript(FacesContext facesContext, UIComponent parentComponent) {
         StringBuffer buffer = new StringBuffer();
-        encodeCreatePopupFunction(buffer, parentComponent);
-        encodePopupEventsFunction(buffer, parentComponent);
-        buffer.append("function ").append(POPUP_MARKER_FUNCTION).append(parentComponent.getId()).append("(map, parent) {");
+        encodeCreatePopupFunction(facesContext, buffer, parentComponent);
+        encodePopupEventsFunction(facesContext, buffer, parentComponent);
+        buffer.append("function ").append(POPUP_MARKER_FUNCTION).append(parentComponent.getClientId(facesContext).replace(':', '_')).append("(map, parent) {");
         for (Iterator iterator = parentComponent.getChildren().iterator(); iterator.hasNext();) {
             UIComponent component = (UIComponent) iterator.next();
             if (component instanceof Popup  && component.isRendered()) {
-                encodePopup((Popup) component, buffer, parentComponent);
+                encodePopup(facesContext, (Popup) component, buffer, parentComponent);
             }
         }
         return buffer.append("}").toString();
     }
 
-    private void encodeCreatePopupFunction(StringBuffer buffer, UIComponent parentComponent) {
-        buffer.append("function ").append(CREATE_POPUP_MARKER_FUNCTION).append(parentComponent.getId())
+    private void encodeCreatePopupFunction(FacesContext facesContext, StringBuffer buffer, UIComponent parentComponent) {
+        buffer.append("function ").append(CREATE_POPUP_MARKER_FUNCTION).append(parentComponent.getClientId(facesContext).replace(':', '_'))
             .append("(map, marker, img) {")
             .append("var origin = marker.getLatLng();")
             .append("var point = map.fromLatLngToContainerPixel(origin);")
@@ -67,8 +67,8 @@ public class PopupMarkerEncoder implements Plugin {
             .append("map.addOverlay(overlay);return overlay;}");
     }
 
-    private void encodePopupEventsFunction(StringBuffer buffer, UIComponent parentComponent) {
-        buffer.append("function ").append(EVENTS_POPUP_MARKER_FUNCTION).append(parentComponent.getId())
+    private void encodePopupEventsFunction(FacesContext facesContext, StringBuffer buffer, UIComponent parentComponent) {
+        buffer.append("function ").append(EVENTS_POPUP_MARKER_FUNCTION).append(parentComponent.getClientId(facesContext).replace(':', '_'))
             .append("(map, marker, img, overlay) {var dglst = ");
         buffer.append(ComponentConstants.JS_GEVENT_OBJECT)
             .append(".addListener(marker, 'dragstart', function(latlng) {")
@@ -78,16 +78,16 @@ public class PopupMarkerEncoder implements Plugin {
             .append(".addListener(marker, 'dragend', function(latlng) {")
             .append("GEvent.removeListener(dgelst);GEvent.clearInstanceListeners(marker);")
             .append("var ov = ").append(CREATE_POPUP_MARKER_FUNCTION)
-            .append(parentComponent.getId()).append("(map, marker, img);")
-            .append(EVENTS_POPUP_MARKER_FUNCTION).append(parentComponent.getId())
+            .append(parentComponent.getClientId(facesContext).replace(':', '_')).append("(map, marker, img);")
+            .append(EVENTS_POPUP_MARKER_FUNCTION).append(parentComponent.getClientId(facesContext).replace(':', '_'))
             .append("(map, marker, img, ov);").append("});var lst = ");
         buffer.append(ComponentConstants.JS_GEVENT_OBJECT)
             .append(".addListener(map, 'zoomend', function(a,b) {")
             .append("GEvent.removeListener(lst);")
             .append("map.removeOverlay(overlay); var ov =")
-            .append(CREATE_POPUP_MARKER_FUNCTION).append(parentComponent.getId())
+            .append(CREATE_POPUP_MARKER_FUNCTION).append(parentComponent.getClientId(facesContext).replace(':', '_'))
             .append("(map, marker, img);").append(EVENTS_POPUP_MARKER_FUNCTION)
-            .append(parentComponent.getId()).append("(map, marker, img, ov);")
+            .append(parentComponent.getClientId(facesContext).replace(':', '_')).append("(map, marker, img, ov);")
             .append("});");
         buffer.append("}");
 
@@ -95,21 +95,21 @@ public class PopupMarkerEncoder implements Plugin {
 
     public String encodeFunctionScriptCall(FacesContext facesContext, UIComponent markerComponent) {
         StringBuffer buffer = new StringBuffer();
-        buffer.append(POPUP_MARKER_FUNCTION).append(markerComponent.getId())
+        buffer.append(POPUP_MARKER_FUNCTION).append(markerComponent.getClientId(facesContext).replace(':', '_'))
             .append("(").append(ComponentConstants.JS_GMAP_BASE_VARIABLE).append(",")
-            .append(ComponentConstants.CONST_MARKER_PREFIX).append(markerComponent.getId())
+            .append(ComponentConstants.CONST_MARKER_PREFIX).append(markerComponent.getClientId(facesContext).replace(':', '_'))
             .append(");");
         return buffer.toString();
     }
 
-    private void encodePopup(Popup popup, StringBuffer buffer, UIComponent parentComponent) {
+    private void encodePopup(FacesContext facesContext, Popup popup, StringBuffer buffer, UIComponent parentComponent) {
         buffer.append("var img = new Image();var url = \\\"")
             .append(getUrl(popup)).append("\\\";")
             .append("img.src = url;")
             .append("img.onload = function() {var ov = ")
-            .append(CREATE_POPUP_MARKER_FUNCTION).append(parentComponent.getId())
+            .append(CREATE_POPUP_MARKER_FUNCTION).append(parentComponent.getClientId(facesContext).replace(':', '_'))
             .append("(map, parent, this);").append(EVENTS_POPUP_MARKER_FUNCTION)
-            .append(parentComponent.getId()).append("(map, parent, this, ov);");
+            .append(parentComponent.getClientId(facesContext).replace(':', '_')).append("(map, parent, this, ov);");
         buffer.append("};");
     }
 
