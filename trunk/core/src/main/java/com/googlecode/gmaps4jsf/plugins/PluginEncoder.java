@@ -57,8 +57,10 @@ public final class PluginEncoder {
             BufferedReader reader = new BufferedReader(new InputStreamReader(pluginsFile.openStream()));
             String pluginClass = null;
             while ((pluginClass = reader.readLine()) != null) {
-                Plugin plugin = (Plugin) Class.forName(pluginClass).newInstance();
-                register(plugin.getModifiedComponent(), plugin);
+                if (pluginClass.trim().length() > 0) {
+                    Plugin plugin = (Plugin) Class.forName(pluginClass).newInstance();
+                    register(plugin.getModifiedComponent(), plugin);
+                }
             }
             reader.close();
         } catch (Exception ex) {
