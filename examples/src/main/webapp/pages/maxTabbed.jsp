@@ -26,9 +26,8 @@
                         <m:tab title="The views" contentNode="form:panoramaContainer" />
                     </m:extendedHtmlInformationWindow>
                     <m:marker latitude="37.184459" longitude="-7.336721" draggable="true">
-                        <m:eventListener eventName="dragstart" jsFunction="function () {if (console && console.log) console.log('I was dragged');}"/>
                         <m:icon imageURL="http://esa.ilmari.googlepages.com/markeryellow.png" />
-                        <m:extendedHtmlInformationWindow regular="This is a corner of Spain" onClose="if (console && console.log) console.log('marker window closed');">
+                        <m:extendedHtmlInformationWindow regular="This is a corner of Spain">
                             <m:tab title="Sun and beach at Ayamonte" content="<div style='width:100%;text-align:center;height:100%;'><img src='http://mw2.google.com/mw-panoramio/photos/small/2697691.jpg' style='height:95%;padding-top:5px'/></div>" />
                         </m:extendedHtmlInformationWindow>
                     </m:marker>
