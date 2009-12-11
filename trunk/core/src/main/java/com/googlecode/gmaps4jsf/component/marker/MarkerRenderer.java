@@ -61,8 +61,8 @@ public class MarkerRenderer extends Renderer {
         String[]    markerExpression = markerState.split("=");
         String[]    markersLngLat    = markerExpression[1].split(",");
 
-        markerValue.setLongitude(markersLngLat[0].substring(1));
-        markerValue.setLatitude(markersLngLat[1].substring(0, markersLngLat[1].length() - 1));
+        markerValue.setLatitude(markersLngLat[0].substring(1));
+        markerValue.setLongitude(markersLngLat[1].substring(0, markersLngLat[1].length() - 1));
 
         return markerValue;
     }
