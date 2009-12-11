@@ -21,14 +21,21 @@ package com.googlecode.gmaps4jsf.example.beans;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ValueChangeEvent;
 
+import com.googlecode.gmaps4jsf.component.marker.MarkerValue;
+import com.googlecode.gmaps4jsf.services.GMaps4JSFServiceFactory;
+import com.googlecode.gmaps4jsf.services.data.PlaceMark;
+
 /**
  * @author Hazem Saleh
  * @date May 23, 2009
  * The MapBean is used for the server side events example of GMaps4JSF.
  */
 public class MapBean {
+    private static final String NOT_AVAILABLE = "Not available";
     String firstMarkerStatus;
     String secondMarkerStatus;
+    String firstLocationInformation;
+    String secondLocationInformation;
 
     public String getFirstMarkerStatus() {
         return firstMarkerStatus;
@@ -47,10 +54,60 @@ public class MapBean {
     }
    
     public void processValueChangeForFirstMarker(ValueChangeEvent event) throws AbortProcessingException {
-        firstMarkerStatus = event.getNewValue().toString();
+        firstMarkerStatus       = event.getNewValue().toString();
+        MarkerValue markerValue = (MarkerValue) event.getNewValue();
+        
+        try {
+            PlaceMark placeMark = GMaps4JSFServiceFactory.getReverseGeocoderService().getPlaceMark(markerValue.getLatitude(), markerValue.getLongitude());
+            
+            firstLocationInformation = "Address: " + ignoreNull(placeMark.getAddress()) 
+                                     + "<br>Country code: " + ignoreNull(placeMark.getCountryCode())
+                                     + "<br>Country name: "+ ignoreNull(placeMark.getCountryName())
+                                     + "<br>Postal code number: "+ ignoreNull(placeMark.getPostalCodeNumber())  
+                                     + "<br>Accuracy: "+ placeMark.getAccuracy();                                     
+        } catch (Exception ex) {
+            firstLocationInformation = NOT_AVAILABLE;
+        }
     }
 
     public void processValueChangeForSecondMarker(ValueChangeEvent event) throws AbortProcessingException {
-        secondMarkerStatus = event.getNewValue().toString();
+        secondMarkerStatus      = event.getNewValue().toString();
+        MarkerValue markerValue = (MarkerValue) event.getNewValue();
+        
+        try {
+            PlaceMark placeMark = GMaps4JSFServiceFactory.getReverseGeocoderService().getPlaceMark(markerValue.getLatitude(), markerValue.getLongitude());
+            
+            secondLocationInformation = "Address: " + ignoreNull(placeMark.getAddress()) 
+                                      + "<br>Country code: " + ignoreNull(placeMark.getCountryCode())
+                                      + "<br>Country name: "+ ignoreNull(placeMark.getCountryName())
+                                      + "<br>Postal code number: "+ ignoreNull(placeMark.getPostalCodeNumber())  
+                                      + "<br>Accuracy: "+ placeMark.getAccuracy();    
+        } catch (Exception ex) {
+            secondLocationInformation = NOT_AVAILABLE;
+        }
+    }
+
+    public String getFirstLocationInformation() {
+        return firstLocationInformation;
+    }
+
+    public void setFirstLocationInformation(String firstLocationInformation) {
+        this.firstLocationInformation = firstLocationInformation;
+    }
+    
+    public String getSecondLocationInformation() {
+        return secondLocationInformation;
+    }
+
+    public void setSecondLocationInformation(String secondLocationInformation) {
+        this.secondLocationInformation = secondLocationInformation;
     }    
+    
+    private static String ignoreNull(String attributeValue) {
+        if (attributeValue == null) {
+            return "";
+        }
+        
+        return attributeValue;
+    }
 }
