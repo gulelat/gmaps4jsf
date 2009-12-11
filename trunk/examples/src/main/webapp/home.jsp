@@ -81,6 +81,13 @@
                         <f:verbatim>An example that demonstrates the usage of the address attribute of the map</f:verbatim>
                     </h:outputLink>
                 </h:panelGrid>
+                
+                <h:outputText value="Reverse Geocoding" />
+                <h:panelGrid style="padding-left:25px">
+                    <h:outputLink value="pages/reverseGeocoding.jsf">
+                        <f:verbatim>An example that demonstrates the usage of the GMaps4JSF ReverseGeocoder service</f:verbatim>
+                    </h:outputLink>
+                </h:panelGrid>                
 
                 <h:outputText value="Polylines" />
                 <h:panelGrid style="padding-left:25px">
