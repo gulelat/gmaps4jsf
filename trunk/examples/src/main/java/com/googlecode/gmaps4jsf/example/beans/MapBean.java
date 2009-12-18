@@ -60,10 +60,10 @@ public class MapBean {
         try {
             PlaceMark placeMark = GMaps4JSFServiceFactory.getReverseGeocoderService().getPlaceMark(markerValue.getLatitude(), markerValue.getLongitude());
             
-            firstLocationInformation = "Address: " + ignoreNull(placeMark.getAddress()) 
+            firstLocationInformation = "Selected Latitude, Longitude: " + markerValue.getLatitude() + ", " + markerValue.getLongitude()
+                                     + "<br>Address: " + ignoreNull(placeMark.getAddress()) 
                                      + "<br>Country code: " + ignoreNull(placeMark.getCountryCode())
                                      + "<br>Country name: "+ ignoreNull(placeMark.getCountryName())
-                                     + "<br>Postal code number: "+ ignoreNull(placeMark.getPostalCodeNumber())  
                                      + "<br>Accuracy: "+ placeMark.getAccuracy();                                     
         } catch (Exception ex) {
             firstLocationInformation = NOT_AVAILABLE;
@@ -77,11 +77,11 @@ public class MapBean {
         try {
             PlaceMark placeMark = GMaps4JSFServiceFactory.getReverseGeocoderService().getPlaceMark(markerValue.getLatitude(), markerValue.getLongitude());
             
-            secondLocationInformation = "Address: " + ignoreNull(placeMark.getAddress()) 
+            secondLocationInformation = "Selected Latitude, Longitude: " + markerValue.getLatitude() + ", " + markerValue.getLongitude()
+                                      + "<br>Address: " + ignoreNull(placeMark.getAddress()) 
                                       + "<br>Country code: " + ignoreNull(placeMark.getCountryCode())
                                       + "<br>Country name: "+ ignoreNull(placeMark.getCountryName())
-                                      + "<br>Postal code number: "+ ignoreNull(placeMark.getPostalCodeNumber())  
-                                      + "<br>Accuracy: "+ placeMark.getAccuracy();    
+                                      + "<br>Accuracy: "+ placeMark.getAccuracy();       
         } catch (Exception ex) {
             secondLocationInformation = NOT_AVAILABLE;
         }
