@@ -250,7 +250,7 @@ public class MarkerEncoder {
         
         // Start creating the drag end listener.
         String markerDragEndHandler = "function " + "marker_" + getUniqueMarkerId(facesContext, marker)
-                                    + "_dragEnd(latlng) " + "{     " +
+                                    + "_changed(latlng) " + "{     " +
                     
                                     "var markersState = document.getElementById('"
                                     + ComponentUtils.getMapStateHiddenFieldId(map)
@@ -286,12 +286,14 @@ public class MarkerEncoder {
                                     // Save the marker state.
                                     + "document.getElementById('"
                                     + ComponentUtils.getMapStateHiddenFieldId(map)
-                                    + "').value = markersState;     " 
+                                    + "').value = markersState;     "
                                     
                                     // Submit the form on marker value change if required.
-                                    + ("true".equalsIgnoreCase(marker.getSubmitOnValueChange()) ? "document.getElementById('" 
+                                    + ("true".equalsIgnoreCase(marker.getSubmitOnValueChange()) ? 
+                                      
+                                      "setTimeout(function(){ document.getElementById('" 
                                     + ComponentUtils.findParentForm(facesContext, marker).getId() + "')." 
-                                    + "submit();     ;"
+                                    + "submit(); }, 500);     "
                                     : "") 
                                     
                                     // End the drag end listener.
@@ -300,7 +302,7 @@ public class MarkerEncoder {
                                     // Attach the listener to the marker drag end event.
                                     + ComponentConstants.JS_GEVENT_OBJECT + ".addListener("
                                     + "marker_" + getUniqueMarkerId(facesContext, marker) + ", 'dragend', " + "marker_"
-                                    + getUniqueMarkerId(facesContext, marker) + "_dragEnd" + ");     ";
+                                    + getUniqueMarkerId(facesContext, marker) + "_changed" + ");     ";
 
         writer.write(markerDragEndHandler);
     }
