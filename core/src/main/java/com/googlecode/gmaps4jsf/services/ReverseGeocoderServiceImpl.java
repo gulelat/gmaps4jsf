@@ -84,14 +84,14 @@ public class ReverseGeocoderServiceImpl implements ReverseGeocoderService {
         try {
             placeMark.setId((String) placeMarkPrimaryData.get("id"));            
         } catch (JSONException exception) {
-            System.out.println("[warning] id is not available ...");
+            //System.out.println("[warning] id is not available ...");
         }
         
         // ADDRESS
         try {
             placeMark.setAddress((String) placeMarkPrimaryData.get("address"));
         } catch (JSONException exception) {
-            System.out.println("[warning] address is not available ...");
+            //System.out.println("[warning] address is not available ...");
         }        
         
         try {
@@ -103,7 +103,7 @@ public class ReverseGeocoderServiceImpl implements ReverseGeocoderService {
             try {
                 placeMark.setAccuracy((Integer) addressDetailsObject.get("Accuracy"));
             } catch (JSONException exception) {
-                System.out.println("[warning] accuracy is not available ...");
+                //System.out.println("[warning] accuracy is not available ...");
             }
             
             try {
@@ -121,7 +121,7 @@ public class ReverseGeocoderServiceImpl implements ReverseGeocoderService {
                         // ADMINISTRATIVEAREANAME                        
                         placeMark.setAdministrativeAreaName((String) administrativeArea.get("AdministrativeAreaName"));
                     } catch (JSONException exception) {
-                        System.out.println("[warning] administrativeAreaName is not available ...");
+                        //System.out.println("[warning] administrativeAreaName is not available ...");
                     }
                     
                     try {
@@ -134,7 +134,7 @@ public class ReverseGeocoderServiceImpl implements ReverseGeocoderService {
                             // LOCALITYNAME                        
                             placeMark.setLocalityName((String) locality.get("LocalityName"));                            
                         } catch (JSONException exception) {
-                            System.out.println("[warning] localityName is not available ...");
+                            //System.out.println("[warning] localityName is not available ...");
                         }     
                         
                         try {
@@ -147,43 +147,43 @@ public class ReverseGeocoderServiceImpl implements ReverseGeocoderService {
                                 // POSTALCODENUMBER                        
                                 placeMark.setPostalCodeNumber((String) postalCode.get("PostalCodeNumber"));
                             } catch (JSONException exception) {
-                                System.out.println("[warning] postalCodeNumber is not available ...");
+                                //System.out.println("[warning] postalCodeNumber is not available ...");
                             }     
                             
                             
                         } catch (JSONException exception) {
-                            System.out.println("[warning] postalCode is not available ...");
+                            //System.out.println("[warning] postalCode is not available ...");
                         }                          
                         
                     } catch (JSONException exception) {
-                        System.out.println("[warning] locality is not available ...");
+                        //System.out.println("[warning] locality is not available ...");
                     }                    
                     
                 } catch (JSONException exception) {
-                    System.out.println("[warning] administrativeArea is not available ...");
+                    //System.out.println("[warning] administrativeArea is not available ...");
                 }                
                 
                 // COUNTRYNAME
                 try {
                     placeMark.setCountryName((String) country.get("CountryName"));
                 } catch (JSONException exception) {
-                    System.out.println("[warning] countryName is not available ...");
+                    //System.out.println("[warning] countryName is not available ...");
                 }                
                 
                 // COUNTRYNAMECODE
                 try {
                     placeMark.setCountryCode((String) country.get("CountryNameCode"));
                 } catch (JSONException exception) {
-                    System.out.println("[warning] countryNameCode is not available ...");
+                    //System.out.println("[warning] countryNameCode is not available ...");
                 }
                 
             } catch (JSONException exception) {
-                System.out.println("[warning] country is not available ...");
+                //System.out.println("[warning] country is not available ...");
             }                
             
 
         } catch (JSONException exception) {
-            System.out.println("[warning] addressDetailsObject is not available ...");
+            //System.out.println("[warning] addressDetailsObject is not available ...");
         }
     }    
     
