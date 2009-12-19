@@ -111,6 +111,16 @@
                         <f:verbatim>Draw many polygons on your map</f:verbatim>
                     </h:outputLink>
                 </h:panelGrid>
+                
+                <h:outputText value="Circles" />
+                <h:panelGrid style="padding-left:25px">
+                    <h:outputLink value="pages/mapCircle.jsf">
+                        <f:verbatim>Draw a circle on your map</f:verbatim>
+                    </h:outputLink>
+                    <h:outputLink value="pages/mapCircles.jsf">
+                        <f:verbatim>Draw many circles on your map</f:verbatim>
+                    </h:outputLink>
+                </h:panelGrid>                
 
                 <h:outputText value="Polygons + Polylines + Events" />
                 <h:panelGrid style="padding-left:25px">
