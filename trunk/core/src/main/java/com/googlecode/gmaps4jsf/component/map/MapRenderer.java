@@ -26,6 +26,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 
+import com.googlecode.gmaps4jsf.component.circle.Circle;
 import com.googlecode.gmaps4jsf.component.groundoverlay.GroundOverlay;
 import com.googlecode.gmaps4jsf.component.marker.Marker;
 import com.googlecode.gmaps4jsf.component.polygon.Polygon;
@@ -42,6 +43,7 @@ import com.googlecode.gmaps4jsf.util.MapRendererUtil;
  * The (MapRenderer) renders a google map.
  */
 public class MapRenderer extends Renderer {
+    private static final String UNDEFINED = "var temp";
 
     public boolean getRendersChildren() {
         return true;
@@ -105,6 +107,11 @@ public class MapRenderer extends Renderer {
                 GroundOverlay groundOverlay = (GroundOverlay) component;
                 if (groundOverlay.getJsVariable() != null) {
                     writer.write("      var " + groundOverlay.getJsVariable() + ";     ");
+                }
+            } else if (component instanceof Circle) {
+                Circle circle = (Circle) component;
+                if (circle.getJsVariable() != null && (! UNDEFINED.equals(circle.getJsVariable())) ) {
+                    writer.write("      var " + circle.getJsVariable() + ";     ");
                 }
             }
         }
