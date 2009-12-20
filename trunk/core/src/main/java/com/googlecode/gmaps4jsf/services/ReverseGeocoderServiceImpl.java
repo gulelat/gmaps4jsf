@@ -109,59 +109,21 @@ public class ReverseGeocoderServiceImpl implements ReverseGeocoderService {
             try {
                 
                 // COUNTRY                
-                JSONObject country = (JSONObject) addressDetailsObject.get("Country");    
+                JSONObject country = (JSONObject) addressDetailsObject.get("Country");  
                 
+                // POSTAL CODE.
                 try {
-                    
-                    // ADMINISTRATIVEAREA                    
-                    JSONObject administrativeArea = (JSONObject) country.get("AdministrativeArea");     
-                    
+                   String postalCode = ((JSONObject) ((JSONObject) ((JSONObject) country.get("AdministrativeArea")).get("Locality")).get("PostalCode")).get("PostalCodeNumber").toString();
+
+                   placeMark.setPostalCodeNumber(postalCode);
+                } catch (Exception exception) {
                     try {
+                        String postalCode = ((JSONObject) ((JSONObject) ((JSONObject) ((JSONObject) ((JSONObject) country.get("AdministrativeArea")).get("SubAdministrativeArea")).get("Locality")).get("DependentLocality")).get("PostalCode")).get("PostalCodeNumber").toString();
                         
-                        // ADMINISTRATIVEAREANAME                        
-                        placeMark.setAdministrativeAreaName((String) administrativeArea.get("AdministrativeAreaName"));
-                    } catch (JSONException exception) {
-                        //System.out.println("[warning] administrativeAreaName is not available ...");
+                        placeMark.setPostalCodeNumber(postalCode);
+                    } catch (Exception innerException) {
                     }
-                    
-                    try {
-                        
-                        // LOCALITY                        
-                        JSONObject locality = (JSONObject) administrativeArea.get("Locality");
-                        
-                        try {
-                            
-                            // LOCALITYNAME                        
-                            placeMark.setLocalityName((String) locality.get("LocalityName"));                            
-                        } catch (JSONException exception) {
-                            //System.out.println("[warning] localityName is not available ...");
-                        }     
-                        
-                        try {
-                            
-                            // POSTALCODE                        
-                            JSONObject postalCode = (JSONObject) locality.get("PostalCode");
-                            
-                            try {
-                                
-                                // POSTALCODENUMBER                        
-                                placeMark.setPostalCodeNumber((String) postalCode.get("PostalCodeNumber"));
-                            } catch (JSONException exception) {
-                                //System.out.println("[warning] postalCodeNumber is not available ...");
-                            }     
-                            
-                            
-                        } catch (JSONException exception) {
-                            //System.out.println("[warning] postalCode is not available ...");
-                        }                          
-                        
-                    } catch (JSONException exception) {
-                        //System.out.println("[warning] locality is not available ...");
-                    }                    
-                    
-                } catch (JSONException exception) {
-                    //System.out.println("[warning] administrativeArea is not available ...");
-                }                
+                }
                 
                 // COUNTRYNAME
                 try {

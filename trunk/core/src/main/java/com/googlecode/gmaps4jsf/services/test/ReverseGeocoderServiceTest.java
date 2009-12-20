@@ -30,7 +30,7 @@ import com.googlecode.gmaps4jsf.services.GMaps4JSFServiceFactory;
 public class ReverseGeocoderServiceTest extends TestCase {
     public void testGetPlaceMark() {
         try {
-            System.out.println(GMaps4JSFServiceFactory.getReverseGeocoderService().getPlaceMark("40.714224", "-73.961452"));
+            System.out.println(GMaps4JSFServiceFactory.getReverseGeocoderService().getPlaceMark("40.73376290522433", "-73.99656772613525"));
         } catch (Exception exception) {
             fail("Unable to get the place mark");
         }

@@ -27,71 +27,63 @@ package com.googlecode.gmaps4jsf.services.data;
 public class PlaceMark {
     String id;
     String address;
-    Integer accuracy;
-    String localityName;
     String postalCodeNumber;
     String countryName;
     String countryCode;
-    String administrativeAreaName;
+    Integer accuracy;
     
-    public Integer getAccuracy() {
-        return accuracy;
-    }
-    public void setAccuracy(Integer accuracy) {
-        this.accuracy = accuracy;
-    }
     public String getAddress() {
         return address;
     }
+
     public void setAddress(String address) {
         this.address = address;
     }
-    public String getCountryCode() {
-        return countryCode;
-    }
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
-    }
+    
     public String getCountryName() {
         return countryName;
     }
+    
     public void setCountryName(String countryName) {
         this.countryName = countryName;
     }
+    
     public String getId() {
         return id;
     }
+
     public void setId(String id) {
         this.id = id;
     }
-    public String getLocalityName() {
-        return localityName;
-    }
-    public void setLocalityName(String localityName) {
-        this.localityName = localityName;
-    }
+
     public String getPostalCodeNumber() {
         return postalCodeNumber;
     }
+
     public void setPostalCodeNumber(String postalCodeNumber) {
         this.postalCodeNumber = postalCodeNumber;
     }
-    public String getAdministrativeAreaName() {
-        return administrativeAreaName;
-    }
-    public void setAdministrativeAreaName(String administrativeAreaName) {
-        this.administrativeAreaName = administrativeAreaName;
+
+    public Integer getAccuracy() {
+        return accuracy;
     }
 
+    public void setAccuracy(Integer accuracy) {
+        this.accuracy = accuracy;
+    }
     
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+
     public String toString() {
         return "id: " + id + "\n" +
                "address: " + address + "\n" +
-               "accuracy: " + accuracy + "\n" +
-               "localityName: " + localityName + "\n" +
                "postalCodeNumber: " + postalCodeNumber + "\n" +
-               "countryName: " + countryName + "\n" +
-               "countryCode: " + countryCode + "\n" +
-               "administrativeAreaName: " + administrativeAreaName;        
+               "countryName: " + countryName + "\n";
     }
 }
