@@ -112,7 +112,7 @@ public class ReverseGeocoderServiceImpl implements ReverseGeocoderService {
                 JSONObject country = (JSONObject) addressDetailsObject.get("Country");  
                 
                 // POSTAL CODE.
-                try {
+                try { 
                    String postalCode = ((JSONObject) ((JSONObject) ((JSONObject) country.get("AdministrativeArea")).get("Locality")).get("PostalCode")).get("PostalCodeNumber").toString();
 
                    placeMark.setPostalCodeNumber(postalCode);
@@ -122,6 +122,9 @@ public class ReverseGeocoderServiceImpl implements ReverseGeocoderService {
                         
                         placeMark.setPostalCodeNumber(postalCode);
                     } catch (Exception innerException) {
+                        String postalCode = ((JSONObject) ((JSONObject) ((JSONObject) ((JSONObject) country.get("AdministrativeArea")).get("SubAdministrativeArea")).get("Locality")).get("PostalCode")).get("PostalCodeNumber").toString();
+                        
+                        placeMark.setPostalCodeNumber(postalCode);                        
                     }
                 }
                 
