@@ -16,11 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.googlecode.gmaps4jsf.services.test;
+package com.googlecode.gmaps4jsf.services;
 
+import com.googlecode.gmaps4jsf.services.data.PlaceMark;
 import junit.framework.TestCase;
-
-import com.googlecode.gmaps4jsf.services.GMaps4JSFServiceFactory;
 
 /**
  * @author Hazem Saleh
@@ -28,11 +27,11 @@ import com.googlecode.gmaps4jsf.services.GMaps4JSFServiceFactory;
  * The <code>ReverseGeocoderServiceTest</code> is used for testing the <code>ReverseGeocoderService</code>.
  */
 public class ReverseGeocoderServiceTest extends TestCase {
-    public void testGetPlaceMark() {
-        try {
-            System.out.println(GMaps4JSFServiceFactory.getReverseGeocoderService().getPlaceMark("40.714224", "-73.961452"));
-        } catch (Exception exception) {
-            fail("Unable to get the place mark");
-        }
+
+    public void testGetPlaceMark() throws Exception {
+        PlaceMark placeMark = GMaps4JSFServiceFactory.getReverseGeocoderService().getPlaceMark("40.714224", "-73.961452");
+        assertNotNull("Place mark is retrieved", placeMark);
+        assertEquals("Place mark in US", "USA", placeMark.getCountryName());
     }
+
 }

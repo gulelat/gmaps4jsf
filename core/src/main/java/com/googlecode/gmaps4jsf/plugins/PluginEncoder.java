@@ -24,12 +24,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.io.IOException;
+import java.util.Collections;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-
 import com.googlecode.gmaps4jsf.component.map.Map;
 import com.googlecode.gmaps4jsf.component.marker.Marker;
 import com.googlecode.gmaps4jsf.component.marker.MarkerEncoder;
@@ -66,6 +65,15 @@ public final class PluginEncoder {
         } catch (Exception ex) {
             System.out.println("Gmaps4Jsf plugin system failed to initialize properly: " + ex.getMessage());
         }
+    }
+
+    /**
+     * For testing purposes.
+     *
+     * @return a non null non modifiable map
+     */
+    protected static java.util.Map getPlugins() {
+        return plugins == null ? Collections.EMPTY_MAP : Collections.unmodifiableMap(plugins);
     }
 
     /**
