@@ -14,4 +14,7 @@
   * [resourcesComponent] (Added in 1.1.3)
 
 # The GMaps4JSF extended components are:
-  * [dragZoom] (Experimental - Added in 1.1.3)
+  * [dragZoomComponent] (Experimental - Added in 1.1.3)
+  * [extendedHtmlInformationWindowComponent] (Experimental - Added in 1.1.3)
+  * [tabComponent] (Experimental - Added in 1.1.3)
+  * [popupComponent] (Experimental - Added in 1.1.3)
