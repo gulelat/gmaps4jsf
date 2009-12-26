@@ -9,3 +9,4 @@
   * [pointComponent]
   * [streetViewPanoramaComponent]
   * [eventListenerComponent]
+  * [circleComponent]
