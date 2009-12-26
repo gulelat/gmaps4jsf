@@ -22,7 +22,7 @@
 //-->
 
 <!--
-   the dragZoom component should be a child of the map component.
+   the extendedHtmlInformationWindow component should be a child of the marker component.
 //-->
 
 <!DOCTYPE component SYSTEM "../../../../../../../core/src/main/resources-maven-jsf/misc/component.dtd" [
@@ -67,7 +67,7 @@
             <required>false</required>
             <type>boolean</type>
             <defaultValue>false</defaultValue>
-            <description>Index or name of the selected tab once maximized.</description>
+            <description>Indicates whether to have the information window maximized.</description>
         </attribute>
         <attribute>
             <name>showCloseButton</name>
