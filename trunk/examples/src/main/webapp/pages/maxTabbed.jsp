@@ -4,14 +4,15 @@
 <!DOCTYPE html "-//W3C//DTD XHTML 1.0 Strict//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <HTML xmlns="http://www.w3.org/1999/xhtml">
+	<f:view>
+	
     <head>
         <title>Welcome to GMaps4JSF</title>
         <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-        <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAxrVS1QxlpJHXxQ2Vxg2bJBQdkFK-tWRbPPQS4ACM1pq_e-PltxQXeyH20wQuqDaQ_6EM5UeGGVpnIw" type="text/javascript"> </script>
-        <script src="http://gmaps-utility-library-dev.googlecode.com/svn/trunk/tabbedmaxcontent/src/tabbedmaxcontent_packed.js" type="text/javascript"> </script>
+
+	    <m:resources key="ABQIAAAAxrVS1QxlpJHXxQ2Vxg2bJBQdkFK-tWRbPPQS4ACM1pq_e-PltxQXeyH20wQuqDaQ_6EM5UeGGVpnIw" includeExtendedComponents="true"/>
     </head>
     <body onunload="GUnload()">
-	<f:view>
             <div style="width:650px;">Known limitations: A bug in v1.0 (tab navigation) forces to include dev version for now (see source)</div>
             <div style="width:650px;">Known limitations: An extended window must have one tab at least or will throw a JS recursion error</div>
             <h:form id="form">
@@ -33,7 +34,7 @@
                     </m:marker>
                 </m:map>
             </h:form>
-	</f:view>
 	<%@include file="../templates/footer.jspf" %>
     </body>
+	</f:view>    
 </HTML>

@@ -7,19 +7,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+<f:view>
 
 <head>
     <title>GMaps4JSF Mashups Example</title> 
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />    	
-    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAxrVS1QxlpJHXxQ2Vxg2bJBQdkFK-tWRbPPQS4ACM1pq_e-PltxQXeyH20wQuqDaQ_6EM5UeGGVpnIw"
-      type="text/javascript"></script>
-	
+    
+    <m:resources key="ABQIAAAAxrVS1QxlpJHXxQ2Vxg2bJBQdkFK-tWRbPPQS4ACM1pq_e-PltxQXeyH20wQuqDaQ_6EM5UeGGVpnIw"/>
 </head>
 
 
 <body onunload="GUnload()">
-
-<f:view>
 
 	<h1>GMaps4JSF Mashups Example</h1>
 
@@ -91,10 +89,8 @@
 			</h:panelGrid>
 
 	</h:form>
-</f:view>
-
 <%@include file="../templates/footer.jspf" %>   	
 </body>
-
+</f:view>
 </html>
 
