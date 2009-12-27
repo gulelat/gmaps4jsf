@@ -1,1 +1,9 @@
-To be documented.
+This component is used for showing a popup from the marker. It should be a child of the marker component.
+
+Beside the JSF UIComponent standard attributes:
+|| Component Attribute   || Required || Description || Default value ||
+|| icon || true || The icon to the left of the bubble. || NA ||
+|| content || true || The text to show in the overlay as content. || NA ||
+|| chartStyle || false || The style of the chart. Valid values beyond the default are d_bubble_icon_text_big, d_bubble_icon_texts_big and d_bubble_texts_big. || d_bubble_icon_text_small ||
+|| backgroundColor || false || The hexadecimal color of the popup background. || FFFFFF ||
+|| textColor || false || The hexadecimal color of the text inside the popup. || 000000 ||
