@@ -1,12 +1,1 @@
-# The GMaps4JSF components are:
-  * [mapComponent]
-  * [markerComponent]
-  * [htmlInformationWindowComponent]
-  * [mapControlComponent]
-  * [groundoverlayComponent]
-  * [polygonComponent]
-  * [polylineComponent]
-  * [pointComponent]
-  * [streetViewPanoramaComponent]
-  * [eventListenerComponent]
-  * [circleComponent]
+Please check the [TagLibraryDocumentation].
