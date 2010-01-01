@@ -1,3 +1,4 @@
+#labels Featured
     * (http://www.theserverside.com/tt/articles/article.tss?l=IntroductiontoGMaps4JSF), An introduction to GMaps4JSF on TSS.
     * (http://biemond.blogspot.com/2008/09/google-maps-for-jsf-gmaps4jsf-in.html), A very good post about GMaps4JSF.
     * (http://blogs.sun.com/arungupta/entry/totd_51_embedding_google_maps), A very good post about GMaps4JSF.
