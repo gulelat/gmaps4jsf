@@ -25,7 +25,7 @@ import javax.faces.context.ResponseWriter;
 
 import com.googlecode.gmaps4jsf.component.map.Map;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
-import com.googlecode.gmaps4jsf.util.ResourceLoader;
+import com.googlecode.gmaps4jsf.util.FileReaderUtils;
 
 /**
  * @author Hazem Saleh
@@ -63,7 +63,7 @@ public class CircleEncoder {
                                      throws IOException {
         
         // read the circle script code from the template.
-        String circleScript = ResourceLoader.getResourceContent(TEMPLATE_FILE_NAME, " ");
+        String circleScript = FileReaderUtils.getResourceContent(TEMPLATE_FILE_NAME, " ");
         circleScript        = circleScript.replaceAll("#ID", getUniqueCircleId(facesContext, circle))
                                           .replaceAll("#JS_VARIABLE", circle.getJsVariable())
                                           .replaceAll("#UNIT", "'" + circle.getUnit() + "'")

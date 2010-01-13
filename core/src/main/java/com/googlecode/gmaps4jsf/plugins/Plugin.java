@@ -18,6 +18,7 @@
  */
 package com.googlecode.gmaps4jsf.plugins;
 
+import java.io.IOException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
@@ -42,7 +43,7 @@ public interface Plugin {
      * @param parent the tag being rendered
      * @return the JS code to write in the page to render this plugin
      */
-    String encodeFunctionScript(FacesContext facesContext, UIComponent parent);
+    String encodeFunctionScript(FacesContext facesContext, UIComponent parent) throws IOException;
 
     /**
      * JS code that can invoke the rendering of this plugin in the client.
@@ -51,6 +52,6 @@ public interface Plugin {
      * @param parent the tag being rendered
      * @return a call to a build function
      */
-    String encodeFunctionScriptCall(FacesContext facesContext, UIComponent parent);
+    String encodeFunctionScriptCall(FacesContext facesContext, UIComponent parent) throws IOException;
 
 }
