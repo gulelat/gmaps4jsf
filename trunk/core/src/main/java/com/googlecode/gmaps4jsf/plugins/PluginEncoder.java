@@ -18,20 +18,18 @@
  */
 package com.googlecode.gmaps4jsf.plugins;
 
-import java.net.URL;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.io.IOException;
 import java.util.Collections;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import com.googlecode.gmaps4jsf.component.map.Map;
 import com.googlecode.gmaps4jsf.component.marker.Marker;
 import com.googlecode.gmaps4jsf.component.marker.MarkerEncoder;
+import com.googlecode.gmaps4jsf.util.FileReaderUtils;
 
 /**
  * Enables plugins to register themselfes to be rendered by their parent
@@ -51,19 +49,15 @@ public final class PluginEncoder {
         plugins = new HashMap(2);
         plugins.put(Map.class, new ArrayList());
         plugins.put(Marker.class, new ArrayList());
-        try {
-            URL pluginsFile = PluginEncoder.class.getResource("/META-INF/plugins.txt");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(pluginsFile.openStream()));
-            String pluginClass = null;
-            while ((pluginClass = reader.readLine()) != null) {
-                if (pluginClass.trim().length() > 0) {
-                    Plugin plugin = (Plugin) Class.forName(pluginClass).newInstance();
-                    register(plugin.getModifiedComponent(), plugin);
-                }
+        String[] readedPlugins = FileReaderUtils.readLines("/META-INF/plugins.txt");
+        for (int index = 0; index < readedPlugins.length; index++) {
+            String pluginClass = readedPlugins[index];
+            try {
+                Plugin plugin = (Plugin) Class.forName(pluginClass).newInstance();
+                register(plugin.getModifiedComponent(), plugin);
+            } catch (Exception ex) {
+                System.out.println("Gmaps4Jsf plugin system failed to initialize properly: " + ex.getMessage());
             }
-            reader.close();
-        } catch (Exception ex) {
-            System.out.println("Gmaps4Jsf plugin system failed to initialize properly: " + ex.getMessage());
         }
     }
 
@@ -93,7 +87,10 @@ public final class PluginEncoder {
      */
     public static void encodeMapPluginsFunctionScripts(FacesContext facesContext, Map map, ResponseWriter writer) throws IOException {
         for (Iterator it = ((List) plugins.get(Map.class)).iterator(); it.hasNext();) {
-            writer.write(((Plugin) it.next()).encodeFunctionScript(facesContext, map));
+            String function  = ((Plugin) it.next()).encodeFunctionScript(facesContext, map);
+            if (function != null) { 
+                writer.write(function);
+            }
         }
     }
 
@@ -102,7 +99,10 @@ public final class PluginEncoder {
      */
     public static void encodeMapPluginsFunctionCalls(FacesContext facesContext, Map map, ResponseWriter writer) throws IOException {
         for (Iterator it = ((List) plugins.get(Map.class)).iterator(); it.hasNext();) {
-            writer.write(((Plugin) it.next()).encodeFunctionScriptCall(facesContext, map));
+            String functionCall = ((Plugin) it.next()).encodeFunctionScriptCall(facesContext, map);
+            if (functionCall != null) {
+                writer.write(functionCall);
+            }
         }
     }
 
@@ -112,7 +112,10 @@ public final class PluginEncoder {
      */
     public static void encodeMarkerPluginsFunctionScripts(FacesContext facesContext, Marker marker, ResponseWriter writer) throws IOException {
         for (Iterator it = ((List) plugins.get(Marker.class)).iterator(); it.hasNext();) {
-            writer.write(((Plugin) it.next()).encodeFunctionScript(facesContext, marker));
+            String function  = ((Plugin) it.next()).encodeFunctionScript(facesContext, marker);
+            if (function != null) {
+                writer.write(function);
+            }
         }
     }
 
@@ -121,7 +124,10 @@ public final class PluginEncoder {
      */
     public static void encodeMarkerPluginsFunctionCalls(FacesContext facesContext, Marker marker, ResponseWriter writer) throws IOException {
         for (Iterator it = ((List) plugins.get(Marker.class)).iterator(); it.hasNext();) {
-            writer.write(((Plugin) it.next()).encodeFunctionScriptCall(facesContext, marker));
+            String functionCall = ((Plugin) it.next()).encodeFunctionScriptCall(facesContext, marker);
+            if (functionCall != null) {
+                writer.write(functionCall);
+            }
         }
     }
     

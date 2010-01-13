@@ -23,7 +23,6 @@ import javax.faces.component.UIComponent;
 
 import com.googlecode.gmaps4jsf.component.map.Map;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
-import com.googlecode.gmaps4jsf.plugins.gmapsutility.component.MaxInfoWindow;
 
 /**
  * Creates an enhanced information window usable inside Maps that can be maximized.
@@ -38,10 +37,9 @@ public final class MapExtendedInfoWindowEncoder extends AbstractTabbedContentEnc
 
     public String encodeFunctionScriptCall(FacesContext facesContext, UIComponent mapComponent) {
         StringBuffer buffer = new StringBuffer();
-        buffer.append(TABBED_INFO_WINDOW_FUNCTION).append(mapComponent.getId())
+        return buffer.append(TABBED_INFO_WINDOW_FUNCTION).append(mapComponent.getId())
             .append("(").append(ComponentConstants.JS_GMAP_BASE_VARIABLE).append(",")
-            .append(ComponentConstants.JS_GMAP_BASE_VARIABLE).append(");");
-        return buffer.toString();
+            .append(ComponentConstants.JS_GMAP_BASE_VARIABLE).append(");").toString();
     }
 
 }

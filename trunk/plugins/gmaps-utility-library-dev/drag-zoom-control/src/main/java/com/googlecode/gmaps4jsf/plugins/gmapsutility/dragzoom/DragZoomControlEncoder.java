@@ -23,8 +23,7 @@ import java.util.Iterator;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
-import com.googlecode.gmaps4jsf.component.map.Map;
-import com.googlecode.gmaps4jsf.plugins.Plugin;
+import com.googlecode.gmaps4jsf.plugins.MapPlugin;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
 import com.googlecode.gmaps4jsf.plugins.gmapsutility.component.DragZoomControl;
 
@@ -32,13 +31,9 @@ import com.googlecode.gmaps4jsf.plugins.gmapsutility.component.DragZoomControl;
  *
  * @author Jose Noheda [jose.noheda@gmail.com]
  */
-public class DragZoomControlEncoder implements Plugin {
+public final class DragZoomControlEncoder extends MapPlugin {
 
     private static final String DRAG_ZOOM_FUNCTION = "dragZoom";
-
-    public Class getModifiedComponent() {
-        return Map.class;
-    }
 
     public String encodeFunctionScript(FacesContext facesContext, UIComponent mapComponent) {
         StringBuffer buffer = new StringBuffer("function ");
@@ -54,9 +49,8 @@ public class DragZoomControlEncoder implements Plugin {
 
     public String encodeFunctionScriptCall(FacesContext facesContext, UIComponent mapComponent) {
         StringBuffer buffer = new StringBuffer();
-        buffer.append(DRAG_ZOOM_FUNCTION).append(mapComponent.getId())
-            .append("(").append(ComponentConstants.JS_GMAP_BASE_VARIABLE).append(");");
-        return buffer.toString();
+        return buffer.append(DRAG_ZOOM_FUNCTION).append(mapComponent.getId())
+            .append("(").append(ComponentConstants.JS_GMAP_BASE_VARIABLE).append(");").toString();
     }
 
     private void encodeDragZoomControl(DragZoomControl zoomControl, StringBuffer buffer) {
