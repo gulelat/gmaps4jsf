@@ -20,82 +20,64 @@ package com.googlecode.gmaps4jsf.component.map;
 
 import java.io.IOException;
 import java.util.Iterator;
-
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-
-import com.googlecode.gmaps4jsf.component.map.Map;
 import com.googlecode.gmaps4jsf.component.mapcontrol.MapControl;
-import com.googlecode.gmaps4jsf.util.ComponentConstants;
 
-/**
- * @author Hazem Saleh
- * @date Sep 16, 2008
- * The MapControlEncoder is used for encoding the map controls.
- */
 public class MapControlEncoder {
 
-    private static final String JS_FUNC_ADD_CONTROL = "addControl";
-
-    public static void encodeMapControlsFunctionScript(FacesContext facesContext, 
-                                                       Map mapComponent, 
-                                                       ResponseWriter writer)
-                                                       throws IOException {
-
-        writer.write(ComponentConstants.JS_FUNCTION
-                    + ComponentConstants.JS_CREATE_MAP_CONTROLS_FUNCTION_PREFIX
-                    + mapComponent.getId() + "("
-                    + ComponentConstants.JS_GMAP_BASE_VARIABLE + ") {");
-        
-        for (Iterator iterator = mapComponent.getChildren().iterator(); iterator.hasNext();) {
-            UIComponent component = (UIComponent) iterator.next();
-
-            if (component instanceof MapControl  && component.isRendered()) {
-                encodeMapControl(facesContext, mapComponent, (MapControl) component, writer);
-            }
-        }
-        
-        writer.write("}");
+    public MapControlEncoder() {
     }
 
-    public static void encodeMapControlsFunctionScriptCall(FacesContext facesContext, 
-                                                           Map mapComponent, 
-                                                           ResponseWriter writer)
-                                                           throws IOException {
-
-        writer.write(ComponentConstants.JS_CREATE_MAP_CONTROLS_FUNCTION_PREFIX
-                    + mapComponent.getId() + "("
-                    + ComponentConstants.JS_GMAP_BASE_VARIABLE + ");     ");
-    }
-    
     private static void encodeMapControl(FacesContext facesContext,
-                                         Map mapComponent, 
-                                         MapControl mapControl, 
-                                         ResponseWriter writer)
-                                         throws IOException {
+	    Map mapComponent, MapControl mapControl, ResponseWriter writer)
+	    throws IOException {
+	
+	if (mapControl.getPosition() != null) {
+	    writer.write("var mapControlPosition_" + mapControl.getId()
+		    + " = new " + "GControlPosition" + "("
+		    + mapControl.getPosition() + ", new " + "GSize" + "("
+		    + mapControl.getOffsetWidth() + ","
+		    + mapControl.getOffsetHeight() + ")" + ");");
+	    writer.write("map_base_variable.addControl(new "
+		    + mapControl.getName() + "(), mapControlPosition_"
+		    + mapControl.getId() + ");");
+	} else {
+	    writer.write("map_base_variable.addControl(new "
+		    + mapControl.getName() + "());");
+	}
+    }
 
-        if (mapControl.getPosition() != null) {
+    public static void encodeMapControlsFunctionScript(
+	    FacesContext facesContext, Map mapComponent, ResponseWriter writer)
+	    throws IOException {
+	
+	writer.write("function createMapControlsFunction"
+		+ mapComponent.getId() + "(" + "map_base_variable" + ") {");
+	
+	Iterator iterator = mapComponent.getChildren().iterator();
+	
+	do {
+	    if (!iterator.hasNext()) {
+		break;
+	    }
+	    
+	    UIComponent component = (UIComponent) iterator.next();
+	    
+	    if ((component instanceof MapControl) && component.isRendered()) {
+		encodeMapControl(facesContext, mapComponent,
+			(MapControl) component, writer);
+	    }
+	} while (true);
+	writer.write("}");
+    }
 
-            writer.write("var mapControlPosition_" + mapControl.getId()
-                        + " = new " + ComponentConstants.JS_GControlPosition_OBJECT
-                        + "(" + mapControl.getPosition() + ", new "
-                        + ComponentConstants.JS_GSize_OBJECT + "("
-                        + mapControl.getOffsetWidth() + ","
-                        + mapControl.getOffsetHeight() + ")" + ");     ");
-
-            writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-                        + "." 
-                        + MapControlEncoder.JS_FUNC_ADD_CONTROL 
-                        + "(new " + mapControl.getName()
-                        + "(), mapControlPosition_" + mapControl.getId() + ");     ");
-        } else {
-
-            writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-                        + "." 
-                        + MapControlEncoder.JS_FUNC_ADD_CONTROL 
-                        + "(new " + mapControl.getName() + "());     ");
-
-        }
-    }    
+    public static void encodeMapControlsFunctionScriptCall(
+	    FacesContext facesContext, Map mapComponent, ResponseWriter writer)
+	    throws IOException {
+	
+	writer.write("createMapControlsFunction" + mapComponent.getId() + "("
+		+ "map_base_variable" + ");");
+    }
 }

@@ -18,31 +18,27 @@
  */
 package com.googlecode.gmaps4jsf.example.beans;
 
-import javax.faces.event.AbortProcessingException;
-import javax.faces.event.ValueChangeEvent;
-
-/**
- * @author Hazem Saleh
- * @date Jan 4, 2009
- * The FavoritePlace is used as a bean for the draggable marker example.
- */
 public class FavoritePlace {
-	String longitude;
-	String latitude;
-	
-	public String getLatitude() {
-		return latitude;
-	}
-	
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
-	
-	public String getLongitude() {
-		return longitude;
-	}
 
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
-	}
+    public FavoritePlace() {
+    }
+
+    public String getLatitude() {
+	return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+	this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+	return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+	this.longitude = longitude;
+    }
+
+    String longitude;
+    String latitude;
 }

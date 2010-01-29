@@ -23,8 +23,6 @@
 
 <!DOCTYPE component SYSTEM "../misc/component.dtd" [
 <!ENTITY standard_uicomponent_attributes		SYSTEM "../entities/standard_uicomponent_attributes.xml">
-<!ENTITY output_component_attributes			SYSTEM "../entities/output_component_attributes.xml">
-<!ENTITY input_component_attributes				SYSTEM "../entities/input_component_attributes.xml">
 ]>
 <component>
 	<tag>marker</tag>
@@ -34,9 +32,9 @@
 	<componentFamily>com.googlecode.gmaps4jsf</componentFamily>
 	<rendererType>com.googlecode.gmaps4jsf.component.marker.MarkerRenderer</rendererType>	
 	<rendererClass>com.googlecode.gmaps4jsf.component.marker.MarkerRenderer</rendererClass>	
-	<parent>javax.faces.component.UIInput</parent>
+	<parent>javax.faces.component.UIComponentBase</parent>
 	<attributes>
-		&input_component_attributes;
+		&standard_uicomponent_attributes;
 		<attribute>
 			<name>longitude</name>
 			<required>false</required>
@@ -64,14 +62,7 @@
 			<type>java.lang.String</type>
 			<defaultValue>(GClientGeocoder) service not found the address location</defaultValue>					
 			<description>The error message that should appear if the address location doesnot exist</description>
-		</attribute>	
-	    <attribute>
-			<name>showLocationNotFoundMessage</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-			<defaultValue>false</defaultValue>					
-			<description>This attribute determines whether to show an error message when the location is not found</description>
-		</attribute>			
+		</attribute>		
 		<attribute>
 			<name>jsVariable</name>
 			<required>false</required>
@@ -102,18 +93,7 @@
 			This attribute determines the event on which the marker information will be shown. 
 			The marker information should be represented as a child htmlInformationWindow component of the marker component.
 			</description>
-		</attribute>		
-		
-		
-		<attribute>
-			<name>submitOnValueChange</name>
-			<required>false</required>
-			<type>java.lang.String</type>		
-			<defaultValue>false</defaultValue>					
-			<description>
-			This attribute determines whether to submit when the marker value changed.
-			</description>
-		</attribute>					
+		</attribute>				
 				
 	</attributes>
 </component>

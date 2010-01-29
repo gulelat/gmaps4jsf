@@ -64,17 +64,7 @@
 			<type>java.lang.String</type>
 			<defaultValue>(GClientGeocoder) service not found the address location</defaultValue>					
 			<description>The error message that should appear if the address location doesnot exist</description>
-		</attribute>	
-		
-	    <attribute>
-			<name>showLocationNotFoundMessage</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-			<defaultValue>false</defaultValue>					
-			<description>This attribute determines whether to show an error message when the location is not found</description>
-		</attribute>
-		 
-						
+		</attribute>					
 		<attribute>
 			<name>width</name>
 			<required>false</required>
@@ -100,7 +90,7 @@
 			<name>type</name>
 			<required>false</required>
 			<type>java.lang.String</type>
-			<defaultValue>G_NORMAL_MAP</defaultValue>					
+			<defaultValue>G_HYBRID_MAP</defaultValue>					
 			<description>
 			The type of the map. 
 			It can be one of the following values (G_NORMAL_MAP, G_SATELLITE_MAP and G_HYBRID_MAP).
@@ -118,7 +108,8 @@
 			This flag should be set to false if the map is inside a zone that will 
 			be updated by Ajax
 			</description>
-		</attribute>		
+		</attribute>			
+		
 		
 		<attribute>
 			<name>enableDragging</name>
@@ -131,16 +122,6 @@
 		</attribute>	
 		
 		<attribute>
-			<name>enableScrollWheelZoom</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-			<defaultValue>false</defaultValue>					
-			<description>
-			This flag determines whether to enable zooming on mouse scroll wheel.
-			</description>
-		</attribute>		
-		
-		<attribute>
 			<name>addStreetOverlay</name>
 			<required>false</required>
 			<type>java.lang.String</type>
@@ -151,16 +132,6 @@
 		</attribute>					
 		
 		<attribute>
-			<name>autoReshape</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-			<defaultValue>false</defaultValue>					
-			<description>
-			Setting this flag to true enables the map to be resized to view all of the markers on it.
-			</description>
-		</attribute>		
-		
-		<attribute>
 			<name>jsVariable</name>
 			<required>false</required>
 			<type>java.lang.String</type>				
@@ -169,7 +140,7 @@
 			It should unique. Use this attribute if you want to use write additional JavaScript
 			code for the map to customize it.
 			</description>
-		</attribute>					
+		</attribute>				
 				
 	</attributes>
 </component>

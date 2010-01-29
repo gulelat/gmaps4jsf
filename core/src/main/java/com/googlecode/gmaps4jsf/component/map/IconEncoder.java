@@ -19,72 +19,48 @@
 package com.googlecode.gmaps4jsf.component.map;
 
 import java.io.IOException;
-
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-
 import com.googlecode.gmaps4jsf.component.icon.Icon;
-import com.googlecode.gmaps4jsf.util.ComponentConstants;
 
-/**
- * @author Hazem Saleh
- * @date September 27, 2008
- * The IconEncoder is used for encoding the marker icons.
- */
 public class IconEncoder {
 
+    public IconEncoder() {
+    }
+
     public static void encodeIconFunctionScript(FacesContext facesContext,
-                                                Icon iconComponent, 
-                                                ResponseWriter writer) 
-                                                throws IOException {
-
-        writer.write(ComponentConstants.JS_FUNCTION
-                    + ComponentConstants.JS_CREATE_ICON_FUNCTION_PREFIX
-                    + iconComponent.getId() + "() {");
-
-        writer.write("var iconObject = new "
-                    + ComponentConstants.JS_GIcon_OBJECT + "("
-                    + ComponentConstants.JS_CONST_G_DEFAULT_ICON_OBJECT + ");     ");
-
-        if (iconComponent.getShadowImageURL() != null) {
-            writer.write("iconObject.shadow = " + "'"
-                        + iconComponent.getShadowImageURL() + "';     ");
-        }
-
-        writer.write("iconObject.iconSize = " + "new "
-                    + ComponentConstants.JS_GSize_OBJECT + "("
-                    + iconComponent.getWidth() + ", " + iconComponent.getHeight()
-                    + ");     ");
-
-        writer.write("iconObject.shadowSize = new "
-                    + ComponentConstants.JS_GSize_OBJECT + "("
-                    + iconComponent.getShadowWidth() + ", "
-                    + iconComponent.getShadowHeight() + ");     ");
-
-        writer.write("iconObject.iconAnchor = new "
-                    + ComponentConstants.JS_GPoint_OBJECT + "("
-                    + iconComponent.getXcoordAnchor() + ", "
-                    + iconComponent.getYcoordAnchor() + ");     ");
-
-        writer.write("iconObject.infoWindowAnchor = new "
-                    + ComponentConstants.JS_GPoint_OBJECT + "("
-                    + iconComponent.getXcoordInfoWindowAnchor() + ", "
-                    + iconComponent.getYcoordInfoWindowAnchor() + ");     ");
-
-        writer.write("iconObject.image = '" 
-                    + iconComponent.getImageURL()
-                    + "';     ");
-
-        writer.write("return iconObject;     ");
-        
-        writer.write("}");
+	    Icon iconComponent, ResponseWriter writer) throws IOException {
+	
+	writer.write("function createIconFunction" + iconComponent.getId()
+		+ "() {");
+	writer.write("var iconObject = new GIcon(G_DEFAULT_ICON);");
+	
+	if (iconComponent.getShadowImageURL() != null) {
+	    writer.write("iconObject.shadow = \""
+		    + iconComponent.getShadowImageURL() + "\";");
+	}
+	
+	writer.write("iconObject.iconSize = new GSize("
+		+ iconComponent.getWidth() + ", " + iconComponent.getHeight()
+		+ ");");
+	writer.write("iconObject.shadowSize = new GSize("
+		+ iconComponent.getShadowWidth() + ", "
+		+ iconComponent.getShadowHeight() + ");");
+	writer.write("iconObject.iconAnchor = new GPoint("
+		+ iconComponent.getXcoordAnchor() + ", "
+		+ iconComponent.getYcoordAnchor() + ");");
+	writer.write("iconObject.infoWindowAnchor = new GPoint("
+		+ iconComponent.getXcoordInfoWindowAnchor() + ", "
+		+ iconComponent.getYcoordInfoWindowAnchor() + ");");
+	writer.write("iconObject.image = \"" + iconComponent.getImageURL()
+		+ "\";");
+	writer.write("return iconObject;");
+	writer.write("}");
     }
 
     public static String getIconFunctionScriptCall(FacesContext facesContext,
-                                                   Icon iconComponent, 
-                                                   ResponseWriter writer) 
-                                                   throws IOException {
-
-        return ComponentConstants.JS_CREATE_ICON_FUNCTION_PREFIX + iconComponent.getId() + "()";
+	    Icon iconComponent, ResponseWriter writer) throws IOException {
+	
+	return "createIconFunction" + iconComponent.getId() + "()";
     }
 }

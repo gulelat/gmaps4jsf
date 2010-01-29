@@ -26,44 +26,48 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class SourceCodeServlet extends HttpServlet  {
-    
-	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException  {
-        String webPage = req.getServletPath();
-        
-      	webPage = chopGivenSuffix(webPage, ".source");
+public class SourceCodeServlet extends HttpServlet {
 
-        if(webPage.endsWith(".jsf"))  {
-        	chopGivenSuffix(webPage, ".jsf");
-            webPage += ".jsp"; // replace jsf with jsp
-        }
- 
-        String realPath = getServletConfig().getServletContext().getRealPath(webPage);
-        outputFile(res, realPath);
+    public void doGet(HttpServletRequest req, HttpServletResponse res)
+	    throws IOException, ServletException {
+	
+	String webPage = req.getServletPath();
+	
+	webPage = chopGivenSuffix(webPage, ".source");
+
+	if (webPage.endsWith(".jsf")) {
+	    chopGivenSuffix(webPage, ".jsf");
+	    webPage += ".jsp"; // replace jsf with jsp
+	}
+
+	String realPath = getServletConfig().getServletContext().getRealPath(
+		webPage);
+	outputFile(res, realPath);
     }
 
-	private String chopGivenSuffix(String webPage, String suffix)  {
-      	int chopPoint = webPage.lastIndexOf(suffix);
-        return webPage.substring(0, chopPoint);
-	}
-	    
-    
-    private void outputFile(HttpServletResponse res, String realPath)   throws IOException   {
-        res.setContentType("text/plain");
-        ServletOutputStream out = res.getOutputStream();
+    private String chopGivenSuffix(String webPage, String suffix) {
+	int chopPoint = webPage.lastIndexOf(suffix);
+	
+	return webPage.substring(0, chopPoint);
+    }
 
-        InputStream in = null;
-        try
-        {
-            in = new BufferedInputStream(new FileInputStream(realPath));
-            int ch;
-            while ((ch = in.read()) !=-1)
-            {
-                out.print((char)ch);
-            }
-        }
-        finally {
-            if (in != null) in.close();  // very important
-        }
+    private void outputFile(HttpServletResponse res, String realPath)
+	    throws IOException {
+	
+	res.setContentType("text/plain");
+	ServletOutputStream out = res.getOutputStream();
+
+	InputStream in = null;
+	
+	try {
+	    in = new BufferedInputStream(new FileInputStream(realPath));
+	    int ch;
+	    while ((ch = in.read()) != -1) {
+		out.print((char) ch);
+	    }
+	} finally {
+	    if (in != null)
+		in.close(); // very important
+	}
     }
 }

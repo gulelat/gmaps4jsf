@@ -20,12 +20,9 @@ package com.googlecode.gmaps4jsf.component.marker;
 
 import java.io.IOException;
 import java.util.Iterator;
-
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-
-import com.googlecode.gmaps4jsf.plugins.PluginEncoder;
 import com.googlecode.gmaps4jsf.component.eventlistener.EventListener;
 import com.googlecode.gmaps4jsf.component.htmlInformationWindow.HTMLInformationWindow;
 import com.googlecode.gmaps4jsf.component.icon.Icon;
@@ -33,374 +30,248 @@ import com.googlecode.gmaps4jsf.component.map.EventEncoder;
 import com.googlecode.gmaps4jsf.component.map.HTMLInfoWindowEncoder;
 import com.googlecode.gmaps4jsf.component.map.IconEncoder;
 import com.googlecode.gmaps4jsf.component.map.Map;
-import com.googlecode.gmaps4jsf.util.ComponentConstants;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
-import com.googlecode.gmaps4jsf.util.MapRendererUtil;
 
-/**
- * @author Hazem Saleh
- * @date Jul 31, 2008
- * The MarkerEncoder is used for encoding the map markers.
- */
 public class MarkerEncoder {
 
-    private static final String JS_FUNC_ADD_LISTENER = "addListener";
-    private static final String JS_FUNC_ADD_OVERLAY = "addOverlay";
-    private static final String JS_FUNC_ALERT = "alert";
-    
-    public static String getUniqueMarkerId(FacesContext facesContext, Marker marker) {
-        String markerID = marker.getClientId(facesContext);
-
-        return markerID.replace(':', '_');
-    }        
-
-    public static void encodeMarkerFunctionScript(FacesContext facesContext,
-                                                  Map map, 
-                                                  Marker marker, 
-                                                  ResponseWriter writer) 
-                                                  throws IOException {
-
-        writer.write(ComponentConstants.JS_FUNCTION
-                    + ComponentConstants.JS_CREATE_MARKER_FUNCTION_PREFIX + getUniqueMarkerId(facesContext, marker) 
-                    + "(" + ComponentConstants.JS_GMAP_BASE_VARIABLE + ") {");
-
-        if (marker.isRendered()) {
-            encodeMarker(facesContext, map, marker, writer);
-            
-            writer.write("return " + ComponentConstants.CONST_MARKER_PREFIX 
-                        + getUniqueMarkerId(facesContext, marker) + ";");
-        }
-
-        writer.write("}");
-        
-        PluginEncoder.encodeMarkerPluginsFunctionScripts(facesContext, marker, writer);
+    public MarkerEncoder() {
     }
 
-    public static void encodeMarkerFunctionScriptCall(FacesContext facesContext, 
-                                                      Map map, 
-                                                      Marker marker,
-                                                      ResponseWriter writer) 
-                                                      throws IOException {
-        
-        writer.write("var " + ComponentConstants.CONST_MARKER_PREFIX + getUniqueMarkerId(facesContext, marker) 
-                    + " = "
-                    + ComponentConstants.JS_CREATE_MARKER_FUNCTION_PREFIX + getUniqueMarkerId(facesContext, marker) 
-                    + "(" + ComponentConstants.JS_GMAP_BASE_VARIABLE + ");     ");
-    }
-    
     private static String getMarkerState(String markerID, Object mapState) {
-        if (mapState == null) {
-            return null;
-        }
+	if (mapState == null) {
+	    return null;
+	}
+	
+	String markersState[] = ((String) mapState).split("&");
+	
+	for (int i = 0; i < markersState.length; i++) {
+	    if (markersState[i].contains(markerID)) {
+		return markersState[i].split("=")[1];
+	    }
+	}
 
-        String[] markersState = ((String) mapState).split("&");
-
-        for (int i = 0; i < markersState.length; ++i) {
-            if (markersState[i].indexOf(markerID) >= 0) {
-                return markersState[i].split("=")[1];
-            }
-        }
-
-        return null;
+	return null;
     }
 
-    private static void encodeMarker(FacesContext context, 
-                                     Map map,
-                                     Marker marker, 
-                                     ResponseWriter writer) 
-                                     throws IOException {
-
-        Object mapState = ComponentUtils.getValueToRender(context, map);
-        String markerState = getMarkerState(getUniqueMarkerId(context, marker), mapState);
-
-        if (markerState != null) { /* Marker comes from postback and it has a state */ 
-
-            // update marker model.
-            updateMarkerModel(context, markerState, marker);
-
-            writer.write("var " 
-                        + ComponentConstants.CONST_MARKER_PREFIX + getUniqueMarkerId(context, marker) 
-                        + " = " 
-                        + " new " + ComponentConstants.JS_GMarker_OBJECT + "(" 
-                        + " new " + ComponentConstants.JS_GLatLng_OBJECT + markerState 
-                        + ","
-                        + getMarkerOptions(context, marker, writer) 
-                        + ");     ");
-            
-            if (MapRendererUtil.isAutoReshapeMap(map)) {
-                writer.write("setBounds" + map.getId() + markerState + ";     ");
-            }
-
-        } else if (marker.getAddress() != null) { /* Marker does not have a state, and it has an address */
-            String errorMessageScript = "";
-
-            // create the marker instance from address.
-            writer.write("var geocoder_" + getUniqueMarkerId(context, marker) 
-                        + " = new " + ComponentConstants.JS_GClientGeocoder_OBJECT + "();     ");
-
-            if ("true".equalsIgnoreCase(marker.getShowLocationNotFoundMessage())) {
-                errorMessageScript = MarkerEncoder.JS_FUNC_ALERT 
-                                   + "('" + marker.getLocationNotFoundErrorMessage() + "');     ";
-            }
-
-            // send XHR request to get the address location and write to the
-            // response.
-            writer.write("geocoder_" + getUniqueMarkerId(context, marker) + ".getLatLng('"
-                        + marker.getAddress() + "'," + "function(location) {     "
-                        + "if (!location) {     " 
-                        + errorMessageScript
-                        + "} else {     ");
-
-            writer.write("var " + ComponentConstants.CONST_MARKER_PREFIX
-                        + getUniqueMarkerId(context, marker) + " = new "
-                        + ComponentConstants.JS_GMarker_OBJECT + "(location, "
-                        + getMarkerOptions(context, marker, writer) + ");     ");
-            
-            if (MapRendererUtil.isAutoReshapeMap(map)) {
-                writer.write("reshapeMap" + map.getId() + "("
-                            + ComponentConstants.JS_GMAP_BASE_VARIABLE + ", "
-                            + "location.lat(), location.lng());     ");
-            }
-            
-        } else { /* Marker does not have a state, and it has a longitude and latitude */
-
-            // create the marker instance from latlng.
-            String longitude;
-            String latitude;
-
-            if (marker.getLatitude() != null) {
-                latitude = marker.getLatitude();
-            } else {
-                latitude = ComponentConstants.JS_GMAP_BASE_VARIABLE
-                         + ".getCenter().lat()";
-            }
-
-            if (marker.getLongitude() != null) {
-                longitude = marker.getLongitude();
-            } else {
-                longitude = ComponentConstants.JS_GMAP_BASE_VARIABLE
-                          + ".getCenter().lng()";
-            }
-
-            writer.write("var " 
-                        + ComponentConstants.CONST_MARKER_PREFIX + getUniqueMarkerId(context, marker) 
-                        + " = new " + ComponentConstants.JS_GMarker_OBJECT 
-                        + "(new " + ComponentConstants.JS_GLatLng_OBJECT 
-                        + "(" + latitude + ", " + longitude + "),"
-                        + getMarkerOptions(context, marker, writer) + ");     ");
-            
-            if (MapRendererUtil.isAutoReshapeMap(map)) {
-                writer.write("reshapeMap" + map.getId() + "(" 
-                            + ComponentConstants.JS_GMAP_BASE_VARIABLE + ", " 
-                            + latitude
-                            + ", " 
-                            + longitude + ");     ");
-            }
-        }
-
-        completeMarkerRendering(context, map, marker, writer);
-
-        if (markerState == null && marker.getAddress() != null) {
-            writer.write("}" + "}     " + ");     ");
-        }
+    private static void encodeMarker(FacesContext context, Map map,
+	    Marker marker, ResponseWriter writer) throws IOException {
+	
+	Object mapState = ComponentUtils.getValueToRender(context, map);
+	String markerState = getMarkerState(marker.getId(), mapState);
+	
+	if (markerState != null) {
+	    updateMarkerModel(context, markerState, marker);
+	    writer.write("var marker_" + marker.getId() + " = new " + "GMarker"
+		    + "(new " + "GLatLng" + markerState + ","
+		    + getMarkerOptions(context, marker, writer) + ");");
+	} else if (marker.getAddress() != null) {
+	    writer.write("var geocoder_" + marker.getId() + " = new "
+		    + "GClientGeocoder" + "();");
+	    writer.write("geocoder_" + marker.getId() + ".getLatLng(\""
+		    + marker.getAddress() + "\"," + "function(location) {\n"
+		    + "if (!location) {\n" + "alert(\""
+		    + marker.getLocationNotFoundErrorMessage() + "\");\n"
+		    + "} else {\n");
+	    writer.write("var marker_" + marker.getId() + " = new " + "GMarker"
+		    + "(location, " + getMarkerOptions(context, marker, writer)
+		    + ");");
+	} else {
+	    String latitude;
+	    if (marker.getLatitude() != null) {
+		latitude = marker.getLatitude();
+	    } else {
+		latitude = "map_base_variable.getCenter().lat()";
+	    }
+	    
+	    String longitude;
+	    
+	    if (marker.getLongitude() != null) {
+		longitude = marker.getLongitude();
+	    } else {
+		longitude = "map_base_variable.getCenter().lng()";
+	    }
+	    
+	    writer.write("var marker_" + marker.getId() + " = new " + "GMarker"
+		    + "(new " + "GLatLng" + "(" + latitude + ", " + longitude
+		    + ")," + getMarkerOptions(context, marker, writer) + ");");
+	}
+	completeMarkerRendering(context, map, marker, writer);
+	
+	if (marker.getAddress() != null) {
+	    writer.write("}}\n);\n");
+	}
     }
 
     private static void updateMarkerModel(FacesContext context,
-                                          String markerState, 
-                                          Marker marker) {
-
-        if (marker.getValueBinding(ComponentConstants.MARKER_ATTR_LATITUDE) != null) {
-            marker.getValueBinding(ComponentConstants.MARKER_ATTR_LATITUDE)
-                  .setValue(context, markerState.split(",")[0].substring(1));
-        }
-
-        if (marker.getValueBinding(ComponentConstants.MARKER_ATTR_LONGITUDE) != null) {
-            marker.getValueBinding(ComponentConstants.MARKER_ATTR_LONGITUDE)
-                  .setValue(
-                            context,
-                            markerState.split(",")[1].substring(0, markerState
-                                       .split(",")[1].length() - 1));
-        }
+	    String markerState, Marker marker) {
+	
+	if (marker.getValueBinding("latitude") != null) {
+	    marker.getValueBinding("latitude").setValue(context,
+		    markerState.split(",")[0].substring(1));
+	}
+	
+	if (marker.getValueBinding("longitude") != null) {
+	    marker.getValueBinding("longitude").setValue(
+		    context,
+		    markerState.split(",")[1].substring(0, markerState
+			    .split(",")[1].length() - 1));
+	}
     }
 
     private static void completeMarkerRendering(FacesContext facesContext,
-                                                Map map, 
-                                                Marker marker,
-                                                ResponseWriter writer) 
-                                                throws IOException {
-
-        writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-                    + "." 
-                    + MarkerEncoder.JS_FUNC_ADD_OVERLAY 
-                    + "(marker_" + getUniqueMarkerId(facesContext, marker) + ");     ");
-
-        // save the marker state.
-        saveMarkerState(facesContext, map, marker, writer);
-
-        // process marker events.
-        encodeMarkerChildren(facesContext, marker, writer);
-
-        // update marker user variable.
-        updateMarkerJSVariable(facesContext, marker, writer);
+	    Map map, Marker marker, ResponseWriter writer) throws IOException {
+	
+	writer.write("map_base_variable.addOverlay(marker_" + marker.getId()
+		+ ");");
+	saveMarkerState(facesContext, map, marker, writer);
+	encodeMarkerChildren(facesContext, marker, writer);
+	updateMarkerJSVariable(facesContext, marker, writer);
     }
 
-    //TODO refactor this method.
     private static void saveMarkerState(FacesContext facesContext, Map map,
-            Marker marker, ResponseWriter writer) throws IOException {
-        
-        // Start creating the drag end listener.
-        String markerDragEndHandler = "function " + "marker_" + getUniqueMarkerId(facesContext, marker)
-                                    + "_changed(latlng) " + "{     " +
-                    
-                                    "var markersState = document.getElementById('"
-                                    + ComponentUtils.getMapStateHiddenFieldId(map)
-                                    + "').value;     " 
-                                    
-                                    
-                                    + "if (markersState.indexOf('" + getUniqueMarkerId(facesContext, marker) + "=') != -1) {     "
-                                    + "var markersArray = markersState.split('&');     "
-                                    + "var updatedMarkersState = '';     " 
-                                    
-                                    + "for (i = 0; markersArray.length > i; ++i) {     "
-                    
-                                        + "if (markersArray[i].indexOf('" + getUniqueMarkerId(facesContext, marker) + "=') == -1) {     "
-                                        
-                                            + "updatedMarkersState += markersArray[i];     "
-                                            + "if (markersArray.length != 1 && ((markersArray.length - 1) > i)) {     "
-                                                + "updatedMarkersState += '&';     " 
-                                            + "}     " 
-                                        
-                                        + "}     "
-                                    + "}     " 
-                                    
-                                    + "markersState = updatedMarkersState;     " 
-                                    + "}     " 
-                                    
-                                    
-                                    + "if (markersState != '' && markersState.charAt(markersState.length - 1) != '&') {     " 
-                                        + "markersState += '&';     "
-                                    + "}     " 
-                                    
-                                    + "markersState += '" + getUniqueMarkerId(facesContext, marker) + "=' + latlng;     "
-                                    
-                                    // Save the marker state.
-                                    + "document.getElementById('"
-                                    + ComponentUtils.getMapStateHiddenFieldId(map)
-                                    + "').value = markersState;     "
-                                    
-                                    // Submit the form on marker value change if required.
-                                    + ("true".equalsIgnoreCase(marker.getSubmitOnValueChange()) ? 
-                                      
-                                      "setTimeout(function(){ document.getElementById('" 
-                                    + ComponentUtils.findParentForm(facesContext, marker).getId() + "')." 
-                                    + "submit(); }, 500);     "
-                                    : "") 
-                                    
-                                    // End the drag end listener.
-                                    + "}     "
-                                    
-                                    // Attach the listener to the marker drag end event.
-                                    + ComponentConstants.JS_GEVENT_OBJECT + ".addListener("
-                                    + "marker_" + getUniqueMarkerId(facesContext, marker) + ", 'dragend', " + "marker_"
-                                    + getUniqueMarkerId(facesContext, marker) + "_changed" + ");     ";
-
-        writer.write(markerDragEndHandler);
+	    Marker marker, ResponseWriter writer) throws IOException {
+	
+	String markerDragEndHandler = "function marker_" + marker.getId()
+		+ "_dragEnd(latlng) " + "{\r\n"
+		+ "var markersState = document.getElementById(\""
+		+ ComponentUtils.getMapStateHiddenFieldId(map)
+		+ "\").value;\r\n" + "if (markersState.indexOf('"
+		+ marker.getId() + "=') != -1) {\r\n"
+		+ "var markersArray = markersState.split('&');\r\n"
+		+ "var updatedMarkersState = \"\";\r\n"
+		+ "for (i = 0; i < markersArray.length; ++i) {\r\n"
+		+ "if (markersArray[i].indexOf('" + marker.getId()
+		+ "=') == -1) {\r\n"
+		+ "updatedMarkersState += markersArray[i];\r\n"
+		+ "if (i != 0 && i < markersArray.length - 1) {\r\n"
+		+ "updatedMarkersState += \"&\";\r\n" + "}\r\n" + "}\r\n"
+		+ "}\r\n" + "markersState = updatedMarkersState;\r\n" + "}\r\n"
+		+ "if (markersState != \"\") {\r\n"
+		+ "markersState += '&';\r\n" + "}\r\n" + "markersState += \""
+		+ marker.getId() + "=\" + latlng;\r\n"
+		+ "document.getElementById(\""
+		+ ComponentUtils.getMapStateHiddenFieldId(map)
+		+ "\").value = markersState;" + "}" + "GEvent"
+		+ ".addListener(" + "marker_" + marker.getId()
+		+ ", \"dragend\", " + "marker_" + marker.getId() + "_dragEnd"
+		+ ");";
+	writer.write(markerDragEndHandler);
     }
 
     private static void encodeMarkerChildren(FacesContext facesContext,
-                                             Marker marker, 
-                                             ResponseWriter writer) 
-                                             throws IOException {
-
-        // encode marker client side events.
-        for (Iterator iterator = marker.getChildren().iterator(); iterator.hasNext();) {
-            UIComponent component = (UIComponent) iterator.next();
-
-            if (component instanceof EventListener) {
-                EventEncoder.encodeEventListenersFunctionScript(facesContext,
-                                                                marker, 
-                                                                writer, 
-                                                                ComponentConstants.CONST_MARKER_PREFIX + getUniqueMarkerId(facesContext, marker));
-
-                EventEncoder.encodeEventListenersFunctionScriptCall(facesContext,
-                                                                    marker, 
-                                                                    writer,
-                                                                    ComponentConstants.CONST_MARKER_PREFIX + getUniqueMarkerId(facesContext, marker));
-            }
-        }
-
-        // encode marker information.
-        for (Iterator iterator = marker.getChildren().iterator(); iterator.hasNext();) {
-            UIComponent component = (UIComponent) iterator.next();
-
-            if (component instanceof HTMLInformationWindow) {
-                HTMLInformationWindow window = (HTMLInformationWindow) component;
-                writer.write(ComponentConstants.JS_GEVENT_OBJECT
-                            + "." 
-                            + MarkerEncoder.JS_FUNC_ADD_LISTENER 
-                            + "("
-                            + ComponentConstants.CONST_MARKER_PREFIX + getUniqueMarkerId(facesContext, marker) 
-                            + ", '"
-                            + marker.getShowInformationEvent()
-                            + "', function() {");
-
-                HTMLInfoWindowEncoder.encodeMarkerHTMLInfoWindow(facesContext, marker, window, writer);
-
-                writer.write("});     ");
-
-                break;
-            }
-        }
-        
-        PluginEncoder.encodeMarkerPluginsFunctionCalls(facesContext, marker, writer);
-    }
-    
-    private static void updateMarkerJSVariable(FacesContext facesContext, 
-                                               Marker marker, 
-                                               ResponseWriter writer) 
-                                               throws IOException {
-
-        if (marker.getJsVariable() != null) {
-            writer.write("     " + marker.getJsVariable() + " = "
-                        + ComponentConstants.CONST_MARKER_PREFIX + getUniqueMarkerId(facesContext, marker)
-                        + ";     ");
-        }
+	    Marker marker, ResponseWriter writer) throws IOException {
+	
+	Iterator iterator = marker.getChildren().iterator();
+	
+	do {
+	    if (!iterator.hasNext()) {
+		break;
+	    }
+	    
+	    UIComponent component = (UIComponent) iterator.next();
+	    
+	    if (component instanceof EventListener) {
+		EventEncoder.encodeEventListenersFunctionScript(facesContext,
+			marker, writer, "marker_" + marker.getId());
+		EventEncoder.encodeEventListenersFunctionScriptCall(
+			facesContext, marker, writer, "marker_"
+				+ marker.getId());
+	    }
+	} while (true);
+	
+	iterator = marker.getChildren().iterator();
+	
+	do {
+	    if (!iterator.hasNext()) {
+		break;
+	    }
+	    
+	    UIComponent component = (UIComponent) iterator.next();
+	    
+	    if (!(component instanceof HTMLInformationWindow)) {
+		continue;
+	    }
+	    
+	    HTMLInformationWindow window = (HTMLInformationWindow) component;
+	    writer.write("GEvent.addListener(marker_" + marker.getId() + ", \""
+		    + marker.getShowInformationEvent() + "\", function() {");
+	    HTMLInfoWindowEncoder.encodeMarkerHTMLInfoWindow(facesContext,
+		    marker, window, writer);
+	    writer.write("});");
+	    break;
+	} while (true);
     }
 
-    private static String getMarkerOptions(FacesContext facesContext, 
-                                           Marker marker, 
-                                           ResponseWriter writer) 
-                                           throws IOException {
+    private static void updateMarkerJSVariable(FacesContext facesContext,
+	    Marker marker, ResponseWriter writer) throws IOException {
+	
+	if (marker.getJsVariable() != null) {
+	    writer.write("\r\n" + marker.getJsVariable() + " = " + "marker_"
+		    + marker.getId() + ";\r\n");
+	}
+    }
 
-        String markerOptions = "{";
+    private static String getUniqueMarkerId(FacesContext facesContext,
+	    Marker marker) {
+	
+	String markerID = marker.getClientId(facesContext);
+	return markerID.replace(":", "_");
+    }
 
-        // check dragability.
-        if ("true".equalsIgnoreCase(marker.getDraggable())) {
-            markerOptions += "draggable: true";
-        } else {
-            markerOptions += "draggable: false";
-        }
+    private static String getMarkerOptions(FacesContext facesContext,
+	    Marker marker, ResponseWriter writer) throws IOException {
+	
+	String markerOptions = "{";
+	if ("true".equalsIgnoreCase(marker.getDraggable())) {
+	    markerOptions = markerOptions + "draggable: true";
+	} else {
+	    markerOptions = markerOptions + "draggable: false";
+	}
+	
+	Iterator iterator = marker.getChildren().iterator();
+	
+	do {
+	    if (!iterator.hasNext()) {
+		break;
+	    }
+	    
+	    UIComponent component = (UIComponent) iterator.next();
+	    
+	    if (!(component instanceof Icon)) {
+		continue;
+	    }
+	    
+	    Icon icon = (Icon) component;
+	    IconEncoder.encodeIconFunctionScript(facesContext, icon, writer);
+	    markerOptions = markerOptions
+		    + ", icon: "
+		    + IconEncoder.getIconFunctionScriptCall(facesContext, icon,
+			    writer);
+	    break;
+	} while (true);
+	
+	markerOptions = markerOptions + "}";
+	return markerOptions;
+    }
 
-        // check if the marker has an icon.
-        for (Iterator iterator = marker.getChildren().iterator(); iterator.hasNext();) {
-            UIComponent component = (UIComponent) iterator.next();
+    public static void encodeMarkerFunctionScript(FacesContext facesContext,
+	    Map map, Marker marker, ResponseWriter writer) throws IOException {
+	
+	writer.write("function createMarkerFunction"
+		+ getUniqueMarkerId(facesContext, marker) + "("
+		+ "map_base_variable" + ") {");
+	if ((marker instanceof Marker) && marker.isRendered()) {
+	    encodeMarker(facesContext, map, marker, writer);
+	}
+	writer.write("}");
+    }
 
-            if (component instanceof Icon) {
-                Icon icon = (Icon) component;
-
-                // encode the marker icon script.
-                IconEncoder.encodeIconFunctionScript(facesContext, icon, writer);
-
-                // call the icon script.
-                markerOptions += ", icon: "
-                              + IconEncoder.getIconFunctionScriptCall(facesContext,
-                                icon, writer);
-                break;
-            }
-        }
-
-        markerOptions += "}";
-
-        return markerOptions;
-    }    
+    public static void encodeMarkerFunctionScriptCall(
+	    FacesContext facesContext, Map map, Marker marker,
+	    ResponseWriter writer) throws IOException {
+	
+	writer.write("createMarkerFunction"
+		+ getUniqueMarkerId(facesContext, marker) + "("
+		+ "map_base_variable" + ");");
+    }
 }

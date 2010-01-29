@@ -20,119 +20,100 @@ package com.googlecode.gmaps4jsf.util;
 
 import java.io.IOException;
 import java.util.Iterator;
-
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-
 import com.googlecode.gmaps4jsf.component.eventlistener.EventListener;
 import com.googlecode.gmaps4jsf.component.map.EventEncoder;
 import com.googlecode.gmaps4jsf.component.streetviewpanorama.StreetViewPanorama;
 
-/**
- * @author Hazem Saleh
- * @date Sep 21, 2008
- * The StreetViewPanoramaRendererUtil is used for encoding the StreetViewPanorama scripts.
- */
 public class StreetViewPanoramaRendererUtil {
 
-    public static void renderStreetViewPanorama(FacesContext facesContext,
-                                                StreetViewPanorama streetViewPanoramaComponent,
-                                                ResponseWriter writer) 
-                                                throws IOException {
-
-        String streetViewPanoramaOptions = "";
-
-        if (streetViewPanoramaComponent.getAddress() != null) {
-            String errorMessageScript = "";    
-            writer.write("var geocoder_" + streetViewPanoramaComponent.getId()
-                        + " = new " + ComponentConstants.JS_GClientGeocoder_OBJECT
-                        + "();    ");
-            
-            if ("true".equalsIgnoreCase(streetViewPanoramaComponent
-                      .getShowLocationNotFoundMessage())) {
-                errorMessageScript = "alert('"
-                                   + streetViewPanoramaComponent.getLocationNotFoundErrorMessage() + "');    ";
-            }                
-
-            // send XHR request to get the address location and write to the
-            // response.
-            writer.write("geocoder_"
-                        + streetViewPanoramaComponent.getId()
-                        + ".getLatLng('"
-                        + streetViewPanoramaComponent.getAddress()
-                        + "',"
-                        + "function(location) {    "
-                        + "if (!location) {    "
-                        + errorMessageScript
-                        + "} else {    ");
-
-            streetViewPanoramaOptions = "{latlng:location, pov:{yaw:"
-                                      + streetViewPanoramaComponent.getYaw() + ", pitch:"
-                                      + streetViewPanoramaComponent.getPitch() + ", zoom:"
-                                      + streetViewPanoramaComponent.getZoom() + "}}";
-
-            writer.write("var "
-                        + ComponentConstants.JS_GSTREET_VIEW_PANORAMA_VARIABLE
-                        + streetViewPanoramaComponent.getId());
-
-            updateStreetViewPanoramaJSVariable(facesContext, streetViewPanoramaComponent, writer);
-
-            writer.write(" = new "
-                        + ComponentConstants.JS_GSTREET_VIEW_PANORAMA_CORE_OBJECT
-                        + "(document.getElementById('"
-                        + streetViewPanoramaComponent.getClientId(facesContext)
-                        + "')," + streetViewPanoramaOptions + ");     ");
-
-            writer.write("}" + "}    " + ");    ");
-        } else {
-            streetViewPanoramaOptions = "{latlng:new "
-                                      + ComponentConstants.JS_GLatLng_OBJECT + "("
-                                      + streetViewPanoramaComponent.getLatitude() + ","
-                                      + streetViewPanoramaComponent.getLongitude()
-                                      + "), pov:{yaw:" + streetViewPanoramaComponent.getYaw()
-                                      + ", pitch:" + streetViewPanoramaComponent.getPitch()
-                                      + ", zoom:" + streetViewPanoramaComponent.getZoom() + "}}";
-
-            writer.write("var "
-                        + ComponentConstants.JS_GSTREET_VIEW_PANORAMA_VARIABLE
-                        + streetViewPanoramaComponent.getId());
-
-            updateStreetViewPanoramaJSVariable(facesContext, streetViewPanoramaComponent, writer);
-
-            writer.write(" = new "
-                        + ComponentConstants.JS_GSTREET_VIEW_PANORAMA_CORE_OBJECT
-                        + "(document.getElementById('"
-                        + streetViewPanoramaComponent.getClientId(facesContext)
-                        + "')," + streetViewPanoramaOptions + ");     ");
-        }
-
-        // encode StreetViewPanorama events.
-        for (Iterator iterator = streetViewPanoramaComponent.getChildren().iterator(); iterator.hasNext();) {
-            UIComponent component = (UIComponent) iterator.next();
-
-            if (component instanceof EventListener) {
-
-                EventEncoder.encodeEventListenersFunctionScript(facesContext,
-                                                                streetViewPanoramaComponent, 
-                                                                writer,
-                                                                ComponentConstants.JS_GSTREET_VIEW_PANORAMA_VARIABLE + streetViewPanoramaComponent.getId());
-
-                EventEncoder.encodeEventListenersFunctionScriptCall(facesContext, 
-                                                                    streetViewPanoramaComponent, 
-                                                                    writer,
-                                                                    ComponentConstants.JS_GSTREET_VIEW_PANORAMA_VARIABLE + streetViewPanoramaComponent.getId());
-            }
-        }
+    public StreetViewPanoramaRendererUtil() {
     }
-    
-    private static void updateStreetViewPanoramaJSVariable(FacesContext facesContext,
-                                                           StreetViewPanorama streetViewPanoramaComponent,
-                                                           ResponseWriter writer) 
-                                                           throws IOException {
 
-        if (streetViewPanoramaComponent.getJsVariable() != null) {
-            writer.write(" = " + streetViewPanoramaComponent.getJsVariable());
-        }
+    public static void renderStreetViewPanorama(FacesContext facesContext,
+	    StreetViewPanorama streetViewPanoramaComponent,
+	    ResponseWriter writer) throws IOException {
+	
+	String streetViewPanoramaOptions = "";
+	
+	if (streetViewPanoramaComponent.getAddress() != null) {
+	    writer.write("var geocoder_" + streetViewPanoramaComponent.getId()
+		    + " = new " + "GClientGeocoder" + "();");
+	    writer.write("geocoder_"
+		    + streetViewPanoramaComponent.getId()
+		    + ".getLatLng(\""
+		    + streetViewPanoramaComponent.getAddress()
+		    + "\","
+		    + "function(location) {\n"
+		    + "if (!location) {\n"
+		    + "alert(\""
+		    + streetViewPanoramaComponent
+			    .getLocationNotFoundErrorMessage() + "\");\n"
+		    + "} else {\n");
+	    
+	    streetViewPanoramaOptions = "{latlng:location, pov:{yaw:"
+		    + streetViewPanoramaComponent.getYaw() + ", pitch:"
+		    + streetViewPanoramaComponent.getPitch() + ", zoom:"
+		    + streetViewPanoramaComponent.getZoom() + "}}";
+	    
+	    writer.write("var pano_base_variable"
+		    + streetViewPanoramaComponent.getId() + " = new "
+		    + "GStreetviewPanorama" + "(document.getElementById(\""
+		    + streetViewPanoramaComponent.getClientId(facesContext)
+		    + "\")," + streetViewPanoramaOptions + ");");
+	    writer.write("}}\n);\n");
+	} else {
+	    streetViewPanoramaOptions = "{latlng:new GLatLng("
+		    + streetViewPanoramaComponent.getLatitude() + ","
+		    + streetViewPanoramaComponent.getLongitude()
+		    + "), pov:{yaw:" + streetViewPanoramaComponent.getYaw()
+		    + ", pitch:" + streetViewPanoramaComponent.getPitch()
+		    + ", zoom:" + streetViewPanoramaComponent.getZoom() + "}}";
+	    
+	    writer.write("var pano_base_variable"
+		    + streetViewPanoramaComponent.getId() + " = new "
+		    + "GStreetviewPanorama" + "(document.getElementById(\""
+		    + streetViewPanoramaComponent.getClientId(facesContext)
+		    + "\")," + streetViewPanoramaOptions + ");");
+	}
+	
+	Iterator iterator = streetViewPanoramaComponent.getChildren()
+		.iterator();
+	
+	do {
+	    if (!iterator.hasNext()) {
+		break;
+	    }
+	    
+	    UIComponent component = (UIComponent) iterator.next();
+	    
+	    if (component instanceof EventListener) {
+		EventEncoder.encodeEventListenersFunctionScript(facesContext,
+			streetViewPanoramaComponent, writer,
+			"pano_base_variable"
+				+ streetViewPanoramaComponent.getId());
+		EventEncoder.encodeEventListenersFunctionScriptCall(
+			facesContext, streetViewPanoramaComponent, writer,
+			"pano_base_variable"
+				+ streetViewPanoramaComponent.getId());
+	    }
+	} while (true);
+
+	updateStreetViewPanoramaJSVariable(facesContext,
+		streetViewPanoramaComponent, writer);
+    }
+
+    private static void updateStreetViewPanoramaJSVariable(
+	    FacesContext facesContext,
+	    StreetViewPanorama streetViewPanoramaComponent,
+	    ResponseWriter writer) throws IOException {
+	
+	if (streetViewPanoramaComponent.getJsVariable() != null) {
+	    writer.write("\r\n" + streetViewPanoramaComponent.getJsVariable()
+		    + "=" + "pano_base_variable"
+		    + streetViewPanoramaComponent.getId() + ";\r\n");
+	}
     }
 }

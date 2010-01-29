@@ -18,24 +18,22 @@
  */
 package com.googlecode.gmaps4jsf.example.beans;
 
-/**
- * @author Hazem Saleh
- * @date Aug 13, 2008
- * The AddressBean acts as an address bean.
- */
+
 public class AddressBean {
-	
-	private String address;
+    public AddressBean() {
+    }
 
-	public String getAddress() {
-		return address;
-	}
+    public String getAddress() {
+	return address;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	
-	public String doSearch() {
-		return null;
-	}
+    public void setAddress(String address) {
+	this.address = address;
+    }
+
+    public String doSearch() {
+	return null;
+    }
+
+    private String address;
 }
