@@ -9,7 +9,7 @@
     <head> 
         <title>Welcome to GMaps4JSF</title> 
         <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />        
-        <m:resources key="ABQIAAAAxrVS1QxlpJHXxQ2Vxg2bJBQdkFK-tWRbPPQS4ACM1pq_e-PltxQXeyH20wQuqDaQ_6EM5UeGGVpnIw"/> 
+        <m:resources key="ABQIAAAAD6cDv-a0AnpzXA4gj6utCRTUlDOzA1Sd8h2eDxLDJEZUtkHZ_xQlPmNUQ-At6YLqCd29cGkwT8i95A"/> 
     </head>
     
     <body onunload="GUnload()">
