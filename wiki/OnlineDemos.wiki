@@ -1,7 +1,5 @@
 #labels Featured
  * http://www.mashups4jsf.com/gmaps4jsf-examples/home.jsf, It demonstrates the library features.
  * http://www.mashups4jsf.com/gmaps4jsf-examples/pages/mashups.jsf, It shows the power of Apache Tomahawk + Ajax4JSF + GMaps4JSF.
- * http://mashups.s43.eatj.com/gmaps4jsf1.1.1-trinidad/faces/demo.jspx, It shows the power of Apache Trinidad PPR + GMaps4JSF 1.1.1.
  * http://mashups.s43.eatj.com/gmaps4jsf1.1.2-trinidad/faces/demo.jspx, It shows the power of Apache Trinidad PPR + GMaps4JSF 1.1.2.
- * http://mashups.s43.eatj.com/gmaps4jsf1.1.1-facelets/, It shows the power of Facelets + GMaps4JSF.
  * http://mashups.s43.eatj.com/gmaps4jsf-push/, It shows GMaps4JSF working with Ajax PUSH.
