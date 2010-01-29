@@ -72,11 +72,5 @@
   		<managed-bean-class>com.googlecode.gmaps4jsf.example.beans.MapBean</managed-bean-class>
 	  	<managed-bean-scope>session</managed-bean-scope>  	
 	</managed-bean>
-	
-    <managed-bean>
-  		<managed-bean-name>map2</managed-bean-name>
-  		<managed-bean-class>com.googlecode.gmaps4jsf.example.beans.MapBean</managed-bean-class>
-	  	<managed-bean-scope>session</managed-bean-scope>  	
-	</managed-bean>	
 
 </faces-config>

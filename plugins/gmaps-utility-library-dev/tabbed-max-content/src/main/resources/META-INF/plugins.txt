@@ -1,2 +1,0 @@
-com.googlecode.gmaps4jsf.plugins.gmapsutility.tabbedmaxcontent.MapExtendedInfoWindowEncoder
-com.googlecode.gmaps4jsf.plugins.gmapsutility.tabbedmaxcontent.MarkerExtendedInfoWindowEncoder

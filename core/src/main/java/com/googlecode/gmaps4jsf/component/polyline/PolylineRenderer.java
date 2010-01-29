@@ -31,32 +31,26 @@ import com.googlecode.gmaps4jsf.util.ComponentUtils;
 /**
  * @author Hazem Saleh
  * @date April 12, 2009
- * The (PolylineRenderer) renders a google map polyline.
+ * The (PolylineRenderer) renders a google map polygon.
  */
 public class PolylineRenderer extends Renderer {
 
-    public void encodeBegin(FacesContext context, UIComponent component) throws IOException {    
-        Polyline       polyline  = (Polyline) component;
-        ResponseWriter writer    = context.getResponseWriter();
-        Map            parentMap = (Map) ComponentUtils.findParentMap(context, polyline);
+	public void encodeBegin(FacesContext context, UIComponent component)
+			throws IOException {	
+		
+	}
 
-        PolylineEncoder.startEncodingPolylineFunctionScript(context, parentMap, polyline,
-                                                            writer);          
-    }
+	public void encodeEnd(FacesContext context, UIComponent component)
+			throws IOException {
 
-    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
-        Polyline       polyline  = (Polyline) component;
-        ResponseWriter writer    = context.getResponseWriter();
-        Map            parentMap = (Map) ComponentUtils.findParentMap(context, polyline);
+		Polyline polyline = (Polyline) component;
+		ResponseWriter writer = context.getResponseWriter();
+		Map parentMap = (Map) ComponentUtils.findParentMap(context, polyline);
 
-        PolylineEncoder.endEncodingPolylineFunctionScript(context, parentMap, polyline,
-                                                          writer);
+		PolylineEncoder.encodePolylineFunctionScript(context, parentMap, polyline,
+				                                     writer);
 
-        PolylineEncoder.encodePolylineFunctionScriptCall(context, parentMap, polyline, 
+		PolylineEncoder.encodePolylineFunctionScriptCall(context, parentMap, polyline, 
                                                          writer);
-    }
-
-    public boolean getRendersChildren() {
-        return true;
-    }
+	}
 }

@@ -35,43 +35,53 @@ import com.googlecode.gmaps4jsf.util.ComponentUtils;
  */
 public class MarkerRenderer extends Renderer {
 
-    public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
+    public void encodeBegin(FacesContext context, UIComponent component)
+            throws IOException {
     }
 
-    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
-        Marker         marker    = (Marker) component;
-        ResponseWriter writer    = context.getResponseWriter();
-        Map            parentMap = (Map) ComponentUtils.findParentMap(context, marker);
-                
-        MarkerEncoder.encodeMarkerFunctionScript(context, parentMap, marker, writer);
-        MarkerEncoder.encodeMarkerFunctionScriptCall(context, parentMap, marker, writer);
+    public void encodeEnd(FacesContext context, UIComponent component)
+            throws IOException {
+
+        Marker marker = (Marker) component;
+        ResponseWriter writer = context.getResponseWriter();
+        Map parentMap = (Map) ComponentUtils.findParentMap(context, marker);
+
+        MarkerEncoder.encodeMarkerFunctionScript(context, parentMap, marker,
+                writer);
+
+        MarkerEncoder.encodeMarkerFunctionScriptCall(context, parentMap,
+                marker, writer);
     }
 
     public void decode(FacesContext context, UIComponent component) {
-        Marker marker   = (Marker) component;
-        Map    map      = (Map) ComponentUtils.findParentMap(context, marker);
-        String mapState = (String) context.getExternalContext().getRequestParameterMap().get(
-                          ComponentUtils.getMapStateHiddenFieldId(map));
+        Marker marker = (Marker) component;
+        Map map = (Map) ComponentUtils.findParentMap(context, marker);
+        String mapState = (String) context.getExternalContext()
+                          .getRequestParameterMap().get
+                          (
+                          ComponentUtils.getMapStateHiddenFieldId(map)
+                          );
 
         decodeMarker(marker, mapState);
     }
 
     private static MarkerValue getMarkerValueFromState(String markerState) {
-        MarkerValue markerValue      = new MarkerValue();
-        String[]    markerExpression = markerState.split("=");
-        String[]    markersLngLat    = markerExpression[1].split(",");
+        MarkerValue markerValue = new MarkerValue();
+        String[] markerExpression = markerState.split("=");
+        String[] markersLngLat = markerExpression[1].split(",");
 
-        markerValue.setLatitude(markersLngLat[0].substring(1));
-        markerValue.setLongitude(markersLngLat[1].substring(0, markersLngLat[1].length() - 1));
+        markerValue.setLongitude(markersLngLat[0].substring(1));
+        markerValue.setLatitude(markersLngLat[1].substring(0, markersLngLat[1]
+                .length() - 1));
 
         return markerValue;
     }
 
     private void decodeMarker(Marker marker, String mapState) {
         if (mapState != null && mapState.indexOf(marker.getId()) != -1) {
-            int         start       = mapState.indexOf(marker.getId() + "=");
-            int         end         = mapState.indexOf(")", start);
-            String      markerState = mapState.substring(start, end + 1);
+            int start = mapState.indexOf(marker.getId() + "=");
+            int end = mapState.indexOf(")", start);
+            String markerState = mapState.substring(start, end + 1);
             MarkerValue markerValue = getMarkerValueFromState(markerState);
                           
             marker.setSubmittedValue(markerValue);

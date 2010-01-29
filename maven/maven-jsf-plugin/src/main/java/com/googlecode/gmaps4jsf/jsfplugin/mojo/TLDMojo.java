@@ -18,7 +18,6 @@ package com.googlecode.gmaps4jsf.jsfplugin.mojo;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -38,68 +37,60 @@ import org.apache.maven.plugin.MojoFailureException;
  */
 public class TLDMojo extends BaseFacesMojo {
 
-    public void execute() throws MojoExecutionException, MojoFailureException {
-        getLog().info("Generating TLD");
+	public void execute() throws MojoExecutionException, MojoFailureException {
+		getLog().info("Generating TLD");
 
-        writeTLD(getComponents());
+		writeTLD(getComponents());
 
-        getLog().info("TLD Generated successfully");
-    }
+		getLog().info("TLD Generated successfully");
+	}
 
-    private void writeTLD(List components) {
-        FileWriter fileWriter;
-        BufferedWriter writer;
-        String outputPath = project.getBuild().getOutputDirectory() + File.separator + "META-INF";
-        String outputFile =  "gmaps4jsf.tld";
+	private void writeTLD(List components) {
+		FileWriter fileWriter;
+		BufferedWriter writer;
+		String outputPath = project.getBuild().getOutputDirectory() + File.separator + "META-INF";
+		String outputFile =  "gmaps4jsf.tld";
 
-        try {
-            File tldDirectory = new File(outputPath);
-            tldDirectory.mkdirs();
+		try {
+			File tldDirectory = new File(outputPath);
+			tldDirectory.mkdirs();
 
-            fileWriter = new FileWriter(outputPath + File.separator + outputFile);
-            writer = new BufferedWriter(fileWriter);
+			fileWriter = new FileWriter(outputPath + File.separator + outputFile);
+			writer = new BufferedWriter(fileWriter);
 
-            writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-            writer.write("<!DOCTYPE taglib PUBLIC \"-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN\"\n");
-            writer.write("\t\t\t\t\"http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd\">\n");
-            writer.write("<taglib>\n");
+			writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+			writer.write("<!DOCTYPE taglib PUBLIC \"-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN\"\n");
+			writer.write("\t\t\t\t\"http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd\">\n");
+			writer.write("<taglib>\n");
+			writer.write("\t<tlib-version>1.0</tlib-version>\n");
+			writer.write("\t<jsp-version>1.2</jsp-version>\n");
+			writer.write("\t<short-name>yui</short-name>\n");
+			writer.write("\t<uri>http://code.google.com/p/gmaps4jsf/</uri>\n");
 
-            writeTLDHeader(outputPath, writer);
+			for (Iterator iterator = components.iterator(); iterator.hasNext();) {
+				Component component = (Component) iterator.next();
+				writer.write("\t<tag>\n");
+				writer.write("\t\t<name>" + component.getTag() + "</name>\n");
+				writer.write("\t\t<tag-class>" + component.getTagClass() + "</tag-class>\n");
+				writer.write("\t\t<body-content>JSP</body-content>\n");
 
-            for (Iterator iterator = components.iterator(); iterator.hasNext();) {
-                Component component = (Component) iterator.next();
-                writer.write("\t<tag>\n");
-                writer.write("\t\t<name>" + component.getTag() + "</name>\n");
-                writer.write("\t\t<tag-class>" + component.getTagClass() + "</tag-class>\n");
-                writer.write("\t\t<body-content>JSP</body-content>\n");
+				for (Iterator iterator2 = component.getAttributes().iterator(); iterator2.hasNext();) {
+					Attribute attribute = (Attribute) iterator2.next();
 
-                for (Iterator iterator2 = component.getAttributes().iterator(); iterator2.hasNext();) {
-                    Attribute attribute = (Attribute) iterator2.next();
-
-                    writer.write("\t\t<attribute>\n");
-                    writer.write("\t\t\t<name>" + attribute.getName() + "</name>\n");
-                    writer.write("\t\t\t<required>" + attribute.getRequired() + "</required>\n");
-                    writer.write("\t\t\t<rtexprvalue>false</rtexprvalue>\n");
-                    writer.write("\t\t\t<type>java.lang.String</type>\n");
-                    writer.write("\t\t\t<description>" + attribute.getDescription() + "</description>\n");
-                    writer.write("\t\t</attribute>\n");
-                }
-                writer.write("\t</tag>\n");
-            }
-            writer.write("</taglib>");
-            writer.close();
-        }catch(Exception exception) {
-                getLog().error( exception.getMessage() );
-        }
-    }
-
-    private void writeTLDHeader(String outputPath, BufferedWriter writer) throws IOException {
-        if (outputPath.indexOf("plugins") < 0) {
-            writer.write("\t<tlib-version>1.0</tlib-version>\n");
-            writer.write("\t<jsp-version>1.2</jsp-version>\n");
-            writer.write("\t<short-name>gmaps4jsf</short-name>\n");
-            writer.write("\t<uri>http://code.google.com/p/gmaps4jsf/</uri>\n");
-        }
-    }
-
+					writer.write("\t\t<attribute>\n");
+					writer.write("\t\t\t<name>" + attribute.getName() + "</name>\n");
+					writer.write("\t\t\t<required>" + attribute.getRequired() + "</required>\n");
+					writer.write("\t\t\t<rtexprvalue>false</rtexprvalue>\n");
+					writer.write("\t\t\t<type>java.lang.String</type>\n");
+					writer.write("\t\t\t<description>" + attribute.getDescription() + "</description>\n");
+					writer.write("\t\t</attribute>\n");
+				}
+				writer.write("\t</tag>\n");
+			}
+			writer.write("</taglib>");
+			writer.close();
+		}catch(Exception exception) {
+			getLog().error( exception.getMessage() );
+		}
+	}
 }

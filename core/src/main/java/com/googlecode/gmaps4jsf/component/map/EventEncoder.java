@@ -35,18 +35,17 @@ import com.googlecode.gmaps4jsf.util.ComponentConstants;
  * The EventEncoder is used for encoding the event listeners for all the event sources.
  */
 public class EventEncoder {
-    private static final String JS_FUNC_CLEAR_INSTANCE_LISTENERS = "clearInstanceListeners";
 
     public static void encodeEventListenersFunctionScript(
-                       FacesContext facesContext, UIComponent eventSource,
-                       ResponseWriter writer, String eventSourceBaseVariable)
-                       throws IOException {
+            FacesContext facesContext, UIComponent eventSource,
+            ResponseWriter writer, String eventSourceBaseVariable)
+            throws IOException {
 
-        writer.write(ComponentConstants.JS_FUNCTION
-                    + ComponentConstants.JS_CREATE_EVENT_LISTENERS_FUNCTION_PREFIX
-                    + eventSource.getId() + "(" + eventSourceBaseVariable + ") {");
-        
-        for (Iterator iterator = eventSource.getChildren().iterator(); iterator.hasNext();) {
+        writer.write("function "
+                + ComponentConstants.JS_CREATE_EVENT_LISTENERS_FUNCTION_PREFIX
+                + eventSource.getId() + "(" + eventSourceBaseVariable + ") {");
+        for (Iterator iterator = eventSource.getChildren().iterator(); iterator
+                .hasNext();) {
             UIComponent component = (UIComponent) iterator.next();
 
             if (component instanceof EventListener) {
@@ -58,37 +57,35 @@ public class EventEncoder {
     }   
     
     public static void encodeEventListenersFunctionScriptCall(
-                       FacesContext facesContext, UIComponent eventSource,
-                       ResponseWriter writer, String eventSourceBaseVariable)
-                       throws IOException {
+            FacesContext facesContext, UIComponent eventSource,
+            ResponseWriter writer, String eventSourceBaseVariable)
+            throws IOException {
 
         writer.write(ComponentConstants.JS_CREATE_EVENT_LISTENERS_FUNCTION_PREFIX
-                    + eventSource.getId()
-                    + "("
-                    + eventSourceBaseVariable
-                    + "); ");
-    }
-    
-    private static void encodeEventListener(FacesContext facesContext,
-                        UIComponent eventSource, EventListener eventListener,
-                        ResponseWriter writer, String eventSourceBaseVariable)
-                        throws IOException {
-
-        if (eventSource instanceof HTMLInformationWindow) {
-            
-            // Incase of HTMLInformationWindow, all of the previous event listeners
-            // should be removed
-            writer.write(ComponentConstants.JS_GEVENT_OBJECT
-                        + "." 
-                        + JS_FUNC_CLEAR_INSTANCE_LISTENERS 
-                        + "(" + eventSourceBaseVariable
+                        + eventSource.getId()
+                        + "("
+                        + eventSourceBaseVariable
                         + "); ");
-        }
-        
-        writer.write(ComponentConstants.JS_GEVENT_OBJECT + ".addListener("
-                    + eventSourceBaseVariable + ", '"
-                    + eventListener.getEventName() + "', "
-                    + eventListener.getJsFunction() + "); ");
+    }    
+    
+	private static void encodeEventListener(FacesContext facesContext,
+			UIComponent eventSource, EventListener eventListener,
+			ResponseWriter writer, String eventSourceBaseVariable)
+			throws IOException {
 
-    }
+		if (eventSource instanceof HTMLInformationWindow) {
+			
+			// Incase of HTMLInformationWindow, all of the previous event listeners
+			// should be removed
+			writer.write(ComponentConstants.JS_GEVENT_OBJECT
+					+ ".clearInstanceListeners(" + eventSourceBaseVariable
+					+ "); ");
+		}
+		
+		writer.write(ComponentConstants.JS_GEVENT_OBJECT + ".addListener("
+				+ eventSourceBaseVariable + ", '"
+				+ eventListener.getEventName() + "', "
+				+ eventListener.getJsFunction() + "); ");
+
+	}
 }

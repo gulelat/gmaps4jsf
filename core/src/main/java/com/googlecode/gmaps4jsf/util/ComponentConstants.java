@@ -60,13 +60,11 @@ public interface ComponentConstants {
 	final String JS_CREATE_EVENT_LISTENERS_FUNCTION_PREFIX = "createEventListenersFunction";
 	//final String JS_CREATE_POLYLINES_FUNCTION_PREFIX = "createPolylinesFunction";
 	final String JS_CREATE_POLYLINE_FUNCTION_PREFIX = "createPolylineFunction";
-    final String JS_FUNCTION = "function ";    
 	//final String JS_CREATE_POLYGONS_FUNCTION_PREFIX = "createPolygonsFunction";
 	final String JS_CREATE_POLYGON_FUNCTION_PREFIX = "createPolygonFunction";
-    final String JS_CREATE_CIRCLE_FUNCTION_PREFIX = "createCircleFunction";    
 	final String JS_CREATE_GROUND_OVERLAYS_FUNCTION_PREFIX = "createGroundOverlaysFunction";
 	final String JS_CREATE_ICON_FUNCTION_PREFIX = "createIconFunction";
 	final String HTML_MAP_STATE_PREFIX = "com.googlecode.gmaps4jsf.mapState";
 	final String MARKER_ATTR_LATITUDE = "latitude";
-	final String MARKER_ATTR_LONGITUDE = "longitude";    
+	final String MARKER_ATTR_LONGITUDE = "longitude";
 }

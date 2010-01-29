@@ -33,58 +33,53 @@ import com.googlecode.gmaps4jsf.util.ComponentConstants;
  */
 public class IconEncoder {
 
-    public static void encodeIconFunctionScript(FacesContext facesContext,
-                                                Icon iconComponent, 
-                                                ResponseWriter writer) 
-                                                throws IOException {
+	public static void encodeIconFunctionScript(FacesContext facesContext,
+			Icon iconComponent, ResponseWriter writer) throws IOException {
 
-        writer.write(ComponentConstants.JS_FUNCTION
-                    + ComponentConstants.JS_CREATE_ICON_FUNCTION_PREFIX
-                    + iconComponent.getId() + "() {");
+		writer.write("function "
+				+ ComponentConstants.JS_CREATE_ICON_FUNCTION_PREFIX
+				+ iconComponent.getId() + "() {");
 
-        writer.write("var iconObject = new "
-                    + ComponentConstants.JS_GIcon_OBJECT + "("
-                    + ComponentConstants.JS_CONST_G_DEFAULT_ICON_OBJECT + ");     ");
+		writer.write("var iconObject = new "
+				+ ComponentConstants.JS_GIcon_OBJECT + "("
+				+ ComponentConstants.JS_CONST_G_DEFAULT_ICON_OBJECT + ");     ");
 
-        if (iconComponent.getShadowImageURL() != null) {
-            writer.write("iconObject.shadow = " + "'"
-                        + iconComponent.getShadowImageURL() + "';     ");
-        }
+		if (iconComponent.getShadowImageURL() != null) {
+			writer.write("iconObject.shadow = " + "'"
+					+ iconComponent.getShadowImageURL() + "';     ");
+		}
 
-        writer.write("iconObject.iconSize = " + "new "
-                    + ComponentConstants.JS_GSize_OBJECT + "("
-                    + iconComponent.getWidth() + ", " + iconComponent.getHeight()
-                    + ");     ");
+		writer.write("iconObject.iconSize = " + "new "
+				+ ComponentConstants.JS_GSize_OBJECT + "("
+				+ iconComponent.getWidth() + ", " + iconComponent.getHeight()
+				+ ");     ");
 
-        writer.write("iconObject.shadowSize = new "
-                    + ComponentConstants.JS_GSize_OBJECT + "("
-                    + iconComponent.getShadowWidth() + ", "
-                    + iconComponent.getShadowHeight() + ");     ");
+		writer.write("iconObject.shadowSize = new "
+				+ ComponentConstants.JS_GSize_OBJECT + "("
+				+ iconComponent.getShadowWidth() + ", "
+				+ iconComponent.getShadowHeight() + ");     ");
 
-        writer.write("iconObject.iconAnchor = new "
-                    + ComponentConstants.JS_GPoint_OBJECT + "("
-                    + iconComponent.getXcoordAnchor() + ", "
-                    + iconComponent.getYcoordAnchor() + ");     ");
+		writer.write("iconObject.iconAnchor = new "
+				+ ComponentConstants.JS_GPoint_OBJECT + "("
+				+ iconComponent.getXcoordAnchor() + ", "
+				+ iconComponent.getYcoordAnchor() + ");     ");
 
-        writer.write("iconObject.infoWindowAnchor = new "
-                    + ComponentConstants.JS_GPoint_OBJECT + "("
-                    + iconComponent.getXcoordInfoWindowAnchor() + ", "
-                    + iconComponent.getYcoordInfoWindowAnchor() + ");     ");
+		writer.write("iconObject.infoWindowAnchor = new "
+				+ ComponentConstants.JS_GPoint_OBJECT + "("
+				+ iconComponent.getXcoordInfoWindowAnchor() + ", "
+				+ iconComponent.getYcoordInfoWindowAnchor() + ");     ");
 
-        writer.write("iconObject.image = '" 
-                    + iconComponent.getImageURL()
-                    + "';     ");
+		writer.write("iconObject.image = '" + iconComponent.getImageURL()
+				+ "';     ");
 
-        writer.write("return iconObject;     ");
-        
-        writer.write("}");
-    }
+		writer.write("return iconObject;     ");
+		writer.write("}");
+	}
 
-    public static String getIconFunctionScriptCall(FacesContext facesContext,
-                                                   Icon iconComponent, 
-                                                   ResponseWriter writer) 
-                                                   throws IOException {
+	public static String getIconFunctionScriptCall(FacesContext facesContext,
+			Icon iconComponent, ResponseWriter writer) throws IOException {
 
-        return ComponentConstants.JS_CREATE_ICON_FUNCTION_PREFIX + iconComponent.getId() + "()";
-    }
+		return ComponentConstants.JS_CREATE_ICON_FUNCTION_PREFIX
+				+ iconComponent.getId() + "()";
+	}
 }

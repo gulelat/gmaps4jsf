@@ -37,90 +37,73 @@ import com.googlecode.gmaps4jsf.util.ComponentConstants;
  */
 public class HTMLInfoWindowEncoder {
     
-    private static final String JS_FUNC_GET_INFO_WINDOW = "getInfoWindow";
-    private static final String JS_FUNC_OPEN_INFO_WINDOW_HTML = "openInfoWindowHtml";
+	/**
+	 * The (encodeMarkerHTMLInfoWindow) method is used for encoding the 
+	 * HTMLInfoWindow when its parent is the marker. 
+	 * @param facesContext
+	 * @param marker
+	 * @param window
+	 * @param writer
+	 * @throws IOException
+	 */
+	public static void encodeMarkerHTMLInfoWindow(FacesContext facesContext,
+			Marker marker, HTMLInformationWindow window, ResponseWriter writer)
+			throws IOException {
 
-    /**
-     * The (encodeMarkerHTMLInfoWindow) method is used for encoding the 
-     * HTMLInfoWindow when its parent is the marker. 
-     * @param facesContext
-     * @param marker
-     * @param window
-     * @param writer
-     * @throws IOException
-     */
-    public static void encodeMarkerHTMLInfoWindow(FacesContext facesContext,
-                                                  Marker marker, 
-                                                  HTMLInformationWindow window, 
-                                                  ResponseWriter writer)
-                                                  throws IOException {
+		writer.write(ComponentConstants.CONST_MARKER_PREFIX + marker.getId()
+				+ ".openInfoWindowHtml('" + window.getHtmlText() + "');    ");
 
-        writer.write(ComponentConstants.CONST_MARKER_PREFIX + marker.getClientId(facesContext).replace(':', '_')
-                    + "." 
-                    + HTMLInfoWindowEncoder.JS_FUNC_OPEN_INFO_WINDOW_HTML 
-                    + "('" + window.getHtmlText() + "');    ");
+		writer.write("var window_" + window.getId() + " = "
+				+ ComponentConstants.JS_GMAP_BASE_VARIABLE
+				+ ".getInfoWindow();    ");
 
-        writer.write("var window_" + window.getId() + " = "
-                    + ComponentConstants.JS_GMAP_BASE_VARIABLE
-                    + "." 
-                    + JS_FUNC_GET_INFO_WINDOW 
-                    + "();    ");
+		// encode window events.
+		for (Iterator iterator = window.getChildren().iterator(); iterator
+				.hasNext();) {
+			UIComponent component = (UIComponent) iterator.next();
 
-        // encode window events.
-        for (Iterator iterator = window.getChildren().iterator(); iterator.hasNext();) {
-            UIComponent component = (UIComponent) iterator.next();
+			if (component instanceof EventListener) {
+				EventEncoder.encodeEventListenersFunctionScript(facesContext,
+						window, writer, "window_" + window.getId());
+				EventEncoder.encodeEventListenersFunctionScriptCall(
+						facesContext, window, writer, "window_"
+								+ window.getId());
+			}
+		}
+	}	
+	
+	public static void encodeHTMLInfoWindowsFunctionScript(FacesContext facesContext,
+			Map mapComponent, ResponseWriter writer) throws IOException {
 
-            if (component instanceof EventListener) {
-                EventEncoder.encodeEventListenersFunctionScript(facesContext,
-                                                                window, 
-                                                                writer, 
-                                                                "window_" + window.getId());
-                
-                EventEncoder.encodeEventListenersFunctionScriptCall(facesContext, 
-                                                                    window, 
-                                                                    writer, 
-                                                                    "window_" + window.getId());
-            }
-        }
-    }
-    
-    public static void encodeHTMLInfoWindowsFunctionScript(FacesContext facesContext,
-                                                           Map mapComponent, 
-                                                           ResponseWriter writer) 
-                                                           throws IOException {
+		writer.write("function "
+				+ ComponentConstants.JS_CREATE_HTMLINFOWINDOWS_FUNCTION_PREFIX
+				+ mapComponent.getId() + "("
+				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ") {");
+		for (Iterator iterator = mapComponent.getChildren().iterator(); iterator
+				.hasNext();) {
+			UIComponent component = (UIComponent) iterator.next();
 
-        writer.write(ComponentConstants.JS_FUNCTION
-                    + ComponentConstants.JS_CREATE_HTMLINFOWINDOWS_FUNCTION_PREFIX
-                    + mapComponent.getId() + "("
-                    + ComponentConstants.JS_GMAP_BASE_VARIABLE + ") {");
-        
-        for (Iterator iterator = mapComponent.getChildren().iterator(); iterator.hasNext();) {
-            UIComponent component = (UIComponent) iterator.next();
+			if (component instanceof HTMLInformationWindow && component.isRendered()) {
+				encodeMapHTMLInfoWindow(facesContext, mapComponent,
+						(HTMLInformationWindow) component, writer);
+			}
+		}
+		writer.write("}");
+	}	
+	
+	public static void encodeHTMLInfoWindowsFunctionScriptCall(
+			FacesContext facesContext, Map mapComponent, ResponseWriter writer)
+			throws IOException {
 
-            if (component instanceof HTMLInformationWindow && component.isRendered()) {
-                encodeMapHTMLInfoWindow(facesContext, mapComponent, (HTMLInformationWindow) component, writer);
-            }
-        }
-        
-        writer.write("}");
-    }    
-    
-    public static void encodeHTMLInfoWindowsFunctionScriptCall(FacesContext facesContext, 
-                                                               Map mapComponent, 
-                                                               ResponseWriter writer)
-                                                               throws IOException {
-
-        writer.write(ComponentConstants.JS_CREATE_HTMLINFOWINDOWS_FUNCTION_PREFIX
-                    + mapComponent.getId()
-                    + "("
-                    + ComponentConstants.JS_GMAP_BASE_VARIABLE + ");    ");
-    }
+		writer.write(ComponentConstants.JS_CREATE_HTMLINFOWINDOWS_FUNCTION_PREFIX
+						+ mapComponent.getId()
+						+ "("
+						+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");    ");
+	}
     
     private static void encodeMapHTMLInfoWindow(FacesContext facesContext,
-                                                Map mapComponent, 
-                                                HTMLInformationWindow window,
-                                                ResponseWriter writer) 
-                                                throws IOException {
+            Map mapComponent, HTMLInformationWindow window,
+            ResponseWriter writer) throws IOException {
 
         String longitude;
         String latitude;
@@ -129,42 +112,37 @@ public class HTMLInfoWindowEncoder {
             latitude = window.getLatitude();
         } else {
             latitude = ComponentConstants.JS_GMAP_BASE_VARIABLE
-                     + ".getCenter().lat()";
+                    + ".getCenter().lat()";
         }
 
         if (window.getLongitude() != null) {
             longitude = window.getLongitude();
         } else {
             longitude = ComponentConstants.JS_GMAP_BASE_VARIABLE
-                      + ".getCenter().lng()";
+                    + ".getCenter().lng()";
         }
 
         writer.write(ComponentConstants.JS_GMAP_BASE_VARIABLE
-                    + "." 
-                    + JS_FUNC_OPEN_INFO_WINDOW_HTML 
-                    + "(new " + ComponentConstants.JS_GLatLng_OBJECT 
-                    + "(" + latitude + ", " + longitude + "), '" + window.getHtmlText() + "');    ");   
+                + ".openInfoWindowHtml(new "
+                + ComponentConstants.JS_GLatLng_OBJECT + "(" + latitude + ", "
+                + longitude + "), '" + window.getHtmlText() + "');    ");   
         
         writer.write("var window_" + window.getId() + " = "
-                    + ComponentConstants.JS_GMAP_BASE_VARIABLE
-                    + "." 
-                    + HTMLInfoWindowEncoder.JS_FUNC_GET_INFO_WINDOW 
-                    + "();    "); 
+                + ComponentConstants.JS_GMAP_BASE_VARIABLE
+                + ".getInfoWindow();    "); 
     
         // encode window events.
-        for (Iterator iterator = window.getChildren().iterator(); iterator.hasNext();) {
+        for (Iterator iterator = window.getChildren().iterator(); iterator
+                .hasNext();) {
             UIComponent component = (UIComponent) iterator.next();
 
             if (component instanceof EventListener) {
                 EventEncoder.encodeEventListenersFunctionScript(facesContext,
-                                                                window, 
-                                                                writer, 
-                                                                "window_" + window.getId());
-                
-                EventEncoder.encodeEventListenersFunctionScriptCall(facesContext, 
-                                                                    window, 
-                                                                    writer, 
-                                                                    "window_" + window.getId());
+                        window, writer, "window_"
+                                + window.getId());
+                EventEncoder.encodeEventListenersFunctionScriptCall(
+                        facesContext, window, writer, "window_"
+                                + window.getId());
             }
         }           
     }    

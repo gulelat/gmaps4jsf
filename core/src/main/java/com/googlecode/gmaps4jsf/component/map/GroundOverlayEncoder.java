@@ -36,42 +36,39 @@ import com.googlecode.gmaps4jsf.util.ComponentConstants;
  */
 public class GroundOverlayEncoder {
     
-    public static void encodeGroundOverlaysFunctionScript(
-                       FacesContext facesContext, Map mapComponent, 
-                       ResponseWriter writer)
-                       throws IOException {
+	public static void encodeGroundOverlaysFunctionScript(
+			FacesContext facesContext, Map mapComponent, ResponseWriter writer)
+			throws IOException {
 
-        writer.write(ComponentConstants.JS_FUNCTION
-                    + ComponentConstants.JS_CREATE_GROUND_OVERLAYS_FUNCTION_PREFIX
-                    + mapComponent.getId() + "("
-                    + ComponentConstants.JS_GMAP_BASE_VARIABLE + ") {");
+		writer.write("function "
+				+ ComponentConstants.JS_CREATE_GROUND_OVERLAYS_FUNCTION_PREFIX
+				+ mapComponent.getId() + "("
+				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ") {");
 
-        for (Iterator iterator = mapComponent.getChildren().iterator(); iterator.hasNext();) {
-            UIComponent component = (UIComponent) iterator.next();
+		for (Iterator iterator = mapComponent.getChildren().iterator(); iterator
+				.hasNext();) {
+			UIComponent component = (UIComponent) iterator.next();
 
-            if (component instanceof GroundOverlay && component.isRendered()) {
-                encodeGroundOverlay(facesContext, mapComponent, (GroundOverlay) component, writer);
-            }
-        }
-        
-        writer.write("}");
-    }
-    
-    public static void encodeGroundOverlaysFunctionScriptCall(
-                       FacesContext facesContext, Map mapComponent, 
-                       ResponseWriter writer)
-                       throws IOException {
+			if (component instanceof GroundOverlay && component.isRendered()) {
+				encodeGroundOverlay(facesContext, mapComponent,
+						(GroundOverlay) component, writer);
+			}
+		}
+		writer.write("}");
+	}
+	
+	public static void encodeGroundOverlaysFunctionScriptCall(
+			FacesContext facesContext, Map mapComponent, ResponseWriter writer)
+			throws IOException {
 
-        writer.write(ComponentConstants.JS_CREATE_GROUND_OVERLAYS_FUNCTION_PREFIX
-                    + mapComponent.getId() + "("
-                    + ComponentConstants.JS_GMAP_BASE_VARIABLE + ");");
-    }
+		writer.write(ComponentConstants.JS_CREATE_GROUND_OVERLAYS_FUNCTION_PREFIX
+				+ mapComponent.getId() + "("
+				+ ComponentConstants.JS_GMAP_BASE_VARIABLE + ");");
+	}
     
     private static void encodeGroundOverlay(FacesContext facesContext,
-                                            Map mapComponent, 
-                                            GroundOverlay groundOverlay, 
-                                            ResponseWriter writer)
-                                            throws IOException {
+            Map mapComponent, GroundOverlay groundOverlay, ResponseWriter writer)
+            throws IOException {
     
         // encode the groundOverlay.
         writer.write("var boundaries = new "
@@ -91,34 +88,30 @@ public class GroundOverlayEncoder {
                 + ".addOverlay(groundOverlay_" + groundOverlay.getId() + ");");
 
         // encode GroundOverlay events.
-        for (Iterator iterator = groundOverlay.getChildren().iterator(); iterator.hasNext();) {
+        for (Iterator iterator = groundOverlay.getChildren().iterator(); iterator
+                .hasNext();) {
             UIComponent component = (UIComponent) iterator.next();
 
             if (component instanceof EventListener) {
                 EventEncoder.encodeEventListenersFunctionScript(facesContext,
-                                                                groundOverlay, 
-                                                                writer, 
-                                                                "groundOverlay_" + groundOverlay.getId());
-                
-                EventEncoder.encodeEventListenersFunctionScriptCall(facesContext, 
-                                                                    groundOverlay, 
-                                                                    writer, 
-                                                                    "groundOverlay_" + groundOverlay.getId());
+                        groundOverlay, writer, "groundOverlay_"
+                                + groundOverlay.getId());
+                EventEncoder.encodeEventListenersFunctionScriptCall(
+                        facesContext, groundOverlay, writer, "groundOverlay_"
+                                + groundOverlay.getId());
             }
-        }
+        }           
         
         // update GroundOverlay user variable.
         updateGroundOverlayJSVariable(facesContext, groundOverlay, writer);
     }
     
     private static void updateGroundOverlayJSVariable(FacesContext facesContext,
-                                                      GroundOverlay groundOverlay, 
-                                                      ResponseWriter writer) 
-                                                      throws IOException {
+            GroundOverlay groundOverlay, ResponseWriter writer) throws IOException {
 
         if (groundOverlay.getJsVariable() != null) {
             writer.write("    " + groundOverlay.getJsVariable() + " = " + "groundOverlay_"
-                        + groundOverlay.getId() + ";    ");
+                    + groundOverlay.getId() + ";    ");
         }
     }    
 }

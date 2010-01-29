@@ -35,28 +35,21 @@ import com.googlecode.gmaps4jsf.util.ComponentUtils;
  */
 public class PolygonRenderer extends Renderer {
 
-    public void encodeBegin(FacesContext context, UIComponent component) throws IOException {    
-        Polygon        polygon   = (Polygon) component;
-        ResponseWriter writer    = context.getResponseWriter();
-        Map            parentMap = (Map) ComponentUtils.findParentMap(context, polygon);
+	public void encodeBegin(FacesContext context, UIComponent component)
+			throws IOException {	
+	}
 
-        PolygonEncoder.startEncodingPolygonFunctionScript(context, parentMap, polygon,
-                                                          writer);        
-    }
+	public void encodeEnd(FacesContext context, UIComponent component)
+			throws IOException {
 
-    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
-        Polygon        polygon   = (Polygon) component;
-        ResponseWriter writer    = context.getResponseWriter();
-        Map            parentMap = (Map) ComponentUtils.findParentMap(context, polygon);
+		Polygon polygon = (Polygon) component;
+		ResponseWriter writer = context.getResponseWriter();
+		Map parentMap = (Map) ComponentUtils.findParentMap(context, polygon);
 
-        PolygonEncoder.endEncodingPolygonFunctionScript(context, parentMap, polygon,
-                                                        writer);
+		PolygonEncoder.encodePolygonFunctionScript(context, parentMap, polygon,
+				                                   writer);
 
-        PolygonEncoder.encodePolygonFunctionScriptCall(context, parentMap, polygon, 
-                                                       writer);
-    }
-
-    public boolean getRendersChildren() {
-        return true;
-    }
+		PolygonEncoder.encodePolygonFunctionScriptCall(context, parentMap,
+				                                       polygon, writer);
+	}
 }
