@@ -46,7 +46,7 @@ public class ResourcesRenderer extends Renderer {
                 writer.write("\n\r");
                 writer.startElement(ComponentConstants.HTML_SCRIPT, component);
                 writer.writeAttribute("src", 
-                                      "http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key="
+                                      "http://maps.google.com/maps?file=api&v=2&sensor=false&key="
                                       + resources.getKey(), null);
                 writer.endElement(ComponentConstants.HTML_SCRIPT);
                 writer.write("\n\r");
