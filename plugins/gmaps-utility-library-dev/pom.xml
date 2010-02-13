@@ -12,6 +12,7 @@
     <description>Includes the additions available in the gmaps utility library</description>
     <url>http://code.google.com/p/gmaps-utility-library-dev/</url>
     <modules>
+        <module>marker-clusterer</module>
         <module>drag-zoom-control</module>
         <module>tabbed-max-content</module>
     </modules>
