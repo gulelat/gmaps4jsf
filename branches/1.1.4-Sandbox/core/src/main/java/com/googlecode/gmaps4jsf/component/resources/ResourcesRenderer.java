@@ -70,7 +70,16 @@ public class ResourcesRenderer extends Renderer {
                                       "http://gmaps-utility-library-dev.googlecode.com/svn/trunk/tabbedmaxcontent/src/tabbedmaxcontent_packed.js", 
                                       null);                
                 writer.endElement(ComponentConstants.HTML_SCRIPT);
-                writer.write("\n\r");                    
+                writer.write("\n\r");
+
+                // include the marker clusterer content script.
+                writer.write("\n\r");
+                writer.startElement(ComponentConstants.HTML_SCRIPT, component);
+                writer.writeAttribute("src",
+                                      "http://gmaps-utility-library-dev.googlecode.com/svn/tags/markerclusterer/1.0/src/markerclusterer_packed.js",
+                                      null);
+                writer.endElement(ComponentConstants.HTML_SCRIPT);
+                writer.write("\n\r");
             }
         }
     }

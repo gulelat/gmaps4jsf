@@ -45,7 +45,7 @@ import com.googlecode.gmaps4jsf.util.MapRendererUtil;
 public class MarkerEncoder {
 
     private static final String JS_FUNC_ADD_LISTENER = "addListener";
-    private static final String JS_FUNC_ADD_OVERLAY = "addOverlay";
+    private static final String JS_FUNC_ADD_OVERLAY = "addMarker";
     private static final String JS_FUNC_ALERT = "alert";
     
     public static String getUniqueMarkerId(FacesContext facesContext, Marker marker) {

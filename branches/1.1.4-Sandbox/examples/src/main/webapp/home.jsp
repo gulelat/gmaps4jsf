@@ -192,6 +192,13 @@
                             </h:outputLink>
                         </h:panelGrid>
 
+                        <h:outputText value="Marker Clusterer(Extended Component - Experimental)" />
+                        <h:panelGrid style="padding-left:25px">
+                            <h:outputLink value="pages/markerCluster.jsf">
+                                <f:verbatim>An example that groups markers in clusters depending on zoom level.</f:verbatim>
+                            </h:outputLink>
+                        </h:panelGrid>
+
                     </t:panelTab>
 
                     <t:panelTab label="Mashups">
