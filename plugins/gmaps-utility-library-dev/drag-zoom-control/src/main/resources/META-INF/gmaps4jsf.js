@@ -14,6 +14,6 @@ if (!google.maps.Map.prototype.dragZoom) {
             }
         };
         this.addControl(new DragZoomControl(box, opts, {}));
-    }
+    };
 
 }
