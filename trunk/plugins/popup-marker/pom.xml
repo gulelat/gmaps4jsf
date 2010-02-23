@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.googlecode.gmaps4jsf</groupId>
@@ -40,7 +40,7 @@
             <plugin>
                 <groupId>com.googlecode.gmaps4jsf</groupId>
                 <artifactId>maven-jsf-plugin</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>1.1.4-SNAPSHOT</version>
                 <configuration>
                     <templatesDir>../../core/src/main/java-templates</templatesDir>
                     <componentConfigsDir>target/resources-maven-jsf/components</componentConfigsDir>
