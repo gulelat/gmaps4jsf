@@ -39,8 +39,8 @@
         </dependency>
     </dependencies>
 	<scm>
-		<connection>scm:svn:http://gmaps4jsf.googlecode.com/svn/tags/1.1.4-SNAPSHOT</connection>
-		<developerConnection>scm:svn:https://gmaps4jsf.googlecode.com/svn/tags/1.1.4-SNAPSHOT</developerConnection>
+		<connection>scm:svn:http://gmaps4jsf.googlecode.com/svn/trunk/</connection>
+		<developerConnection>scm:svn:https://gmaps4jsf.googlecode.com/svn/trunk/</developerConnection>
 		<url>http://gmaps4jsf.googlecode.com/svn/tags/1.1.4-SNAPSHOT</url>
 	</scm>
 	<repositories>
@@ -51,10 +51,16 @@
         </repository>
     </repositories>
 	<distributionManagement>
-		<snapshotRepository>
+		<downloadUrl>https://gmaps4jsf.googlecode.com/svn/trunk/gmaps4jsf-repo/release/</downloadUrl>
+		<repository>
 			<uniqueVersion>false</uniqueVersion>
             <id>googlecode</id>
-            <url>svn:https://gmaps4jsf.googlecode.com/svn/trunk/gmaps4jsf-repo</url>
+            <url>svn:https://gmaps4jsf.googlecode.com/svn/trunk/gmaps4jsf-repo/release</url>
+		</repository>
+		<snapshotRepository>
+			<uniqueVersion>true</uniqueVersion>
+            <id>googlecode-snapshot</id>
+            <url>svn:https://gmaps4jsf.googlecode.com/svn/trunk/gmaps4jsf-repo/snapshot</url>
 		</snapshotRepository>
     </distributionManagement>
 </project>
