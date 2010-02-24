@@ -181,9 +181,9 @@ public class MapRenderer extends Renderer {
         writer.writeAttribute(ComponentConstants.HTML_ATTR_TYPE, ComponentConstants.HTML_ATTR_TYPE_HIDDEN,
                               ComponentConstants.HTML_ATTR_TYPE);
 
-        if (null != mapState) {
-            writer.writeAttribute(ComponentConstants.HTML_ATTR_VALUE, mapState, ComponentConstants.HTML_ATTR_VALUE);
-        }
+        //if (null != mapState) {
+        //    writer.writeAttribute(ComponentConstants.HTML_ATTR_VALUE, mapState, ComponentConstants.HTML_ATTR_VALUE);
+        //}
 
         writer.endElement(ComponentConstants.HTML_INPUT);
     }
