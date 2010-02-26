@@ -22,6 +22,13 @@
                             </h:outputLink>
                         </h:panelGrid>
 
+                        <h:outputText value="Simple with marker" />
+                        <h:panelGrid style="padding-left:25px">
+                            <h:outputLink value="pages/mapWithMarkers.jsf">
+                                <f:verbatim>A simple map with markers</f:verbatim>
+                            </h:outputLink>
+                        </h:panelGrid>
+
                         <h:outputText value="Auto-Arrange Map" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/autoReshape.jsf">
