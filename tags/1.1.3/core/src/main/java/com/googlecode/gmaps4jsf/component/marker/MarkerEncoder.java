@@ -335,18 +335,24 @@ public class MarkerEncoder {
 
             if (component instanceof HTMLInformationWindow) {
                 HTMLInformationWindow window = (HTMLInformationWindow) component;
-                writer.write(ComponentConstants.JS_GEVENT_OBJECT
-                            + "." 
-                            + MarkerEncoder.JS_FUNC_ADD_LISTENER 
-                            + "("
-                            + ComponentConstants.CONST_MARKER_PREFIX + getUniqueMarkerId(facesContext, marker) 
-                            + ", '"
-                            + marker.getShowInformationEvent()
-                            + "', function() {");
-
-                HTMLInfoWindowEncoder.encodeMarkerHTMLInfoWindow(facesContext, marker, window, writer);
-
-                writer.write("});     ");
+                
+                if (! ComponentConstants.MARKER_LOAD_EVENT.equalsIgnoreCase(marker.getShowInformationEvent())) { 
+                    writer.write(ComponentConstants.JS_GEVENT_OBJECT
+                                + "." 
+                                + MarkerEncoder.JS_FUNC_ADD_LISTENER 
+                                + "("
+                                + ComponentConstants.CONST_MARKER_PREFIX + getUniqueMarkerId(facesContext, marker) 
+                                + ", '"
+                                + marker.getShowInformationEvent()
+                                + "', function() {");
+    
+                    HTMLInfoWindowEncoder.encodeMarkerHTMLInfoWindow(facesContext, marker, window, writer);
+    
+                    writer.write("});     ");
+                
+                } else {
+                    HTMLInfoWindowEncoder.encodeMarkerHTMLInfoWindow(facesContext, marker, window, writer);                    
+                }
 
                 break;
             }
