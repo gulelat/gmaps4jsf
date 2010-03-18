@@ -69,4 +69,5 @@ public interface ComponentConstants {
 	final String HTML_MAP_STATE_PREFIX = "com.googlecode.gmaps4jsf.mapState";
 	final String MARKER_ATTR_LATITUDE = "latitude";
 	final String MARKER_ATTR_LONGITUDE = "longitude";    
+    final String MARKER_LOAD_EVENT ="load";
 }
