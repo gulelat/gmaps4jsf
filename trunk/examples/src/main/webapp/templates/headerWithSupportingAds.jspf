@@ -11,13 +11,20 @@
     </tr>
 </table>
 
-<table class="pageHeader">
+<table>
     <tr>
 	  <td>
-<!-- Begin BidVertiser code -->
-<SCRIPT LANGUAGE="JavaScript1.1" SRC="http://bdv.bidvertiser.com/BidVertiser.dbm?pid=305140&bid=750932" type="text/javascript"></SCRIPT>
-<noscript><a href="http://www.bidvertiser.com">pay per click advertising</a></noscript>
-<!-- End BidVertiser code --> 
+		<script type="text/javascript"><!--
+		google_ad_client = "pub-0108392760264860";
+		/* 728x90, created 4/2/10 */
+		google_ad_slot = "5067741973";
+		google_ad_width = 728;
+		google_ad_height = 90;
+		//-->
+		</script>
+		<script type="text/javascript"
+		src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+		</script>	  
 	  </td>
     </tr>
 </table>
