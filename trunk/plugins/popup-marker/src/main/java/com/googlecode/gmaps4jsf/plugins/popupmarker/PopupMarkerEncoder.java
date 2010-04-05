@@ -65,7 +65,7 @@ public class PopupMarkerEncoder implements Plugin {
             .append("var ne = gmap.fromContainerPixelToLatLng(end);")
             .append("var bounds = new GLatLngBounds(origin, ne);")
             .append("var overlay = new GGroundOverlay(img.src, bounds);")
-            .append("map.addOverlay(overlay);return overlay;}");
+            .append("try {map.addOverlay(overlay);} catch (err){};return overlay;}");
     }
 
     private void encodePopupEventsFunction(FacesContext facesContext, StringBuffer buffer, UIComponent marker) {
