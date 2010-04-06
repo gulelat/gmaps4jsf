@@ -21,7 +21,11 @@ if (!google.maps.Map.prototype.addLabel) {
         var ne = this.fromContainerPixelToLatLng(end);
         var bounds = new GLatLngBounds(origin, ne);
         var overlay = new GGroundOverlay(img.src, bounds);
-        this.addOverlay(overlay);
+        try {
+            this.addOverlay(overlay);
+        } catch (err) {
+            // Swallow internal Google Maps error if any
+        }
         return overlay;
     };
 
