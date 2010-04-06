@@ -24,7 +24,7 @@ if (!google.maps.Map.prototype.addLabel) {
         try {
             this.addOverlay(overlay);
         } catch (err) {
-            // Swallow internal Google Maps error if any
+            /* Swallow internal Google Maps error if any */
         }
         return overlay;
     };

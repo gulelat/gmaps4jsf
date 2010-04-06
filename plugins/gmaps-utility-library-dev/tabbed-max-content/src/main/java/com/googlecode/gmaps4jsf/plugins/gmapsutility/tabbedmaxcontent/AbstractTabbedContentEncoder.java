@@ -77,17 +77,30 @@ public abstract class AbstractTabbedContentEncoder implements Plugin {
         return buffer;
     }
 
+    protected final StringBuffer parse(StringBuffer source) {
+        return parse(source.toString());
+    }
+
+    protected final StringBuffer parse(String source) {
+        StringBuffer buffer = new StringBuffer();
+        if ((source != null) && (source.trim().length() > 0)) {
+            buffer.append(source.trim().replace("'", "\\\\\'").replace("\"", "\\\\\\\""));
+        }
+        return buffer;
+    }
+
     private void encodeMaxInfoWindow(MaxInfoWindow maxInfoWindow, StringBuffer buffer) {
         encodeWindowCreation(maxInfoWindow, buffer);
         encodeTabs(maxInfoWindow, buffer);
-        encodeButtons(maxInfoWindow, buffer);
         encodeOnClose(maxInfoWindow, buffer);
+        encodeButtons(maxInfoWindow, buffer);
+        buffer.append("var regular = '").append(parse(maxInfoWindow.getRegular()).append("';"));
+        buffer.append("var summary = '").append(parse(maxInfoWindow.getSummary()).append("';"));
+        buffer.append("var maxTitle = '").append(parse(maxInfoWindow.getMaxTitle()).append("';"));
         buffer.append("map.")
             .append(TABBED_INFO_WINDOW_FUNCTION)
-            .append("(parent, target, '").append(maxInfoWindow.getRegular() == null ? "" : maxInfoWindow.getRegular())
-            .append("', '").append(maxInfoWindow.getSummary() == null ? "" : maxInfoWindow.getSummary())
-            .append("', '").append(maxInfoWindow.getMaxTitle() == null ? "" : maxInfoWindow.getMaxTitle())
-            .append("', ").append(getSelectedTab(maxInfoWindow))
+            .append("(parent, target, regular, summary, maxTitle, ")
+            .append(getSelectedTab(maxInfoWindow)).append(", ")
             .append(maxInfoWindow.isMaximized()).append(", buttons, tabs, onClose);");
         encodeWindowCreationEnd(maxInfoWindow, buffer);
     }
@@ -136,7 +149,7 @@ public abstract class AbstractTabbedContentEncoder implements Plugin {
     protected final StringBuffer getTabOnSelect(Tab tab) {
         StringBuffer buffer = new StringBuffer();
         if ((tab.getOnSelect() != null) && (tab.getOnSelect().trim().length() > 0)) {
-            buffer.append("function (tab) {").append(tab.getOnSelect()).append("}");
+            buffer.append("function (tab) {").append(parse(tab.getOnSelect())).append("}");
         } else {
             buffer.append("null");
         }
@@ -146,7 +159,7 @@ public abstract class AbstractTabbedContentEncoder implements Plugin {
     private StringBuffer getStringOrNull(String content) {
         StringBuffer buffer = new StringBuffer();
         if ((content != null) && (content.trim().length() > 0)) {
-            buffer.append("'").append(content).append("'");
+            buffer.append("'").append(parse(content)).append("'");
         } else {
             buffer.append("null");
         }
@@ -155,7 +168,7 @@ public abstract class AbstractTabbedContentEncoder implements Plugin {
 
     private void encodeTab(MaxInfoWindow maxInfoWindow, Tab tab, StringBuffer buffer) {
         buffer.append(ComponentConstants.JS_GMAP_BASE_VARIABLE).append(".encodeTab('")
-            .append(tab.getId()).append("', '").append(tab.getTitle()).append("', ")
+            .append(tab.getId()).append("', '").append(parse(tab.getTitle())).append("', ")
             .append(getTabContent(tab)).append(", ").append(getTabNode(tab))
             .append(", ").append(getTabOnSelect(tab)).append("),");
     }

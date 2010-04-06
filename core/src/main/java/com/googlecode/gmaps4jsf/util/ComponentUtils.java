@@ -375,7 +375,7 @@ public class ComponentUtils {
 				+ "}     "
 				+ funcName
 				+ "();     "
-				+ "}     "
+				+ "};     "
 				+ "}     ";
 
 		writer.write(jsFunctionInWindowOnLoad);
