@@ -55,7 +55,6 @@ public class MarkerExtendedInfoWindowEncoder extends AbstractTabbedContentEncode
             .append(ComponentConstants.CONST_MARKER_PREFIX).append(PluginEncoder.getUniqueMarkerId(facesContext, (Marker) markerComponent))
             .append(");");
         return buffer.toString();
-
     }
 
 }
