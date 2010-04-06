@@ -39,20 +39,16 @@ public abstract class AbstractTabbedContentEncoder implements Plugin {
 
     protected static final String TABBED_INFO_WINDOW_FUNCTION = "tabbedContent";
 
+    private String getParentId(FacesContext facesContext, UIComponent parentComponent) {
+        return parentComponent instanceof Marker
+            ? PluginEncoder.getUniqueMarkerId(facesContext, (Marker) parentComponent)
+            : parentComponent.getId();
+    }
+
     public final String encodeFunctionScript(FacesContext facesContext, UIComponent parentComponent) {
-        StringBuffer buffer   = new StringBuffer("function ");
-        String       parentID = ""; 
-        
-        // Get the parent component identifier
-        if (parentComponent instanceof Marker) {
-            parentID = PluginEncoder.getUniqueMarkerId(facesContext, (Marker) parentComponent);
-        } else {
-            parentID = parentComponent.getId();          
-        }
-       
-        // create the function script
+        StringBuffer buffer = new StringBuffer("function ");
+        String parentID = getParentId(facesContext, parentComponent);
         buffer.append(TABBED_INFO_WINDOW_FUNCTION).append(parentID).append("(map, parent) {");
-        
         for (Iterator iterator = parentComponent.getChildren().iterator(); iterator.hasNext();) {
             UIComponent component = (UIComponent) iterator.next();
             if (component instanceof MaxInfoWindow  && component.isRendered()) {
@@ -70,54 +66,51 @@ public abstract class AbstractTabbedContentEncoder implements Plugin {
 
     }
 
-    private void encodeMaxInfoWindow(MaxInfoWindow maxInfoWindow, StringBuffer buffer) {
-        buffer.append("var regular = \\\"")
-            .append(maxInfoWindow.getRegular() == null ? "" : maxInfoWindow.getRegular())
-            .append("\\\";var summary = \\\"")
-            .append(maxInfoWindow.getSummary() == null ? "" : maxInfoWindow.getSummary())
-            .append("\\\";").append("var maxTitle = \\\"")
-            .append(maxInfoWindow.getMaxTitle() == null ? "" : maxInfoWindow.getMaxTitle())
-            .append("\\\";").append("var maximized= ")
-            .append(maxInfoWindow.isMaximized()).append(";var selectedTab = 0;");
-        try {
-            int index = Integer.parseInt(maxInfoWindow.getSelectedTab());
-            buffer.append("selectedTab = ").append(index);
-        } catch (Exception ex) {
-            buffer.append("selectedTab = \\\"").append(maxInfoWindow.getSelectedTab()).append("\\\"");
+    protected final StringBuffer getSelectedTab(MaxInfoWindow maxInfoWindow) {
+        StringBuffer buffer = new StringBuffer();
+        String selectedTab = maxInfoWindow.getSelectedTab();
+        if ((selectedTab != null) && (selectedTab.matches("\\d{1,}"))) {
+            buffer.append(selectedTab);
+        } else {
+            buffer.append("'").append(selectedTab).append("'");
         }
-        encodeTabs(maxInfoWindow, buffer.append(";"));
-        encodeWindowCreation(maxInfoWindow, buffer);
-        buffer.append("parent.openMaxContentTabsHtml(target, regular, summary, tabs, {")
-            .append("maxTitle: maxTitle,").append("selectedTab: selectedTab,")
-            .append("maximized: maximized, noCloseOnClick: true, buttons: {");
-        if (!maxInfoWindow.isShowCloseButton()) buffer.append("close:{show: 4},");
-        if (!maxInfoWindow.isShowMaximizeButton()) buffer.append("maximize:{show: 4},");
-        if (!maxInfoWindow.isShowMinimizeButton()) buffer.append("restore:{show: 4},");
-        if (buffer.charAt(buffer.length() - 1) == ',') buffer.deleteCharAt(buffer.length() - 1);
-        buffer.append("}");
-        String onClose = maxInfoWindow.getOnClose();
-        if ((onClose != null) && (onClose.trim().length() > 0)) {
-            buffer.append(",onCloseFn: function() {")
-                .append(onClose).append("}");
-        }
-        encodeWindowCreationEnd(maxInfoWindow, buffer.append("});"));
-
+        return buffer;
     }
 
-    private void encondeOnSelectSupport(MaxInfoWindow maxInfoWindow, StringBuffer buffer) {
-        buffer.append("if (window.gSelectTabFunctions === undefined) {")
-            .append("window.gSelectTabFunctions = {};");
-        buffer.append("GEvent.addListener(").append(ComponentConstants.JS_GMAP_BASE_VARIABLE)
-            .append(".getTabbedMaxContent(), 'selecttab', function(tab) {")
-            .append("var selection = window.gSelectTabFunctions")
-            .append("[tab.id];if(selection) {")
-            .append("for (var index = 0; selection.length > index; index++) {")
-            .append("if (selection[index]) selection[index](tab);")
-            .append("}}});}");
+    private void encodeMaxInfoWindow(MaxInfoWindow maxInfoWindow, StringBuffer buffer) {
+        encodeWindowCreation(maxInfoWindow, buffer);
+        encodeTabs(maxInfoWindow, buffer);
+        encodeButtons(maxInfoWindow, buffer);
+        encodeOnClose(maxInfoWindow, buffer);
+        buffer.append("map.")
+            .append(TABBED_INFO_WINDOW_FUNCTION)
+            .append("(parent, target, '").append(maxInfoWindow.getRegular() == null ? "" : maxInfoWindow.getRegular())
+            .append("', '").append(maxInfoWindow.getSummary() == null ? "" : maxInfoWindow.getSummary())
+            .append("', '").append(maxInfoWindow.getMaxTitle() == null ? "" : maxInfoWindow.getMaxTitle())
+            .append("', ").append(getSelectedTab(maxInfoWindow))
+            .append(maxInfoWindow.isMaximized()).append(", buttons, tabs, onClose);");
+        encodeWindowCreationEnd(maxInfoWindow, buffer);
+    }
+
+    protected final void encodeButtons(MaxInfoWindow maxInfoWindow, StringBuffer buffer) {
+        buffer.append("var buttons = {");
+        if (!maxInfoWindow.isShowCloseButton()) buffer.append("close: {show: 4},");
+        if (!maxInfoWindow.isShowMaximizeButton()) buffer.append("maximize: {show: 4},");
+        if (!maxInfoWindow.isShowMinimizeButton()) buffer.append("restore: {show: 4},");
+        if (buffer.charAt(buffer.length() - 1) == ',') buffer.deleteCharAt(buffer.length() - 1);
+        buffer.append("};");
+    }
+
+    protected final void encodeOnClose(MaxInfoWindow maxInfoWindow, StringBuffer buffer) {
+        buffer.append("var onClose");
+        String onClose = maxInfoWindow.getOnClose();
+        if ((onClose != null) && (onClose.trim().length() > 0)) {
+            buffer.append(" = function() {").append(onClose).append("}");
+        }
+        buffer.append(";");
     }
 
     private void encodeTabs(MaxInfoWindow maxInfoWindow, StringBuffer buffer) {
-        encondeOnSelectSupport(maxInfoWindow, buffer);
         buffer.append("var tabs = [");
         for (Iterator iterator = maxInfoWindow.getChildren().iterator(); iterator.hasNext();) {
             UIComponent component = (UIComponent) iterator.next();
@@ -132,34 +125,39 @@ public abstract class AbstractTabbedContentEncoder implements Plugin {
         buffer.append("];");
     }
 
-    private void encodeTab(MaxInfoWindow maxInfoWindow, Tab tab, StringBuffer buffer) {
-        buffer.append("(function() {var t = new MaxContentTab(\\\"")
-            .append(tab.getTitle()).append("\\\", ");
-        if ((tab.getContent() != null) && (tab.getContent().trim().length() > 0)) {
-            buffer.append("\\\"").append(tab.getContent()).append("\\\"");
-        } else if ((tab.getContentNode() != null) && (tab.getContentNode().trim().length() > 0)) {
-            buffer.append("(function() {window.gSelectTabFunctions['")
-                .append(tab.getId()).append("'] = [function(tab){")
-                .append("var node = document.getElementById('").append(tab.getContentNode())
-                .append("');if (node) {node.style.display='block';")
-                .append("node.style.width='98%';node.style.height='98%';")
-                .append("tab.getContentNode().appendChild(node);}}];")
-                .append("return document.createElement('div');})()");
-        } else {
-            buffer.append("document.createElement('div')");
-        }
-        buffer.append(");t.id = '").append(tab.getId()).append("';");
+    protected final StringBuffer getTabContent(Tab tab) {
+        return getStringOrNull(tab.getContent());
+    }
+
+    protected final StringBuffer getTabNode(Tab tab) {
+        return getStringOrNull(tab.getContentNode());
+    }
+
+    protected final StringBuffer getTabOnSelect(Tab tab) {
+        StringBuffer buffer = new StringBuffer();
         if ((tab.getOnSelect() != null) && (tab.getOnSelect().trim().length() > 0)) {
-            buffer.append("var selection = window.gSelectTabFunctions['")
-                .append(tab.getId()).append("'];if (!selection){")
-                .append("window.gSelectTabFunctions['")
-                .append(tab.getId()).append("'] = []; selection = ")
-                .append("window.gSelectTabFunctions['")
-                .append(tab.getId()).append("'];}selection.push(")
-                .append("function (tab) {").append(tab.getOnSelect())
-                .append("});");
+            buffer.append("function (tab) {").append(tab.getOnSelect()).append("}");
+        } else {
+            buffer.append("null");
         }
-        buffer.append("return t;})(),");
+        return buffer;
+    }
+
+    private StringBuffer getStringOrNull(String content) {
+        StringBuffer buffer = new StringBuffer();
+        if ((content != null) && (content.trim().length() > 0)) {
+            buffer.append("'").append(content).append("'");
+        } else {
+            buffer.append("null");
+        }
+        return buffer;
+    }
+
+    private void encodeTab(MaxInfoWindow maxInfoWindow, Tab tab, StringBuffer buffer) {
+        buffer.append(ComponentConstants.JS_GMAP_BASE_VARIABLE).append(".encodeTab('")
+            .append(tab.getId()).append("', '").append(tab.getTitle()).append("', ")
+            .append(getTabContent(tab)).append(", ").append(getTabNode(tab))
+            .append(", ").append(getTabOnSelect(tab)).append("),");
     }
 
 }
