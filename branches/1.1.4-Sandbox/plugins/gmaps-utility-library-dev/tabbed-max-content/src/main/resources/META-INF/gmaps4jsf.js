@@ -1,15 +1,19 @@
 if (!google.maps.Map.prototype.tabbedContent) {
 
-    google.maps.Map.prototype.gSelectTabFunctions = {};
+    google.maps.Map.prototype.gSelectTabFunctions = null;
 
     google.maps.Map.prototype.addTabFunction = function (tab, func) {
-        if (func) {
+        if (tab && tab.id && func) {
+            if (this.gSelectTabFunctions === null) {
+                this.gSelectTabFunctions = {};
+                this.activateTabSelection();
+            }
             if (!this.gSelectTabFunctions[tab.id]) {
                 this.gSelectTabFunctions[tab.id] = [];
             }
             this.gSelectTabFunctions[tab.id].push(func);
         }
-    }
+    };
 
     google.maps.Map.prototype.encodeTab = function(id, title, content, node, onSelect) {
         var t = new MaxContentTab(title, content ? content : document.createElement('div'));
@@ -21,13 +25,13 @@ if (!google.maps.Map.prototype.tabbedContent) {
                     domNode.style.display = 'block';
                     domNode.style.width = '98%';
                     domNode.style.height = '98%';
-                    tab.getContentNode().appendChild(node);
+                    tab.getContentNode().appendChild(domNode);
                 }
             });
         }
         this.addTabFunction(t, onSelect);
         return t;
-    }
+    };
 
     google.maps.Map.prototype.activateTabSelection = function() {
         var map = this;
@@ -41,7 +45,7 @@ if (!google.maps.Map.prototype.tabbedContent) {
                 }
             }
         });
-    }
+    };
 
     google.maps.Map.prototype.tabbedContent = function(parent, target, regular, summary, maxTitle, selectedTab, maximized, buttons, tabs, onClose) {
         parent.openMaxContentTabsHtml(target, regular, summary, tabs, {
@@ -52,6 +56,6 @@ if (!google.maps.Map.prototype.tabbedContent) {
             buttons: buttons,
             onCloseFn : onClose
         });
-    }
+    };
 
 }

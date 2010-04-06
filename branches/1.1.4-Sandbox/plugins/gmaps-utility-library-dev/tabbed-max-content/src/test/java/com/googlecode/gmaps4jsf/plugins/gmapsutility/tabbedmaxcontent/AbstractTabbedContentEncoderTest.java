@@ -101,4 +101,11 @@ public class AbstractTabbedContentEncoderTest extends TestCase {
         assertEquals("All buttons", "var buttons = {};", buffer.toString());
     }
 
+    public void testParse() {
+        assertEquals("Null is parsed", "", encoder.parse((String) null).toString());
+        assertEquals("No parsing needed", "hi", encoder.parse("hi").toString());
+        assertEquals("Parsed quote", "john\\\\\'s hat", encoder.parse(new StringBuffer("  john's hat ")).toString());
+        assertEquals("Parsed double quote", "\\\\\\\"mike\\\\\\\"", encoder.parse(new StringBuffer("  \"mike\" ")).toString());
+    }
+
 }
