@@ -147,6 +147,6 @@ public class PolylineEncoder {
     private static String getUniquePolylineId(FacesContext facesContext, Polyline polyline) {
         String polylineID = polyline.getClientId(facesContext);
 
-        return polylineID.replace(":", "_");
+        return polylineID.replace(':', '_');
     }
 }

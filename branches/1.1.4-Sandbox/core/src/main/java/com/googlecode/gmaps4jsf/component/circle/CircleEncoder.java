@@ -83,6 +83,6 @@ public class CircleEncoder {
     private static String getUniqueCircleId(FacesContext facesContext, Circle circle) {
         String circleID = circle.getClientId(facesContext);
 
-        return circleID.replace(":", "_");
+        return circleID.replace(':', '_');
     }
 }

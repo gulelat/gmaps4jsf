@@ -144,6 +144,6 @@ public class PolygonEncoder {
     private static String getUniquePolygonId(FacesContext facesContext, Polygon polygon) {
         String polygonID = polygon.getClientId(facesContext);
 
-        return polygonID.replace(":", "_");
+        return polygonID.replace(':', '_');
     }
 }
