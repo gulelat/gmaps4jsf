@@ -381,8 +381,24 @@ public class ComponentUtils {
 		writer.write(jsFunctionInWindowOnLoad);
 	}
 
-	public static String getMapStateHiddenFieldId(Map map) {
-		return ComponentConstants.HTML_MAP_STATE_PREFIX + map.getId();
-	}	
+    public static String getMapStateHiddenFieldId(Map map) {
+        return ComponentConstants.HTML_MAP_STATE_PREFIX + map.getId();
+    }
+
+    public static String getMapWidth(Map map) {
+        return getCSSDimensions(map.getWidth());
+    }
+
+    public static String getMapHeight(Map map) {
+        return getCSSDimensions(map.getHeight());
+    }
+
+    private static String getCSSDimensions(String dimensions) {
+        return isNumber(dimensions) ? dimensions + "px" : dimensions;
+    }
+
+    public static boolean isNumber(String test) {
+        return test != null && test.matches("\\d{1,}");
+    }
 
 }

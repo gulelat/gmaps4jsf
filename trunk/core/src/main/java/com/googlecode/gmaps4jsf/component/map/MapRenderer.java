@@ -164,8 +164,8 @@ public class MapRenderer extends Renderer {
 
         writer.writeAttribute(ComponentConstants.HTML_ATTR_ID, map.getClientId(context),
                               ComponentConstants.HTML_ATTR_ID);
-        writer.writeAttribute(ComponentConstants.HTML_ATTR_STYLE, "width: " + map.getWidth() + "; height: "
-                             + map.getHeight(), ComponentConstants.HTML_ATTR_STYLE);
+        writer.writeAttribute(ComponentConstants.HTML_ATTR_STYLE, "width: " + ComponentUtils.getMapWidth(map) + "; height: "
+                             + ComponentUtils.getMapHeight(map), ComponentConstants.HTML_ATTR_STYLE);
 
         writer.endElement(ComponentConstants.HTML_DIV);
 
