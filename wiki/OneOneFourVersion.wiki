@@ -1,2 +1,2 @@
-1. Solving Issue 111. 
-2. Solving Issue 112.
+ * Solving Issue 111. 
+ * Solving Issue 112.
