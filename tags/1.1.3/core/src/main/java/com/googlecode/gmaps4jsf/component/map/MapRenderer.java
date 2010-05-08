@@ -84,6 +84,9 @@ public class MapRenderer extends Renderer {
         if (map.getJsVariable() != null) {
             writer.write("      var " + map.getJsVariable() + ";     ");
         }
+        
+        // declare the map implicit variable.
+        writer.write("      var " + MapRendererUtil.getMapImplicitVariable(map) + ";     ");
 
         for (Iterator iterator = map.getChildren().iterator(); iterator.hasNext();) {
             UIComponent component = (UIComponent) iterator.next();
