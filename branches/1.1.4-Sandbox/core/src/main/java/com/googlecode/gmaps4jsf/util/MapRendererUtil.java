@@ -38,6 +38,10 @@ import com.googlecode.gmaps4jsf.plugins.PluginEncoder;
  */
 public class MapRendererUtil {
 
+    public static String getMapImplicitVariable(Map map) {
+        return ComponentConstants.JS_MAP_VARIABLE_PREFIX + map.getId();
+    }      
+    
     public static void startEncodingMapScript(FacesContext facesContext,
                                               Map mapComponent, 
                                               ResponseWriter writer) 
@@ -190,7 +194,12 @@ public class MapRendererUtil {
             writer.write("     " + map.getJsVariable() + "="
                     + ComponentConstants.JS_GMAP_BASE_VARIABLE + ";     ");
         }
+        
+        // declare the internal map variable used by GMaps4JSF. 
+        writer.write("     " + getMapImplicitVariable(map) + "="
+                + ComponentConstants.JS_GMAP_BASE_VARIABLE + ";     ");
     }
+
 
     private static void getMapBoundsJSInstance(Map map, ResponseWriter writer) throws IOException {
         writer.write("if (bounds" + map.getId() + " == null) {     ");
@@ -246,5 +255,5 @@ public class MapRendererUtil {
                                                     throws IOException {
 
         writer.write("}" + "}     " + ");     ");
-    }
+    }  
 }
