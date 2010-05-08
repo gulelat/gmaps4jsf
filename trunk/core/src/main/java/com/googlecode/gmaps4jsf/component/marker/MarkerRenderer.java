@@ -31,7 +31,7 @@ import com.googlecode.gmaps4jsf.util.ComponentUtils;
 /**
  * @author Hazem Saleh
  * @date Jan 3, 2009
- * The (MarkerRenderer) renders a google map marker.
+ * The (DirectionRenderer) renders a google map marker.
  */
 public class MarkerRenderer extends Renderer {
 
