@@ -18,7 +18,7 @@
  */
 package com.googlecode.gmaps4jsf.util;
 
-public interface ComponentConstants {
+public interface ComponentConstants {   
 	final String CONTEXT_CANNOT_BE_NULL = "context cannot be null";
 	final String HTML_SCRIPT = "script";
 	final String HTML_SCRIPT_TYPE = "type";
@@ -31,6 +31,7 @@ public interface ComponentConstants {
 	final String HTML_ATTR_ID = "id";
 	final String HTML_ATTR_NAME = "name";
 	final String HTML_ATTR_STYLE = "style";
+    final String HTML_ATTR_STYLE_CLASS = "class";
 	final String HTML_ATTR_HIDDEN = "hidden";
 	final String HTML_ATTR_TYPE = "type";
 	final String HTML_ATTR_TYPE_HIDDEN = "hidden";
@@ -49,6 +50,7 @@ public interface ComponentConstants {
 	final String JS_GPolygon_OBJECT = "GPolygon";
 	final String JS_GPolyline_OBJECT = "GPolyline";
 	final String JS_GPoint_OBJECT = "GPoint";
+    final String JS_GDirection_OBJECT = "GDirections";    
 	final String JS_GMAP_BASE_VARIABLE = "map_base_variable";
 	final String JS_GSTREET_VIEW_PANORAMA_VARIABLE = "pano_base_variable";
 	final String JS_GBrowserIsCompatible_OBJECT = "GBrowserIsCompatible";
@@ -66,6 +68,8 @@ public interface ComponentConstants {
     final String JS_CREATE_CIRCLE_FUNCTION_PREFIX = "createCircleFunction";    
 	final String JS_CREATE_GROUND_OVERLAYS_FUNCTION_PREFIX = "createGroundOverlaysFunction";
 	final String JS_CREATE_ICON_FUNCTION_PREFIX = "createIconFunction";
+    final String JS_MAP_VARIABLE_PREFIX = "com_google_gmaps4jsf_map_";    
+    final String JS_TAB = "    ";
 	final String HTML_MAP_STATE_PREFIX = "com.googlecode.gmaps4jsf.mapState";
 	final String MARKER_ATTR_LATITUDE = "latitude";
 	final String MARKER_ATTR_LONGITUDE = "longitude";    
