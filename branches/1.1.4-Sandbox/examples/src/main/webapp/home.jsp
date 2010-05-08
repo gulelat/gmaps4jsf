@@ -141,6 +141,14 @@
                                 <f:verbatim>Place GMaps4JSF logo on the earth</f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
+                        
+                        
+                        <h:outputText value="Direction" />
+                        <h:panelGrid style="padding-left:25px">
+                            <h:outputLink value="pages/direction1.jsf">
+                                <f:verbatim>Usage of the direction component for displaying the driving directions results</f:verbatim>
+                            </h:outputLink>
+                        </h:panelGrid>                          
 
                         <h:outputText value="JavaScript Customization" />
                         <h:panelGrid style="padding-left:25px">
