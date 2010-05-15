@@ -59,6 +59,11 @@
         </list-entries>
     </managed-bean>
     <managed-bean>
+        <managed-bean-name>multiple</managed-bean-name>
+        <managed-bean-class>com.googlecode.gmaps4jsf.example.beans.Multiple</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
         <managed-bean-name>addressBean</managed-bean-name>
         <managed-bean-class>com.googlecode.gmaps4jsf.example.beans.AddressBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
