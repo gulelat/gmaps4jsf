@@ -11,7 +11,7 @@
         <%@include file="templates/header.jspf" %>
         <f:view>
             <h:form>
-                <t:panelTabbedPane activePanelTabVar="true" width="700px" title="Gmaps4JSF components" serverSideTabSwitch="false" inactiveTabStyleClass="bluetab">
+                <t:panelTabbedPane activePanelTabVar="true" width="750px" title="Gmaps4JSF components" serverSideTabSwitch="false" inactiveTabStyleClass="bluetab">
 
                     <t:panelTab label="Map & Markers">
 
@@ -22,7 +22,7 @@
                             </h:outputLink>
                         </h:panelGrid>
 
-                        <h:outputText value="Simple" />
+                        <h:outputText value="Repeated" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/repeat.jsf">
                                 <f:verbatim>A list of markers with info windows (for-each sample)</f:verbatim>
@@ -222,6 +222,17 @@
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/mashups.jsf">
                                 <f:verbatim>A Web 2.0 Mashup Demo that uses both Apache Tomahawk + Ajax4JSF + GMaps4JSF</f:verbatim>
+                            </h:outputLink>
+                        </h:panelGrid>
+
+                    </t:panelTab>
+
+                    <t:panelTab label="Other">
+
+                        <h:outputText value="Performance" />
+                        <h:panelGrid style="padding-left:25px">
+                            <h:outputLink value="pages/multiple.jsf">
+                            <f:verbatim>Performance test with 500 markers</f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
 

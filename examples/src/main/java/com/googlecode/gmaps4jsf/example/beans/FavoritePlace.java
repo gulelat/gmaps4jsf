@@ -18,9 +18,6 @@
  */
 package com.googlecode.gmaps4jsf.example.beans;
 
-import javax.faces.event.AbortProcessingException;
-import javax.faces.event.ValueChangeEvent;
-
 /**
  * @author Hazem Saleh
  * @date Jan 4, 2009
