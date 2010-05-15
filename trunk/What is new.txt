@@ -1,1 +1,2 @@
 1. The direction component (It is also included in 1.1.3-u3 as well).
+2. Optimizing the display of the markers (using the new JS approach) [Issue 81].
