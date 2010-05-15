@@ -22,6 +22,13 @@
                             </h:outputLink>
                         </h:panelGrid>
 
+                        <h:outputText value="Simple" />
+                        <h:panelGrid style="padding-left:25px">
+                            <h:outputLink value="pages/repeat.jsf">
+                                <f:verbatim>A list of markers with info windows (for-each sample)</f:verbatim>
+                            </h:outputLink>
+                        </h:panelGrid>
+
                         <h:outputText value="Auto-Arrange Map" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/autoReshape.jsf">

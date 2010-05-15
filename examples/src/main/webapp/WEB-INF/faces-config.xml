@@ -23,6 +23,42 @@
 
 <faces-config xmlns="http://java.sun.com/JSF/Configuration">
     <managed-bean>
+        <managed-bean-name>loc1</managed-bean-name>
+        <managed-bean-class>com.googlecode.gmaps4jsf.example.beans.LocationBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>latitude</property-name>
+            <value>10.123</value>
+        </managed-property>
+        <managed-property>
+            <property-name>longitude</property-name>
+            <value>10.231</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>loc2</managed-bean-name>
+        <managed-bean-class>com.googlecode.gmaps4jsf.example.beans.LocationBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>latitude</property-name>
+            <value>10.231</value>
+        </managed-property>
+        <managed-property>
+            <property-name>longitude</property-name>
+            <value>10.123</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>locs</managed-bean-name>
+        <managed-bean-class>java.util.ArrayList</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <list-entries>
+            <value-class>com.googlecode.gmaps4jsf.example.beans.LocationBean</value-class>
+            <value>#{loc1}</value>
+            <value>#{loc2}</value>
+        </list-entries>
+    </managed-bean>
+    <managed-bean>
         <managed-bean-name>addressBean</managed-bean-name>
         <managed-bean-class>com.googlecode.gmaps4jsf.example.beans.AddressBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
