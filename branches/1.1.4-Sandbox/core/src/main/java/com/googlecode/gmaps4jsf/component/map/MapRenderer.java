@@ -26,6 +26,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 
+import com.googlecode.gmaps4jsf.util.FileReaderUtils;
 import com.googlecode.gmaps4jsf.component.circle.Circle;
 import com.googlecode.gmaps4jsf.component.groundoverlay.GroundOverlay;
 import com.googlecode.gmaps4jsf.component.marker.Marker;
@@ -54,6 +55,8 @@ public class MapRenderer extends Renderer {
 
         ResponseWriter writer = context.getResponseWriter();
 
+        encodeCommonJavascriptCode(component, writer);
+
         encodeHTMLModel(context, component, writer);
 
         startEncodingMapWorld(context, component, writer);
@@ -75,7 +78,17 @@ public class MapRenderer extends Renderer {
 
         map.setSubmittedValue(submittedValue);
     }
-    
+
+    /*
+     * Writes the generic (not binded to a specific component) JS code.
+     */
+    protected final void encodeCommonJavascriptCode(UIComponent component, ResponseWriter writer) throws IOException {
+        writer.startElement(ComponentConstants.HTML_SCRIPT, component);
+        writer.writeAttribute(ComponentConstants.HTML_SCRIPT_TYPE, ComponentConstants.HTML_SCRIPT_LANGUAGE, ComponentConstants.HTML_SCRIPT_TYPE);
+        writer.write(FileReaderUtils.getResourceContent("gmaps4jsf.js"));
+        writer.endElement(ComponentConstants.HTML_SCRIPT);
+    }
+
     /*
      * Declare the JS variables for the map and its related objects such as
      * markers, polygons, polylines ...
