@@ -223,7 +223,7 @@ public class MapRenderer extends Renderer {
         ComponentUtils.endEncodingBrowserCompatabilityChecking(context, component, writer);
 
         writer.write("\";");        /* End of script variable that contains the script code. */
-        writer.write("/*window.setTimeout(function() {window.eval(renderingScript);}, 10);*/ eval(renderingScript); "); /* Evaluate the script now! */
+        writer.write("window.setTimeout(function() {window.eval(renderingScript);}, 10); /*eval(renderingScript);*/ "); /* Evaluate the script now! */
         //writer.write("/*alert('rendering script evaluated');*/ ");
         
         writer.endElement(ComponentConstants.HTML_SCRIPT);
