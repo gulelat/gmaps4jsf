@@ -39,7 +39,7 @@ import com.googlecode.gmaps4jsf.util.MapRendererUtil;
 /**
  * @author Hazem Saleh
  * @date Jul 13, 2008
- * last modified at Jul 31, 2008 
+ * last modified at Jul 31, 2008
  * The (MapRenderer) renders a google map.
  */
 public class MapRenderer extends Renderer {
@@ -75,7 +75,7 @@ public class MapRenderer extends Renderer {
 
         map.setSubmittedValue(submittedValue);
     }
-    
+
     /*
      * Declare the JS variables for the map and its related objects such as
      * markers, polygons, polylines ...
@@ -84,7 +84,7 @@ public class MapRenderer extends Renderer {
         if (map.getJsVariable() != null) {
             writer.write("      var " + map.getJsVariable() + ";     ");
         }
-        
+
         // declare the map implicit variable.
         writer.write("      var " + MapRendererUtil.getMapImplicitVariable(map) + ";     ");
 
@@ -197,7 +197,7 @@ public class MapRenderer extends Renderer {
         writer.startElement(ComponentConstants.HTML_SCRIPT, component);
         writer.writeAttribute(ComponentConstants.HTML_SCRIPT_TYPE, ComponentConstants.HTML_SCRIPT_LANGUAGE,
                               ComponentConstants.HTML_SCRIPT_TYPE);
-        
+
         writer.write("var renderingScript = \"");
 
         declareJSVariables(context, map, writer);
@@ -223,9 +223,9 @@ public class MapRenderer extends Renderer {
         ComponentUtils.endEncodingBrowserCompatabilityChecking(context, component, writer);
 
         writer.write("\";");        /* End of script variable that contains the script code. */
-        writer.write("/*window.setTimeout(function() {window.eval(renderingScript);}, 10);*/ eval(renderingScript); "); /* Evaluate the script now! */
+        writer.write("window.setTimeout(function() {window.eval(renderingScript);}, 10); /*eval(renderingScript);*/ "); /* Evaluate the script now! */
         //writer.write("/*alert('rendering script evaluated');*/ ");
-        
+
         writer.endElement(ComponentConstants.HTML_SCRIPT);
-    }    
+    }
 }
