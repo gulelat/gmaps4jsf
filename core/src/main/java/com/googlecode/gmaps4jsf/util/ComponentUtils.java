@@ -401,4 +401,8 @@ public class ComponentUtils {
         return test != null && test.matches("\\d{1,}");
     }
 
+    public static String unicode(String original) {
+        return original == null ? "" : original.replace("'", "\u0027");
+    }
+
 }

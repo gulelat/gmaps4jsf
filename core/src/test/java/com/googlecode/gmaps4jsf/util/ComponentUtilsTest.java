@@ -46,4 +46,10 @@ public class ComponentUtilsTest extends TestCase {
         assertTrue("500 is a number", ComponentUtils.isNumber("500"));
     }
 
+    public void testUnicode() {
+        assertTrue("Null is maintained", ComponentUtils.unicode(null).length() == 0);
+        assertEquals("String is not modified", "something", ComponentUtils.unicode("something"));
+        assertEquals("Unicoded", "some\u0027thing", ComponentUtils.unicode("some'thing"));
+    }
+
 }
