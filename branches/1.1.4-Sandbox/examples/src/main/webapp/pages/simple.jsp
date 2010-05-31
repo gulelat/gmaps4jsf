@@ -9,9 +9,11 @@
              <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
              <m:resources key="ABQIAAAAD6cDv-a0AnpzXA4gj6utCRTUlDOzA1Sd8h2eDxLDJEZUtkHZ_xQlPmNUQ-At6YLqCd29cGkwT8i95A"/>
          </head>
-         <body onunload="GUnload()">
+         <body>
              <h:form id="form">
                   <m:map width="400" height="300px" latitude="30.01" longitude="31.14" enableScrollWheelZoom="true" />
+		  <br/>
+		  <m:map width="600" height="300px" address="Main street, Boston" zoom="10" />
              </h:form>
              <%@include file="../templates/footer.jspf" %>
          </body>
