@@ -13,7 +13,7 @@
              <h:form id="form">
                   <m:map width="400" height="300px" latitude="30.01" longitude="31.14" enableScrollWheelZoom="true" />
 		  <br/>
-		  <m:map width="600" height="300px" address="Main street, Boston" zoom="10" />
+                  <m:map width="600" height="300px" address="Main street, Boston" zoom="16" jsVariable="mapa"/>
              </h:form>
              <%@include file="../templates/footer.jspf" %>
          </body>

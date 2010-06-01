@@ -16,6 +16,10 @@
             <h:form id="form">
                 <div>Repeat tag with several markers.</div>
     		<m:map width="500px" latitude="10.1" longitude="10.1" height="500px" zoom="6" autoReshape="true">
+                    <m:marker />
+                    <m:marker address="Jos, Nigeria">
+                        <m:icon imageURL="http://google-maps-icons.googlecode.com/files/sun.png" width="32" height="32" />
+                    </m:marker>
                     <a4j:repeat var="loc" value="#{locs}">
                         <m:marker latitude="#{loc.latitude}" longitude="#{loc.longitude}">
                             <m:htmlInformationWindow htmlText="<b>#{loc.latitude}-#{loc.longitude}</b>" />
