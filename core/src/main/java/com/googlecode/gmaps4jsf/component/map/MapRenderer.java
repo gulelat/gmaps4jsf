@@ -55,13 +55,8 @@ public final class MapRenderer extends Renderer {
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
         ComponentUtils.assertValidContext(context);
         ResponseWriter writer = context.getResponseWriter();
+        writer.write("\t});\n}) (window);");
         writer.endElement(ComponentConstants.HTML_SCRIPT);
-    }
-
-    public void decode(FacesContext context, UIComponent component) {
-        Map map = (Map) component;
-        String submittedValue = (String) context.getExternalContext().getRequestParameterMap().get(ComponentUtils.getMapStateHiddenFieldId(map));
-        map.setSubmittedValue(submittedValue);
     }
 
     /*
@@ -79,18 +74,12 @@ public final class MapRenderer extends Renderer {
         writer.writeAttribute(ComponentConstants.HTML_ATTR_ID, map.getClientId(context), ComponentConstants.HTML_ATTR_ID);
         writer.writeAttribute(ComponentConstants.HTML_ATTR_STYLE, "width: " + ComponentUtils.getMapWidth(map) + "; height: " + ComponentUtils.getMapHeight(map), ComponentConstants.HTML_ATTR_STYLE);
         writer.endElement(ComponentConstants.HTML_DIV);
-
-        writer.startElement(ComponentConstants.HTML_INPUT, map);
-        writer.writeAttribute(ComponentConstants.HTML_ATTR_ID, ComponentUtils.getMapStateHiddenFieldId(map), ComponentConstants.HTML_ATTR_ID);
-        writer.writeAttribute(ComponentConstants.HTML_ATTR_NAME, ComponentUtils.getMapStateHiddenFieldId(map), ComponentConstants.HTML_ATTR_NAME);
-        writer.writeAttribute(ComponentConstants.HTML_ATTR_TYPE, ComponentConstants.HTML_ATTR_TYPE_HIDDEN, ComponentConstants.HTML_ATTR_TYPE);
-        writer.endElement(ComponentConstants.HTML_INPUT);
     }
 
     private void startEncodingMapWorld(FacesContext context, Map map, ResponseWriter writer) throws IOException {
         writer.startElement(ComponentConstants.HTML_SCRIPT, map);
         writer.writeAttribute(ComponentConstants.HTML_SCRIPT_TYPE, ComponentConstants.HTML_SCRIPT_LANGUAGE, ComponentConstants.HTML_SCRIPT_TYPE);
-        writer.write("window.gmaps4jsf.createMap(" + convertToJavascriptObject(context, map) + ");");
+        writer.write("(function(window) {\n\twindow.gmaps4jsf.createMap(" + convertToJavascriptObject(context, map) + ", function (gmap) {\n");
     }
 
     protected String convertToJavascriptObject(FacesContext context, Map map) {
@@ -99,7 +88,8 @@ public final class MapRenderer extends Renderer {
         buffer.append("zoom: ").append(map.getZoom()).append(",");
         buffer.append("location: {latitude: ").append(map.getLatitude())
             .append(", longitude: ").append(map.getLongitude())
-            .append(", address: '").append(ComponentUtils.unicode(map.getAddress())).append("'}");
+            .append(", address: '").append(ComponentUtils.unicode(map.getAddress()));
+        buffer.append("'}, jsVariable: '").append(ComponentUtils.unicode(map.getJsVariable())).append("'");
         return buffer.append("}").toString();
     }
 

@@ -18,14 +18,13 @@
  */
 package com.googlecode.gmaps4jsf.component.marker;
 
+import java.util.Iterator;
 import java.io.IOException;
-
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
-
-import com.googlecode.gmaps4jsf.component.map.Map;
+import javax.faces.context.FacesContext;
+import javax.faces.component.UIComponent;
+import javax.faces.context.ResponseWriter;
+import com.googlecode.gmaps4jsf.component.icon.Icon;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
 
 /**
@@ -33,48 +32,47 @@ import com.googlecode.gmaps4jsf.util.ComponentUtils;
  * @date Jan 3, 2009
  * The (MarkerRenderer) renders a google map marker.
  */
-public class MarkerRenderer extends Renderer {
+public final class MarkerRenderer extends Renderer {
 
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
+        Marker marker = (Marker) component;
+        ResponseWriter writer = context.getResponseWriter();
+        writer.write("\t\tgmap.createMarker(" + convertToJavascriptObject(marker) + ", function (gmap, gmarker) {\n");
     }
 
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
-        Marker         marker    = (Marker) component;
-        ResponseWriter writer    = context.getResponseWriter();
-        Map            parentMap = (Map) ComponentUtils.findParentMap(context, marker);
-                
-        MarkerEncoder.encodeMarkerFunctionScript(context, parentMap, marker, writer);
-        MarkerEncoder.encodeMarkerFunctionScriptCall(context, parentMap, marker, writer);
+        ResponseWriter writer = context.getResponseWriter();
+        writer.write("\t\t});\n");
     }
 
-    public void decode(FacesContext context, UIComponent component) {
-        Marker marker   = (Marker) component;
-        Map    map      = (Map) ComponentUtils.findParentMap(context, marker);
-        String mapState = (String) context.getExternalContext().getRequestParameterMap().get(
-                          ComponentUtils.getMapStateHiddenFieldId(map));
-
-        decodeMarker(marker, mapState);
-    }
-
-    private static MarkerValue getMarkerValueFromState(String markerState) {
-        MarkerValue markerValue      = new MarkerValue();
-        String[]    markerExpression = markerState.split("=");
-        String[]    markersLngLat    = markerExpression[1].split(",");
-
-        markerValue.setLatitude(markersLngLat[0].substring(1));
-        markerValue.setLongitude(markersLngLat[1].substring(0, markersLngLat[1].length() - 1));
-
-        return markerValue;
-    }
-
-    private void decodeMarker(Marker marker, String mapState) {
-        if (mapState != null && mapState.indexOf(marker.getId()) != -1) {
-            int         start       = mapState.indexOf(marker.getId() + "=");
-            int         end         = mapState.indexOf(")", start);
-            String      markerState = mapState.substring(start, end + 1);
-            MarkerValue markerValue = getMarkerValueFromState(markerState);
-                          
-            marker.setSubmittedValue(markerValue);
+    protected String convertToJavascriptObject(Marker marker) {
+        StringBuffer buffer = new StringBuffer("{");
+        buffer.append("address: '").append(ComponentUtils.unicode(marker.getAddress()));
+        buffer.append("', latitude: ").append(marker.getLatitude());
+        buffer.append(", longitude: ").append(marker.getLongitude());
+        buffer.append(", markerOptions: {draggable: ").append(marker.getDraggable());
+        for (Iterator iterator = marker.getChildren().iterator(); iterator.hasNext();) {
+            UIComponent component = (UIComponent) iterator.next();
+            if (component instanceof Icon) {
+                buffer.append(", icon: gmap.buildIcon(").append(convertIconToJavascriptObject((Icon) component)).append(")");
+            }
         }
+        return buffer.append("}}").toString();
     }
+
+    protected StringBuffer convertIconToJavascriptObject(Icon icon) {
+        StringBuffer buffer = new StringBuffer("{");
+        buffer.append("shadow: '").append(ComponentUtils.unicode(icon.getShadowImageURL()));
+        buffer.append("', iconSize: {width: ").append(icon.getWidth())
+            .append(", height: ").append(icon.getHeight());
+        buffer.append("}, shadowSize: {width: ").append(icon.getShadowWidth())
+            .append(", height: ").append(icon.getShadowHeight());
+        buffer.append("}, iconAnchor: {x: ").append(icon.getXcoordAnchor())
+            .append(", y: ").append(icon.getYcoordAnchor());
+        buffer.append("}, infoWindowAnchor: {x: ").append(icon.getXcoordInfoWindowAnchor())
+            .append(", y: ").append(icon.getYcoordInfoWindowAnchor());
+        buffer.append("}, image: '").append(icon.getImageURL()).append("'");
+        return buffer.append("}");
+    }
+
 }

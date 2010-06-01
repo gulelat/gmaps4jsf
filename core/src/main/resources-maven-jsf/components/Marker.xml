@@ -22,98 +22,91 @@
 //-->
 
 <!DOCTYPE component SYSTEM "../misc/component.dtd" [
-<!ENTITY standard_uicomponent_attributes		SYSTEM "../entities/standard_uicomponent_attributes.xml">
-<!ENTITY output_component_attributes			SYSTEM "../entities/output_component_attributes.xml">
-<!ENTITY input_component_attributes				SYSTEM "../entities/input_component_attributes.xml">
+<!ENTITY standard_uicomponent_attributes SYSTEM "../entities/standard_uicomponent_attributes.xml">
+<!ENTITY output_component_attributes SYSTEM "../entities/output_component_attributes.xml">
+<!ENTITY input_component_attributes SYSTEM "../entities/input_component_attributes.xml">
 ]>
 <component>
-	<tag>marker</tag>
-	<tagClass>com.googlecode.gmaps4jsf.component.marker.MarkerTag</tagClass>
-	<componentClass>com.googlecode.gmaps4jsf.component.marker.Marker</componentClass>
-	<componentType>com.googlecode.gmaps4jsf.Marker</componentType>
-	<componentFamily>com.googlecode.gmaps4jsf</componentFamily>
-	<rendererType>com.googlecode.gmaps4jsf.component.marker.MarkerRenderer</rendererType>	
-	<rendererClass>com.googlecode.gmaps4jsf.component.marker.MarkerRenderer</rendererClass>	
-	<parent>javax.faces.component.UIInput</parent>
-	<attributes>
-		&input_component_attributes;
-		<attribute>
-			<name>longitude</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-			<description>The longitude of the marker. If not set then the parent map longitude will be taken.</description>
-		</attribute>
-		<attribute>
-			<name>latitude</name>
-			<required>false</required>	
-			<type>java.lang.String</type>
-			<description>The latitude of the marker. If not set then the parent map latitude will be taken.</description>
-		</attribute>
-		<attribute>
-			<name>address</name>
-			<required>false</required>
-			<type>java.lang.String</type>				
-			<description>
-						The address you wish the marker to point to. 
-						If you use this attribute donot longitude or latitude attributes.
-			</description>
-		</attribute>	
-		<attribute>
-			<name>locationNotFoundErrorMessage</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-			<defaultValue>(GClientGeocoder) service not found the address location</defaultValue>					
-			<description>The error message that should appear if the address location doesnot exist</description>
-		</attribute>	
-	    <attribute>
-			<name>showLocationNotFoundMessage</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-			<defaultValue>false</defaultValue>					
-			<description>This attribute determines whether to show an error message when the location is not found</description>
-		</attribute>			
-		<attribute>
-			<name>jsVariable</name>
-			<required>false</required>
-			<type>java.lang.String</type>				
-			<description>
-			This flag determines the JavaScript variable you want to use for referring to the marker.
-			Use this attribute if you want to use write additional JavaScript
-			code for the marker to customize it.
-			</description>
-		</attribute>			
-		
-		<attribute>
-			<name>draggable</name>
-			<required>false</required>
-			<type>java.lang.String</type>		
-			<defaultValue>false</defaultValue>					
-			<description>
-			This flag determines whether the marker is draggable.
-			</description>
-		</attribute>		
-		
-		<attribute>
-			<name>showInformationEvent</name>
-			<required>false</required>
-			<type>java.lang.String</type>		
-			<defaultValue>click</defaultValue>					
-			<description>
-			This attribute determines the event on which the marker information will be shown. 
-			The marker information should be represented as a child htmlInformationWindow component of the marker component.
-			</description>
-		</attribute>		
-		
-		
-		<attribute>
-			<name>submitOnValueChange</name>
-			<required>false</required>
-			<type>java.lang.String</type>		
-			<defaultValue>false</defaultValue>					
-			<description>
-			This attribute determines whether to submit when the marker value changed.
-			</description>
-		</attribute>					
-				
-	</attributes>
+    <tag>marker</tag>
+    <tagClass>com.googlecode.gmaps4jsf.component.marker.MarkerTag</tagClass>
+    <componentClass>com.googlecode.gmaps4jsf.component.marker.Marker</componentClass>
+    <componentType>com.googlecode.gmaps4jsf.Marker</componentType>
+    <componentFamily>com.googlecode.gmaps4jsf</componentFamily>
+    <rendererType>com.googlecode.gmaps4jsf.component.marker.MarkerRenderer</rendererType>
+    <rendererClass>com.googlecode.gmaps4jsf.component.marker.MarkerRenderer</rendererClass>
+    <parent>javax.faces.component.UIInput</parent>
+    <attributes>
+        &input_component_attributes;
+        <attribute>
+            <name>longitude</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <description>The longitude of the marker. If not set then the parent map longitude will be taken.</description>
+        </attribute>
+        <attribute>
+            <name>latitude</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <description>The latitude of the marker. If not set then the parent map latitude will be taken.</description>
+        </attribute>
+        <attribute>
+            <name>address</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <description>
+                The address you wish the marker to point to.
+                If you use this attribute donot longitude or latitude attributes.
+            </description>
+        </attribute>
+        <attribute>
+            <name>locationNotFoundErrorMessage</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <defaultValue>(GClientGeocoder) service not found the address location</defaultValue>
+            <description>The error message that should appear if the address location doesnot exist</description>
+        </attribute>
+        <attribute>
+            <name>showLocationNotFoundMessage</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <defaultValue>false</defaultValue>
+            <description>This attribute determines whether to show an error message when the location is not found</description>
+        </attribute>
+        <attribute>
+            <name>jsVariable</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <description>
+                This flag determines the JavaScript variable you want to use for referring to the marker.
+                Use this attribute if you want to use write additional JavaScript
+                code for the marker to customize it.
+            </description>
+        </attribute>
+        <attribute>
+            <name>draggable</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <defaultValue>false</defaultValue>
+            <description>This flag determines whether the marker is draggable.</description>
+        </attribute>
+        <attribute>
+            <name>showInformationEvent</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <defaultValue>click</defaultValue>
+            <description>
+                This attribute determines the event on which the marker information will be shown.
+                The marker information should be represented as a child htmlInformationWindow component of the marker component.
+            </description>
+        </attribute>
+        <attribute>
+            <name>submitOnValueChange</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <defaultValue>false</defaultValue>
+            <description>
+                This attribute determines whether to submit when the marker value changed.
+            </description>
+        </attribute>
+    </attributes>
 </component>
