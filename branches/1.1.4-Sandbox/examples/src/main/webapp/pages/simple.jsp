@@ -11,9 +11,9 @@
          </head>
          <body>
              <h:form id="form">
-                  <m:map width="400" height="300px" latitude="30.01" longitude="31.14" enableScrollWheelZoom="true" />
-		  <br/>
-                  <m:map width="600" height="300px" address="Main street, Boston" zoom="16" jsVariable="mapa"/>
+                  <m:map width="500" height="450px" latitude="30.01" longitude="31.14" enableScrollWheelZoom="true">
+                      <m:htmlInformationWindow htmlText="<span style='color:red'>Sample HTML \"text\"!!</span>" latitude="30.3" longitude="31.3"/>
+                  </m:map>
              </h:form>
              <%@include file="../templates/footer.jspf" %>
          </body>

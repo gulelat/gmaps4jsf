@@ -26,7 +26,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import com.googlecode.gmaps4jsf.component.eventlistener.EventListener;
-import com.googlecode.gmaps4jsf.component.htmlInformationWindow.HTMLInformationWindow;
+import com.googlecode.gmaps4jsf.component.window.HTMLInformationWindow;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
 
 /**

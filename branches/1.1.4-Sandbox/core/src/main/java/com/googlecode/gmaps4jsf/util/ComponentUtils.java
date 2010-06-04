@@ -402,7 +402,7 @@ public class ComponentUtils {
     }
 
     public static String unicode(String original) {
-        return original == null ? "" : original.replace("'", "\u0027");
+        return original == null ? "" : original.replace("'", "\\u0027");
     }
 
 }

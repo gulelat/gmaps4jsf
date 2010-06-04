@@ -37,7 +37,7 @@ public final class MarkerRenderer extends Renderer {
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
         Marker marker = (Marker) component;
         ResponseWriter writer = context.getResponseWriter();
-        writer.write("\t\tgmap.createMarker(" + convertToJavascriptObject(marker) + ", function (gmap, gmarker) {\n");
+        writer.write("\t\tgmap.createMarker(" + convertToJavascriptObject(marker) + ", function (gmap, parent) {\n");
     }
 
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {

@@ -27,7 +27,7 @@ import javax.faces.context.ResponseWriter;
 
 import com.googlecode.gmaps4jsf.plugins.PluginEncoder;
 import com.googlecode.gmaps4jsf.component.eventlistener.EventListener;
-import com.googlecode.gmaps4jsf.component.htmlInformationWindow.HTMLInformationWindow;
+import com.googlecode.gmaps4jsf.component.window.HTMLInformationWindow;
 import com.googlecode.gmaps4jsf.component.icon.Icon;
 import com.googlecode.gmaps4jsf.component.map.EventEncoder;
 import com.googlecode.gmaps4jsf.component.map.HTMLInfoWindowEncoder;
