@@ -119,3 +119,11 @@ if (!google.maps.Map.prototype.createInfoWindow) {
     };
 
 }
+
+if (!google.maps.Marker.prototype.createInfoWindow) {
+
+    google.maps.Marker.prototype.createInfoWindow = function(infoWindow) {
+        this.openInfoWindowHtml(infoWindow.htmlText);
+    };
+
+}
