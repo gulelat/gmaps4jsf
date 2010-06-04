@@ -87,12 +87,12 @@ if (!google.maps.Map.prototype.markers) {
                     callback(self, m);
                 }
             });
-        } else if (marker.latitude) {
-            themarker = new google.maps.Marker(new google.maps.LatLng(marker.latitude, marker.longitude), marker.markerOptions);
         } else {
-            themarker = new google.maps.Marker(self.getCenter(), marker.markerOptions);
-        }
-        if (themarker) {
+            if (marker.latitude) {
+                themarker = new google.maps.Marker(new google.maps.LatLng(marker.latitude, marker.longitude), marker.markerOptions);
+            } else {
+                themarker = new google.maps.Marker(self.getCenter(), marker.markerOptions);
+            }
             self.addMarker(themarker);
             callback(self, themarker);
         }
@@ -107,6 +107,15 @@ if (!google.maps.Map.prototype.markers) {
             this.markers[i].set_map(null);
         }
         this.markers = new Array();
+    };
+
+}
+
+if (!google.maps.Map.prototype.createInfoWindow) {
+
+    google.maps.Map.prototype.createInfoWindow = function(infoWindow) {
+        var pos = infoWindow.latitude ? new google.maps.LatLng(infoWindow.latitude, infoWindow.longitude) : this.getCenter();
+        this.openInfoWindowHtml(pos, infoWindow.htmlText);
     };
 
 }

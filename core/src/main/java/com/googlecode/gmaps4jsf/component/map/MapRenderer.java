@@ -55,7 +55,7 @@ public final class MapRenderer extends Renderer {
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
         ComponentUtils.assertValidContext(context);
         ResponseWriter writer = context.getResponseWriter();
-        writer.write("\t});\n}) (window);");
+        writer.write("\n\t});\n}) (window);");
         writer.endElement(ComponentConstants.HTML_SCRIPT);
     }
 
@@ -79,7 +79,7 @@ public final class MapRenderer extends Renderer {
     private void startEncodingMapWorld(FacesContext context, Map map, ResponseWriter writer) throws IOException {
         writer.startElement(ComponentConstants.HTML_SCRIPT, map);
         writer.writeAttribute(ComponentConstants.HTML_SCRIPT_TYPE, ComponentConstants.HTML_SCRIPT_LANGUAGE, ComponentConstants.HTML_SCRIPT_TYPE);
-        writer.write("(function(window) {\n\twindow.gmaps4jsf.createMap(" + convertToJavascriptObject(context, map) + ", function (gmap) {\n");
+        writer.write("(function(window) {\n\twindow.gmaps4jsf.createMap(" + convertToJavascriptObject(context, map) + ", function (parent) {\n");
     }
 
     protected String convertToJavascriptObject(FacesContext context, Map map) {
