@@ -55,6 +55,12 @@ if (!google.maps.Map.prototype.center) {
         }
     };
 
+    google.maps.Map.prototype.reshape = function() {
+        if (this.properties.autoReshape) {
+            
+        }
+    };
+
 }
 
 if (!google.maps.Map.prototype.buildIcon) {
