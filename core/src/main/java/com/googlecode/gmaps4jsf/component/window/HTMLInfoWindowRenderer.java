@@ -34,7 +34,7 @@ public class HTMLInfoWindowRenderer extends Renderer {
 
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        writer.write("\t\t\tparent.createInfoWindow(" + convertToJavascriptObject(context, (HTMLInformationWindow) component) + ");");
+        writer.write("\t\tparent.createInfoWindow(" + convertToJavascriptObject(context, (HTMLInformationWindow) component) + ");");
     }
 
     protected String convertToJavascriptObject(FacesContext context, HTMLInformationWindow infoWindow) {

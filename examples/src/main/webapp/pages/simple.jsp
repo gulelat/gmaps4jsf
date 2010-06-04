@@ -12,7 +12,9 @@
          <body>
              <h:form id="form">
                   <m:map width="500" height="450px" latitude="30.01" longitude="31.14" enableScrollWheelZoom="true">
-                      <m:htmlInformationWindow htmlText="<span style='color:red'>Sample HTML \"text\"!!</span>" latitude="30.3" longitude="31.3"/>
+                      <m:marker>
+                          <m:htmlInformationWindow htmlText="something" />
+                      </m:marker>
                   </m:map>
              </h:form>
              <%@include file="../templates/footer.jspf" %>
