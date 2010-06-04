@@ -89,7 +89,8 @@ public final class MapRenderer extends Renderer {
         buffer.append("location: {latitude: ").append(map.getLatitude())
             .append(", longitude: ").append(map.getLongitude())
             .append(", address: '").append(ComponentUtils.unicode(map.getAddress()));
-        buffer.append("'}, jsVariable: '").append(ComponentUtils.unicode(map.getJsVariable())).append("'");
+        buffer.append("'}, jsVariable: '").append(ComponentUtils.unicode(map.getJsVariable()));
+        buffer.append("', autoReshape: ").append(map.getAutoReshape());
         return buffer.append("}").toString();
     }
 

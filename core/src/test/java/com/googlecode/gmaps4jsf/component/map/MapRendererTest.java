@@ -36,10 +36,11 @@ public class MapRendererTest extends TestCase {
             }
         };
         map.setAddress("Barcelona");
-        assertEquals("Map address object", "{id: 'whatever',zoom: 11,location: {latitude: 30.01, longitude: 31.14, address: 'Barcelona'}, jsVariable: ''}", renderer.convertToJavascriptObject(null, map));
+        assertEquals("Map address object", "{id: 'whatever',zoom: 11,location: {latitude: 30.01, longitude: 31.14, address: 'Barcelona'}, jsVariable: '', autoReshape: false}", renderer.convertToJavascriptObject(null, map));
         map.setAddress("Rat's Nest");
         map.setJsVariable("mapa");
-        assertEquals("Map JS object", "{id: 'whatever',zoom: 11,location: {latitude: 30.01, longitude: 31.14, address: 'Rat\\u0027s Nest'}, jsVariable: 'mapa'}", renderer.convertToJavascriptObject(null, map));
+        map.setAutoReshape("true");
+        assertEquals("Map JS object", "{id: 'whatever',zoom: 11,location: {latitude: 30.01, longitude: 31.14, address: 'Rat\\u0027s Nest'}, jsVariable: 'mapa', autoReshape: true}", renderer.convertToJavascriptObject(null, map));
     }
 
 }
