@@ -51,7 +51,7 @@ public class MarkerRendererTest extends TestCase {
         Icon icon = new Icon();
         icon.setImageURL("http://www.google.com");
         children.add(icon);
-        assertEquals("Marker converted", "{address: '', latitude: 4.21, longitude: 3.82, markerOptions: {draggable: false, icon: gmap.buildIcon({shadow: '', iconSize: {width: 20, height: 34}, shadowSize: {width: 37, height: 34}, iconAnchor: {x: 9, y: 34}, infoWindowAnchor: {x: 9, y: 2}, image: 'http://www.google.com'})}}", renderer.convertToJavascriptObject(marker));
+        assertEquals("Marker converted", "{address: '', latitude: 4.21, longitude: 3.82, markerOptions: {draggable: false, icon: parent.buildIcon({shadow: '', iconSize: {width: 20, height: 34}, shadowSize: {width: 37, height: 34}, iconAnchor: {x: 9, y: 34}, infoWindowAnchor: {x: 9, y: 2}, image: 'http://www.google.com'})}}", renderer.convertToJavascriptObject(marker));
     }
 
     public void testConvertIconToJavascriptObject() {
