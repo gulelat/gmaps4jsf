@@ -54,7 +54,7 @@ public final class MarkerRenderer extends Renderer {
         for (Iterator iterator = marker.getChildren().iterator(); iterator.hasNext();) {
             UIComponent component = (UIComponent) iterator.next();
             if (component instanceof Icon) {
-                buffer.append(", icon: gmap.buildIcon(").append(convertIconToJavascriptObject((Icon) component)).append(")");
+                buffer.append(", icon: parent.buildIcon(").append(convertIconToJavascriptObject((Icon) component)).append(")");
             }
         }
         return buffer.append("}}").toString();
