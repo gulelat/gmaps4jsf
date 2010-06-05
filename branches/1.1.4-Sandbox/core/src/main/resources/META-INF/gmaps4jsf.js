@@ -55,10 +55,24 @@ if (!google.maps.Map.prototype.center) {
         }
     };
 
-    google.maps.Map.prototype.reshape = function() {
-        if (this.properties.autoReshape) {
-            
+    google.maps.Map.prototype.reshape = function(latlng) {
+        this.setBounds(latlng);
+        if (this.properties.autoReshape && (this.markers.length > 1)) {
+            var sw = this.bounds.getSouthWest();
+            sw = new google.maps.LatLng(sw.lat() - 0.005, sw.lng() - 0.005);
+            var ne = this.bounds.getNorthEast();
+            ne = new google.maps.LatLng(ne.lat() + 0.005, ne.lng() + 0.005);
+            var extra = new google.maps.LatLngBounds(sw, ne);
+            this.setZoom(this.getBoundsZoomLevel(extra));
+            this.setCenter(extra.getCenter());
         }
+    };
+
+    google.maps.Map.prototype.setBounds = function(latlng) {
+        if (!this.bounds) {
+            this.bounds = new google.maps.LatLngBounds();
+        }
+        this.bounds.extend(latlng);
     };
 
 }
@@ -84,24 +98,34 @@ if (!google.maps.Map.prototype.markers) {
 
     google.maps.Map.prototype.createMarker = function(marker, callback) {
         var self = this;
-        var themarker;
         if (marker.address) {
             self.properties.gmaps4jsf.geocode(marker.address, function(location) {
                 if (location) {
                     var m = new google.maps.Marker(location, marker.markerOptions);
-                    self.addMarker(m);
-                    callback(self, m);
+                    self._markerCreationCallback(m, marker, callback);
                 }
             });
         } else {
+            var themarker;
             if (marker.latitude) {
                 themarker = new google.maps.Marker(new google.maps.LatLng(marker.latitude, marker.longitude), marker.markerOptions);
             } else {
                 themarker = new google.maps.Marker(self.getCenter(), marker.markerOptions);
             }
-            self.addMarker(themarker);
-            callback(self, themarker);
+            self._markerCreationCallback(themarker, marker, callback);
         }
+    };
+
+    google.maps.Map.prototype._markerCreationCallback = function(marker, markerOptions, callback) {
+        this.addMarker(marker);
+        var latlng = marker.getLatLng();
+        if (!markerOptions.latitude) {
+            markerOptions.latitude = latlng.lat();
+            markerOptions.longitude = latlng.lng();
+        }
+        marker.properties = markerOptions;
+        callback(this, marker);
+        this.reshape(latlng);
     };
 
     google.maps.Map.prototype.getMarkers = function() {
