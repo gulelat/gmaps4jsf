@@ -25,6 +25,11 @@
                 }
             }
             themap.center(map);
+            if (map.enableScrollWheelZoom) {
+                themap.enableScrollWheelZoom();
+            } else {
+                themap.disableScrollWheelZoom();
+            }
             callback(themap);
         };
 
