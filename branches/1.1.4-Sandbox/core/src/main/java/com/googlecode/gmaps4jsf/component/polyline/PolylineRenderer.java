@@ -18,45 +18,23 @@
  */
 package com.googlecode.gmaps4jsf.component.polyline;
 
-import java.util.Iterator;
 import java.io.IOException;
-import javax.faces.render.Renderer;
 import javax.faces.context.FacesContext;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ResponseWriter;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
-import com.googlecode.gmaps4jsf.component.point.Point;
 
 /**
  * @author Hazem Saleh
  * @date April 12, 2009
  * The (PolylineRenderer) renders a google map polyline.
  */
-public class PolylineRenderer extends Renderer {
-
-    public boolean getRendersChildren() {
-        return true;
-    }
+public class PolylineRenderer extends AbstractPolyshape {
 
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
         if (component.isRendered()) {
             ResponseWriter writer = context.getResponseWriter();
             writer.write("\t\tparent.createPolyline(" + convertToJavascriptObject((Polyline) component) + ", function () {\n\t\t\tvar points = [null");
-        }
-    }
-
-    public void encodeChildren(FacesContext context, UIComponent component) throws IOException {
-        if (component.isRendered()) {
-            ResponseWriter writer = context.getResponseWriter();
-            writer.write(",");
-            super.encodeChildren(context, component);
-        }
-    }
-
-    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
-        if (component.isRendered()) {
-            ResponseWriter writer = context.getResponseWriter();
-            writer.write("null];\n\t\t\treturn points.slice(1, points.length - 1);\n\t\t});\n");
         }
     }
 

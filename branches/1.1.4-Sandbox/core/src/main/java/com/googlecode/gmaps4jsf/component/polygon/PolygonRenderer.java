@@ -19,44 +19,35 @@
 package com.googlecode.gmaps4jsf.component.polygon;
 
 import java.io.IOException;
-
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.component.UIComponent;
 import javax.faces.context.ResponseWriter;
-import javax.faces.render.Renderer;
-
-import com.googlecode.gmaps4jsf.component.map.Map;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
+import com.googlecode.gmaps4jsf.component.polyline.AbstractPolyshape;
 
 /**
  * @author Hazem Saleh
  * @date April 12, 2009
  * The (PolygonRenderer) renders a google map polygon.
  */
-public class PolygonRenderer extends Renderer {
+public class PolygonRenderer extends AbstractPolyshape {
 
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {    
-        Polygon        polygon   = (Polygon) component;
-        ResponseWriter writer    = context.getResponseWriter();
-        Map            parentMap = (Map) ComponentUtils.findParentMap(context, polygon);
-
-        PolygonEncoder.startEncodingPolygonFunctionScript(context, parentMap, polygon,
-                                                          writer);        
+        if (component.isRendered()) {
+            ResponseWriter writer = context.getResponseWriter();
+            writer.write("\t\tparent.createPolygon(" + convertToJavascriptObject((Polygon) component) + ", function () {\n\t\t\tvar points = [null");
+        }
     }
 
-    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
-        Polygon        polygon   = (Polygon) component;
-        ResponseWriter writer    = context.getResponseWriter();
-        Map            parentMap = (Map) ComponentUtils.findParentMap(context, polygon);
-
-        PolygonEncoder.endEncodingPolygonFunctionScript(context, parentMap, polygon,
-                                                        writer);
-
-        PolygonEncoder.encodePolygonFunctionScriptCall(context, parentMap, polygon, 
-                                                       writer);
+    protected String convertToJavascriptObject(Polygon polygon) {
+        StringBuffer buffer = new StringBuffer("{");
+        buffer.append("hexStrokeColor: '").append(polygon.getHexStrokeColor()).append("', ");
+        buffer.append("lineWidth: ").append(polygon.getLineWidth()).append(", ");
+        buffer.append("strokeOpacity: ").append(polygon.getStrokeOpacity()).append(", ");
+        buffer.append("hexFillColor: '").append(polygon.getHexFillColor()).append("', ");
+        buffer.append("fillOpacity: ").append(polygon.getFillOpacity()).append(", ");
+        buffer.append("jsVariable: '").append(ComponentUtils.unicode(polygon.getJsVariable())).append("'");
+        return buffer.append("}").toString();
     }
 
-    public boolean getRendersChildren() {
-        return true;
-    }
 }

@@ -118,10 +118,10 @@
                         <h:outputText value="Polygons" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/mapPolygon.jsf">
-                                <f:verbatim><span style="color:red">Draw a polygon on your map</span></f:verbatim>
+                                <f:verbatim>Draw a polygon on your map</f:verbatim>
                             </h:outputLink>
                             <h:outputLink value="pages/mapPolygons.jsf">
-                                <f:verbatim><span style="color:red">Draw many polygons on your map</span></f:verbatim>
+                                <f:verbatim>Draw many polygons on your map</f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
 

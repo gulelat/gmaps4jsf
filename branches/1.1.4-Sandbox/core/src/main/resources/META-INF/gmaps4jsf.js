@@ -174,3 +174,15 @@ if (!google.maps.Map.prototype.createPolyline) {
     };
 
 }
+
+if (!google.maps.Map.prototype.createPolygon) {
+
+    google.maps.Map.prototype.createPolygon = function(polygon, getPoints) {
+        var poly = new google.maps.Polygon(getPoints(), polygon.hexStrokeColor, polygon.lineWidth, polygon.strokeOpacity, polygon.hexFillColor, polygon.fillOpacity);
+        this.addOverlay(poly);
+        if (polygon.jsVariable) {
+            this.gmaps4jsf.window[polygon.jsVariable] = poly;
+        }
+    };
+
+}
