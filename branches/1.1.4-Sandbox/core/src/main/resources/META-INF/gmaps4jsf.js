@@ -162,3 +162,15 @@ if (!google.maps.Marker.prototype.createInfoWindow) {
     };
 
 }
+
+if (!google.maps.Map.prototype.createPolyline) {
+
+    google.maps.Map.prototype.createPolyline = function (polyline, getPoints) {
+        var line = new google.maps.Polyline(getPoints(), polyline.hexaColor, polyline.lineWidth, polyline.opacity, {geodesic: polyline.geodesic});
+        this.addOverlay(line);
+        if (polyline.jsVariable) {
+            this.gmaps4jsf.window[polyline.jsVariable] = line;
+        }
+    };
+
+}

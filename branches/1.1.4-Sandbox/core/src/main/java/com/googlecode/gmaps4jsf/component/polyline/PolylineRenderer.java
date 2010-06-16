@@ -18,15 +18,14 @@
  */
 package com.googlecode.gmaps4jsf.component.polyline;
 
+import java.util.Iterator;
 import java.io.IOException;
-
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
-
-import com.googlecode.gmaps4jsf.component.map.Map;
+import javax.faces.context.FacesContext;
+import javax.faces.component.UIComponent;
+import javax.faces.context.ResponseWriter;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
+import com.googlecode.gmaps4jsf.component.point.Point;
 
 /**
  * @author Hazem Saleh
@@ -35,28 +34,40 @@ import com.googlecode.gmaps4jsf.util.ComponentUtils;
  */
 public class PolylineRenderer extends Renderer {
 
-    public void encodeBegin(FacesContext context, UIComponent component) throws IOException {    
-        Polyline       polyline  = (Polyline) component;
-        ResponseWriter writer    = context.getResponseWriter();
-        Map            parentMap = (Map) ComponentUtils.findParentMap(context, polyline);
-
-        PolylineEncoder.startEncodingPolylineFunctionScript(context, parentMap, polyline,
-                                                            writer);          
-    }
-
-    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
-        Polyline       polyline  = (Polyline) component;
-        ResponseWriter writer    = context.getResponseWriter();
-        Map            parentMap = (Map) ComponentUtils.findParentMap(context, polyline);
-
-        PolylineEncoder.endEncodingPolylineFunctionScript(context, parentMap, polyline,
-                                                          writer);
-
-        PolylineEncoder.encodePolylineFunctionScriptCall(context, parentMap, polyline, 
-                                                         writer);
-    }
-
     public boolean getRendersChildren() {
         return true;
     }
+
+    public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
+        if (component.isRendered()) {
+            ResponseWriter writer = context.getResponseWriter();
+            writer.write("\t\tparent.createPolyline(" + convertToJavascriptObject((Polyline) component) + ", function () {\n\t\t\tvar points = [null");
+        }
+    }
+
+    public void encodeChildren(FacesContext context, UIComponent component) throws IOException {
+        if (component.isRendered()) {
+            ResponseWriter writer = context.getResponseWriter();
+            writer.write(",");
+            super.encodeChildren(context, component);
+        }
+    }
+
+    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
+        if (component.isRendered()) {
+            ResponseWriter writer = context.getResponseWriter();
+            writer.write("null];\n\t\t\treturn points.slice(1, points.length - 1);\n\t\t});\n");
+        }
+    }
+
+    protected String convertToJavascriptObject(Polyline polyline) {
+        StringBuffer buffer = new StringBuffer("{");
+        buffer.append("lineWidth: ").append(polyline.getLineWidth()).append(", ");
+        buffer.append("hexaColor: '").append(polyline.getHexaColor()).append("', ");
+        buffer.append("opacity: ").append(polyline.getOpacity()).append(", ");
+        buffer.append("geodesic: ").append(polyline.getGeodesic()).append(", ");
+        buffer.append("jsVariable: '").append(ComponentUtils.unicode(polyline.getJsVariable())).append("'");
+        return buffer.append("}").toString();
+    }
+
 }
