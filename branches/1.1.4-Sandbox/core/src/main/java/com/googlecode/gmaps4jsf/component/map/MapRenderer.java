@@ -86,6 +86,7 @@ public final class MapRenderer extends Renderer {
     protected String convertToJavascriptObject(FacesContext context, Map map) {
         StringBuffer buffer = new StringBuffer("{");
         buffer.append("id: '").append(map.getClientId(context)).append("',");
+        buffer.append("enableScrollWheelZoom: ").append(map.getEnableScrollWheelZoom()).append(",");
         buffer.append("zoom: ").append(map.getZoom()).append(",");
         buffer.append("location: {latitude: ").append(map.getLatitude())
             .append(", longitude: ").append(map.getLongitude())
