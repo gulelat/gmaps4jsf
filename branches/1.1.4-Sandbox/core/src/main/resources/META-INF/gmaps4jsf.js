@@ -8,7 +8,7 @@
         gmaps4jsf.geocode = function (address, callback) {
             var geocoder = new google.maps.ClientGeocoder();
             geocoder.getLatLng(address, callback);
-        }
+        };
 
         gmaps4jsf.createMap = function(map, callback) {
             var id = map.id;

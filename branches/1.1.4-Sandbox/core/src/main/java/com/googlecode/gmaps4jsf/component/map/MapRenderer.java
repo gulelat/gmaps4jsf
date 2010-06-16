@@ -65,7 +65,8 @@ public final class MapRenderer extends Renderer {
     protected void encodeCommonJavascriptCode(Map map, ResponseWriter writer) throws IOException {
         writer.startElement(ComponentConstants.HTML_SCRIPT, map);
         writer.writeAttribute(ComponentConstants.HTML_SCRIPT_TYPE, ComponentConstants.HTML_SCRIPT_LANGUAGE, ComponentConstants.HTML_SCRIPT_TYPE);
-        writer.write(FileReaderUtils.getResourceContent("gmaps4jsf.js", "\n"));
+        String debug = "true".equals(map.getDebug()) ? "\n" : "";
+        writer.write(FileReaderUtils.getResourceContent("gmaps4jsf.js", debug));
         writer.endElement(ComponentConstants.HTML_SCRIPT);
     }
 

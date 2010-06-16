@@ -153,5 +153,15 @@
                 code for the map to customize it.
             </description>
         </attribute>
+        <attribute>
+            <name>debug</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <defaultValue>false</defaultValue>
+            <description>
+                This flag determines if the JS code should be rendered with line feeds making it easy to
+                debug using Firebug or similar tools.
+            </description>
+        </attribute>
     </attributes>
 </component>
