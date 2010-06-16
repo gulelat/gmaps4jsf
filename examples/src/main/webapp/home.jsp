@@ -105,13 +105,13 @@
                         <h:outputText value="Polylines" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/mapSimplePolyline.jsf">
-                                <f:verbatim><span style="color:red">Draw a simple polyline on your map</span></f:verbatim>
+                                <f:verbatim>Draw a simple polyline on your map</f:verbatim>
                             </h:outputLink>
                             <h:outputLink value="pages/mapGeodesicPolyline.jsf">
-                                <f:verbatim><span style="color:red">Draw a geodesic polyline on your map</span></f:verbatim>
+                                <f:verbatim>Draw a geodesic polyline on your map</f:verbatim>
                             </h:outputLink>
                             <h:outputLink value="pages/mapMixedPolylines.jsf">
-                                <f:verbatim><span style="color:red">Draw mixed polylines on your map</span></f:verbatim>
+                                <f:verbatim>Draw mixed polylines on your map</f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
 

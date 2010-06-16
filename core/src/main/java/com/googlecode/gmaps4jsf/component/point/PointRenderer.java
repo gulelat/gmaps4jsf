@@ -19,13 +19,10 @@
 package com.googlecode.gmaps4jsf.component.point;
 
 import java.io.IOException;
-
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
-
-import com.googlecode.gmaps4jsf.util.ComponentUtils;
+import javax.faces.context.FacesContext;
+import javax.faces.component.UIComponent;
+import javax.faces.context.ResponseWriter;
 
 /**
  * @author Hazem Saleh
@@ -34,14 +31,18 @@ import com.googlecode.gmaps4jsf.util.ComponentUtils;
  */
 public class PointRenderer extends Renderer {
 
-    public void encodeBegin(FacesContext context, UIComponent component) throws IOException {    
+    public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
+        if (component.isRendered()) {
+            ResponseWriter writer = context.getResponseWriter();
+            writer.write(convertToJavascriptObject((Point) component));
+        }
     }
 
-    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
-        Point          point       = (Point) component;
-        ResponseWriter writer      = context.getResponseWriter();
-        UIComponent    pointParent = ComponentUtils.findParentPolygonOrPolyline(context, point);
-
-        PointEncoder.encodePoint(context, pointParent, point, writer);
+    protected String convertToJavascriptObject(Point point) {
+        StringBuffer buffer = new StringBuffer("new google.maps.LatLng(");
+        buffer.append(point.getLatitude()).append(", ");
+        buffer.append(point.getLongitude()).append(")");
+        return buffer.toString();
     }
+
 }

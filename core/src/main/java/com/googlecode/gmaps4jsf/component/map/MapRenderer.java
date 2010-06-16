@@ -25,9 +25,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 
+import com.googlecode.gmaps4jsf.util.ComponentUtils;
 import com.googlecode.gmaps4jsf.util.FileReaderUtils;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
-import com.googlecode.gmaps4jsf.util.ComponentUtils;
 
 /**
  * @author Hazem Saleh

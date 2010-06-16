@@ -22,63 +22,56 @@
 //-->
 
 <!DOCTYPE component SYSTEM "../misc/component.dtd" [
-<!ENTITY standard_uicomponent_attributes		SYSTEM "../entities/standard_uicomponent_attributes.xml">
+<!ENTITY standard_uicomponent_attributes SYSTEM "../entities/standard_uicomponent_attributes.xml">
 ]>
 <component>
-	<tag>polyline</tag>
-	<tagClass>com.googlecode.gmaps4jsf.component.polyline.PolylineTag</tagClass>
-	<componentClass>com.googlecode.gmaps4jsf.component.polyline.Polyline</componentClass>
-	<componentType>com.googlecode.gmaps4jsf.Polyline</componentType>
-	<componentFamily>com.googlecode.gmaps4jsf</componentFamily>
-	<rendererType>com.googlecode.gmaps4jsf.component.polyline.PolylineRenderer</rendererType>	
-	<rendererClass>com.googlecode.gmaps4jsf.component.polyline.PolylineRenderer</rendererClass>		
-	<parent>javax.faces.component.UIComponentBase</parent>
-	<attributes>
-		&standard_uicomponent_attributes;
-		<attribute>
-			<name>lineWidth</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-			<defaultValue>10</defaultValue>			
-			<description>The polyline line width.</description>
-		</attribute>
-		
-		<attribute>
-			<name>hexaColor</name>
-			<required>false</required>	
-			<type>java.lang.String</type>
-			<defaultValue>#ff0000</defaultValue>					
-			<description>The hexa color of the polyline.</description>
-		</attribute>
-		
-		<attribute>
-			<name>opacity</name>
-			<required>false</required>	
-			<type>java.lang.String</type>
-			<defaultValue>1</defaultValue>					
-			<description>The opacity of the polyline.</description>
-		</attribute>		
-		
-		<attribute>
-			<name>geodesic</name>
-			<required>false</required>
-			<type>java.lang.String</type>	
-			<defaultValue>false</defaultValue>						
-			<description>
-			This flag determines whether the polyline is geodesic.
-			</description>
-		</attribute>		
-			
-		<attribute>
-			<name>jsVariable</name>
-			<required>false</required>
-			<type>java.lang.String</type>				
-			<description>
-			This flag determines the JavaScript variable you want to use for referring to the polyline.
-			Use this attribute if you want to use write additional JavaScript
-			code for the polyline to customize it.
-			</description>
-		</attribute>					
-				
-	</attributes>
+    <tag>polyline</tag>
+    <tagClass>com.googlecode.gmaps4jsf.component.polyline.PolylineTag</tagClass>
+    <componentClass>com.googlecode.gmaps4jsf.component.polyline.Polyline</componentClass>
+    <componentType>com.googlecode.gmaps4jsf.Polyline</componentType>
+    <componentFamily>com.googlecode.gmaps4jsf</componentFamily>
+    <rendererType>com.googlecode.gmaps4jsf.component.polyline.PolylineRenderer</rendererType>
+    <rendererClass>com.googlecode.gmaps4jsf.component.polyline.PolylineRenderer</rendererClass>
+    <parent>javax.faces.component.UIComponentBase</parent>
+    <attributes>
+        &standard_uicomponent_attributes;
+        <attribute>
+            <name>lineWidth</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <defaultValue>10</defaultValue>
+            <description>The polyline line width.</description>
+        </attribute>
+        <attribute>
+            <name>hexaColor</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <defaultValue>#ff0000</defaultValue>
+            <description>The hexa color of the polyline.</description>
+        </attribute>
+        <attribute>
+            <name>opacity</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <defaultValue>1</defaultValue>
+            <description>The opacity of the polyline.</description>
+        </attribute>
+        <attribute>
+            <name>geodesic</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <defaultValue>false</defaultValue>
+            <description>This flag determines whether the polyline is geodesic.</description>
+        </attribute>
+        <attribute>
+            <name>jsVariable</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <description>
+                This flag determines the JavaScript variable you want to use for referring to the polyline.
+                Use this attribute if you want to use write additional JavaScript
+                code for the polyline to customize it.
+            </description>
+        </attribute>
+    </attributes>
 </component>
