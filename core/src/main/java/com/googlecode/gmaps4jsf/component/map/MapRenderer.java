@@ -59,7 +59,7 @@ public final class MapRenderer extends Renderer {
         writer.endElement(ComponentConstants.HTML_SCRIPT);
     }
 
-    /*
+    /**
      * Writes the generic (not binded to a specific component) JS code.
      */
     protected void encodeCommonJavascriptCode(Map map, ResponseWriter writer) throws IOException {
@@ -67,6 +67,8 @@ public final class MapRenderer extends Renderer {
         writer.writeAttribute(ComponentConstants.HTML_SCRIPT_TYPE, ComponentConstants.HTML_SCRIPT_LANGUAGE, ComponentConstants.HTML_SCRIPT_TYPE);
         String debug = "true".equals(map.getDebug()) ? "\n" : "";
         writer.write(FileReaderUtils.getResourceContent("gmaps4jsf.js", debug));
+        writer.write(debug);
+        writer.write(FileReaderUtils.getResourceContent("gmaps4jsf-map.js", debug));
         writer.endElement(ComponentConstants.HTML_SCRIPT);
     }
 
