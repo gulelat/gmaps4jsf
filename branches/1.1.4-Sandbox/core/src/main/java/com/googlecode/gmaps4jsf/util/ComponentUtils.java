@@ -38,6 +38,7 @@ import javax.faces.webapp.UIComponentTag;
 import com.googlecode.gmaps4jsf.component.map.Map;
 import com.googlecode.gmaps4jsf.component.polygon.Polygon;
 import com.googlecode.gmaps4jsf.component.polyline.Polyline;
+import com.googlecode.gmaps4jsf.component.streetviewpanorama.StreetViewPanorama;
 
 
 public class ComponentUtils {
@@ -391,6 +392,14 @@ public class ComponentUtils {
 
     public static String getMapHeight(Map map) {
         return getCSSDimensions(map.getHeight());
+    }
+
+    public static String getPanoramaWidth(StreetViewPanorama panorama) {
+        return getCSSDimensions(panorama.getWidth());
+    }
+
+    public static String getPanoramaHeight(StreetViewPanorama panorama) {
+        return getCSSDimensions(panorama.getHeight());
     }
 
     private static String getCSSDimensions(String dimensions) {
