@@ -18,7 +18,17 @@
 	
 	<body onunload="GUnload()">
     	<h:form id="form">
-		  	<div>Click on the polygon and the polyline</div>    	
+		  	<div>Click on the polygon and the polyline</div>
+		  	
+		    <script>
+			   	function polgonClickHandler() {
+			   		alert("You clicked on the area of (Egypt, South Africa, USA)");  	 	
+			   	}
+			   	function polylineClickHandler() {
+			   		alert("You clicked on the line of (Egypt, France, Japan)");  
+			   	}		   		   	
+		    </script>     		  	
+		  	    	
     		<m:map width="90%" height="90%" latitude="24" longitude="15" zoom="2">
     			<m:polygon lineWidth="1">
     				<m:point latitude="30.01" longitude="31.14"/>
@@ -32,17 +42,7 @@
     				<m:point latitude="48" longitude="2"/>    				
     				<m:point latitude="43" longitude="141"/>  	   								
 					<m:eventListener eventName="click" jsFunction="polylineClickHandler"/>	    				
-    			</m:polyline>   
-    			
-			    <script>
-			   	function polgonClickHandler() {
-			   		alert("You clicked on the area of (Egypt, South Africa, USA)");  	 	
-			   	}
-			   	function polylineClickHandler() {
-			   		alert("You clicked on the line of (Egypt, France, Japan)");  
-			   	}		   		   	
-			    </script>       			
-    			         			
+    			</m:polyline>   	         			
     		</m:map>		
     	</h:form>
 	<%@include file="../templates/footer.jspf" %>   	
