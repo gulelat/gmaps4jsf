@@ -38,7 +38,7 @@ public final class MarkerRenderer extends Renderer {
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
         Marker marker = (Marker) component;
         ResponseWriter writer = context.getResponseWriter();
-        writer.write("\t\tparent.createMarker(" + convertToJavascriptObject(marker) + ", function (gmap, parent) {\n");
+        writer.write("\t\t\tparent.createMarker(" + convertToJavascriptObject(marker) + ", function (gmap, parent) {\n");
         
         // encode marker client side events ...
         EventEncoder.encodeEventListeners(context, marker, writer, "parent");
@@ -46,7 +46,7 @@ public final class MarkerRenderer extends Renderer {
 
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        writer.write("\n\t\t});\n");
+        writer.write("\n\t\t\t});\n");
     }
 
     protected String convertToJavascriptObject(Marker marker) {

@@ -152,10 +152,10 @@
                         
                         <h:outputText value="Direction" />
                         <h:panelGrid style="padding-left:25px">
-                            <h:outputLink value="pages/direction1.jsf">
-                                <f:verbatim><span style="color:red">Usage of the direction component for displaying the driving directions results</span></f:verbatim>
+                            <h:outputLink value="pages/directions.jsf">
+                                <f:verbatim>Usage of the direction component for displaying the driving directions results</f:verbatim>
                             </h:outputLink>
-                        </h:panelGrid>                          
+                        </h:panelGrid>
 
                         <h:outputText value="JavaScript Customization" />
                         <h:panelGrid style="padding-left:25px">

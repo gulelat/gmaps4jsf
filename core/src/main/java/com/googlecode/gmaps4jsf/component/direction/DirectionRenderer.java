@@ -19,14 +19,12 @@
 package com.googlecode.gmaps4jsf.component.direction;
 
 import java.io.IOException;
-
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
-
-import com.googlecode.gmaps4jsf.util.ComponentConstants;
+import javax.faces.context.FacesContext;
+import javax.faces.component.UIComponent;
+import javax.faces.context.ResponseWriter;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
+import com.googlecode.gmaps4jsf.util.ComponentConstants;
 
 /**
  * @author Hazem Saleh
@@ -36,38 +34,24 @@ import com.googlecode.gmaps4jsf.util.ComponentUtils;
 public class DirectionRenderer extends Renderer {
 
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
-    }
-
-    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
-        Direction      direction = (Direction) component;
         ResponseWriter writer    = context.getResponseWriter();
-                
-        encodeDirectionHTMLModel(writer, direction);
-        encodeDirectionScriptModel(context, writer, direction);
+        writer.write("\t\t\tparent.addDirection(" + convertToJavascriptObject((Direction) component) + ");");
     }
 
-    private void encodeDirectionHTMLModel(ResponseWriter writer, Direction direction) throws IOException {
-        writer.startElement(ComponentConstants.HTML_DIV, direction);
-        
-        writer.writeAttribute(ComponentConstants.HTML_ATTR_ID, direction.getId(), ComponentConstants.HTML_ATTR_ID);
-        
-        if (direction.getStyle() != null) {
-            writer.writeAttribute(ComponentConstants.HTML_ATTR_STYLE, direction.getStyle(), ComponentConstants.HTML_ATTR_STYLE);
-        }
-        
-        if (direction.getStyleClass() != null) {
-            writer.writeAttribute(ComponentConstants.HTML_ATTR_STYLE_CLASS, direction.getStyleClass(), ComponentConstants.HTML_ATTR_STYLE_CLASS);
-        }        
-        
-        writer.endElement(ComponentConstants.HTML_DIV);
+    protected String convertToJavascriptObject(Direction direction) {
+        StringBuffer buffer = new StringBuffer("{");
+        buffer.append("attachNodeId: '").append(ComponentUtils.unicode(direction.getAttachNodeId())).append("', ");
+        buffer.append("fromAddress: '").append(ComponentUtils.unicode(direction.getFromAddress())).append("', ");
+        buffer.append("toAddress: '").append(ComponentUtils.unicode(direction.getToAddress())).append("', ");
+        buffer.append("locale: '").append(ComponentUtils.unicode(direction.getLocale())).append("', ");
+        buffer.append("travelMode: ").append(direction.getTravelMode()).append(", ");
+        buffer.append("avoidHighways: ").append(direction.getAvoidHighways()).append(", ");
+        buffer.append("preserveViewport: ").append(direction.getPreserveViewport()).append("}");
+        return buffer.toString();
     }
     
-    private void encodeDirectionScriptModel(FacesContext context, ResponseWriter writer, Direction direction) throws IOException {
-        writer.startElement(ComponentConstants.HTML_SCRIPT, direction);
-        writer.writeAttribute(ComponentConstants.HTML_SCRIPT_TYPE, ComponentConstants.HTML_SCRIPT_LANGUAGE,
-                              ComponentConstants.HTML_SCRIPT_TYPE);    
-        
-        ComponentUtils.startEncodingBrowserCompatabilityChecking(context, direction, writer);
+    /*private void encodeDirectionScriptModel(FacesContext context, ResponseWriter writer, Direction direction) throws IOException {
+
         
         String script = "\"var " + getDirectionPanelJSVariable(direction) + "=" + "document.getElementById('" + direction.getId() + "');" + ComponentConstants.JS_TAB;
         
@@ -85,54 +69,9 @@ public class DirectionRenderer extends Renderer {
                   direction.getFromAddress() +
                   " to: " +
                   direction.getToAddress() +
-                  "\\\"" +
+                  "\\\"" 
                   ", {" + constructDirectionAttributes(direction)  + "});\"";
-        
-        executeDirectionScriptAfterMapLoading(writer, script, direction);
-        
-        ComponentUtils.endEncodingBrowserCompatabilityChecking(context, direction, writer);        
-        writer.endElement(ComponentConstants.HTML_SCRIPT);
-    }
+                  ;
+    }*/
 
-    private String constructDirectionAttributes(Direction direction) {
-        String directionAttributes = "locale: '" + direction.getLocale() + "'";
-        
-        if (direction.getTravelMode() != null) {
-            directionAttributes += ", travelMode:" + direction.getTravelMode();
-        }
-        
-        if (direction.getAvoidHighways() != null) {
-            directionAttributes += ", avoidHighways:" + direction.getAvoidHighways();
-        }        
-        
-        if (direction.getPreserveViewport() != null) {
-            directionAttributes += ", preserveViewport:" + direction.getPreserveViewport();
-        }           
-        
-        return directionAttributes;
-    }
-    
-    private void executeDirectionScriptAfterMapLoading(ResponseWriter writer, String script, Direction direction) throws IOException {
-        String executeScript = "var interval" + direction.getId() +
-                               " = window.setInterval(function(){ " +
-                                   "if (" + getDirectionMapJSVariable(direction) + ") { " +
-                                       "clearInterval(interval" + direction.getId() + "); " +
-                                       "window.setTimeout(function() {" + "window.eval(" + script + ");}, 10);" +
-                                   "} " +
-                               "}, 10);";
-        
-        writer.write(executeScript);
-    }    
-    
-    private String getDirectionMapJSVariable(Direction direction) {
-        return ComponentConstants.JS_MAP_VARIABLE_PREFIX + direction.getFor();
-    }
-
-    private String getDirectionPanelJSVariable(Direction direction) {
-        return "directionsPanel" + direction.getId();
-    }
-
-    private String getDirectionJSVariable(Direction direction) {
-        return "directions" + direction.getId();
-    }
 }
