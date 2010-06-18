@@ -105,17 +105,6 @@
             </description>
         </attribute>
         <attribute>
-            <name>renderOnWindowLoad</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-            <defaultValue>true</defaultValue>
-            <description>
-                This flag determines whether to render the map on window load.
-                This flag should be set to false if the map is inside a zone that will
-                be updated by Ajax
-            </description>
-        </attribute>
-        <attribute>
             <name>enableDragging</name>
             <required>false</required>
             <type>java.lang.String</type>
