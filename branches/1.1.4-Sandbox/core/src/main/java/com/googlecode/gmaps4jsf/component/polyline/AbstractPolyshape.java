@@ -19,10 +19,13 @@
 package com.googlecode.gmaps4jsf.component.polyline;
 
 import java.io.IOException;
-import javax.faces.render.Renderer;
-import javax.faces.context.FacesContext;
+
 import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.render.Renderer;
+
+import com.googlecode.gmaps4jsf.component.map.EventEncoder;
 
 /**
  * Base class for shapes made by a set of points.
@@ -47,7 +50,13 @@ public abstract class AbstractPolyshape extends Renderer {
         if (component.isRendered()) {
             ResponseWriter writer = context.getResponseWriter();
             writer.write("null];\n\t\t\treturn points.slice(1, points.length - 1);\n\t\t});\n");
+            
+            // encode poly listeners.
+            EventEncoder.encodeEventListeners(context, component, writer, getJSVariableName(component));               
         }
     }
-
+    
+    protected String getJSVariableName(UIComponent component) {
+    	return "poly_" + component.getId();
+	}
 }

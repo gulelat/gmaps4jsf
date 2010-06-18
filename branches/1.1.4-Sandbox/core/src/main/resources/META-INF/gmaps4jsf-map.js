@@ -122,6 +122,8 @@
                 markerOptions.longitude = latlng.lng();
             }
             marker.properties = markerOptions;
+            marker.parentMap = this;
+            
             callback(this, marker);
             this.reshape(latlng);
         };
@@ -144,6 +146,8 @@
         google.maps.Map.prototype.createInfoWindow = function(infoWindow) {
             var pos = infoWindow.latitude ? new google.maps.LatLng(infoWindow.latitude, infoWindow.longitude) : this.getCenter();
             this.openInfoWindowHtml(pos, infoWindow.htmlText);
+            
+            return this.getInfoWindow();
         };
 
     }
@@ -152,8 +156,9 @@
 
         google.maps.Marker.prototype.createInfoWindow = function(infoWindow) {
             this.openInfoWindowHtml(infoWindow.htmlText);
+            
+            return this.parentMap.getInfoWindow();         
         };
-
     }
 
     if (!google.maps.Map.prototype.createPolyline) {
@@ -164,6 +169,8 @@
             if (polyline.jsVariable) {
                 this.gmaps4jsf.window[polyline.jsVariable] = line;
             }
+            
+            return line;
         };
 
     }
@@ -176,6 +183,8 @@
             if (polygon.jsVariable) {
                 this.gmaps4jsf.window[polygon.jsVariable] = poly;
             }
+            
+            return poly;
         };
 
     }

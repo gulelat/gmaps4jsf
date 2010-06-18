@@ -24,6 +24,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ResponseWriter;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
+import com.googlecode.gmaps4jsf.component.map.EventEncoder;
 import com.googlecode.gmaps4jsf.component.window.HTMLInformationWindow;
 
 /**
@@ -34,10 +35,14 @@ public class HTMLInfoWindowRenderer extends Renderer {
 
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        writer.write("\t\tparent.createInfoWindow(" + convertToJavascriptObject(context, (HTMLInformationWindow) component) + ");");
+        writer.write("\t\tvar " + getJSVariableName(component) + 
+        		     " = parent.createInfoWindow(" + convertToJavascriptObject(context, (HTMLInformationWindow) component) + ");");
+        
+        // encode marker client side events ...
+        EventEncoder.encodeEventListeners(context, (HTMLInformationWindow) component, writer, getJSVariableName(component));        
     }
 
-    protected String convertToJavascriptObject(FacesContext context, HTMLInformationWindow infoWindow) {
+	protected String convertToJavascriptObject(FacesContext context, HTMLInformationWindow infoWindow) {
         StringBuffer buffer = new StringBuffer("{latitude: ");
         buffer.append(infoWindow.getLatitude()).append(", longitude: ");
         buffer.append(infoWindow.getLongitude()).append(", htmlText: '");
@@ -45,4 +50,7 @@ public class HTMLInfoWindowRenderer extends Renderer {
         return buffer.toString();
     }
 
+    private String getJSVariableName(UIComponent component) {
+    	return "infoWindowJS_" + component.getId();
+	}
 }

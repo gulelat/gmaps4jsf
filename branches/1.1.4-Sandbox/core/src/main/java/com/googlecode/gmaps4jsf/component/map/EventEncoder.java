@@ -36,6 +36,23 @@ import com.googlecode.gmaps4jsf.util.ComponentConstants;
  */
 public class EventEncoder {
     private static final String JS_FUNC_CLEAR_INSTANCE_LISTENERS = "clearInstanceListeners";
+    
+	public static void encodeEventListeners(FacesContext facesContext,
+			                                UIComponent eventSource, 
+			                                ResponseWriter writer,
+			                                String eventSourceBaseVariable) 
+	                                        throws IOException {
+
+		for (Iterator iterator = eventSource.getChildren().iterator(); iterator.hasNext();) {
+			UIComponent component = (UIComponent) iterator.next();
+
+			if (component instanceof EventListener) {
+				encodeEventListener(facesContext, eventSource,
+						(EventListener) component, writer,
+						eventSourceBaseVariable);
+			}
+		}
+	}   
 
     public static void encodeEventListenersFunctionScript(
                        FacesContext facesContext, UIComponent eventSource,
