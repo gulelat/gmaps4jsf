@@ -25,6 +25,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ResponseWriter;
 import com.googlecode.gmaps4jsf.component.icon.Icon;
+import com.googlecode.gmaps4jsf.component.map.EventEncoder;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
 
 /**
@@ -38,6 +39,9 @@ public final class MarkerRenderer extends Renderer {
         Marker marker = (Marker) component;
         ResponseWriter writer = context.getResponseWriter();
         writer.write("\t\tparent.createMarker(" + convertToJavascriptObject(marker) + ", function (gmap, parent) {\n");
+        
+        // encode marker client side events ...
+        EventEncoder.encodeEventListeners(context, marker, writer, "parent");
     }
 
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
@@ -74,5 +78,4 @@ public final class MarkerRenderer extends Renderer {
         buffer.append("}, image: '").append(icon.getImageURL()).append("'");
         return buffer.append("}");
     }
-
 }

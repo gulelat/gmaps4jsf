@@ -83,6 +83,9 @@ public final class MapRenderer extends Renderer {
         writer.startElement(ComponentConstants.HTML_SCRIPT, map);
         writer.writeAttribute(ComponentConstants.HTML_SCRIPT_TYPE, ComponentConstants.HTML_SCRIPT_LANGUAGE, ComponentConstants.HTML_SCRIPT_TYPE);
         writer.write("(function(window) {\n\twindow.gmaps4jsf.createMap(" + convertToJavascriptObject(context, map) + ", function (parent) {\n");
+        
+        // encode map client side events ...
+        EventEncoder.encodeEventListeners(context, map, writer, "parent");
     }
 
     protected String convertToJavascriptObject(FacesContext context, Map map) {

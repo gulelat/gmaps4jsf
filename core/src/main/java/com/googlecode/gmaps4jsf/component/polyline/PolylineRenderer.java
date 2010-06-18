@@ -34,7 +34,8 @@ public class PolylineRenderer extends AbstractPolyshape {
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
         if (component.isRendered()) {
             ResponseWriter writer = context.getResponseWriter();
-            writer.write("\t\tparent.createPolyline(" + convertToJavascriptObject((Polyline) component) + ", function () {\n\t\t\tvar points = [null");
+            writer.write("\t\tvar " + getJSVariableName(component) + " = " +
+            		     "parent.createPolyline(" + convertToJavascriptObject((Polyline) component) + ", function () {\n\t\t\tvar points = [null");
         }
     }
 
