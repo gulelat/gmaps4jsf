@@ -22,7 +22,7 @@
 //-->
 
 <!DOCTYPE component SYSTEM "../misc/component.dtd" [
-<!ENTITY standard_uicomponent_attributes		SYSTEM "../entities/standard_uicomponent_attributes.xml">
+<!ENTITY standard_uicomponent_attributes SYSTEM "../entities/standard_uicomponent_attributes.xml">
 ]>
 <component>
     <tag>direction</tag>
@@ -36,10 +36,10 @@
     <attributes>
         &standard_uicomponent_attributes;
         <attribute>
-            <name>for</name>
-            <required>true</required>
+            <name>attachNodeId</name>
+            <required>false</required>
             <type>java.lang.String</type>
-            <description>The map id to attach direction to.</description>
+            <description>The DOM node id where the step by step explanation will be placed.</description>
         </attribute>
         <attribute>
             <name>fromAddress</name>
@@ -52,46 +52,33 @@
             <required>true</required>
             <type>java.lang.String</type>
             <description>The direction to address.</description>
-        </attribute>
-        
-        <attribute>
-            <name>style</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-            <description>The direction style.</description>
-        </attribute>
-        <attribute>
-            <name>styleClass</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-            <description>The direction style class.</description>
-        </attribute>       
+        </attribute>     
         <attribute>
             <name>locale</name>
             <required>false</required>
             <type>java.lang.String</type>
-			<defaultValue>en_US</defaultValue>            
-            <description>The direction locale. default is en_US.</description>
+            <defaultValue>en_US</defaultValue>
+            <description>The direction locale. Default is en_US.</description>
         </attribute>  
         <attribute>
             <name>travelMode</name>
             <required>false</required>
             <type>java.lang.String</type>
-			<defaultValue>G_TRAVEL_MODE_WALKING</defaultValue>            
+            <defaultValue>G_TRAVEL_MODE_DRIVING</defaultValue>
             <description>The direction travel mode. Possible values are (G_TRAVEL_MODE_WALKING, G_TRAVEL_MODE_DRIVING).</description>
         </attribute>
         <attribute>
             <name>avoidHighways</name>
             <required>false</required>
             <type>java.lang.String</type>
-			<defaultValue>false</defaultValue>            
+            <defaultValue>false</defaultValue>
             <description>This flag determines to avoid the highway. default is false.</description>
         </attribute>        
         <attribute>
             <name>preserveViewport</name>
             <required>false</required>
             <type>java.lang.String</type>
-			<defaultValue>false</defaultValue>            
+            <defaultValue>false</defaultValue>
             <description>This flag determines whether to preserve the map original viewport after attaching the map to.</description>
         </attribute>
     </attributes>

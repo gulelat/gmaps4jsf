@@ -189,4 +189,14 @@
 
     }
 
+    if (!google.maps.Map.prototype.addDirection) {
+
+        google.maps.Map.prototype.addDirection = function (direction, callback) {
+            var panel = this.properties.gmaps4jsf.window.document.getElementById(direction.attachNodeId);
+            var directions = new google.maps.Directions(this, panel);
+            directions.load("from: " + direction.fromAddress + " to: " + direction.toAddress, direction);
+        };
+
+    }
+
 })(window);

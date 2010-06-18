@@ -35,14 +35,14 @@ public class HTMLInfoWindowRenderer extends Renderer {
 
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        writer.write("\t\tvar " + getJSVariableName(component) + 
+        writer.write("\t\t\tvar " + getJSVariableName(component) +
         		     " = parent.createInfoWindow(" + convertToJavascriptObject(context, (HTMLInformationWindow) component) + ");");
         
         // encode marker client side events ...
         EventEncoder.encodeEventListeners(context, (HTMLInformationWindow) component, writer, getJSVariableName(component));        
     }
 
-	protected String convertToJavascriptObject(FacesContext context, HTMLInformationWindow infoWindow) {
+    protected String convertToJavascriptObject(FacesContext context, HTMLInformationWindow infoWindow) {
         StringBuffer buffer = new StringBuffer("{latitude: ");
         buffer.append(infoWindow.getLatitude()).append(", longitude: ");
         buffer.append(infoWindow.getLongitude()).append(", htmlText: '");
@@ -52,5 +52,6 @@ public class HTMLInfoWindowRenderer extends Renderer {
 
     private String getJSVariableName(UIComponent component) {
     	return "infoWindowJS_" + component.getId();
-	}
+    }
+
 }
