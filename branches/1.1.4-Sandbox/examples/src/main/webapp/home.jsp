@@ -160,7 +160,7 @@
                         <h:outputText value="JavaScript Customization" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/jsVariableExample.jsf">
-                                <f:verbatim><span style="color:red">An example that demonstrates the ability to use map and markers using JavaScript using the (jsVariable) attribute</span></f:verbatim>
+                                <f:verbatim>An example that demonstrates the ability to use map and markers using JavaScript using the (jsVariable) attribute</f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
 
