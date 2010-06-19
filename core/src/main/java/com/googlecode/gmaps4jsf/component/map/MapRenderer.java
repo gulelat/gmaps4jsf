@@ -19,12 +19,10 @@
 package com.googlecode.gmaps4jsf.component.map;
 
 import java.io.IOException;
-
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
-
+import javax.faces.context.FacesContext;
+import javax.faces.component.UIComponent;
+import javax.faces.context.ResponseWriter;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
 import com.googlecode.gmaps4jsf.util.FileReaderUtils;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
@@ -60,12 +58,10 @@ public final class MapRenderer extends Renderer {
     }
     
     public void decode(FacesContext context, UIComponent component) {
-        Map    map            = (Map)    component;
-        String submittedValue = (String) context.getExternalContext().getRequestParameterMap().get(
-                                         ComponentUtils.getMapStateHiddenFieldId(map));
-
+        Map map = (Map) component;
+        String submittedValue = (String) context.getExternalContext().getRequestParameterMap().get(ComponentUtils.getMapStateHiddenFieldId(map));
         map.setSubmittedValue(submittedValue);
-    }    
+    }
 
     /**
      * Writes the generic (not binded to a specific component) JS code.
@@ -111,7 +107,7 @@ public final class MapRenderer extends Renderer {
         writer.write("(function(window) {\n\twindow.gmaps4jsf.addOnLoad(function() {\n\t\twindow.gmaps4jsf.createMap(" + convertToJavascriptObject(context, map) + ", function (parent) {\n");
         
         // encode map client side events ...
-        EventEncoder.encodeEventListeners(context, map, writer, "parent");
+        EventEncoder.encodeEventListeners(context, map, writer);
     }
 
     protected String convertToJavascriptObject(FacesContext context, Map map) {

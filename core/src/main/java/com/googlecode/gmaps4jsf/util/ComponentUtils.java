@@ -414,4 +414,12 @@ public class ComponentUtils {
         return original == null ? "" : original.replace("'", "\\u0027");
     }
 
+    public static String pad(UIComponent component) {
+        if (component instanceof Map) {
+            return "\t\t";
+        } else {
+            return "\t" + pad(component.getParent());
+        }
+    }
+
 }
