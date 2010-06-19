@@ -34,7 +34,6 @@ import com.googlecode.gmaps4jsf.util.ComponentConstants;
  * The (MapRenderer) renders a google map.
  */
 public final class MapRenderer extends Renderer {
-    private static final String UNDEFINED = "var temp";
 
     public boolean getRendersChildren() {
         return true;
