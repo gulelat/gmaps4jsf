@@ -55,7 +55,7 @@ public final class MapRenderer extends Renderer {
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
         ComponentUtils.assertValidContext(context);
         ResponseWriter writer = context.getResponseWriter();
-        writer.write("\n\t\t});\n\t});\n}) (window);");
+        writer.write("\t\t});\n\t});\n}) (window);");
         writer.endElement(ComponentConstants.HTML_SCRIPT);
     }
     

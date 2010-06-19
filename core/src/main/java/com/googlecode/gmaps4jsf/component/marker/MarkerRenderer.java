@@ -60,7 +60,7 @@ public final class MarkerRenderer extends Renderer {
 
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        writer.write("\n\t\t\t});\n");
+        writer.write("\t\t\t});\n");
     }
     
     public void decode(FacesContext context, UIComponent component) {
