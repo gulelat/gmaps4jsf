@@ -221,7 +221,7 @@
                         <h:outputText value="Web 2.0 Mashup Demo" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/mashups.jsf">
-                                <f:verbatim><span style="color:red">A Web 2.0 Mashup Demo that uses both Apache Tomahawk + Ajax4JSF + GMaps4JSF</span></f:verbatim>
+                                <f:verbatim>A Web 2.0 Mashup Demo that uses both Apache Tomahawk + Ajax4JSF + GMaps4JSF</f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
 
