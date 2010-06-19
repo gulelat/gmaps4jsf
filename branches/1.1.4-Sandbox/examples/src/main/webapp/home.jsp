@@ -189,7 +189,7 @@
                         <h:outputText value="DragZoom (Extended Component - Experimental)" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/dragZoom.jsf">
-                                <f:verbatim><span style="color:red">An example that demonstrates the DragZoom extended component that uses the gmaps-utility-library-dev project</span></f:verbatim>
+                                <f:verbatim>An example that demonstrates the DragZoom extended component that uses the gmaps-utility-library-dev project</f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
 
@@ -203,7 +203,7 @@
                         <h:outputText value="PopupMarker(Extended Component - Experimental)" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/popupMarkers.jsf">
-                                <f:verbatim><span style="color:red">An example that creates popup markers (AKA labels).</span></f:verbatim>
+                                <f:verbatim>An example that creates popup markers (AKA labels).</f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
 
