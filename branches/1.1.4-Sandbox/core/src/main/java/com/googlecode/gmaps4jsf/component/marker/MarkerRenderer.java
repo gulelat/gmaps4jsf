@@ -80,7 +80,7 @@ public final class MarkerRenderer extends Renderer {
             String longitude = markersLngLat[1].substring(0, markersLngLat[1].length() - 1).trim();
             
             buffer.append("address: ''");
-            buffer.append("', latitude: ").append(latitude);
+            buffer.append(", latitude: ").append(latitude);
             buffer.append(", longitude: ").append(longitude);
         } else {
             buffer.append("address: '").append(ComponentUtils.unicode(marker.getAddress()));
