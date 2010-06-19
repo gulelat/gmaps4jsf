@@ -35,8 +35,9 @@ public class PolygonRenderer extends AbstractPolyshape {
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {    
         if (component.isRendered()) {
             ResponseWriter writer = context.getResponseWriter();
-            writer.write("\t\t\tvar " + getJSVariableName(component) + " = " +
-                         "parent.createPolygon(" + convertToJavascriptObject((Polygon) component) + ", function () {\n\t\t\tvar points = [null");
+            writer.write(ComponentUtils.pad(component) + "parent.createPolygon(" + convertToJavascriptObject((Polygon) component) + ", function () {\n");
+            writer.write(ComponentUtils.pad(component) + "\tvar data = {};\n");
+            writer.write(ComponentUtils.pad(component) + "\tdata.points = [];\n");
         }
     }
 

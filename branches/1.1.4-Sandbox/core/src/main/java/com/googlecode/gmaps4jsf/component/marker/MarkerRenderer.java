@@ -52,15 +52,15 @@ public final class MarkerRenderer extends Renderer {
     	updateELBinding(context, marker, markerState);            
         
     	// render the marker
-        writer.write("\t\t\tparent.createMarker(" + convertToJavascriptObject(context, marker, markerState) + ", function (gmap, parent) {\n");
+        writer.write(ComponentUtils.pad(marker) + "parent.createMarker(" + convertToJavascriptObject(context, marker, markerState) + ", function (gmap, parent) {\n");
         
         // encode marker client side events ...
-        EventEncoder.encodeEventListeners(context, marker, writer, "parent");
+        EventEncoder.encodeEventListeners(context, marker, writer);
     }
 
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        writer.write("\t\t\t});\n");
+        writer.write(ComponentUtils.pad(component) + "});\n");
     }
     
     public void decode(FacesContext context, UIComponent component) {
@@ -72,28 +72,22 @@ public final class MarkerRenderer extends Renderer {
     }    
 
     protected String convertToJavascriptObject(FacesContext context, Marker marker, String markerState) {
-        StringBuffer buffer = new StringBuffer("{");
-
+        StringBuffer buffer = new StringBuffer("{address: '");
         if (markerState != null) {
             String[] markersLngLat = markerState.split(",");
-            String latitude  = markersLngLat[0].substring(1).trim();
-            String longitude = markersLngLat[1].substring(0, markersLngLat[1].length() - 1).trim();
-            
-            buffer.append("address: ''");
-            buffer.append(", latitude: ").append(latitude);
-            buffer.append(", longitude: ").append(longitude);
+            buffer.append("', latitude: ").append(markersLngLat[0].substring(1).trim());
+            buffer.append(", longitude: ").append(markersLngLat[1].substring(0, markersLngLat[1].length() - 1).trim());
         } else {
-            buffer.append("address: '").append(ComponentUtils.unicode(marker.getAddress()));
+            buffer.append(ComponentUtils.unicode(marker.getAddress()));
             buffer.append("', latitude: ").append(marker.getLatitude());
             buffer.append(", longitude: ").append(marker.getLongitude());
         }
 
-        buffer.append(", parentFormID: ").append("'" + ComponentUtils.findParentForm(context, marker).getId() + "'");
-        buffer.append(", submitOnValueChange: ").append("'" + marker.getSubmitOnValueChange().toLowerCase() + "'");        
-        buffer.append(", markerID: ").append("'" + getUniqueMarkerId(context, marker) + "'");        
-        buffer.append(", stateHiddenFieldID: ").append("'" + ComponentUtils.getMapStateHiddenFieldId((Map) ComponentUtils.findParentMap(context, marker)) + "'");        
-
-        buffer.append(", markerOptions: {draggable: ").append(marker.getDraggable());
+        buffer.append(", parentFormID: '").append(ComponentUtils.findParentForm(context, marker).getId());
+        buffer.append("', submitOnValueChange: '").append(marker.getSubmitOnValueChange().toLowerCase());
+        buffer.append("', markerID: '").append(getUniqueMarkerId(context, marker));
+        buffer.append("', stateHiddenFieldID: '").append(ComponentUtils.getMapStateHiddenFieldId((Map) ComponentUtils.findParentMap(context, marker)));
+        buffer.append("', markerOptions: {draggable: ").append(marker.getDraggable());
         for (Iterator iterator = marker.getChildren().iterator(); iterator.hasNext();) {
             UIComponent component = (UIComponent) iterator.next();
             if (component instanceof Icon) {
@@ -153,7 +147,6 @@ public final class MarkerRenderer extends Renderer {
             int         end         = mapState.indexOf(")", start);
             String      markerState = mapState.substring(start, end + 1);
             MarkerValue markerValue = getMarkerValueFromState(markerState);
-                          
             marker.setSubmittedValue(markerValue);
         }
     }

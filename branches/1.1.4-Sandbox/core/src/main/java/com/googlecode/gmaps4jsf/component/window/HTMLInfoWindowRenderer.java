@@ -35,10 +35,15 @@ public class HTMLInfoWindowRenderer extends Renderer {
 
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        writer.write("\t\t\tvar infoWindow = parent.createInfoWindow(" + convertToJavascriptObject(context, (HTMLInformationWindow) component) + ");\n");
+        writer.write(ComponentUtils.pad(component) + "parent.createInfoWindow(" + convertToJavascriptObject(context, (HTMLInformationWindow) component) + ", function (parent) {\n");
         
         // encode marker client side events ...
-        EventEncoder.encodeEventListeners(context, (HTMLInformationWindow) component, writer, "infoWindow");
+        EventEncoder.encodeEventListeners(context, (HTMLInformationWindow) component, writer);
+    }
+
+    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
+        ResponseWriter writer = context.getResponseWriter();
+        writer.write(ComponentUtils.pad(component) + "});\n");
     }
 
     protected String convertToJavascriptObject(FacesContext context, HTMLInformationWindow infoWindow) {

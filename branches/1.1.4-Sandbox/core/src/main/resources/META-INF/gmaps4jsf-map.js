@@ -243,33 +243,32 @@
 
     if (!google.maps.Map.prototype.createInfoWindow) {
 
-        google.maps.Map.prototype.createInfoWindow = function(infoWindow) {
+        google.maps.Map.prototype.createInfoWindow = function(infoWindow, callback) {
             var pos = infoWindow.latitude ? new google.maps.LatLng(infoWindow.latitude, infoWindow.longitude) : this.getCenter();
             this.openInfoWindowHtml(pos, infoWindow.htmlText);
-            
-            return this.getInfoWindow();
+            callback(this.getInfoWindow());
         };
 
     }
 
     if (!google.maps.Marker.prototype.createInfoWindow) {
 
-        google.maps.Marker.prototype.createInfoWindow = function(infoWindow) {
+        google.maps.Marker.prototype.createInfoWindow = function(infoWindow, callback) {
             this.openInfoWindowHtml(infoWindow.htmlText);
-            
-            return this.parentMap.getInfoWindow();         
+            callback(this.parentMap.getInfoWindow());
         };
     }
 
     if (!google.maps.Map.prototype.createPolyline) {
 
-        google.maps.Map.prototype.createPolyline = function (polyline, getPoints) {
-            var line = new google.maps.Polyline(getPoints(), polyline.hexaColor, polyline.lineWidth, polyline.opacity, {geodesic: polyline.geodesic});
+        google.maps.Map.prototype.createPolyline = function (polyline, getContained) {
+            var contained = getContained({});
+            var line = new google.maps.Polyline(contained.points, polyline.hexaColor, polyline.lineWidth, polyline.opacity, {geodesic: polyline.geodesic});
             this.addOverlay(line);
             if (polyline.jsVariable) {
                 this.gmaps4jsf.window[polyline.jsVariable] = line;
             }
-            
+            contained.callback(line);
             return line;
         };
 
@@ -277,13 +276,14 @@
 
     if (!google.maps.Map.prototype.createPolygon) {
 
-        google.maps.Map.prototype.createPolygon = function(polygon, getPoints) {
-            var poly = new google.maps.Polygon(getPoints(), polygon.hexStrokeColor, polygon.lineWidth, polygon.strokeOpacity, polygon.hexFillColor, polygon.fillOpacity);
+        google.maps.Map.prototype.createPolygon = function(polygon, getContained) {
+            var contained = getContained();
+            var poly = new google.maps.Polygon(contained.points, polygon.hexStrokeColor, polygon.lineWidth, polygon.strokeOpacity, polygon.hexFillColor, polygon.fillOpacity);
             this.addOverlay(poly);
             if (polygon.jsVariable) {
                 this.gmaps4jsf.window[polygon.jsVariable] = poly;
             }
-            
+            contained.callback(poly);
             return poly;
         };
 

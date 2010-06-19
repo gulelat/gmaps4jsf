@@ -26,6 +26,7 @@ import javax.faces.context.ResponseWriter;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
 import com.googlecode.gmaps4jsf.component.eventlistener.EventListener;
 import com.googlecode.gmaps4jsf.component.window.HTMLInformationWindow;
+import com.googlecode.gmaps4jsf.util.ComponentUtils;
 
 /**
  * @author Hazem Saleh
@@ -36,24 +37,25 @@ public class EventEncoder {
 
     private static final String JS_FUNC_CLEAR_INSTANCE_LISTENERS = "clearInstanceListeners";
 
-    public static void encodeEventListeners(FacesContext facesContext, UIComponent eventSource, ResponseWriter writer, String eventSourceBaseVariable) throws IOException {
+    public static void encodeEventListeners(FacesContext facesContext, UIComponent eventSource, ResponseWriter writer) throws IOException {
         for (Iterator iterator = eventSource.getChildren().iterator(); iterator.hasNext();) {
             UIComponent component = (UIComponent) iterator.next();
             if (component instanceof EventListener) {
-                encodeEventListener(facesContext, eventSource, (EventListener) component, writer, eventSourceBaseVariable);
+                encodeEventListener(facesContext, eventSource, (EventListener) component, writer);
             }
         }
     }
     
-    private static void encodeEventListener(FacesContext facesContext, UIComponent eventSource, EventListener eventListener, ResponseWriter writer, String eventSourceBaseVariable) throws IOException {
-        StringBuffer buffer = new StringBuffer("\t\t\t");
+    private static void encodeEventListener(FacesContext facesContext, UIComponent eventSource, EventListener eventListener, ResponseWriter writer) throws IOException {
+        StringBuffer buffer = new StringBuffer("\t");
+        buffer.append(ComponentUtils.pad(eventSource));
         if (eventSource instanceof HTMLInformationWindow) {
             // Incase of HTMLInformationWindow, all of the previous event listeners should be removed
             buffer.append(ComponentConstants.JS_GEVENT_OBJECT).append(".")
-                .append(JS_FUNC_CLEAR_INSTANCE_LISTENERS).append("(infoWindow);\n\t\t\t");
+                .append(JS_FUNC_CLEAR_INSTANCE_LISTENERS).append("(parent);\n\t")
+                .append(ComponentUtils.pad(eventSource));
         }
-        buffer.append(ComponentConstants.JS_GEVENT_OBJECT).append(".addListener(")
-            .append(eventSourceBaseVariable).append(", '")
+        buffer.append(ComponentConstants.JS_GEVENT_OBJECT).append(".addListener(parent, '")
             .append(eventListener.getEventName()).append("', ")
             .append(eventListener.getJsFunction()).append(");\n");
         writer.write(buffer.toString());
