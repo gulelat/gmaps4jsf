@@ -15,7 +15,7 @@
 	<body onunload="GUnload()">
             <h:form id="form">
                 <div>AutoReshape Map: A map that is reshaped according to its markers positions. (Drag the markers and submit to see).</div>
-    		<m:map width="500px" height="500px" latitude="24" longitude="15" jsVariable="map1" zoom="4" autoReshape="true">
+                <m:map width="500px" height="500px" latitude="24" longitude="15" jsVariable="map1" zoom="4" autoReshape="true" debug="true">
                     <m:marker latitude="30.01" longitude="31.14" draggable="true" />
                     <m:marker latitude="39" longitude="-101"  draggable="true" />
                     <m:marker  latitude="-33" longitude="19" draggable="true" />
