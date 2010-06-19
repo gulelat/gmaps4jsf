@@ -58,6 +58,14 @@ public final class MapRenderer extends Renderer {
         writer.write("\n\t\t});\n\t});\n}) (window);");
         writer.endElement(ComponentConstants.HTML_SCRIPT);
     }
+    
+    public void decode(FacesContext context, UIComponent component) {
+        Map    map            = (Map)    component;
+        String submittedValue = (String) context.getExternalContext().getRequestParameterMap().get(
+                                         ComponentUtils.getMapStateHiddenFieldId(map));
+
+        map.setSubmittedValue(submittedValue);
+    }    
 
     /**
      * Writes the generic (not binded to a specific component) JS code.
@@ -77,6 +85,24 @@ public final class MapRenderer extends Renderer {
         writer.writeAttribute(ComponentConstants.HTML_ATTR_ID, map.getClientId(context), ComponentConstants.HTML_ATTR_ID);
         writer.writeAttribute(ComponentConstants.HTML_ATTR_STYLE, "width: " + ComponentUtils.getMapWidth(map) + "; height: " + ComponentUtils.getMapHeight(map), ComponentConstants.HTML_ATTR_STYLE);
         writer.endElement(ComponentConstants.HTML_DIV);
+        
+        // encode map state holder.
+        Object mapState = ComponentUtils.getValueToRender(context, map);
+
+        writer.startElement(ComponentConstants.HTML_INPUT, map);
+
+        writer.writeAttribute(ComponentConstants.HTML_ATTR_ID, ComponentUtils.getMapStateHiddenFieldId(map),
+                              ComponentConstants.HTML_ATTR_ID);
+        writer.writeAttribute(ComponentConstants.HTML_ATTR_NAME, ComponentUtils.getMapStateHiddenFieldId(map),
+                              ComponentConstants.HTML_ATTR_NAME);
+        writer.writeAttribute(ComponentConstants.HTML_ATTR_TYPE, ComponentConstants.HTML_ATTR_TYPE_HIDDEN,
+                              ComponentConstants.HTML_ATTR_TYPE);
+        
+        if (null != mapState) {
+            writer.writeAttribute(ComponentConstants.HTML_ATTR_VALUE, mapState, ComponentConstants.HTML_ATTR_VALUE);
+        }        
+
+        writer.endElement(ComponentConstants.HTML_INPUT);        
     }
 
     private void startEncodingMapWorld(FacesContext context, Map map, ResponseWriter writer) throws IOException {
