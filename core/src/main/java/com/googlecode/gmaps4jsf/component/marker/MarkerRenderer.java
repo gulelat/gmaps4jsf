@@ -92,7 +92,7 @@ public final class MarkerRenderer extends Renderer {
         buffer.append(", submitOnValueChange: ").append("'" + marker.getSubmitOnValueChange().toLowerCase() + "'");        
         buffer.append(", markerID: ").append("'" + getUniqueMarkerId(context, marker) + "'");        
         buffer.append(", stateHiddenFieldID: ").append("'" + ComponentUtils.getMapStateHiddenFieldId((Map) ComponentUtils.findParentMap(context, marker)) + "'");        
-        
+
         buffer.append(", markerOptions: {draggable: ").append(marker.getDraggable());
         for (Iterator iterator = marker.getChildren().iterator(); iterator.hasNext();) {
             UIComponent component = (UIComponent) iterator.next();

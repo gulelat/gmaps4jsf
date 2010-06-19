@@ -36,7 +36,7 @@ import com.googlecode.gmaps4jsf.util.ComponentConstants;
  */
 public class GroundOverlayEncoder {
     
-    public static void encodeGroundOverlaysFunctionScript(
+    /*public static void encodeGroundOverlaysFunctionScript(
                        FacesContext facesContext, Map mapComponent, 
                        ResponseWriter writer)
                        throws IOException {
@@ -120,5 +120,5 @@ public class GroundOverlayEncoder {
             writer.write("    " + groundOverlay.getJsVariable() + " = " + "groundOverlay_"
                         + groundOverlay.getId() + ";    ");
         }
-    }    
+    }    */
 }

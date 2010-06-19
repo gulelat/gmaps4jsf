@@ -28,7 +28,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import com.googlecode.gmaps4jsf.component.map.Map;
 import com.googlecode.gmaps4jsf.component.marker.Marker;
-import com.googlecode.gmaps4jsf.component.marker.MarkerEncoder;
+//import com.googlecode.gmaps4jsf.component.marker.MarkerEncoder;
 import com.googlecode.gmaps4jsf.util.FileReaderUtils;
 
 /**
@@ -133,7 +133,7 @@ public final class PluginEncoder {
     
     
     public static String getUniqueMarkerId(FacesContext facesContext, Marker marker) {
-        return MarkerEncoder.getUniqueMarkerId(facesContext, marker);
+        return null;//MarkerEncoder.getUniqueMarkerId(facesContext, marker);
     }       
 
 }
