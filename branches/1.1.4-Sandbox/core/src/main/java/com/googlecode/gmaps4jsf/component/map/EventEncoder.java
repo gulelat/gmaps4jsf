@@ -35,77 +35,30 @@ import com.googlecode.gmaps4jsf.util.ComponentConstants;
  * The EventEncoder is used for encoding the event listeners for all the event sources.
  */
 public class EventEncoder {
+
     private static final String JS_FUNC_CLEAR_INSTANCE_LISTENERS = "clearInstanceListeners";
-    
-	public static void encodeEventListeners(FacesContext facesContext,
-			                                UIComponent eventSource, 
-			                                ResponseWriter writer,
-			                                String eventSourceBaseVariable) 
-	                                        throws IOException {
 
-		for (Iterator iterator = eventSource.getChildren().iterator(); iterator.hasNext();) {
-			UIComponent component = (UIComponent) iterator.next();
-
-			if (component instanceof EventListener) {
-				encodeEventListener(facesContext, eventSource,
-						(EventListener) component, writer,
-						eventSourceBaseVariable);
-			}
-		}
-	}   
-
-    public static void encodeEventListenersFunctionScript(
-                       FacesContext facesContext, UIComponent eventSource,
-                       ResponseWriter writer, String eventSourceBaseVariable)
-                       throws IOException {
-
-        writer.write(ComponentConstants.JS_FUNCTION
-                    + ComponentConstants.JS_CREATE_EVENT_LISTENERS_FUNCTION_PREFIX
-                    + eventSource.getId() + "(" + eventSourceBaseVariable + ") {");
-        
+    public static void encodeEventListeners(FacesContext facesContext, UIComponent eventSource, ResponseWriter writer, String eventSourceBaseVariable) throws IOException {
         for (Iterator iterator = eventSource.getChildren().iterator(); iterator.hasNext();) {
             UIComponent component = (UIComponent) iterator.next();
-
             if (component instanceof EventListener) {
-                encodeEventListener(facesContext, eventSource, (EventListener) component,
-                        writer, eventSourceBaseVariable);
+                encodeEventListener(facesContext, eventSource, (EventListener) component, writer, eventSourceBaseVariable);
             }
         }
-        writer.write("}");
-    }   
-    
-    public static void encodeEventListenersFunctionScriptCall(
-                       FacesContext facesContext, UIComponent eventSource,
-                       ResponseWriter writer, String eventSourceBaseVariable)
-                       throws IOException {
-
-        writer.write(ComponentConstants.JS_CREATE_EVENT_LISTENERS_FUNCTION_PREFIX
-                    + eventSource.getId()
-                    + "("
-                    + eventSourceBaseVariable
-                    + "); ");
     }
     
-    private static void encodeEventListener(FacesContext facesContext,
-                        UIComponent eventSource, EventListener eventListener,
-                        ResponseWriter writer, String eventSourceBaseVariable)
-                        throws IOException {
-
+    private static void encodeEventListener(FacesContext facesContext, UIComponent eventSource, EventListener eventListener, ResponseWriter writer, String eventSourceBaseVariable) throws IOException {
+        StringBuffer buffer = new StringBuffer("\t\t\t");
         if (eventSource instanceof HTMLInformationWindow) {
-            
-            // Incase of HTMLInformationWindow, all of the previous event listeners
-            // should be removed
-            writer.write(ComponentConstants.JS_GEVENT_OBJECT
-                        + "." 
-                        + JS_FUNC_CLEAR_INSTANCE_LISTENERS 
-                        + "(" + eventSourceBaseVariable
-                        + "); ");
+            // Incase of HTMLInformationWindow, all of the previous event listeners should be removed
+            buffer.append(ComponentConstants.JS_GEVENT_OBJECT).append(".")
+                .append(JS_FUNC_CLEAR_INSTANCE_LISTENERS).append("(infoWindow);\n\t\t\t");
         }
-        
-        writer.write(ComponentConstants.JS_GEVENT_OBJECT + ".addListener("
-                    + eventSourceBaseVariable + ", '"
-                    + eventListener.getEventName() + "', "
-                    + eventListener.getJsFunction() + "); ");
-
+        buffer.append(ComponentConstants.JS_GEVENT_OBJECT).append(".addListener(")
+            .append(eventSourceBaseVariable).append(", '")
+            .append(eventListener.getEventName()).append("', ")
+            .append(eventListener.getJsFunction()).append(");\n");
+        writer.write(buffer.toString());
     }
+
 }

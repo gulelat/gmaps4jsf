@@ -32,7 +32,7 @@
                         <h:outputText value="Auto-Arrange Map" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/autoReshape.jsf">
-                                <f:verbatim><span style="color:red">A map that is reshaped according to its markers' positions</span></f:verbatim>
+                                <f:verbatim>A map that is reshaped according to its markers' positions</f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
 
@@ -46,7 +46,7 @@
                         <h:outputText value="Draggable Markers" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/draggableMarkers.jsf">
-                                <f:verbatim><span style="color:red">Map with draggable markers</span></f:verbatim>
+                                <f:verbatim>Map with draggable markers</f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
 
@@ -74,7 +74,7 @@
                         <h:outputText value="Client-side EventListeners" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/mapEvents.jsf">
-                                <f:verbatim><span style="color:red">Listening to client-side events on your map and markers</span></f:verbatim>
+                                <f:verbatim>Listening to client-side events on your map and markers</f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
 
