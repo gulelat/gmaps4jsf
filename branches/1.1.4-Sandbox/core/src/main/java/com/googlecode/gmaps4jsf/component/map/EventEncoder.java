@@ -18,16 +18,14 @@
  */
 package com.googlecode.gmaps4jsf.component.map;
 
-import java.io.IOException;
 import java.util.Iterator;
-
-import javax.faces.component.UIComponent;
+import java.io.IOException;
 import javax.faces.context.FacesContext;
+import javax.faces.component.UIComponent;
 import javax.faces.context.ResponseWriter;
-
+import com.googlecode.gmaps4jsf.util.ComponentConstants;
 import com.googlecode.gmaps4jsf.component.eventlistener.EventListener;
 import com.googlecode.gmaps4jsf.component.window.HTMLInformationWindow;
-import com.googlecode.gmaps4jsf.util.ComponentConstants;
 
 /**
  * @author Hazem Saleh
