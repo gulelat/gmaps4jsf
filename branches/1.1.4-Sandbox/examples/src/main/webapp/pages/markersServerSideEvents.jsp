@@ -19,7 +19,7 @@
 	<body onunload="GUnload()">
     	<h:form id="form">
 		  	<div>Markers Server side events - Drag the markers!!!</div>
-    		<m:map width="90%" height="90%" latitude="24" longitude="15" jsVariable="map1" zoom="2">
+    		<m:map width="90%" height="90%" latitude="24" longitude="15" jsVariable="map1" zoom="2" debug="true">
     			<m:marker id="marker1" latitude="30.01" longitude="31.14" jsVariable="marker1" draggable="true" 
     			          submitOnValueChange="true" valueChangeListener="#{map.processValueChangeForFirstMarker}">
 					<m:icon shadowImageURL="http://www.google.com/mapfiles/shadow50.png" 
