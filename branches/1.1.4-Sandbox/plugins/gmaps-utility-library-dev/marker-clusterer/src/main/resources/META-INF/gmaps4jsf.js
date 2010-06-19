@@ -2,8 +2,9 @@ if (!google.maps.Map.prototype.setCluster) {
 
     google.maps.Map.prototype.cluster = null;
 
-    google.maps.Map.prototype.setCluster = function(clt) {
+    google.maps.Map.prototype.setCluster = function(clt, callback) {
         this.cluster = clt;
+        callback(this);
     };
 
     google.maps.Map.prototype.addMarker = function(marker) {
@@ -16,6 +17,7 @@ if (!google.maps.Map.prototype.setCluster) {
             }
             this.cluster.timer = setTimeout(this.getClusterFunction(this), 250);
         }
+        return this.cluster == null;
     };
 
     google.maps.Map.prototype.getClusterFunction = function(map) {

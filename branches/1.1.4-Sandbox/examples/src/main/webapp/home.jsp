@@ -81,7 +81,7 @@
                         <h:outputText value="Server-side EventListeners" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/markersServerSideEvents.jsf">
-                                <f:verbatim><span style="color:red">Listening to server-side events on markers</span></f:verbatim>
+                                <f:verbatim>Listening to server-side events on markers</f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
 
@@ -210,7 +210,7 @@
                         <h:outputText value="Marker Clusterer(Extended Component - Experimental)" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/markerCluster.jsf">
-                                <f:verbatim><span style="color:red">An example that groups markers in clusters depending on zoom level.</span></f:verbatim>
+                                <f:verbatim>An example that groups markers in clusters depending on zoom level.</f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
 

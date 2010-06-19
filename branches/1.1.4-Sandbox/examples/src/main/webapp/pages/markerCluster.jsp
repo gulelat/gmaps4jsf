@@ -10,7 +10,7 @@
         </head>
         <body onunload="GUnload()">
             <h:form id="form">
-                <m:map width="650px" height="450px" latitude="40.417923" longitude="-3.700333" jsVariable="gmap" zoom="11">
+                <m:map width="650px" height="450px" latitude="40.417923" longitude="-3.700333" jsVariable="gmap" zoom="11" enableScrollWheelZoom="true">
                     <m:mapControl name="GSmallMapControl" />
                     <m:markerCluster>
                         <m:marker address="Moncloa, Madrid" />
