@@ -37,10 +37,8 @@ import com.googlecode.gmaps4jsf.util.ComponentUtils;
  */
 public final class MarkerRenderer extends Renderer {
     
-	public static String getUniqueMarkerId(FacesContext facesContext, Marker marker) {
-        String markerID = marker.getClientId(facesContext);
-
-        return markerID.replace(':', '_');
+    protected static String getUniqueMarkerId(FacesContext facesContext, Marker marker) {
+        return marker.getClientId(facesContext).replace(':', '_');
     }        
 	
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
@@ -68,30 +66,28 @@ public final class MarkerRenderer extends Renderer {
     public void decode(FacesContext context, UIComponent component) {
         Marker marker   = (Marker) component;
         Map    map      = (Map) ComponentUtils.findParentMap(context, marker);
-        String mapState = (String) context.getExternalContext().getRequestParameterMap().get(
-                          ComponentUtils.getMapStateHiddenFieldId(map));
+        String mapState = (String) context.getExternalContext().getRequestParameterMap().get(ComponentUtils.getMapStateHiddenFieldId(map));
 
         decodeMarker(marker, mapState);
     }    
 
     protected String convertToJavascriptObject(FacesContext context, Marker marker, String markerState) {
         StringBuffer buffer = new StringBuffer("{");
-        
+
         if (markerState != null) {
             String[] markersLngLat = markerState.split(",");
-
             String latitude  = markersLngLat[0].substring(1).trim();
             String longitude = markersLngLat[1].substring(0, markersLngLat[1].length() - 1).trim();
             
-	        buffer.append("address: '").append("");
-	        buffer.append("', latitude: ").append(latitude);
-	        buffer.append(", longitude: ").append(longitude);    
+            buffer.append("address: ''");
+            buffer.append("', latitude: ").append(latitude);
+            buffer.append(", longitude: ").append(longitude);
         } else {
-	        buffer.append("address: '").append(ComponentUtils.unicode(marker.getAddress()));
-	        buffer.append("', latitude: ").append(marker.getLatitude());
-	        buffer.append(", longitude: ").append(marker.getLongitude());
+            buffer.append("address: '").append(ComponentUtils.unicode(marker.getAddress()));
+            buffer.append("', latitude: ").append(marker.getLatitude());
+            buffer.append(", longitude: ").append(marker.getLongitude());
         }
-        
+
         buffer.append(", parentFormID: ").append("'" + ComponentUtils.findParentForm(context, marker).getId() + "'");
         buffer.append(", submitOnValueChange: ").append("'" + marker.getSubmitOnValueChange().toLowerCase() + "'");        
         buffer.append(", markerID: ").append("'" + getUniqueMarkerId(context, marker) + "'");        
@@ -104,7 +100,9 @@ public final class MarkerRenderer extends Renderer {
                 buffer.append(", icon: parent.buildIcon(").append(convertIconToJavascriptObject((Icon) component)).append(")");
             }
         }
-        return buffer.append("}}").toString();
+
+        buffer.append("}, jsVariable: '").append(ComponentUtils.unicode(marker.getJsVariable())).append("'}");
+        return buffer.toString();
     }
 
     protected StringBuffer convertIconToJavascriptObject(Icon icon) {
@@ -160,21 +158,21 @@ public final class MarkerRenderer extends Renderer {
         }
     }
     
-	private void updateELBinding(FacesContext context, Marker marker,
-			String markerState) {
-		if (markerState != null && (! markerState.equals(""))) {
-	        if (marker.getValueBinding(ComponentConstants.MARKER_ATTR_LATITUDE) != null) {
-	            marker.getValueBinding(ComponentConstants.MARKER_ATTR_LATITUDE)
-	                  .setValue(context, markerState.split(",")[0].substring(1).trim());
-	        }
-	
-	        if (marker.getValueBinding(ComponentConstants.MARKER_ATTR_LONGITUDE) != null) {
-	            marker.getValueBinding(ComponentConstants.MARKER_ATTR_LONGITUDE)
-	                  .setValue(
-	                            context,
-	                            markerState.split(",")[1].substring(0, markerState
-	                                       .split(",")[1].length() - 1).trim());
-	        }    	
-    	}
-	}    
+    private void updateELBinding(FacesContext context, Marker marker, String markerState) {
+        if (markerState != null && (! markerState.equals(""))) {
+            if (marker.getValueBinding(ComponentConstants.MARKER_ATTR_LATITUDE) != null) {
+                marker.getValueBinding(ComponentConstants.MARKER_ATTR_LATITUDE)
+                  .setValue(context, markerState.split(",")[0].substring(1).trim());
+            }
+
+            if (marker.getValueBinding(ComponentConstants.MARKER_ATTR_LONGITUDE) != null) {
+                marker.getValueBinding(ComponentConstants.MARKER_ATTR_LONGITUDE)
+                    .setValue(context,
+                                markerState.split(",")[1].substring(0,
+                                markerState.split(",")[1].length() - 1).trim()
+                    );
+            }
+        }
+    }
+
 }

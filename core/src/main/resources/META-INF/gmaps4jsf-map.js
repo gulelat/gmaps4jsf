@@ -21,13 +21,12 @@
                     }
                 }
             }
-            themap.center(map);
             if (map.enableScrollWheelZoom) {
                 themap.enableScrollWheelZoom();
             } else {
                 themap.disableScrollWheelZoom();
             }
-            callback(themap);
+            themap.center(map, callback);
         };
 
         gmaps4jsf.getMap = function (map) {
@@ -39,18 +38,27 @@
 
     if (!google.maps.Map.prototype.center) {
 
-        google.maps.Map.prototype.center = function (map) {
+        google.maps.Map.prototype.center = function (map, callback) {
             var self = this;
             var props = map ? map : self.properties;
             if (props.location.address) {
                 props.gmaps4jsf.geocode(props.location.address, function (location) {
                     if (location) {
-                        self.setCenter(location, props.zoom);
+                        self._center(location, props.zoom, callback)
                     }
                 });
             } else {
-                self.setCenter(new google.maps.LatLng(props.location.latitude, props.location.longitude), props.zoom);
+                self._center(new google.maps.LatLng(props.location.latitude, props.location.longitude), props.zoom, callback);
             }
+        };
+
+        google.maps.Map.prototype._center = function (latlng, zoom, callback) {
+            this.setCenter(latlng, zoom);
+            this._createMapCallback(callback);
+        };
+
+        google.maps.Map.prototype._createMapCallback = function(callback) {
+            callback(this);
         };
 
         google.maps.Map.prototype.reshape = function(latlng) {
@@ -213,7 +221,9 @@
             }
             marker.properties = markerOptions;
             marker.parentMap = this;
-            
+            if (markerOptions.jsVariable) {
+                this.properties.gmaps4jsf.window[markerOptions.jsVariable] = marker;
+            }
             callback(this, marker);
             this.reshape(latlng);
         };
