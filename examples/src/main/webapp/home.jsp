@@ -145,7 +145,7 @@
                         <h:outputText value="GroundOverlay" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/groundoverlay.jsf">
-                                <f:verbatim><span style="color:red">Place GMaps4JSF logo on the earth</span></f:verbatim>
+                                <f:verbatim>Place GMaps4JSF logo on the earth</f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
                         
