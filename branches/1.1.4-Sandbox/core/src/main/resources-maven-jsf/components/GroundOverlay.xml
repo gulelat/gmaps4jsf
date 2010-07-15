@@ -22,63 +22,58 @@
 //-->
 
 <!DOCTYPE component SYSTEM "../misc/component.dtd" [
-<!ENTITY standard_uicomponent_attributes		SYSTEM "../entities/standard_uicomponent_attributes.xml">
+    <!ENTITY standard_uicomponent_attributes SYSTEM "../entities/standard_uicomponent_attributes.xml">
 ]>
 <component>
-	<tag>groundoverlay</tag>
-	<tagClass>com.googlecode.gmaps4jsf.component.groundoverlay.GroundOverlayTag</tagClass>
-	<componentClass>com.googlecode.gmaps4jsf.component.groundoverlay.GroundOverlay</componentClass>
-	<componentType>com.googlecode.gmaps4jsf.Groundoverlay</componentType>
-	<componentFamily>com.googlecode.gmaps4jsf</componentFamily>
-	<parent>javax.faces.component.UIComponentBase</parent>
-	<attributes>
-		&standard_uicomponent_attributes;
-		<attribute>
-			<name>imageURL</name>
-			<required>true</required>
-			<type>java.lang.String</type>		
-			<description>The GroundOverlay image url.</description>
-		</attribute>		
-		
-		<attribute>
-			<name>startLatitude</name>
-			<required>true</required>
-			<type>java.lang.String</type>		
-			<description>The GroundOverlay image box left upper start latitude.</description>
-		</attribute>		
-		
-		<attribute>
-			<name>startLongitude</name>
-			<required>true</required>
-			<type>java.lang.String</type>		
-			<description>The GroundOverlay image box left upper start longitude.</description>
-		</attribute>
-				
-		
-		<attribute>
-			<name>endLatitude</name>
-			<required>true</required>
-			<type>java.lang.String</type>		
-			<description>The GroundOverlay image box right bottom end latitude.</description>
-		</attribute>
-		
-		<attribute>
-			<name>endLongitude</name>
-			<required>true</required>
-			<type>java.lang.String</type>		
-			<description>The GroundOverlay image box right bottom end longitude.</description>
-		</attribute>				
-		
-		<attribute>
-			<name>jsVariable</name>
-			<required>false</required>
-			<type>java.lang.String</type>				
-			<description>
-			This flag determines the JavaScript variable you want to use for referring to the GroundOverlay.
-			Use this attribute if you want to use write additional JavaScript code for the 
-			GroundOverlay to customize it.
-			</description>
-		</attribute>								
-				
-	</attributes>
+    <tag>groundoverlay</tag>
+    <tagClass>com.googlecode.gmaps4jsf.component.overlay.GroundOverlayTag</tagClass>
+    <componentClass>com.googlecode.gmaps4jsf.component.overlay.GroundOverlay</componentClass>
+    <componentType>com.googlecode.gmaps4jsf.Groundoverlay</componentType>
+    <componentFamily>com.googlecode.gmaps4jsf</componentFamily>
+    <rendererType>com.googlecode.gmaps4jsf.component.overlay.GroundOverlayRenderer</rendererType>
+    <rendererClass>com.googlecode.gmaps4jsf.component.overlay.GroundOverlayRenderer</rendererClass>
+    <parent>javax.faces.component.UIComponentBase</parent>
+    <attributes>
+        &standard_uicomponent_attributes;
+        <attribute>
+            <name>imageURL</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+            <description>The GroundOverlay image url.</description>
+        </attribute>
+        <attribute>
+            <name>startLatitude</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+            <description>The GroundOverlay image box left upper start latitude.</description>
+        </attribute>
+        <attribute>
+            <name>startLongitude</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+            <description>The GroundOverlay image box left upper start longitude.</description>
+        </attribute>
+        <attribute>
+            <name>endLatitude</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+            <description>The GroundOverlay image box right bottom end latitude.</description>
+        </attribute>
+        <attribute>
+            <name>endLongitude</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+            <description>The GroundOverlay image box right bottom end longitude.</description>
+        </attribute>
+        <attribute>
+            <name>jsVariable</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <description>
+                This flag determines the JavaScript variable you want to use for referring to the GroundOverlay.
+                Use this attribute if you want to use write additional JavaScript code for the
+                GroundOverlay to customize it.
+            </description>
+        </attribute>
+    </attributes>
 </component>

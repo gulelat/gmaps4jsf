@@ -213,7 +213,7 @@
             var line = new google.maps.Polyline(contained.points, polyline.hexaColor, polyline.lineWidth, polyline.opacity, {geodesic: polyline.geodesic});
             this.addOverlay(line);
             if (polyline.jsVariable) {
-                this.gmaps4jsf.window[polyline.jsVariable] = line;
+                this.properties.gmaps4jsf.window[polyline.jsVariable] = line;
             }
             contained.callback(line);
             return line;
@@ -228,10 +228,24 @@
             var poly = new google.maps.Polygon(contained.points, polygon.hexStrokeColor, polygon.lineWidth, polygon.strokeOpacity, polygon.hexFillColor, polygon.fillOpacity);
             this.addOverlay(poly);
             if (polygon.jsVariable) {
-                this.gmaps4jsf.window[polygon.jsVariable] = poly;
+                this.properties.gmaps4jsf.window[polygon.jsVariable] = poly;
             }
             contained.callback(poly);
             return poly;
+        };
+
+    }
+
+    if (!google.maps.Map.prototype.createOverlay) {
+
+        google.maps.Map.prototype.createOverlay = function (overlay, callback) {
+            var bounds = new google.maps.LatLngBounds(new google.maps.LatLng(overlay.startLatitude, overlay.startLongitude), new google.maps.LatLng(overlay.endLatitude, overlay.endLongitude));
+            var goverlay = new google.maps.GroundOverlay(overlay.imageURL, bounds);
+            this.addOverlay(goverlay);
+            if (overlay.jsVariable) {
+                this.properties.gmaps4jsf.window[overlay.jsVariable] = goverlay;
+            }
+            callback(this, goverlay);
         };
 
     }
