@@ -18,28 +18,29 @@
  */
 package com.googlecode.gmaps4jsf.plugins.gmapsutility.tabbedmaxcontent;
 
-import javax.faces.context.FacesContext;
-import javax.faces.component.UIComponent;
-
-import com.googlecode.gmaps4jsf.component.map.Map;
-import com.googlecode.gmaps4jsf.util.ComponentConstants;
+import junit.framework.TestCase;
+import com.googlecode.gmaps4jsf.plugins.gmapsutility.component.Tab;
 
 /**
- * Creates an enhanced information window usable inside Maps that can be maximized.
  *
  * @author Jose Noheda [jose.noheda@gmail.com]
  */
-public final class MapExtendedInfoWindowEncoder extends AbstractTabbedContentEncoder {
+public class TabRendererTest extends TestCase {
 
-    public Class getModifiedComponent() {
-        return Map.class;
+    private TabRenderer renderer = new TabRenderer();
+
+    public void testGetTabContent() {
+        Tab tab = new Tab();
+        assertEquals("No tab content", "null", renderer.getTabContent(tab).toString());
+        tab.setContent("Something");
+        assertEquals("Tab content", "'Something'", renderer.getTabContent(tab).toString());
     }
 
-    public String encodeFunctionScriptCall(FacesContext facesContext, UIComponent mapComponent) {
-        StringBuffer buffer = new StringBuffer();
-        return buffer.append(TABBED_INFO_WINDOW_FUNCTION).append(mapComponent.getId())
-            .append("(").append(ComponentConstants.JS_GMAP_BASE_VARIABLE).append(",")
-            .append(ComponentConstants.JS_GMAP_BASE_VARIABLE).append(");").toString();
+    public void testGetTabOnSelect() {
+        Tab tab = new Tab();
+        assertEquals("No tab select function", "null", renderer.getTabOnSelect(tab).toString());
+        tab.setOnSelect("alert(1);");
+        assertEquals("JS function on select", "function (tab) {alert(1);}", renderer.getTabOnSelect(tab).toString());
     }
 
 }

@@ -16,19 +16,28 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.googlecode.gmaps4jsf.plugins;
-
-import com.googlecode.gmaps4jsf.component.marker.Marker;
+package com.googlecode.gmaps4jsf.plugins.gmapsutility.tabbedmaxcontent.util;
 
 /**
- * Base class for plugins that modify the Marker component behavior.
  *
- * @author Jose Noheda [jose.noheda@gmail.com]
+ * @author Jose Noheda
  */
-public abstract class MarkerPlugin implements Plugin {
+public final class TabbedUtils {
 
-    public final Class getModifiedComponent() {
-        return Marker.class;
+    private TabbedUtils() {
+        throw new AssertionError("Do not instantiate utility class");
+    }
+
+    public static StringBuffer parse(StringBuffer source) {
+        return parse(source.toString());
+    }
+
+    public static StringBuffer parse(String source) {
+        StringBuffer buffer = new StringBuffer();
+        if ((source != null) && (source.trim().length() > 0)) {
+            buffer.append(source.trim().replace("'", "\\\\\'").replace("\"", "\\\\\\\""));
+        }
+        return buffer;
     }
 
 }

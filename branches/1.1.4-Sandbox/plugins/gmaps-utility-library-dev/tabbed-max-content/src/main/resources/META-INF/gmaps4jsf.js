@@ -47,6 +47,22 @@ if (!google.maps.Map.prototype.tabbedContent) {
         });
     };
 
+    google.maps.Map.prototype.createTabbedInfoWindow = function(infoWindow, getData) {
+        this._createTabbedInfoWindow(infoWindow, getData, this, this.getCenter());
+    };
+
+    google.maps.Marker.prototype.createTabbedInfoWindow = function(infoWindow, getData) {
+        var self = this;
+        google.maps.Event.addListener(this, 'click', function(latlng) {
+            self.parentMap._createTabbedInfoWindow(infoWindow, getData, self, self.parentMap);
+        });
+    };
+
+    google.maps.Map.prototype._createTabbedInfoWindow = function(infoWindow, getData, parent, target) {
+        var data = getData(parent);
+        this.tabbedContent(parent, target, infoWindow.regular, infoWindow.summary, infoWindow.maxTitle, infoWindow.selectedTab, infoWindow.maximized, data.tabs, infoWindow.onClose);
+    };
+
     google.maps.Map.prototype.tabbedContent = function(parent, target, regular, summary, maxTitle, selectedTab, maximized, buttons, tabs, onClose) {
         parent.openMaxContentTabsHtml(target, regular, summary, tabs, {
             maxTitle: maxTitle,
