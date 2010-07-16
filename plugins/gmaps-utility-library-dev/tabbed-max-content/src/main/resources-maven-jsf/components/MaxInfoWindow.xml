@@ -22,7 +22,7 @@
 //-->
 
 <!--
-   the extendedHtmlInformationWindow component should be a child of the marker component.
+   the extendedHtmlInformationWindow component should be a child of the map or marker component.
 //-->
 
 <!DOCTYPE component SYSTEM "../../../../../../../core/src/main/resources-maven-jsf/misc/component.dtd" [
@@ -34,6 +34,8 @@
     <componentClass>com.googlecode.gmaps4jsf.plugins.gmapsutility.component.MaxInfoWindow</componentClass>
     <componentType>com.googlecode.gmaps4jsf.MaxInfoWindow</componentType>
     <componentFamily>com.googlecode.gmaps4jsf</componentFamily>
+    <rendererType>com.googlecode.gmaps4jsf.plugins.gmapsutility.tabbedmaxcontent.ExtendedInfoWindowRenderer</rendererType>
+    <rendererClass>com.googlecode.gmaps4jsf.plugins.gmapsutility.tabbedmaxcontent.ExtendedInfoWindowRenderer</rendererClass>
     <parent>javax.faces.component.UIComponentBase</parent>
     <attributes>
         &standard_uicomponent_attributes;
