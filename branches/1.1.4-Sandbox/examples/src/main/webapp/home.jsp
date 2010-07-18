@@ -148,8 +148,7 @@
                                 <f:verbatim>Place GMaps4JSF logo on the earth</f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
-                        
-                        
+
                         <h:outputText value="Direction" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/directions.jsf">
@@ -196,7 +195,7 @@
                         <h:outputText value="Max tabbed content (Extended Component - Experimental)" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/maxTabbed.jsf">
-                                <f:verbatim><span style="color:red">An example that creates enhanced info windows.</span></f:verbatim>
+                                <f:verbatim>An example that creates enhanced info windows.</f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
 

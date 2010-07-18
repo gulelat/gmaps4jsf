@@ -65,4 +65,11 @@ public class ExtendedInfoWindowRendererTest extends TestCase {
         assertEquals("Named tab", "'whatever'", renderer.getSelectedTab(window).toString());
     }
 
+    public void testEncodeOnClose() {
+        MaxInfoWindow window = new MaxInfoWindow();
+        assertEquals("Default onClose", "function() {}", renderer.encodeOnClose(window).toString());
+        window.setOnClose("alert(1);");
+        assertEquals("onClose function", "function() {alert(1);}", renderer.encodeOnClose(window).toString());
+    }
+
 }

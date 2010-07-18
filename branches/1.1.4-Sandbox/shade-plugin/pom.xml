@@ -65,7 +65,7 @@
                                     <resource>META-INF/gmaps4jsf.tld</resource>
                                 </transformer>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-                                    <resource>META-INF/gmaps4jsf.js</resource>
+                                    <resource>META-INF/gmaps4jsf-map.js</resource>
                                 </transformer>
                             </transformers>
                         </configuration>
