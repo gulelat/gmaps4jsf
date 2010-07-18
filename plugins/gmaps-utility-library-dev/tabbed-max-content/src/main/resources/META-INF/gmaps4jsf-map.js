@@ -58,13 +58,13 @@ if (!google.maps.Map.prototype.tabbedContent) {
         });
     };
 
-    google.maps.Map.prototype._createTabbedInfoWindow = function(infoWindow, getData, parent, target) {
-        var data = getData(parent);
-        this.tabbedContent(parent, target, infoWindow.regular, infoWindow.summary, infoWindow.maxTitle, infoWindow.selectedTab, infoWindow.maximized, data.tabs, infoWindow.onClose);
+    google.maps.Map.prototype._createTabbedInfoWindow = function(infoWindow, getData, origin, target) {
+        var data = getData(this);
+        this.tabbedContent(origin, target, infoWindow.regular, infoWindow.summary, infoWindow.maxTitle, infoWindow.selectedTab, infoWindow.maximized, infoWindow.buttons, data.tabs, infoWindow.onClose);
     };
 
-    google.maps.Map.prototype.tabbedContent = function(parent, target, regular, summary, maxTitle, selectedTab, maximized, buttons, tabs, onClose) {
-        parent.openMaxContentTabsHtml(target, regular, summary, tabs, {
+    google.maps.Map.prototype.tabbedContent = function(origin, target, regular, summary, maxTitle, selectedTab, maximized, buttons, tabs, onClose) {
+        origin.openMaxContentTabsHtml(target, regular, summary, tabs, {
             maxTitle: maxTitle,
             selectedTab: selectedTab,
             maximized: maximized,

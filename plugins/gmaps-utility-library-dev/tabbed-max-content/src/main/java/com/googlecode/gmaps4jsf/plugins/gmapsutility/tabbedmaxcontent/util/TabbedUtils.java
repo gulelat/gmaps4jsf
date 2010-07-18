@@ -35,7 +35,7 @@ public final class TabbedUtils {
     public static StringBuffer parse(String source) {
         StringBuffer buffer = new StringBuffer();
         if ((source != null) && (source.trim().length() > 0)) {
-            buffer.append(source.trim().replace("'", "\\\\\'").replace("\"", "\\\\\\\""));
+            buffer.append(source.trim().replace("'", "\\\'"));
         }
         return buffer;
     }

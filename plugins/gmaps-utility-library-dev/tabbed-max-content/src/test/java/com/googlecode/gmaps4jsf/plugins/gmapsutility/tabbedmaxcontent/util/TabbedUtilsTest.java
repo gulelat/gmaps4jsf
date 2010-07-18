@@ -29,8 +29,7 @@ public class TabbedUtilsTest extends TestCase {
     public void testParse() {
         assertEquals("Null is parsed", "", TabbedUtils.parse((String) null).toString());
         assertEquals("No parsing needed", "hi", TabbedUtils.parse("hi").toString());
-        assertEquals("Parsed quote", "john\\\\\'s hat", TabbedUtils.parse(new StringBuffer("  john's hat ")).toString());
-        assertEquals("Parsed double quote", "\\\\\\\"mike\\\\\\\"", TabbedUtils.parse(new StringBuffer("  \"mike\" ")).toString());
+        assertEquals("Parsed quote", "john\\\'s hat", TabbedUtils.parse(new StringBuffer("  john's hat ")).toString());
     }
 
 }

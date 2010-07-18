@@ -23,7 +23,6 @@ import javax.faces.render.Renderer;
 import javax.faces.context.FacesContext;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ResponseWriter;
-import com.googlecode.gmaps4jsf.util.ComponentUtils;
 import com.googlecode.gmaps4jsf.plugins.gmapsutility.component.Tab;
 import com.googlecode.gmaps4jsf.plugins.gmapsutility.tabbedmaxcontent.util.TabbedUtils;
 
@@ -36,7 +35,7 @@ public final class TabRenderer extends Renderer {
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
         if (component.isRendered()) {
             ResponseWriter writer = context.getResponseWriter();
-            writer.write(ComponentUtils.pad(component) + "\t" + convertToJavascriptObject((Tab) component));
+            writer.write(convertToJavascriptObject((Tab) component));
         }
     }
 
@@ -51,7 +50,7 @@ public final class TabRenderer extends Renderer {
     protected final StringBuffer getTabOnSelect(Tab tab) {
         StringBuffer buffer = new StringBuffer();
         if ((tab.getOnSelect() != null) && (tab.getOnSelect().trim().length() > 0)) {
-            buffer.append("function (tab) {").append(TabbedUtils.parse(tab.getOnSelect())).append("}");
+            buffer.append("function (tab) {").append(tab.getOnSelect()).append("}");
         } else {
             buffer.append("null");
         }

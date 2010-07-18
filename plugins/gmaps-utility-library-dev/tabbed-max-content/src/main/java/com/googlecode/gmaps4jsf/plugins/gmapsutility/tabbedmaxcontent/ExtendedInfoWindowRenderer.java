@@ -64,6 +64,7 @@ public final class ExtendedInfoWindowRenderer extends Renderer {
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
         if (component.isRendered()) {
             ResponseWriter writer = context.getResponseWriter();
+            writer.write(ComponentUtils.pad(component) + "\treturn data;\n");
             writer.write(ComponentUtils.pad(component) + "});\n");
         }
     }
@@ -75,7 +76,7 @@ public final class ExtendedInfoWindowRenderer extends Renderer {
         buffer.append("maxTitle: '").append(TabbedUtils.parse(infoWindow.getMaxTitle())).append("', ");
         buffer.append("selectedTab: ").append(getSelectedTab(infoWindow)).append(", ");
         buffer.append("maximized: ").append(infoWindow.isMaximized()).append(", ");
-        buffer.append("onClose: null").append(", ");
+        buffer.append("onClose: ").append(encodeOnClose(infoWindow)).append(", ");
         encodeButtons(infoWindow, buffer);
         return buffer.append("}").toString();
     }
@@ -98,6 +99,15 @@ public final class ExtendedInfoWindowRenderer extends Renderer {
         if (!maxInfoWindow.isShowMinimizeButton()) buffer.append("restore: {show: 4},");
         if (buffer.charAt(buffer.length() - 1) == ',') buffer.deleteCharAt(buffer.length() - 1);
         buffer.append("}");
+    }
+
+    protected final StringBuffer encodeOnClose(MaxInfoWindow maxInfoWindow) {
+        String onClose = maxInfoWindow.getOnClose();
+        StringBuffer buffer = new StringBuffer("function() {");
+        if ((onClose != null) && (onClose.trim().length() > 0)) {
+            buffer.append(onClose);
+        }
+        return buffer.append("}");
     }
 
 }
