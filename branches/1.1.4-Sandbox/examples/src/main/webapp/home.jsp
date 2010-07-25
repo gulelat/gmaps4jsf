@@ -18,7 +18,14 @@
                         <h:outputText value="Simple" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/simple.jsf">
-                                <f:verbatim>Some simple maps with no other components</f:verbatim>
+                                <f:verbatim>A simple map with basic components</f:verbatim>
+                            </h:outputLink>
+                        </h:panelGrid>
+
+                        <h:outputText value="Duped" />
+                        <h:panelGrid style="padding-left:25px">
+                            <h:outputLink value="pages/two.jsf">
+                                <f:verbatim>Two maps in a page</f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
 
