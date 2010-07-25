@@ -35,6 +35,8 @@ import com.googlecode.gmaps4jsf.util.ComponentConstants;
  */
 public final class MapRenderer extends Renderer {
 
+    private static final String MAP_RENDERED = "firstMap";
+
     public boolean getRendersChildren() {
         return true;
     }
@@ -44,7 +46,10 @@ public final class MapRenderer extends Renderer {
         ResponseWriter writer = context.getResponseWriter();
 
         Map map = (Map) component;
-        encodeCommonJavascriptCode(map, writer);
+        if (isFirstMapInPage(context)) {
+            setFirstMapInPage(context);
+            encodeCommonJavascriptCode(map, writer);
+        }
         encodeHTMLModel(context, map, writer);
         startEncodingMapWorld(context, map, writer);
     }
@@ -55,11 +60,25 @@ public final class MapRenderer extends Renderer {
         writer.write("\t\t});\n\t});\n}) (window);");
         writer.endElement(ComponentConstants.HTML_SCRIPT);
     }
-    
+
     public void decode(FacesContext context, UIComponent component) {
         Map map = (Map) component;
         String submittedValue = (String) context.getExternalContext().getRequestParameterMap().get(ComponentUtils.getMapStateHiddenFieldId(map));
         map.setSubmittedValue(submittedValue);
+    }
+
+    private java.util.Map getAttributes(FacesContext context) {
+        return context.getViewRoot().getAttributes();
+    }
+
+    private boolean isFirstMapInPage(FacesContext context) {
+        java.util.Map attributes = getAttributes(context);
+        return !attributes.containsKey(MAP_RENDERED);
+    }
+
+    private void setFirstMapInPage(FacesContext context) {
+        java.util.Map attributes = getAttributes(context);
+        attributes.put(MAP_RENDERED, Boolean.TRUE);
     }
 
     /**

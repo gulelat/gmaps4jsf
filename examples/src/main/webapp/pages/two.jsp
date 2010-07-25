@@ -10,11 +10,10 @@
          </head>
          <body>
              <h:form id="form">
-                  <m:map width="500" height="450px" latitude="30.01" longitude="31.14" enableScrollWheelZoom="true">
-                      <m:marker>
-                          <m:htmlInformationWindow htmlText="something" />
-                      </m:marker>
-                  </m:map>
+                 <ul style="list-style-type:none;height:300px">
+                     <li style="float:left;margin-right:5px"><m:map width="300" height="300" latitude="30.01" longitude="31.14" /></li>
+                     <li style="float:left"><m:map width="300" height="300" latitude="30.01" longitude="31.14" /></li>
+                 </ul>
              </h:form>
              <%@include file="../templates/footer.jspf" %>
          </body>
