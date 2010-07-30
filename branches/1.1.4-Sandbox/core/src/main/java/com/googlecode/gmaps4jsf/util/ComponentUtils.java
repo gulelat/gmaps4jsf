@@ -417,6 +417,8 @@ public class ComponentUtils {
     public static String pad(UIComponent component) {
         if (component instanceof Map) {
             return "\t\t";
+        } else if (component instanceof StreetViewPanorama) {
+        	return "\t\t";
         } else {
             return "\t" + pad(component.getParent());
         }

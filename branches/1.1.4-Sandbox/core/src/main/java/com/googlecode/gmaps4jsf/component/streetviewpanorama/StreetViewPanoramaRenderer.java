@@ -23,6 +23,8 @@ import javax.faces.render.Renderer;
 import javax.faces.context.FacesContext;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ResponseWriter;
+
+import com.googlecode.gmaps4jsf.component.map.EventEncoder;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
 import com.googlecode.gmaps4jsf.util.FileReaderUtils;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
@@ -33,6 +35,10 @@ import com.googlecode.gmaps4jsf.util.ComponentConstants;
  * The (StreetViewPanoramaRenderer) renders a StreetViewPanorama.
  */
 public class StreetViewPanoramaRenderer extends Renderer {
+
+    public boolean getRendersChildren() {
+        return true;
+    }	
 
     private void encodeHTMLModel(FacesContext facesContext, StreetViewPanorama panorama, ResponseWriter writer) throws IOException {
         writer.startElement(ComponentConstants.HTML_DIV, panorama);
@@ -46,6 +52,9 @@ public class StreetViewPanoramaRenderer extends Renderer {
         writer.startElement(ComponentConstants.HTML_SCRIPT, panorama);
         writer.writeAttribute(ComponentConstants.HTML_SCRIPT_TYPE, ComponentConstants.HTML_SCRIPT_LANGUAGE, ComponentConstants.HTML_SCRIPT_TYPE);
         writer.write("(function(window) {\n\twindow.gmaps4jsf.createPanorama(" + convertToJavascriptObject(context, panorama) + ", function (parent) {\n");
+        
+        // encode panorama client side events ...
+        EventEncoder.encodeEventListeners(context, panorama, writer);        
     }
 
     /*
@@ -64,6 +73,7 @@ public class StreetViewPanoramaRenderer extends Renderer {
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         StreetViewPanorama panorama = (StreetViewPanorama) component;
+        
         encodeCommonJavascriptCode(panorama, writer);
         encodeHTMLModel(context, panorama, writer);
         startEncodingPanoramaWorld(context, panorama, writer);

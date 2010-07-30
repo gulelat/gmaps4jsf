@@ -46,6 +46,7 @@ public final class MapRenderer extends Renderer {
         ResponseWriter writer = context.getResponseWriter();
 
         Map map = (Map) component;
+        
         if (isFirstMapInPage(context)) {
             setFirstMapInPage(context);
             encodeCommonJavascriptCode(map, writer);
@@ -68,20 +69,6 @@ public final class MapRenderer extends Renderer {
         map.setSubmittedValue(submittedValue);
     }
 
-    private java.util.Map getAttributes(FacesContext context) {
-        return context.getExternalContext().getRequestMap();
-    }
-
-    private boolean isFirstMapInPage(FacesContext context) {
-        java.util.Map attributes = getAttributes(context);
-        return !attributes.containsKey(MAP_RENDERED);
-    }
-
-    private void setFirstMapInPage(FacesContext context) {
-        java.util.Map attributes = getAttributes(context);
-        attributes.put(MAP_RENDERED, Boolean.TRUE);
-    }
-
     /**
      * Writes the generic (not binded to a specific component) JS code.
      */
@@ -95,6 +82,33 @@ public final class MapRenderer extends Renderer {
         writer.endElement(ComponentConstants.HTML_SCRIPT);
     }
 
+    protected String convertToJavascriptObject(FacesContext context, Map map) {
+        StringBuffer buffer = new StringBuffer("{");
+        buffer.append("id: '").append(map.getClientId(context)).append("',");
+        buffer.append("enableScrollWheelZoom: ").append(map.getEnableScrollWheelZoom()).append(",");
+        buffer.append("zoom: ").append(map.getZoom()).append(",");
+        buffer.append("location: {latitude: ").append(map.getLatitude())
+            .append(", longitude: ").append(map.getLongitude())
+            .append(", address: '").append(ComponentUtils.unicode(map.getAddress()));
+        buffer.append("'}, jsVariable: '").append(ComponentUtils.unicode(map.getJsVariable()));
+        buffer.append("', autoReshape: ").append(map.getAutoReshape());
+        return buffer.append("}").toString();
+    }
+    
+    private java.util.Map getAttributes(FacesContext context) {
+        return context.getExternalContext().getRequestMap();
+    }
+
+    private boolean isFirstMapInPage(FacesContext context) {
+        java.util.Map attributes = getAttributes(context);
+        return !attributes.containsKey(MAP_RENDERED);
+    }
+
+    private void setFirstMapInPage(FacesContext context) {
+        java.util.Map attributes = getAttributes(context);
+        attributes.put(MAP_RENDERED, Boolean.TRUE);
+    }    
+    
     private void encodeHTMLModel(FacesContext context, Map map, ResponseWriter writer) throws IOException {
         writer.startElement(ComponentConstants.HTML_DIV, map);
         writer.writeAttribute(ComponentConstants.HTML_ATTR_ID, map.getClientId(context), ComponentConstants.HTML_ATTR_ID);
@@ -128,18 +142,4 @@ public final class MapRenderer extends Renderer {
         // encode map client side events ...
         EventEncoder.encodeEventListeners(context, map, writer);
     }
-
-    protected String convertToJavascriptObject(FacesContext context, Map map) {
-        StringBuffer buffer = new StringBuffer("{");
-        buffer.append("id: '").append(map.getClientId(context)).append("',");
-        buffer.append("enableScrollWheelZoom: ").append(map.getEnableScrollWheelZoom()).append(",");
-        buffer.append("zoom: ").append(map.getZoom()).append(",");
-        buffer.append("location: {latitude: ").append(map.getLatitude())
-            .append(", longitude: ").append(map.getLongitude())
-            .append(", address: '").append(ComponentUtils.unicode(map.getAddress()));
-        buffer.append("'}, jsVariable: '").append(ComponentUtils.unicode(map.getJsVariable()));
-        buffer.append("', autoReshape: ").append(map.getAutoReshape());
-        return buffer.append("}").toString();
-    }
-
 }
