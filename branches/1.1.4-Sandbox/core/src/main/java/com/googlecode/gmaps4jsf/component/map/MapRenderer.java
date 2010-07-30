@@ -35,7 +35,7 @@ import com.googlecode.gmaps4jsf.util.ComponentConstants;
  */
 public final class MapRenderer extends Renderer {
 
-    private static final String MAP_RENDERED = "firstMap";
+    private static final String MAP_RENDERED = "com.googlecode.gmaps4jsf.firstMap";
 
     public boolean getRendersChildren() {
         return true;
@@ -50,6 +50,7 @@ public final class MapRenderer extends Renderer {
             setFirstMapInPage(context);
             encodeCommonJavascriptCode(map, writer);
         }
+        
         encodeHTMLModel(context, map, writer);
         startEncodingMapWorld(context, map, writer);
     }
@@ -68,7 +69,7 @@ public final class MapRenderer extends Renderer {
     }
 
     private java.util.Map getAttributes(FacesContext context) {
-        return context.getViewRoot().getAttributes();
+        return context.getExternalContext().getRequestMap();
     }
 
     private boolean isFirstMapInPage(FacesContext context) {

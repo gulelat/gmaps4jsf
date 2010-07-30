@@ -1,5 +1,4 @@
 (function (window) {
-
     var google = window.google;
     var gmaps4jsf = window.gmaps4jsf;
 
