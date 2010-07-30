@@ -1,6 +1,6 @@
 (function (window) {
-
-    if (!window.gmaps4jsf) {
+	
+    if (typeof(window.gmaps4jsf) =="undefined") {
 
         var gmaps4jsf = {window: window, pageLoaded: window.document.readyState ? window.document.readyState == "complete" : false};
 
@@ -15,7 +15,7 @@
                         func();
                     };
                 }
-            } else {
+            } else {            	
                 func();
             }
         };
