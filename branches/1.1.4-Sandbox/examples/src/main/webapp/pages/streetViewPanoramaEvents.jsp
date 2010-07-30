@@ -15,19 +15,19 @@
     <body onunload="GUnload()">
         <h:form id="form">
               <div>Street View Panorama Event Listener on the Panorama zoom (Try it by making zoom in and out)!!!</div>           
-          
+              <script>
+                  function panoramaZoomChanged() {
+                   alert("Panorama zoom changed and the current zoom = " + pano1.getPOV().zoom);       
+                  }
+              </script>   
+               
               <m:streetViewPanorama width="500px" 
                                     height="500px" 
                                     latitude="42.345573" 
                                     longitude="-71.098326"
                                     jsVariable="pano1">
                     <m:eventListener eventName="zoomchanged" jsFunction="panoramaZoomChanged"/>                        
-               </m:streetViewPanorama>
-               <script>
-                  function panoramaZoomChanged() {
-                   alert("Panorama zoom changed and the current zoom = " + pano1.getPOV().zoom);       
-                  }
-               </script>            
+               </m:streetViewPanorama>         
         </h:form>
     <%@include file="../templates/footer.jspf" %>       
     </body>
