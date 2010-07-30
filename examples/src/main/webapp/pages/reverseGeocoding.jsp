@@ -19,7 +19,7 @@
 	<body onunload="GUnload()">
     	<h:form id="form">
 		  	<div>Reverse Geocoding - Get the address after dragging the marker!!!</div>
-    		<m:map width="500px" height="400px" latitude="40.730885" longitude="-73.997383" jsVariable="map1" zoom="15">
+    		<m:map width="500px" height="400px" latitude="40.730885" longitude="-73.997383" jsVariable="map1" zoom="15" autoReshape="true">
     			<m:marker id="marker1" latitude="40.727421" longitude="-73.992620" jsVariable="marker1" draggable="true" 
     			          submitOnValueChange="true" valueChangeListener="#{map2.processValueChangeForFirstMarker}">
 					<m:icon shadowImageURL="http://www.google.com/mapfiles/shadow50.png" 
