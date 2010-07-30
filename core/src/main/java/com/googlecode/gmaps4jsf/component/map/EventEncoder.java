@@ -49,15 +49,19 @@ public class EventEncoder {
     private static void encodeEventListener(FacesContext facesContext, UIComponent eventSource, EventListener eventListener, ResponseWriter writer) throws IOException {
         StringBuffer buffer = new StringBuffer("\t");
         buffer.append(ComponentUtils.pad(eventSource));
+        
         if (eventSource instanceof HTMLInformationWindow) {
-            // Incase of HTMLInformationWindow, all of the previous event listeners should be removed
+           
+        	// Incase of HTMLInformationWindow, all of the previous event listeners should be removed
             buffer.append(ComponentConstants.JS_GEVENT_OBJECT).append(".")
                 .append(JS_FUNC_CLEAR_INSTANCE_LISTENERS).append("(parent);\n\t")
                 .append(ComponentUtils.pad(eventSource));
         }
+        
         buffer.append(ComponentConstants.JS_GEVENT_OBJECT).append(".addListener(parent, '")
-            .append(eventListener.getEventName()).append("', ")
-            .append(eventListener.getJsFunction()).append(");\n");
+              .append(eventListener.getEventName()).append("', ")
+              .append(eventListener.getJsFunction()).append(");\n");
+        
         writer.write(buffer.toString());
     }
 
