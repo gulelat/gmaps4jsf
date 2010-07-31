@@ -6,10 +6,10 @@
 
         gmaps4jsf.maps = {};
 
-        gmaps4jsf.createMap = function(map, callback) {
+        gmaps4jsf.createMap = function(map, callback, partiallyTriggered) {
             var id = map.id;
             map.gmaps4jsf = this;
-            var themap = this.getMap(id);
+            var themap = this.getMap(id, partiallyTriggered);
             if (!themap) {
                 var container = document.getElementById(id);
                 if (container) {
@@ -28,8 +28,16 @@
             themap.center(map, callback);
         };
 
-        gmaps4jsf.getMap = function (map) {
+        gmaps4jsf.getMap = function (map, partiallyTriggered) {
+        	if (partiallyTriggered) {
+
+        		/* If it is partially triggered then it is always updated on the response rendering */
+        		/*alert("It is an Ajax request for the map so reload it again");*/
+        		return null;
+        	}
+        	
             var id = typeof map === "object" ? map.id : map;
+            
             return this.maps[id];
         };
 

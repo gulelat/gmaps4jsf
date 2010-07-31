@@ -19,6 +19,8 @@
 package com.googlecode.gmaps4jsf.component.map;
 
 import java.io.IOException;
+import java.text.Format;
+
 import javax.faces.render.Renderer;
 import javax.faces.context.FacesContext;
 import javax.faces.component.UIComponent;
@@ -59,7 +61,7 @@ public final class MapRenderer extends Renderer {
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
         ComponentUtils.assertValidContext(context);
         ResponseWriter writer = context.getResponseWriter();
-        writer.write("\t\t});\n\t});\n}) (window);");
+        writer.write("\t\t}, " + ((Map) component).getPartiallyTriggered()  + ");\n\t});\n}) (window);");
         writer.endElement(ComponentConstants.HTML_SCRIPT);
     }
 
@@ -131,7 +133,7 @@ public final class MapRenderer extends Renderer {
             writer.writeAttribute(ComponentConstants.HTML_ATTR_VALUE, mapState, ComponentConstants.HTML_ATTR_VALUE);
         }        
 
-        writer.endElement(ComponentConstants.HTML_INPUT);        
+        writer.endElement(ComponentConstants.HTML_INPUT);       
     }
 
     private void startEncodingMapWorld(FacesContext context, Map map, ResponseWriter writer) throws IOException {

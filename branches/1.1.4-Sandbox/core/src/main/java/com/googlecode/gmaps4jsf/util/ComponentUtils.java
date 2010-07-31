@@ -422,6 +422,5 @@ public class ComponentUtils {
         } else {
             return "\t" + pad(component.getParent());
         }
-    }
-
+    } 
 }

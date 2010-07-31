@@ -133,6 +133,13 @@
             <description>Setting this flag to true enables the map to be resized to view all of the markers on it.</description>
         </attribute>
         <attribute>
+            <name>partiallyTriggered</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <defaultValue>false</defaultValue>
+            <description>Setting this flag to true indicates that the map is part of Ajax response zone.</description>
+        </attribute>        
+        <attribute>
             <name>jsVariable</name>
             <required>false</required>
             <type>java.lang.String</type>
