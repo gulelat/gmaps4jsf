@@ -1,6 +1,6 @@
 (function (window) {
 	
-    if (typeof(window.gmaps4jsf) =="undefined") {
+    if (typeof(window.gmaps4jsf) == "undefined") {
 
         var gmaps4jsf = {window: window, pageLoaded: window.document.readyState ? window.document.readyState == "complete" : false};
 
