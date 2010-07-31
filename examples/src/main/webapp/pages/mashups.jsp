@@ -44,7 +44,7 @@
                     <h:panelGrid columns="2">
                         <h:panelGroup id="countryMapGroup">
                             <h:outputText id="lblCountryName" value="#{param.countryName}"></h:outputText>
-                            <m:map id="mapCountry" width="300px" height="300px" address="#{param.countryName}" rendered="#{param.countryName ne null}" debug="true">
+                            <m:map id="mapCountry" width="300px" height="300px" address="#{param.countryName}" rendered="#{param.countryName ne null}" partiallyTriggered="true" debug="true">
                                 <m:marker />
                                 <m:htmlInformationWindow htmlText="#{param.countryName}"/>
                             </m:map>
