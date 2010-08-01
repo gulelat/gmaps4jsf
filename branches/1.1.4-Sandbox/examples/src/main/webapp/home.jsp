@@ -74,7 +74,7 @@
                         <h:outputText value="Controls" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/mapWithControls.jsf">
-                                <f:verbatim><span style="color:red">Adding controls to your map</span></f:verbatim>
+                                <f:verbatim>Adding controls to your map</f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
 

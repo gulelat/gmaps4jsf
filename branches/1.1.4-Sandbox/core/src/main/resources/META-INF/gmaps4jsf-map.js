@@ -267,4 +267,18 @@
 
     }
 
+    if (!google.maps.Map.prototype.createControl) {
+
+        google.maps.Map.prototype.createControl = function (control) {
+            var mapControlPosition = null;
+            if (control.position) {
+                var position = eval(control.position);
+                mapControlPosition = new google.maps.ControlPosition(position, new google.maps.Size(control.offsetWidth, control.offsetHeight));
+            }
+            var ctl = eval("new " + control.name + "()");
+            this.addControl(ctl, mapControlPosition);
+        };
+
+    }
+
 })(window);
