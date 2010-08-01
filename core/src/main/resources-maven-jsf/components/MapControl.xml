@@ -26,64 +26,64 @@ the mapControl component should be a child of the map component.
 //-->
 
 <!DOCTYPE component SYSTEM "../misc/component.dtd" [
-<!ENTITY standard_uicomponent_attributes		SYSTEM "../entities/standard_uicomponent_attributes.xml">
+<!ENTITY standard_uicomponent_attributes SYSTEM "../entities/standard_uicomponent_attributes.xml">
 ]>
 <component>
-	<tag>mapControl</tag>
-	<tagClass>com.googlecode.gmaps4jsf.component.mapcontrol.MapControlTag</tagClass>
-	<componentClass>com.googlecode.gmaps4jsf.component.mapcontrol.MapControl</componentClass>
-	<componentType>com.googlecode.gmaps4jsf.MapControl</componentType>
-	<componentFamily>com.googlecode.gmaps4jsf</componentFamily>
-	<parent>javax.faces.component.UIComponentBase</parent>
-	<attributes>
-		&standard_uicomponent_attributes;
-		<attribute>
-			<name>name</name>
-			<required>true</required>
-			<type>java.lang.String</type>
-			<description>The control name of the map.
-			It can take on the following values: 
-		    * GLargeMapControl - a large pan/zoom control used on Google Maps. Appears in the top left corner of the map by default.
-		    * GSmallMapControl - a smaller pan/zoom control used on Google Maps. Appears in the top left corner of the map by default.
-		    * GSmallZoomControl - a small zoom control (no panning controls) used in the small map blowup windows used to display driving directions steps on Google Maps.
-		    * GScaleControl - a map scale.
-		    * GMapTypeControl - buttons that let the user toggle between map types (such as Map and Satellite).
-		    * GHierarchicalMapTypeControl - a selection of nested buttons and menu items for placing many map type selectors.
-		    * GOverviewMapControl - a collapsible overview map in the corner of the screen.
-			</description>
-		</attribute>
-		<attribute>
-			<name>position</name>
-			<required>false</required>	
-			<type>java.lang.String</type>
-			<defaultValue>G_ANCHOR_TOP_LEFT</defaultValue>				
-			<description>This attribute lets you specify the position of the map control.
-			It can take on the following values: 
-			* G_ANCHOR_TOP_RIGHT
-		    * G_ANCHOR_TOP_LEFT
-		    * G_ANCHOR_BOTTOM_RIGHT
-		    * G_ANCHOR_BOTTOM_LEFT	
-			</description>
-		</attribute>
-		
-		<attribute>
-			<name>offsetWidth</name>
-			<required>false</required>	
-			<type>java.lang.String</type>
-			<defaultValue>10</defaultValue>						
-			<description>
-				This attribute lets you specify the offset width of the map control position.
-			</description>
-		</attribute>
-		
-		<attribute>
-			<name>offsetHeight</name>
-			<required>false</required>	
-			<type>java.lang.String</type>
-			<defaultValue>10</defaultValue>			
-			<description>
-				This attribute lets you specify the offset height of the map control position.
-			</description>
-		</attribute>				
-	</attributes>
+    <tag>mapControl</tag>
+    <tagClass>com.googlecode.gmaps4jsf.component.mapcontrol.MapControlTag</tagClass>
+    <componentClass>com.googlecode.gmaps4jsf.component.mapcontrol.MapControl</componentClass>
+    <componentType>com.googlecode.gmaps4jsf.MapControl</componentType>
+    <componentFamily>com.googlecode.gmaps4jsf</componentFamily>
+    <rendererType>com.googlecode.gmaps4jsf.component.mapcontrol.MapControlRenderer</rendererType>
+    <rendererClass>com.googlecode.gmaps4jsf.component.mapcontrol.MapControlRenderer</rendererClass>
+    <parent>javax.faces.component.UIComponentBase</parent>
+    <attributes>
+        &standard_uicomponent_attributes;
+        <attribute>
+            <name>name</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+            <description>The control name of the map.
+                It can take on the following values:
+                * GLargeMapControl - a large pan/zoom control used on Google Maps. Appears in the top left corner of the map by default.
+                * GSmallMapControl - a smaller pan/zoom control used on Google Maps. Appears in the top left corner of the map by default.
+                * GSmallZoomControl - a small zoom control (no panning controls) used in the small map blowup windows used to display driving directions steps on Google Maps.
+                * GScaleControl - a map scale.
+                * GMapTypeControl - buttons that let the user toggle between map types (such as Map and Satellite).
+                * GHierarchicalMapTypeControl - a selection of nested buttons and menu items for placing many map type selectors.
+                * GOverviewMapControl - a collapsible overview map in the corner of the screen.
+            </description>
+        </attribute>
+        <attribute>
+            <name>position</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <defaultValue>G_ANCHOR_TOP_LEFT</defaultValue>
+            <description>This attribute lets you specify the position of the map control.
+                It can take on the following values:
+                * G_ANCHOR_TOP_RIGHT
+                * G_ANCHOR_TOP_LEFT
+                * G_ANCHOR_BOTTOM_RIGHT
+                * G_ANCHOR_BOTTOM_LEFT
+            </description>
+        </attribute>
+        <attribute>
+            <name>offsetWidth</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <defaultValue>10</defaultValue>
+            <description>
+                This attribute lets you specify the offset width of the map control position.
+            </description>
+        </attribute>
+        <attribute>
+            <name>offsetHeight</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <defaultValue>10</defaultValue>
+            <description>
+                This attribute lets you specify the offset height of the map control position.
+            </description>
+        </attribute>
+    </attributes>
 </component>

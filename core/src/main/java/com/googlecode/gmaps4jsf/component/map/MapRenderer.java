@@ -19,8 +19,6 @@
 package com.googlecode.gmaps4jsf.component.map;
 
 import java.io.IOException;
-import java.text.Format;
-
 import javax.faces.render.Renderer;
 import javax.faces.context.FacesContext;
 import javax.faces.component.UIComponent;
