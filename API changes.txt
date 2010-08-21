@@ -1,2 +1,3 @@
 1. When defining JS event listeners, it should be added before the map component (not after as what was supported in previous versions).
 2. Renaming the Map (renderOnWindowLoad) attribute to (partiallyTriggered) attribute.
+3. The direction component.
