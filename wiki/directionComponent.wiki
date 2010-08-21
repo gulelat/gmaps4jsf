@@ -7,7 +7,7 @@ Beside the JSF UIComponent standard attributes.
 || fromAddress || true || The direction from address. || NA ||
 || toAddress || true || The direction to address. || NA ||
 || locale || false || The direction locale. default is en_US. || en_US ||
-|| travelMode || false || The direction travel mode. Possible values are (G_TRAVEL_MODE_WALKING, G_TRAVEL_MODE_DRIVING). || G_TRAVEL_MODE_WALKING ||
+|| travelMode || false || The direction travel mode. Possible values are (G_TRAVEL_MODE_WALKING, G_TRAVEL_MODE_DRIVING). || G_TRAVEL_MODE_DRIVING ||
 || avoidHighways || false || This flag determines to avoid the highway. default is false. || false ||
 || preserveViewport || false || This flag determines whether to preserve the map original viewport after attaching the map to. || false ||
-|| attachNodeId (Added since 1.1.4 version) || false || The DOM node id where the step by step explanation will be placed. || NA ||
+|| attachNodeId (Added since 1.1.4) || false || The DOM node id where the step by step explanation will be placed. || NA ||
