@@ -32,7 +32,7 @@
                         <h:outputText value="Repeated" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/repeat.jsf">
-                                <f:verbatim><span style="color:red">A list of markers with info windows (for-each sample)</span></f:verbatim>
+                                <f:verbatim><span >A list of markers with info windows (for-each sample)</span></f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
 
@@ -46,7 +46,7 @@
                         <h:outputText value="Markers and Information Windows" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/mapWithMarkersAndInfoWindows.jsf">
-                                <f:verbatim><span style="color:red">A map with both markers and Information windows</span></f:verbatim>
+                                <f:verbatim><span >A map with both markers and Information windows</span></f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
 
@@ -60,14 +60,14 @@
                         <h:outputText value="Addressable Markers" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/addressableMarkers.jsf">
-                                <f:verbatim><span style="color:red">Map with addressable markers</span></f:verbatim>
+                                <f:verbatim><span>Map with addressable markers</span></f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
 
                         <h:outputText value="Custom Markers" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/customMarkers.jsf">
-                                <f:verbatim><span style="color:red">Map with custom draggable markers</span></f:verbatim>
+                                <f:verbatim><span>Map with custom draggable markers</span></f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
 
@@ -95,14 +95,14 @@
                         <h:outputText value="Geocoding" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/getMyLocation.jsf">
-                                <f:verbatim><span style="color:red">An example that demonstrates the usage of the address attribute of the map</span></f:verbatim>
+                                <f:verbatim><span>An example that demonstrates the usage of the address attribute of the map</span></f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
 
                         <h:outputText value="Reverse Geocoding" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/reverseGeocoding.jsf">
-                                <f:verbatim><span style="color:red">An example that demonstrates the usage of the GMaps4JSF ReverseGeocoder service</span></f:verbatim>
+                                <f:verbatim><span>An example that demonstrates the usage of the GMaps4JSF ReverseGeocoder service</span></f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
 
@@ -135,17 +135,17 @@
                         <h:outputText value="Circles" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/mapCircle.jsf">
-                                <f:verbatim><span style="color:red">Draw a circle on your map</span></f:verbatim>
+                                <f:verbatim><span>Draw a circle on your map</span></f:verbatim>
                             </h:outputLink>
                             <h:outputLink value="pages/mapCircles.jsf">
-                                <f:verbatim><span style="color:red">Draw many circles on your map</span></f:verbatim>
+                                <f:verbatim><span>Draw many circles on your map</span></f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
 
                         <h:outputText value="Polygons + Polylines + Events" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/mixedGraphics.jsf">
-                                <f:verbatim><span style="color:red">Draw polygons, polylines on your map and listen to their events</span></f:verbatim>
+                                <f:verbatim><span >Draw polygons, polylines on your map and listen to their events</span></f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
 
@@ -182,10 +182,10 @@
                                 <f:verbatim>An example that shows the street view panorama using address</f:verbatim>
                             </h:outputLink>
                             <h:outputLink value="pages/streetViewPanoramaEvents.jsf">
-                                <f:verbatim><span style="color:red">An event listener example that listens to the street view panorama</span></f:verbatim>
+                                <f:verbatim><span>An event listener example that listens to the street view panorama</span></f:verbatim>
                             </h:outputLink>
                             <h:outputLink value="pages/showMyStreet.jsf">
-                                <f:verbatim><span style="color:red">An example that uses the street view panorama to show the map streets</span></f:verbatim>
+                                <f:verbatim><span>An example that uses the street view panorama to show the map streets</span></f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
                     </t:panelTab>
@@ -238,7 +238,7 @@
                         <h:outputText value="Performance" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/multiple.jsf">
-                                <f:verbatim><span style="color:red">Performance test with 500 markers</span></f:verbatim>
+                                <f:verbatim><span>Performance test with 500 markers</span></f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
 
