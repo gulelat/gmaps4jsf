@@ -25,7 +25,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 
-import com.googlecode.gmaps4jsf.component.map.Map;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
 
 /**
@@ -34,18 +33,26 @@ import com.googlecode.gmaps4jsf.util.ComponentUtils;
  * The (CircleRenderer) renders a google map circle.
  */
 public class CircleRenderer extends Renderer {
-    public void encodeBegin(FacesContext context, UIComponent component) throws IOException {      
+
+    public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
+        if (component.isRendered()) {
+            ResponseWriter writer = context.getResponseWriter();
+            writer.write(ComponentUtils.pad(component) + "parent.createCircle(" + convertToJavascriptObject((Circle) component) + ");\n");
+        }
     }
 
-    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
-        Circle         circle    = (Circle) component;
-        ResponseWriter writer    = context.getResponseWriter();
-        Map            parentMap = (Map) ComponentUtils.findParentMap(context, circle);
-
-        if (circle.isRendered()) {
-            CircleEncoder.encodeCircleFunctionScript(context, parentMap, circle, writer);
-            CircleEncoder.encodeCircleFunctionScriptCall(context, parentMap, circle, writer);
-        }
+    protected String convertToJavascriptObject(Circle control) {
+        StringBuffer buffer = new StringBuffer("{");
+        buffer.append("raduis: '").append(ComponentUtils.unicode(control.getRaduis()));
+        buffer.append("', unit: '").append(ComponentUtils.unicode(control.getUnit()));
+        buffer.append("', latitude: '").append(control.getLatitude());
+        buffer.append("', longitude: '").append(control.getLongitude());
+        buffer.append("', strokeColour: '").append(control.getHexStrokeColor());        
+        buffer.append("', lineWidth: '").append(control.getLineWidth());        
+        buffer.append("', strokeOpacity: '").append(control.getStrokeOpacity());        
+        buffer.append("', fillColour: '").append(control.getHexFillColor());        
+        buffer.append("', fillOpacity: '").append(control.getFillOpacity() + "'");        
+        return buffer.append("}").toString();
     }
 
     public boolean getRendersChildren() {
