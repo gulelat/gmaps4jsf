@@ -2,3 +2,4 @@
 2. Renaming the Map (renderOnWindowLoad) attribute to (partiallyTriggered) attribute.
 3. The direction component.
 4. The markerCluster experimental component.
+5. Fixing the marker eventListener execution for markers inside <ui:repeat/>.
