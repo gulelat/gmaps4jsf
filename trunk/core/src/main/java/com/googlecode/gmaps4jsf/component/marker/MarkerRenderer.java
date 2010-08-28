@@ -41,38 +41,40 @@ public final class MarkerRenderer extends Renderer {
         return marker.getClientId(facesContext).replace(':', '_');
     }        
 	
-    public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
+    public void encodeBegin(FacesContext facesContext, UIComponent component) throws IOException {
         Marker         marker      = (Marker) component;
-        ResponseWriter writer      = context.getResponseWriter();
-        Map            map         = (Map) ComponentUtils.findParentMap(context, marker);        
-        Object         mapState    = ComponentUtils.getValueToRender(context, map);
-        String         markerState = getMarkerState(marker.getId(), mapState);
+        ResponseWriter writer      = facesContext.getResponseWriter();
+        Map            map         = (Map) ComponentUtils.findParentMap(facesContext, marker);        
+        Object         mapState    = ComponentUtils.getValueToRender(facesContext, map);
+        String         markerState = getMarkerState(getUniqueMarkerId(facesContext, marker), mapState);
         
         // restore the marker if it has previous state
-    	updateELBinding(context, marker, markerState);            
+    	updateELBinding(facesContext, marker, markerState);            
         
     	// render the marker
-        writer.write(ComponentUtils.pad(marker) + "parent.createMarker(" + convertToJavascriptObject(context, marker, markerState) + ", function (gmap, parent) {\n");
+        writer.write(ComponentUtils.pad(marker) + "parent.createMarker(" + convertToJavascriptObject(facesContext, marker, markerState) + ", function (gmap, parent) {\n");
         
         // encode marker client side events ...
-        EventEncoder.encodeEventListeners(context, marker, writer);
+        EventEncoder.encodeEventListeners(facesContext, marker, writer);
     }
 
-    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
+    public void encodeEnd(FacesContext facesContext, UIComponent component) throws IOException {
+        ResponseWriter writer = facesContext.getResponseWriter();
+        
         writer.write(ComponentUtils.pad(component) + "});\n");
     }
     
-    public void decode(FacesContext context, UIComponent component) {
+    public void decode(FacesContext facesContext, UIComponent component) {
         Marker marker   = (Marker) component;
-        Map    map      = (Map) ComponentUtils.findParentMap(context, marker);
-        String mapState = (String) context.getExternalContext().getRequestParameterMap().get(ComponentUtils.getMapStateHiddenFieldId(map));
+        Map    map      = (Map) ComponentUtils.findParentMap(facesContext, marker);
+        String mapState = (String) facesContext.getExternalContext().getRequestParameterMap().get(ComponentUtils.getMapStateHiddenFieldId(map));
 
-        decodeMarker(marker, mapState);
+        decodeMarker(facesContext, marker, mapState);
     }    
 
-    protected String convertToJavascriptObject(FacesContext context, Marker marker, String markerState) {
+    protected String convertToJavascriptObject(FacesContext facesContext, Marker marker, String markerState) {
         StringBuffer buffer = new StringBuffer("{address: '");
+        
         if (markerState != null) {
             String[] markersLngLat = markerState.split(",");
             buffer.append("', latitude: ").append(markersLngLat[0].substring(1).trim());
@@ -83,13 +85,15 @@ public final class MarkerRenderer extends Renderer {
             buffer.append(", longitude: ").append(marker.getLongitude());
         }
 
-        buffer.append(", parentFormID: '").append(ComponentUtils.findParentForm(context, marker).getId());
+        buffer.append(", parentFormID: '").append(ComponentUtils.findParentForm(facesContext, marker).getId());
         buffer.append("', submitOnValueChange: '").append(marker.getSubmitOnValueChange().toLowerCase());
-        buffer.append("', markerID: '").append(getUniqueMarkerId(context, marker));
-        buffer.append("', stateHiddenFieldID: '").append(ComponentUtils.getMapStateHiddenFieldId((Map) ComponentUtils.findParentMap(context, marker)));
+        buffer.append("', markerID: '").append(getUniqueMarkerId(facesContext, marker));
+        buffer.append("', stateHiddenFieldID: '").append(ComponentUtils.getMapStateHiddenFieldId((Map) ComponentUtils.findParentMap(facesContext, marker)));        
         buffer.append("', markerOptions: {draggable: ").append(marker.getDraggable());
+
         for (Iterator iterator = marker.getChildren().iterator(); iterator.hasNext();) {
             UIComponent component = (UIComponent) iterator.next();
+            
             if (component instanceof Icon) {
                 buffer.append(", icon: parent.buildIcon(").append(convertIconToJavascriptObject((Icon) component)).append(")");
             }
@@ -114,7 +118,7 @@ public final class MarkerRenderer extends Renderer {
         return buffer.append("}");
     }
     
-    private static String getMarkerState(String markerID, Object mapState) {
+    private static String getMarkerState(String markerClientID, Object mapState) {
         if (mapState == null) {
             return null;
         }
@@ -122,7 +126,7 @@ public final class MarkerRenderer extends Renderer {
         String[] markersState = ((String) mapState).split("&");
 
         for (int i = 0; i < markersState.length; ++i) {
-            if (markersState[i].indexOf(markerID) >= 0) {
+            if (markersState[i].indexOf(markerClientID) >= 0) {
                 return markersState[i].split("=")[1];
             }
         }
@@ -141,31 +145,35 @@ public final class MarkerRenderer extends Renderer {
         return markerValue;
     }  
     
-    private void decodeMarker(Marker marker, String mapState) {
-        if (mapState != null && mapState.indexOf(marker.getId()) != -1) {
-            int         start       = mapState.indexOf(marker.getId() + "=");
+    private void decodeMarker(FacesContext facesContext, Marker marker, String mapState) {
+        if (markerStateChanged(facesContext, marker, mapState)) {
+            int         start       = mapState.indexOf(getUniqueMarkerId(facesContext, marker) + "=");
             int         end         = mapState.indexOf(")", start);
+            
             String      markerState = mapState.substring(start, end + 1);
             MarkerValue markerValue = getMarkerValueFromState(markerState);
             marker.setSubmittedValue(markerValue);
         }
     }
+
+	private boolean markerStateChanged(FacesContext facesContext, Marker marker, String mapState) {
+		return mapState != null
+			   && mapState.indexOf(getUniqueMarkerId(facesContext, marker)) == 0;
+	}
     
-    private void updateELBinding(FacesContext context, Marker marker, String markerState) {
+    private void updateELBinding(FacesContext facesContext, Marker marker, String markerState) {
         if (markerState != null && (! markerState.equals(""))) {
             if (marker.getValueBinding(ComponentConstants.MARKER_ATTR_LATITUDE) != null) {
                 marker.getValueBinding(ComponentConstants.MARKER_ATTR_LATITUDE)
-                  .setValue(context, markerState.split(",")[0].substring(1).trim());
+                      .setValue(facesContext, markerState.split(",")[0].substring(1).trim());
             }
 
             if (marker.getValueBinding(ComponentConstants.MARKER_ATTR_LONGITUDE) != null) {
                 marker.getValueBinding(ComponentConstants.MARKER_ATTR_LONGITUDE)
-                    .setValue(context,
+                      .setValue(facesContext,
                                 markerState.split(",")[1].substring(0,
-                                markerState.split(",")[1].length() - 1).trim()
-                    );
+                                markerState.split(",")[1].length() - 1).trim());
             }
         }
     }
-
 }
