@@ -145,6 +145,7 @@
                 var dragEndFunction = function (m) {
                     return function(latlng) {
                         var markersState = document.getElementById(m.stateHiddenFieldID).value;
+                        
                         if (markersState.indexOf(m.markerID + '=') != -1) {
                              var markersArray = markersState.split('&');
                              var updatedMarkersState = "";
@@ -162,12 +163,16 @@
 
                              markersState = updatedMarkersState;
                         }
-                        if (markersState != '' && markersState.charAt(markersState.length - 1) != '&') {
-                            markersState += '&';
+                        
+                        if (markersState != null && markersState != "") {
+                        	markersState = '&' + markersState;
                         }
-                        markersState += m.markerID + '=' + latlng;
+                        
+                        markersState = m.markerID + '=' + latlng + markersState;
+                        
                         /* Save the marker state. */
                         document.getElementById(m.stateHiddenFieldID).value = markersState;
+                        
                         /* Submit the form on marker value change if required. */
                         if (m.submitOnValueChange == 'true') {
                             setTimeout(function() {

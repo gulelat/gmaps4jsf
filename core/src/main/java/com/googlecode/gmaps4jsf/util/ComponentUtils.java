@@ -385,6 +385,10 @@ public class ComponentUtils {
     public static String getMapStateHiddenFieldId(Map map) {
         return ComponentConstants.HTML_MAP_STATE_PREFIX + map.getId();
     }
+    
+    public static String getMapLastChangedMarkerHiddenFieldId(Map map) {
+        return ComponentConstants.HTML_MAP_LAST_CHANGED_MARKER_PREFIX + map.getId();
+    }    
 
     public static String getMapWidth(Map map) {
         return getCSSDimensions(map.getWidth());

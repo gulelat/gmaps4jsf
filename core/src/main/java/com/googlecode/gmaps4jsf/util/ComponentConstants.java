@@ -71,6 +71,7 @@ public interface ComponentConstants {
     final String JS_MAP_VARIABLE_PREFIX = "com_google_gmaps4jsf_map_";    
     final String JS_TAB = "    ";
 	final String HTML_MAP_STATE_PREFIX = "com_googlecode_gmaps4jsf_mapState";
+	final String HTML_MAP_LAST_CHANGED_MARKER_PREFIX = "com_googlecode_gmaps4jsf_lastChangedMarker";	
 	final String MARKER_ATTR_LATITUDE = "latitude";
 	final String MARKER_ATTR_LONGITUDE = "longitude";    
     final String MARKER_LOAD_EVENT ="load";
