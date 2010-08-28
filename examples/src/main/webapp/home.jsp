@@ -85,12 +85,19 @@
                             </h:outputLink>
                         </h:panelGrid>
 
-                        <h:outputText value="Server-side EventListeners" />
+                        <h:outputText value="Server-side Markers EventListeners (Example 1)" />
                         <h:panelGrid style="padding-left:25px">
                             <h:outputLink value="pages/markersServerSideEvents.jsf">
-                                <f:verbatim>Listening to server-side events on markers</f:verbatim>
+                                <f:verbatim>Listening to server-side events on markers (Example 1)</f:verbatim>
                             </h:outputLink>
                         </h:panelGrid>
+                        
+                        <h:outputText value="Server-side Markers EventListeners (Example 2)" />
+                        <h:panelGrid style="padding-left:25px">
+                            <h:outputLink value="pages/multipleMarkersServerSideEvents.jsf">
+                                <f:verbatim>Listening to server-side events on markers (Example 2)</f:verbatim>
+                            </h:outputLink>
+                        </h:panelGrid>                        
 
                         <h:outputText value="Geocoding" />
                         <h:panelGrid style="padding-left:25px">

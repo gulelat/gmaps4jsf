@@ -14,12 +14,19 @@
         </head>
 	<body onunload="GUnload()">
             <h:form id="form">
-                <div>Multiple markers with event listeners</div>
-    		<m:map width="500px" latitude="10.1" longitude="10.1" height="500px" zoom="2">
-                    <a4j:repeat var="loc" value="#{multiple.locations}">
-                        <m:marker latitude="#{loc.latitude}" longitude="#{loc.longitude}" />
+                <div>Multiple markers inside repeat tag with ValueChangeListeners.</div>
+    		<m:map width="500px" height="500px" zoom="2">
+                    <a4j:repeat var="marker" value="#{markerList.data}">
+                        <m:marker latitude="#{marker.latitude}" 
+                                  longitude="#{marker.longitude}"  
+                                  jsVariable="#{marker.jsVariable}" 
+                                  draggable="true" 
+                                  submitOnValueChange="true" 
+                                  valueChangeListener="#{marker.update}"/>
                     </a4j:repeat>
     		</m:map>
+    		
+    		<h:outputText value="#{markerList.status}"></h:outputText>
             </h:form>
             <%@include file="../templates/footer.jspf" %>
         </body>
