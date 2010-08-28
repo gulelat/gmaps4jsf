@@ -5,7 +5,7 @@
         var gmaps4jsf = {window: window, pageLoaded: window.document.readyState ? window.document.readyState == "complete" : false};
 
         gmaps4jsf.addOnLoad = function (func) {
-            if (!this.pageLoaded) {
+            if (! this.pageLoaded) {
                 var oldonload = window.onload;
                 if (typeof window.onload != 'function'){
                     window.onload = func;

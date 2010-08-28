@@ -7,10 +7,11 @@
         gmaps4jsf.maps = {};
 
         gmaps4jsf.createMap = function(map, callback, partiallyTriggered) {
+        	/*alert("createMap is called ...");*/
             var id = map.id;
             map.gmaps4jsf = this;
             var themap = this.getMap(id, partiallyTriggered);
-            if (!themap) {
+            if (! themap) {
                 var container = document.getElementById(id);
                 if (container) {
                     themap = this.maps[id] = new google.maps.Map(container);
@@ -29,8 +30,8 @@
         };
 
         gmaps4jsf.getMap = function (map, partiallyTriggered) {
+        	
         	if (partiallyTriggered) {
-
         		/* If it is partially triggered then it is always updated on the response rendering */
         		/*alert("It is an Ajax request for the map so reload it again");*/
         		return null;
