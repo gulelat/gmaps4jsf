@@ -97,7 +97,14 @@
                             <h:outputLink value="pages/multipleMarkersServerSideEvents.jsf">
                                 <f:verbatim>Listening to server-side events on markers (Example 2)</f:verbatim>
                             </h:outputLink>
-                        </h:panelGrid>                        
+                        </h:panelGrid>        
+                        
+                        <h:outputText value="Server-side Markers EventListeners (Example 3)" />
+                        <h:panelGrid style="padding-left:25px">
+                            <h:outputLink value="pages/resetMarkerPosition.jsf">
+                                <f:verbatim>Listening to server-side events on markers (Example 3)</f:verbatim>
+                            </h:outputLink>
+                        </h:panelGrid>    
 
                         <h:outputText value="Geocoding" />
                         <h:panelGrid style="padding-left:25px">

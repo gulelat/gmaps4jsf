@@ -112,6 +112,19 @@
 		</managed-property>	  	
 	</managed-bean>
 	
+    <managed-bean>
+  		<managed-bean-name>place3</managed-bean-name>
+  		<managed-bean-class>com.googlecode.gmaps4jsf.example.beans.FavoritePlace</managed-bean-class>
+	  	<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+		    <property-name>longitude</property-name>
+		    <value>-101</value>
+		</managed-property>
+		<managed-property>
+		    <property-name>latitude</property-name>
+		    <value>39</value>
+		</managed-property>	  	
+	</managed-bean>	
 
     <managed-bean>
   		<managed-bean-name>map</managed-bean-name>

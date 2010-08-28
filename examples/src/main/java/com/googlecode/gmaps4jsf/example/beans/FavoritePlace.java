@@ -26,15 +26,15 @@ package com.googlecode.gmaps4jsf.example.beans;
 public class FavoritePlace {
 	String longitude;
 	String latitude;
-	
+
 	public String getLatitude() {
 		return latitude;
 	}
-	
+
 	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
-	
+
 	public String getLongitude() {
 		return longitude;
 	}
@@ -42,4 +42,11 @@ public class FavoritePlace {
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
+
+    public String moveToDefaults() {
+        longitude = "31.14";
+        latitude = "30.01";
+
+        return null;
+    }
 }
