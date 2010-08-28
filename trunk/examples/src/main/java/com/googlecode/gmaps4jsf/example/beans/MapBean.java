@@ -86,6 +86,10 @@ public class MapBean {
             secondLocationInformation = NOT_AVAILABLE;
         }
     }
+    
+    public void processValueChangeForMarker(ValueChangeEvent event) throws AbortProcessingException {
+        System.out.println("maker is dragged to: " + ((MarkerValue) event.getNewValue()).toString());
+    }
 
     public String getFirstLocationInformation() {
         return firstLocationInformation;
