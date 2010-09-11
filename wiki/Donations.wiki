@@ -1,2 +1,2 @@
 #labels Featured
-GMaps4JSF (one of the Mashups4JSF project components) is an open source project with a free community support. Donations help us to continue the development journey and tell us that you are really appreciating our current work. If you want to donate, click [http://www.mashups4jsf.com/donate.htm here].
+GMaps4JSF (one of the [http://code.google.com/p/mashups4jsf Mashups4JSF] project components) is an open source project with a free community support. Donations help us to continue the development journey and tell us that you are really appreciating our current work. If you want to donate, click [http://www.mashups4jsf.com/donate.htm here].
