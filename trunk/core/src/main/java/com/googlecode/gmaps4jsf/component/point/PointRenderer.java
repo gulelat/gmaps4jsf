@@ -24,6 +24,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ResponseWriter;
 
+import com.googlecode.gmaps4jsf.util.ComponentUtils;
+
 /**
  * @author Hazem Saleh
  * @date August 16, 2009
@@ -34,7 +36,10 @@ public class PointRenderer extends Renderer {
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
         if (component.isRendered()) {
             ResponseWriter writer = context.getResponseWriter();
+
+            writer.write(ComponentUtils.pad(component) + "\tdata.points.push(");
             writer.write(convertToJavascriptObject((Point) component));
+            writer.write(");\n");            
         }
     }
 
