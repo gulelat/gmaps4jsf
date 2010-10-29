@@ -39,19 +39,6 @@ public abstract class AbstractPolyshape extends Renderer {
         return true;
     }
 
-    public void encodeChildren(FacesContext context, UIComponent component) throws IOException {
-        List children = component.getChildren();
-        for (int i = 0; i < children.size(); i++) {
-            UIComponent child = (UIComponent) children.get(i);
-            if (child.isRendered() && child instanceof Point) {
-                ResponseWriter writer = context.getResponseWriter();
-                writer.write(ComponentUtils.pad(component) + "\tdata.points.push(");
-                child.encodeBegin(context);
-                writer.write(");\n");
-            }
-        }
-    }
-
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
         if (component.isRendered()) {
             ResponseWriter writer = context.getResponseWriter();
