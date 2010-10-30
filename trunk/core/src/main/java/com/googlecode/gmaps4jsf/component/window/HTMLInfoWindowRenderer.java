@@ -19,23 +19,27 @@
 package com.googlecode.gmaps4jsf.component.window;
 
 import java.io.IOException;
-import javax.faces.render.Renderer;
-import javax.faces.context.FacesContext;
+
 import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import com.googlecode.gmaps4jsf.util.ComponentUtils;
+import javax.faces.render.Renderer;
+
 import com.googlecode.gmaps4jsf.component.map.EventEncoder;
-import com.googlecode.gmaps4jsf.component.window.HTMLInformationWindow;
+import com.googlecode.gmaps4jsf.util.ComponentUtils;
 
 /**
  *
  * @author Jose Noheda [jose.noheda@gmail.com]
+ * @author hazems
  */
 public class HTMLInfoWindowRenderer extends Renderer {
 
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        writer.write(ComponentUtils.pad(component) + "parent.createInfoWindow(" + convertToJavascriptObject(context, (HTMLInformationWindow) component) + ", function (parent) {\n");
+
+        // render the informationWindow.
+        writer.write(ComponentUtils.pad(component) + "parent.createInfoWindow(" + convertToJavascriptObject(context, (HTMLInformationWindow) component) + ", parent, function (parent) {\n");
         
         // encode marker client side events ...
         EventEncoder.encodeEventListeners(context, (HTMLInformationWindow) component, writer);
@@ -43,7 +47,7 @@ public class HTMLInfoWindowRenderer extends Renderer {
 
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        writer.write(ComponentUtils.pad(component) + "});\n");
+        writer.write(ComponentUtils.pad(component) + "});\n");     
     }
 
     protected String convertToJavascriptObject(FacesContext context, HTMLInformationWindow infoWindow) {

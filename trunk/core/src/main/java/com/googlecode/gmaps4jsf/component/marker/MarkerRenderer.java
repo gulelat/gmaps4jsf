@@ -86,6 +86,7 @@ public final class MarkerRenderer extends Renderer {
         }
 
         buffer.append(", parentFormID: '").append(ComponentUtils.findParentForm(facesContext, marker).getId());
+        buffer.append("', showInformationEvent: '").append(marker.getShowInformationEvent());        
         buffer.append("', submitOnValueChange: '").append(marker.getSubmitOnValueChange().toLowerCase());
         buffer.append("', markerID: '").append(getUniqueMarkerId(facesContext, marker));
         buffer.append("', stateHiddenFieldID: '").append(ComponentUtils.getMapStateHiddenFieldId((Map) ComponentUtils.findParentMap(facesContext, marker)));        
