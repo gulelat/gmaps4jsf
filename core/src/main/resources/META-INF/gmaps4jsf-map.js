@@ -16,6 +16,7 @@
                 if (container) {
                     themap = this.maps[id] = new google.maps.Map(container);
                     themap.properties = map;
+                    themap.setMapType(map.mapType);
                     if (map.jsVariable) {
                         this.window[map.jsVariable] = themap;
                     }
