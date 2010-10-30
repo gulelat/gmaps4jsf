@@ -85,7 +85,7 @@ public final class MarkerRenderer extends Renderer {
             buffer.append(", longitude: ").append(marker.getLongitude());
         }
 
-        buffer.append(", parentFormID: '").append(ComponentUtils.findParentForm(facesContext, marker).getId());
+        buffer.append(", parentFormID: '").append(ComponentUtils.findParentForm(facesContext, marker).getClientId(facesContext));
         buffer.append("', showInformationEvent: '").append(marker.getShowInformationEvent());        
         buffer.append("', submitOnValueChange: '").append(marker.getSubmitOnValueChange().toLowerCase());
         buffer.append("', markerID: '").append(getUniqueMarkerId(facesContext, marker));
