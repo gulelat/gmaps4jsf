@@ -203,7 +203,7 @@
 
     if (!google.maps.Map.prototype.createInfoWindow) {
 
-        google.maps.Map.prototype.createInfoWindow = function(infoWindow, callback) {
+        google.maps.Map.prototype.createInfoWindow = function(infoWindow, callback) {      	
             var pos = infoWindow.latitude ? new google.maps.LatLng(infoWindow.latitude, infoWindow.longitude) : this.getCenter();
             this.openInfoWindowHtml(pos, infoWindow.htmlText);
             callback(this.getInfoWindow());
@@ -213,9 +213,18 @@
 
     if (!google.maps.Marker.prototype.createInfoWindow) {
 
-        google.maps.Marker.prototype.createInfoWindow = function(infoWindow, callback) {
-            this.openInfoWindowHtml(infoWindow.htmlText);
-            callback(this.parentMap.getInfoWindow());
+        google.maps.Marker.prototype.createInfoWindow = function(infoWindow, parentMarker, callback) {
+        	/*alert("The HTMLInformationWindow of the marker is called:  parentMarker.properties.showInformationEvent=" + parentMarker.properties.showInformationEvent);*/
+        	
+            var showWindowHandler = function (markerObj, infoWindowObj) {
+                    return function(latlng) {
+                    	/*alert("markerObj: " + markerObj);*/
+                    	markerObj.openInfoWindowHtml(infoWindowObj.htmlText);
+                    }
+            };
+        	
+            google.maps.Event.addListener(parentMarker,  parentMarker.properties.showInformationEvent, showWindowHandler(parentMarker, infoWindow));
+            callback(parentMarker.parentMap.getInfoWindow());            
         };
     }
 
