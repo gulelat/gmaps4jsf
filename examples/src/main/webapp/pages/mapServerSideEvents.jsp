@@ -15,10 +15,7 @@
 					<m:map width="400px" height="400px" latitude="24" longitude="15" 
 						   jsVariable="map1" zoom="2" 
 						   actionListener="#{map.addMarkerHere}" 
-						   submitOnClick="true">
-
-						   
-					</m:map>
+						   submitOnClick="true"/>
 				</h:form>
 			</f:subview>
             <%@include file="../templates/footer.jspf" %>
