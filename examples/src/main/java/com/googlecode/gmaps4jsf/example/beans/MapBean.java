@@ -18,9 +18,13 @@
  */
 package com.googlecode.gmaps4jsf.example.beans;
 
+import javax.faces.component.UIComponent;
 import javax.faces.event.AbortProcessingException;
+import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 
+import com.googlecode.gmaps4jsf.component.map.Map;
+import com.googlecode.gmaps4jsf.component.marker.Marker;
 import com.googlecode.gmaps4jsf.component.marker.MarkerValue;
 import com.googlecode.gmaps4jsf.services.GMaps4JSFServiceFactory;
 import com.googlecode.gmaps4jsf.services.data.PlaceMark;
@@ -113,5 +117,22 @@ public class MapBean {
         }
         
         return attributeValue;
+    }
+    
+    public void addMarkerHere(ActionEvent actionEvent) {
+    	System.out.println("ActionEvent is called here = " + actionEvent.getComponent());
+    	
+    	Map map = (Map) actionEvent.getComponent();
+    	
+    	System.out.println("Map Id = " + map.getId());
+    	System.out.println("Clicked Longitude = " + ((MarkerValue)map.getValue()).getLongitude());
+    	System.out.println("Clicked Latitude = " + ((MarkerValue)map.getValue()).getLatitude());
+    	
+    	Marker marker = new Marker();
+    	
+    	marker.setLongitude(((MarkerValue)map.getValue()).getLongitude());
+    	marker.setLatitude(((MarkerValue)map.getValue()).getLatitude());
+    	
+    	map.getChildren().add(marker);
     }
 }

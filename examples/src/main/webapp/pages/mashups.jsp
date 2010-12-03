@@ -7,9 +7,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <f:view>
         <head>
-            <title>GMaps4JSF Mashups Example</title>
-            <m:resources key="ABQIAAAAD6cDv-a0AnpzXA4gj6utCRTUlDOzA1Sd8h2eDxLDJEZUtkHZ_xQlPmNUQ-At6YLqCd29cGkwT8i95A"/>
-        </head>
+        	<%@include file="../templates/internalHeader.jspf" %>               
+        </head>  
         <body onunload="GUnload()">
             <h1>GMaps4JSF Mashups Example</h1>
             <h:form id="myForm">

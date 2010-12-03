@@ -4,10 +4,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN">
 <html xmlns="http://www.w3.org/1999/xhtml">
      <f:view>
-         <head>
-             <title>Welcome to GMaps4JSF</title>
-             <m:resources key="ABQIAAAAD6cDv-a0AnpzXA4gj6utCRTUlDOzA1Sd8h2eDxLDJEZUtkHZ_xQlPmNUQ-At6YLqCd29cGkwT8i95A"/>
-         </head>
+        <head>
+        	<%@include file="../templates/internalHeader.jspf" %>               
+        </head> 
          <body>
              <h:form id="form">
                  <ul style="list-style-type:none;height:300px">

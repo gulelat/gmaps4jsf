@@ -6,23 +6,18 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<f:view>
-	
-    <head> 
-    <title>Welcome to GMaps4JSF</title> 
-    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />      
-    
-    <m:resources key="ABQIAAAAD6cDv-a0AnpzXA4gj6utCRTUlDOzA1Sd8h2eDxLDJEZUtkHZ_xQlPmNUQ-At6YLqCd29cGkwT8i95A"/>
-    </head>
-	
-	<body onunload="GUnload()">
-    	<h:form id="form">
-    		<m:map width="500px" height="500px" latitude="30.01" longitude="31.14">
-    			<m:marker latitude="30.01" longitude="31.14"/>
-    			<m:htmlInformationWindow latitude="30.01" longitude="31.14" 
-    			   htmlText="<center>Welcome to Cairo, Egypt<br><img height=30 width=50 src=http://www.appliedlanguage.com/flags_of_the_world/large_flag_of_egypt.gif></center>"/>
-    		</m:map>
-    	</h:form>
-	<%@include file="../templates/footer.jspf" %>   	
-    </body>
+	    <head>
+	    	<%@include file="../templates/internalHeader.jspf" %>               
+	    </head>  
+		<body onunload="GUnload()">
+	    	<h:form id="form">
+	    		<m:map width="500px" height="500px" latitude="30.01" longitude="31.14">
+	    			<m:marker latitude="30.01" longitude="31.14"/>
+	    			<m:htmlInformationWindow latitude="30.01" longitude="31.14" 
+	    			   htmlText="<center>Welcome to Cairo, Egypt<br><img height=30 width=50 src=http://www.appliedlanguage.com/flags_of_the_world/large_flag_of_egypt.gif></center>"/>
+	    		</m:map>
+	    	</h:form>
+			<%@include file="../templates/footer.jspf" %>   	
+	    </body>
 	</f:view>    
 </html>  

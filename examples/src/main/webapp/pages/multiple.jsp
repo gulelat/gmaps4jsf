@@ -6,22 +6,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <f:view>
         <head>
-            <title>Welcome to GMaps4JSF</title>
-            <m:resources key="ABQIAAAAD6cDv-a0AnpzXA4gj6utCRTUlDOzA1Sd8h2eDxLDJEZUtkHZ_xQlPmNUQ-At6YLqCd29cGkwT8i95A" />
-            <style type="text/css">
-                html, body { height: 100% }
-            </style>
-        </head>
-	<body onunload="GUnload()">
-            <h:form id="form">
-                <div>Multiple markers with event listeners</div>
-    		<m:map width="500px" latitude="10.1" longitude="10.1" height="500px" zoom="2">
-                    <a4j:repeat var="loc" value="#{multiple.locations}">
-                        <m:marker latitude="#{loc.latitude}" longitude="#{loc.longitude}" />
-                    </a4j:repeat>
-    		</m:map>
-            </h:form>
-            <%@include file="../templates/footer.jspf" %>
-        </body>
+        	<%@include file="../templates/internalHeader.jspf" %>               
+        </head>  
+		<body onunload="GUnload()">
+	            <h:form id="form">
+	                <div>Multiple markers with event listeners</div>
+	    		<m:map width="500px" latitude="10.1" longitude="10.1" height="500px" zoom="2">
+	                    <a4j:repeat var="loc" value="#{multiple.locations}">
+	                        <m:marker latitude="#{loc.latitude}" longitude="#{loc.longitude}" />
+	                    </a4j:repeat>
+	    		</m:map>
+	            </h:form>
+	            <%@include file="../templates/footer.jspf" %>
+	     </body>
     </f:view>
 </html>
