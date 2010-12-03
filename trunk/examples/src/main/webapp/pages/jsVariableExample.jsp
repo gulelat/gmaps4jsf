@@ -5,40 +5,38 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <f:view>
         <head>
-            <title>Welcome to GMaps4JSF</title>
-            <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-            <m:resources key="ABQIAAAAD6cDv-a0AnpzXA4gj6utCRTUlDOzA1Sd8h2eDxLDJEZUtkHZ_xQlPmNUQ-At6YLqCd29cGkwT8i95A"/>
-        </head>
-	<body onunload="GUnload()">
-            <h:form id="form">
-    		<m:map width="500px" height="500px" latitude="30.01" longitude="31.14" jsVariable="map1">
-                    <m:marker latitude="30.01" longitude="31.14" jsVariable="marker1"/>
-                    <m:htmlInformationWindow latitude="30.01" longitude="31.14" htmlText="Egypt"/>
-                </m:map>
-    		<br/>
-    		<input type="button" value="Zoom In" onclick="zoomIn();" />
-    		<input type="button" value="Zoom Out" onclick="zoomOut();" /> <br/>
-    		<input type="button" value="Hide Marker" onclick="hideMarker();" />
-    		<input type="button" value="Show Marker" onclick="showMarker();" /><br/>
-                <script type="text/javascript">
-                    function zoomIn() {
-                        map1.zoomIn();
-                    }
-
-                    function zoomOut() {
-                        map1.zoomOut();
-                    }
-
-                    function hideMarker() {
-                        marker1.hide();
-                    }
-
-                    function showMarker() {
-                        marker1.show();
-                    }
-    		</script>
-            </h:form>
-            <%@include file="../templates/footer.jspf" %>
-        </body>
+        	<%@include file="../templates/internalHeader.jspf" %>               
+        </head>  
+		<body onunload="GUnload()">
+	            <h:form id="form">
+	    		<m:map width="500px" height="500px" latitude="30.01" longitude="31.14" jsVariable="map1">
+	                    <m:marker latitude="30.01" longitude="31.14" jsVariable="marker1"/>
+	                    <m:htmlInformationWindow latitude="30.01" longitude="31.14" htmlText="Egypt"/>
+	                </m:map>
+	    		<br/>
+	    		<input type="button" value="Zoom In" onclick="zoomIn();" />
+	    		<input type="button" value="Zoom Out" onclick="zoomOut();" /> <br/>
+	    		<input type="button" value="Hide Marker" onclick="hideMarker();" />
+	    		<input type="button" value="Show Marker" onclick="showMarker();" /><br/>
+	                <script type="text/javascript">
+	                    function zoomIn() {
+	                        map1.zoomIn();
+	                    }
+	
+	                    function zoomOut() {
+	                        map1.zoomOut();
+	                    }
+	
+	                    function hideMarker() {
+	                        marker1.hide();
+	                    }
+	
+	                    function showMarker() {
+	                        marker1.show();
+	                    }
+	    		</script>
+	            </h:form>
+	            <%@include file="../templates/footer.jspf" %>
+	        </body>
     </f:view>
 </html>

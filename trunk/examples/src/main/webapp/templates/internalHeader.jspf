@@ -1,0 +1,9 @@
+<%@ taglib uri="http://code.google.com/p/gmaps4jsf/" prefix="m" %>
+
+<div>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <m:resources key="ABQIAAAAD6cDv-a0AnpzXA4gj6utCRTUlDOzA1Sd8h2eDxLDJEZUtkHZ_xQlPmNUQ-At6YLqCd29cGkwT8i95A"/>
+    <style type="text/css">
+        html, body { height: 100% }
+    </style>
+</div>            

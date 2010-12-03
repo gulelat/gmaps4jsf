@@ -5,10 +5,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <f:view>
         <head>
-            <title>Welcome to GMaps4JSF</title>
-            <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-            <m:resources key="ABQIAAAAD6cDv-a0AnpzXA4gj6utCRTUlDOzA1Sd8h2eDxLDJEZUtkHZ_xQlPmNUQ-At6YLqCd29cGkwT8i95A" includeExtendedComponents="true"/>
-        </head>
+        	<%@include file="../templates/internalHeader.jspf" %>               
+        </head>  
         <body onunload="GUnload()">
             <h:form id="form">
                 <m:map width="650px" height="450px" latitude="40.41701670242653" longitude="-3.703519105911255" jsVariable="gmap" zoom="5">
