@@ -23,6 +23,7 @@
 
 <!DOCTYPE component SYSTEM "../misc/component.dtd" [
 <!ENTITY standard_uicomponent_attributes		SYSTEM "../entities/standard_uicomponent_attributes.xml">
+<!ENTITY command_component_attributes	 	    SYSTEM "../entities/command_component_attributes.xml">
 ]>
 <component>
     <tag>map</tag>
@@ -32,9 +33,10 @@
     <componentFamily>com.googlecode.gmaps4jsf</componentFamily>
     <rendererType>com.googlecode.gmaps4jsf.component.map.MapRenderer</rendererType>
     <rendererClass>com.googlecode.gmaps4jsf.component.map.MapRenderer</rendererClass>
-    <parent>javax.faces.component.UIInput</parent>
+    <parent>javax.faces.component.html.HtmlCommandButton</parent>
     <attributes>
         &standard_uicomponent_attributes;
+		&command_component_attributes;		        
         <attribute>
             <name>longitude</name>
             <required>false</required>
@@ -150,6 +152,15 @@
             </description>
         </attribute>
         <attribute>
+            <name>submitOnClick</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <defaultValue>false</defaultValue>
+            <description>
+                This attribute determines whether to submit the map on server when it is clicked.
+            </description>
+        </attribute>    
+        <attribute>
             <name>debug</name>
             <required>false</required>
             <type>java.lang.String</type>
@@ -158,6 +169,6 @@
                 This flag determines if the JS code should be rendered with line feeds making it easy to
                 debug using Firebug or similar tools.
             </description>
-        </attribute>
+        </attribute>     
     </attributes>
 </component>

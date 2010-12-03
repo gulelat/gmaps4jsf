@@ -18,12 +18,14 @@
  */
 package com.googlecode.gmaps4jsf.component.marker;
 
-import java.util.Iterator;
 import java.io.IOException;
-import javax.faces.render.Renderer;
-import javax.faces.context.FacesContext;
+import java.util.Iterator;
+
 import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.render.Renderer;
+
 import com.googlecode.gmaps4jsf.component.icon.Icon;
 import com.googlecode.gmaps4jsf.component.map.EventEncoder;
 import com.googlecode.gmaps4jsf.component.map.Map;
@@ -44,8 +46,8 @@ public final class MarkerRenderer extends Renderer {
     public void encodeBegin(FacesContext facesContext, UIComponent component) throws IOException {
         Marker         marker      = (Marker) component;
         ResponseWriter writer      = facesContext.getResponseWriter();
-        Map            map         = (Map) ComponentUtils.findParentMap(facesContext, marker);        
-        Object         mapState    = ComponentUtils.getValueToRender(facesContext, map);
+        Map            map         = (Map) ComponentUtils.findParentMap(facesContext, marker);              
+        Object         mapState    = ComponentUtils.getRequestAttribute(facesContext, ComponentUtils.getMapMarkersStateHiddenFieldId(map));    
         String         markerState = getMarkerState(getUniqueMarkerId(facesContext, marker), mapState);
         
         // restore the marker if it has previous state
@@ -67,7 +69,7 @@ public final class MarkerRenderer extends Renderer {
     public void decode(FacesContext facesContext, UIComponent component) {
         Marker marker   = (Marker) component;
         Map    map      = (Map) ComponentUtils.findParentMap(facesContext, marker);
-        String mapState = (String) facesContext.getExternalContext().getRequestParameterMap().get(ComponentUtils.getMapStateHiddenFieldId(map));
+        String mapState = (String) facesContext.getExternalContext().getRequestParameterMap().get(ComponentUtils.getMapMarkersStateHiddenFieldId(map));
 
         decodeMarker(facesContext, marker, mapState);
     }    
@@ -89,7 +91,7 @@ public final class MarkerRenderer extends Renderer {
         buffer.append("', showInformationEvent: '").append(marker.getShowInformationEvent());        
         buffer.append("', submitOnValueChange: '").append(marker.getSubmitOnValueChange().toLowerCase());
         buffer.append("', markerID: '").append(getUniqueMarkerId(facesContext, marker));
-        buffer.append("', stateHiddenFieldID: '").append(ComponentUtils.getMapStateHiddenFieldId((Map) ComponentUtils.findParentMap(facesContext, marker)));        
+        buffer.append("', stateHiddenFieldID: '").append(ComponentUtils.getMapMarkersStateHiddenFieldId((Map) ComponentUtils.findParentMap(facesContext, marker)));        
         buffer.append("', markerOptions: {draggable: ").append(marker.getDraggable());
 
         for (Iterator iterator = marker.getChildren().iterator(); iterator.hasNext();) {

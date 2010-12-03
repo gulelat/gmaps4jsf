@@ -28,6 +28,22 @@
                 themap.disableScrollWheelZoom();
             }
             themap.center(map, callback);
+            
+            /* add a drag-end listener to the marker */
+            var mapClickFunction = function (m) {
+                return function(overlay, latlng) {
+                    /* Save the map state. */
+                    document.getElementById(m.mapStateHiddenFieldID).value = latlng;
+                    
+                    /* Submit the form on marker value change if required. */
+                    if (m.submitOnValueChange == 'true') {
+                        setTimeout(function() {
+                            document.getElementById(m.parentFormID).submit();
+                        }, 500);
+                    }
+                }
+            };
+            google.maps.Event.addListener(themap, 'click', mapClickFunction(map));
         };
 
         gmaps4jsf.getMap = function (map, partiallyTriggered) {
