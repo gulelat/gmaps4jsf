@@ -1,6 +1,6 @@
 <wiki:gadget url="http://mashups4jsf.googlecode.com/svn/wiki/ads/adsense.xml" border="0" width="780" height="100" />
 
-Beside the JSF UIComponent standard attributes
+Beside the JSF UIComponent and UICommand standard attributes
 || Component Attribute   || Required || Description || Default value ||
 || longitude || false || The longitude you wish the map to point to. || 30.01 ||
 || latitude|| false || The latitude you wish the map to point to. || 31.14 ||
