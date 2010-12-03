@@ -382,9 +382,13 @@ public class ComponentUtils {
 		writer.write(jsFunctionInWindowOnLoad);
 	}
 
+    public static String getMapMarkersStateHiddenFieldId(Map map) {
+        return ComponentConstants.HTML_MAP_MARKERS_STATE_PREFIX + map.getId();
+    }
+    
     public static String getMapStateHiddenFieldId(Map map) {
         return ComponentConstants.HTML_MAP_STATE_PREFIX + map.getId();
-    }
+    }    
     
     public static String getMapLastChangedMarkerHiddenFieldId(Map map) {
         return ComponentConstants.HTML_MAP_LAST_CHANGED_MARKER_PREFIX + map.getId();
@@ -427,4 +431,36 @@ public class ComponentUtils {
             return "\t" + pad(component.getParent());
         }
     } 
+    
+    
+    public static void setRequestAttribute(FacesContext context, String name, String value) {    	
+    	Object request = context.getExternalContext().getRequest();
+    	
+        if (request instanceof javax.servlet.http.HttpServletRequest) {
+        	javax.servlet.http.HttpServletRequest httpServletRequest = ((javax.servlet.http.HttpServletRequest) request);
+        	
+        	httpServletRequest.setAttribute(name, value);
+        } else if (request instanceof javax.portlet.PortletRequest) {
+        	javax.portlet.PortletRequest portletRequest = ((javax.portlet.PortletRequest) request);
+        	
+        	portletRequest.setAttribute(name, value);	
+        }
+    }
+    
+    public static String getRequestAttribute(FacesContext context, String name) {    	
+    	Object request = context.getExternalContext().getRequest();
+    	String value = "";
+    	
+        if (request instanceof javax.servlet.http.HttpServletRequest) {
+        	javax.servlet.http.HttpServletRequest httpServletRequest = ((javax.servlet.http.HttpServletRequest) request);
+        	
+        	value = (String) httpServletRequest.getAttribute(name);
+        } else if (request instanceof javax.portlet.PortletRequest) {
+        	javax.portlet.PortletRequest portletRequest = ((javax.portlet.PortletRequest) request);
+        	
+        	value = (String) portletRequest.getAttribute(name);	
+        }
+        
+        return value;
+    }    
 }

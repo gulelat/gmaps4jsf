@@ -23,6 +23,10 @@ import javax.faces.render.Renderer;
 import javax.faces.context.FacesContext;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ResponseWriter;
+import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpServletRequest;
+
+import com.googlecode.gmaps4jsf.component.marker.MarkerValue;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
 import com.googlecode.gmaps4jsf.util.FileReaderUtils;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
@@ -66,11 +70,28 @@ public final class MapRenderer extends Renderer {
         		    + ") (window);");
         writer.endElement(ComponentConstants.HTML_SCRIPT);
     }
+    
 
     public void decode(FacesContext context, UIComponent component) {
         Map map = (Map) component;
-        String submittedValue = (String) context.getExternalContext().getRequestParameterMap().get(ComponentUtils.getMapStateHiddenFieldId(map));
-        map.setSubmittedValue(submittedValue);
+        String markersStateValue = (String) context.getExternalContext().getRequestParameterMap().get(ComponentUtils.getMapMarkersStateHiddenFieldId(map));
+        	
+        ComponentUtils.setRequestAttribute(context, ComponentUtils.getMapMarkersStateHiddenFieldId(map), markersStateValue);
+        
+        String mapStateValue = (String) context.getExternalContext().getRequestParameterMap().get(ComponentUtils.getMapStateHiddenFieldId(map));
+        
+        if (mapStateValue != null && !mapStateValue.trim().equals("")) {
+        	
+        	// pass updated values to the client.
+        	String latitude =(mapStateValue.split(",")[0].substring(1).trim());
+        	String longitude = (mapStateValue.split(",")[1].substring(0, mapStateValue.split(",")[1].length() - 1).trim());
+        	
+        	map.setValue(new MarkerValue(longitude, latitude));
+  
+        	ActionEvent actionEvent = new ActionEvent(map);
+        	
+        	map.queueEvent(actionEvent);
+        }
     }
 
     /**
@@ -95,8 +116,11 @@ public final class MapRenderer extends Renderer {
             .append(", longitude: ").append(map.getLongitude())
             .append(", address: '").append(ComponentUtils.unicode(map.getAddress()));
         buffer.append("'}, jsVariable: '").append(ComponentUtils.unicode(map.getJsVariable())).append("'");
-        buffer.append(", mapType: ").append(map.getType()).append("");        
-        buffer.append(", autoReshape: ").append(map.getAutoReshape());
+        buffer.append(", parentFormID: '").append(ComponentUtils.findParentForm(context, map).getClientId(context));        
+        buffer.append("', mapType: ").append(map.getType()).append("");       
+        buffer.append(", submitOnValueChange: '").append(map.getSubmitOnClick().toLowerCase());        
+        buffer.append("', mapStateHiddenFieldID: '").append(ComponentUtils.getMapStateHiddenFieldId(map));        
+        buffer.append("', autoReshape: ").append(map.getAutoReshape());
         
         return buffer.append("}").toString();
     }
@@ -121,9 +145,25 @@ public final class MapRenderer extends Renderer {
         writer.writeAttribute(ComponentConstants.HTML_ATTR_STYLE, "width: " + ComponentUtils.getMapWidth(map) + "; height: " + ComponentUtils.getMapHeight(map), ComponentConstants.HTML_ATTR_STYLE);
         writer.endElement(ComponentConstants.HTML_DIV);
         
-        // encode map state holder.
-        Object mapState = ComponentUtils.getValueToRender(context, map);
+        // encode map markers state holder.
+        Object mapMarkersState = ComponentUtils.getRequestAttribute(context, ComponentUtils.getMapMarkersStateHiddenFieldId(map));
 
+        writer.startElement(ComponentConstants.HTML_INPUT, map);
+
+        writer.writeAttribute(ComponentConstants.HTML_ATTR_ID, ComponentUtils.getMapMarkersStateHiddenFieldId(map),
+                              ComponentConstants.HTML_ATTR_ID);
+        writer.writeAttribute(ComponentConstants.HTML_ATTR_NAME, ComponentUtils.getMapMarkersStateHiddenFieldId(map),
+                              ComponentConstants.HTML_ATTR_NAME);
+        writer.writeAttribute(ComponentConstants.HTML_ATTR_TYPE, ComponentConstants.HTML_ATTR_TYPE_HIDDEN,
+                              ComponentConstants.HTML_ATTR_TYPE);
+        
+        if (null != mapMarkersState) {
+            writer.writeAttribute(ComponentConstants.HTML_ATTR_VALUE, mapMarkersState, ComponentConstants.HTML_ATTR_VALUE);
+        }        
+
+        writer.endElement(ComponentConstants.HTML_INPUT);     
+        
+        // encode map state holder.
         writer.startElement(ComponentConstants.HTML_INPUT, map);
 
         writer.writeAttribute(ComponentConstants.HTML_ATTR_ID, ComponentUtils.getMapStateHiddenFieldId(map),
@@ -133,11 +173,7 @@ public final class MapRenderer extends Renderer {
         writer.writeAttribute(ComponentConstants.HTML_ATTR_TYPE, ComponentConstants.HTML_ATTR_TYPE_HIDDEN,
                               ComponentConstants.HTML_ATTR_TYPE);
         
-        if (null != mapState) {
-            writer.writeAttribute(ComponentConstants.HTML_ATTR_VALUE, mapState, ComponentConstants.HTML_ATTR_VALUE);
-        }        
-
-        writer.endElement(ComponentConstants.HTML_INPUT);       
+        writer.endElement(ComponentConstants.HTML_INPUT);         
     }
 
     private void startEncodingMapWorld(FacesContext context, Map map, ResponseWriter writer) throws IOException {
