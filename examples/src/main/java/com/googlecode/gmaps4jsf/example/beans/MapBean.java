@@ -18,7 +18,6 @@
  */
 package com.googlecode.gmaps4jsf.example.beans;
 
-import javax.faces.component.UIComponent;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
@@ -26,6 +25,7 @@ import javax.faces.event.ValueChangeEvent;
 import com.googlecode.gmaps4jsf.component.map.Map;
 import com.googlecode.gmaps4jsf.component.marker.Marker;
 import com.googlecode.gmaps4jsf.component.marker.MarkerValue;
+import com.googlecode.gmaps4jsf.component.window.HTMLInformationWindow;
 import com.googlecode.gmaps4jsf.services.GMaps4JSFServiceFactory;
 import com.googlecode.gmaps4jsf.services.data.PlaceMark;
 
@@ -132,7 +132,7 @@ public class MapBean {
     	
     	marker.setLongitude(((MarkerValue)map.getValue()).getLongitude());
     	marker.setLatitude(((MarkerValue)map.getValue()).getLatitude());
-    	
+    	    	
     	map.getChildren().add(marker);
     }
 }

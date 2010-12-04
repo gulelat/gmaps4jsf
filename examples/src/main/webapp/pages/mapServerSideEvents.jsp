@@ -11,8 +11,8 @@
         <body onunload="GUnload()">
 			<f:subview id="subview">
 				<h:form id="form">
-					<div>Map Server side events - click the map to create markers dynamically!!!</div>
-					<m:map width="400px" height="400px" latitude="24" longitude="15" 
+					<div>Map Server side events - click the map to create markers dynamically (Non-Ajax)</div>
+					<m:map width="90%" height="90%" latitude="24" longitude="15" 
 						   jsVariable="map1" zoom="2" 
 						   actionListener="#{map.addMarkerHere}" 
 						   submitOnClick="true"/>

@@ -10,7 +10,7 @@
         </head>  
 		<body onunload="GUnload()">
 	            <h:form id="form">
-	                <div>Multiple markers inside repeat tag with ValueChangeListeners.</div>
+	                <div>Multiple markers inside repeat tag with ValueChangeListeners (non-Ajax)</div>
 	    		<m:map width="500px" height="500px" zoom="2">
 	                    <a4j:repeat var="marker" value="#{markerList.data}">
 	                        <m:marker latitude="#{marker.latitude}" 

@@ -10,7 +10,7 @@
         <body onunload="GUnload()">
 			<f:subview id="subview">
 				<h:form id="form">
-					<div>Markers Server side events - Drag the markers!!!</div>
+					<div>Markers Server side events - Drag the markers (non-Ajax)</div>
 					<m:map width="90%" height="90%" latitude="24" longitude="15" jsVariable="map1" zoom="2" type="G_PHYSICAL_MAP">
 						<m:marker id="marker1" latitude="30.01" longitude="31.14" jsVariable="marker1" draggable="true" submitOnValueChange="true" valueChangeListener="#{map.processValueChangeForFirstMarker}">
 							<m:icon shadowImageURL="http://www.google.com/mapfiles/shadow50.png" imageURL="http://www.google.com/mapfiles/markerA.png"/>
