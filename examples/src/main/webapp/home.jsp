@@ -234,6 +234,13 @@
                             </h:outputLink>
                         </h:panelGrid>
 
+                        <h:outputText value="Marker Clusterer Loop(Extended Component - Experimental)" />
+                        <h:panelGrid style="padding-left:25px">
+                            <h:outputLink value="pages/markerClusterLoop.jsf">
+                                <f:verbatim>An example that groups markers in clusters using a for loop.</f:verbatim>
+                            </h:outputLink>
+                        </h:panelGrid>
+
                     </t:panelTab>
 
                     <t:panelTab label="Mashups">
