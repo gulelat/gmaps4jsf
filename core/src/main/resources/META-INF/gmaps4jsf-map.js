@@ -147,60 +147,52 @@
             }
         };
 
+        google.maps.Map.prototype._dragEnd = function (m) {
+            return function(latlng) {
+                var markersState = document.getElementById(m.stateHiddenFieldID).value;
+                if (markersState.indexOf(m.markerID + '=') != -1) {
+                     var markersArray = markersState.split('&');
+                     var updatedMarkersState = "";
+                     for (i = 0; markersArray.length > i; ++i) {
+                        if (markersArray[i].indexOf(m.markerID + '=') == -1) {
+                            updatedMarkersState += markersArray[i];
+                            if (markersArray.length != 1 && ((markersArray.length - 1) > i)) {
+                                updatedMarkersState += '&';
+                            }
+                        }
+                     }
+                     markersState = updatedMarkersState;
+                }
+                if (markersState != null && markersState != "") {
+                    markersState = '&' + markersState;
+                }
+                markersState = m.markerID + '=' + latlng + markersState;
+                /* Save the marker state. */
+                document.getElementById(m.stateHiddenFieldID).value = markersState;
+                /* Submit the form on marker value change if required. */
+                if (m.submitOnValueChange == 'true') {
+                    setTimeout(function() {
+                        document.getElementById(m.parentFormID).submit();
+                    }, 500);
+                }
+            }
+        };
+
         google.maps.Map.prototype._markerCreationCallback = function(marker, markerOptions, callback) {
+            var latlng = marker.getLatLng();
+            if (!markerOptions.latitude) {
+                markerOptions.latitude = latlng.lat();
+                markerOptions.longitude = latlng.lng();
+            }
+            marker.properties = markerOptions;
+            marker.parentMap = this;
+            if (markerOptions.jsVariable) {
+                this.properties.gmaps4jsf.window[markerOptions.jsVariable] = marker;
+            }
+            /* add a drag-end listener to the marker */
+            google.maps.Event.addListener(marker, 'dragend', this._dragEnd(markerOptions));
+            callback(this, marker);
             if (this.addMarker(marker)) {
-                var latlng = marker.getLatLng();
-                if (!markerOptions.latitude) {
-                    markerOptions.latitude = latlng.lat();
-                    markerOptions.longitude = latlng.lng();
-                }
-                marker.properties = markerOptions;
-                marker.parentMap = this;
-                if (markerOptions.jsVariable) {
-                    this.properties.gmaps4jsf.window[markerOptions.jsVariable] = marker;
-                }
-                /* add a drag-end listener to the marker */
-                var dragEndFunction = function (m) {
-                    return function(latlng) {
-                        var markersState = document.getElementById(m.stateHiddenFieldID).value;
-                        
-                        if (markersState.indexOf(m.markerID + '=') != -1) {
-                             var markersArray = markersState.split('&');
-                             var updatedMarkersState = "";
-
-                             for (i = 0; markersArray.length > i; ++i) {
-                                    if (markersArray[i].indexOf(m.markerID + '=') == -1) {
-
-                                            updatedMarkersState += markersArray[i];
-                                            if (markersArray.length != 1 && ((markersArray.length - 1) > i)) {
-                                                    updatedMarkersState += '&';
-                                            }
-
-                                    }
-                             }
-
-                             markersState = updatedMarkersState;
-                        }
-                        
-                        if (markersState != null && markersState != "") {
-                        	markersState = '&' + markersState;
-                        }
-                        
-                        markersState = m.markerID + '=' + latlng + markersState;
-                        
-                        /* Save the marker state. */
-                        document.getElementById(m.stateHiddenFieldID).value = markersState;
-                        
-                        /* Submit the form on marker value change if required. */
-                        if (m.submitOnValueChange == 'true') {
-                            setTimeout(function() {
-                                document.getElementById(m.parentFormID).submit();
-                            }, 500);
-                        }
-                    }
-                };
-                google.maps.Event.addListener(marker, 'dragend', dragEndFunction(markerOptions));
-                callback(this, marker);
                 this.reshape(latlng);
             }
         };
@@ -291,7 +283,7 @@
 
     if (!google.maps.Map.prototype.addDirection) {
 
-        google.maps.Map.prototype.addDirection = function (direction, callback) {
+        google.maps.Map.prototype.addDirection = function (direction) {
             var panel = this.properties.gmaps4jsf.window.document.getElementById(direction.attachNodeId);
             var directions = new google.maps.Directions(this, panel);
             directions.load("from: " + direction.fromAddress + " to: " + direction.toAddress, direction);

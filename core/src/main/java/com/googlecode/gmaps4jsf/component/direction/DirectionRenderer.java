@@ -24,7 +24,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ResponseWriter;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
-import com.googlecode.gmaps4jsf.util.ComponentConstants;
 
 /**
  * @author Hazem Saleh
@@ -49,29 +48,5 @@ public class DirectionRenderer extends Renderer {
         buffer.append("preserveViewport: ").append(direction.getPreserveViewport()).append("}");
         return buffer.toString();
     }
-    
-    /*private void encodeDirectionScriptModel(FacesContext context, ResponseWriter writer, Direction direction) throws IOException {
-
-        
-        String script = "\"var " + getDirectionPanelJSVariable(direction) + "=" + "document.getElementById('" + direction.getId() + "');" + ComponentConstants.JS_TAB;
-        
-        script += "var " + getDirectionJSVariable(direction) + "=" +
-                  " new " + ComponentConstants.JS_GDirection_OBJECT +
-                  "(" +
-                  getDirectionMapJSVariable(direction) +
-                  ", " +
-                  getDirectionPanelJSVariable(direction) +
-                  ");" + ComponentConstants.JS_TAB;
-        
-        script += getDirectionJSVariable(direction) + 
-                  ".load(" +
-                  "\\\"from: " +
-                  direction.getFromAddress() +
-                  " to: " +
-                  direction.getToAddress() +
-                  "\\\"" 
-                  ", {" + constructDirectionAttributes(direction)  + "});\"";
-                  ;
-    }*/
 
 }
