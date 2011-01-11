@@ -15,7 +15,9 @@
                     <m:mapControl name="GSmallMapControl" />
                     <m:markerCluster>
                          <a4j:repeat var="loc" value="#{multiple.locations}">
-                            <m:marker latitude="#{loc.latitude}" longitude="#{loc.longitude}" />
+                            <m:marker latitude="#{loc.latitude}" longitude="#{loc.longitude}">
+                                <m:htmlInformationWindow htmlText="lat: #{loc.latitude} long: #{loc.longitude}" />
+                            </m:marker>
                         </a4j:repeat>
                     </m:markerCluster>
                 </m:map>
