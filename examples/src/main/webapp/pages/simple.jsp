@@ -9,7 +9,7 @@
         </head> 
          <body>
              <h:form id="form">
-                  <m:map width="500" height="450px" latitude="30.01" longitude="31.14" enableScrollWheelZoom="true">
+                 <m:map width="500" height="450px" latitude="30.01" longitude="31.14" enableScrollWheelZoom="true">
                       <m:marker>
                           <m:htmlInformationWindow htmlText="This is Cairo, Egypt" />
                       </m:marker>

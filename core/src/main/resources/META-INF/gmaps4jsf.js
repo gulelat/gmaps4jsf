@@ -1,13 +1,13 @@
 (function (window) {
 	
-    if (typeof(window.gmaps4jsf) == "undefined") {
+    if (typeof(window.gmaps4jsf) === "undefined") {
 
-        var gmaps4jsf = {window: window, pageLoaded: window.document.readyState ? window.document.readyState == "complete" : false};
+        var gmaps4jsf = {window: window, pageLoaded: window.document.readyState ? window.document.readyState === "complete" : false};
 
         gmaps4jsf.addOnLoad = function (func) {
             if (! this.pageLoaded) {
                 var oldonload = window.onload;
-                if (typeof window.onload != 'function'){
+                if (typeof window.onload !== 'function'){
                     window.onload = func;
                 } else {
                     window.onload = function() {
@@ -15,7 +15,7 @@
                         func();
                     };
                 }
-            } else {            	
+            } else {
                 func();
             }
         };
