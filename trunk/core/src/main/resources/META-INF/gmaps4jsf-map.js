@@ -7,7 +7,6 @@
         gmaps4jsf.maps = {};
 
         gmaps4jsf.createMap = function(map, callback, partiallyTriggered) {
-        	/*alert("createMap is called ...");*/
             var id = map.id;
             map.gmaps4jsf = this;
             var themap = this.getMap(id, partiallyTriggered);
@@ -47,15 +46,11 @@
         };
 
         gmaps4jsf.getMap = function (map, partiallyTriggered) {
-        	
-        	if (partiallyTriggered) {
-        		/* If it is partially triggered then it is always updated on the response rendering */
-        		/*alert("It is an Ajax request for the map so reload it again");*/
-        		return null;
-        	}
-        	
+            if (partiallyTriggered) {
+                // If it is partially triggered then it is always updated on the response rendering
+                return null;
+            }
             var id = typeof map === "object" ? map.id : map;
-            
             return this.maps[id];
         };
 
@@ -212,7 +207,7 @@
 
     if (!google.maps.Map.prototype.createInfoWindow) {
 
-        google.maps.Map.prototype.createInfoWindow = function(infoWindow, callback) {      	
+        google.maps.Map.prototype.createInfoWindow = function(infoWindow, parentMap, callback) {
             var pos = infoWindow.latitude ? new google.maps.LatLng(infoWindow.latitude, infoWindow.longitude) : this.getCenter();
             this.openInfoWindowHtml(pos, infoWindow.htmlText);
             callback(this.getInfoWindow());
@@ -223,18 +218,15 @@
     if (!google.maps.Marker.prototype.createInfoWindow) {
 
         google.maps.Marker.prototype.createInfoWindow = function(infoWindow, parentMarker, callback) {
-        	/*alert("The HTMLInformationWindow of the marker is called:  parentMarker.properties.showInformationEvent=" + parentMarker.properties.showInformationEvent);*/
-        	
             var showWindowHandler = function (markerObj, infoWindowObj) {
-                    return function(latlng) {
-                    	/*alert("markerObj: " + markerObj);*/
-                    	markerObj.openInfoWindowHtml(infoWindowObj.htmlText);
-                    }
+                return function(latlng) {
+                    markerObj.openInfoWindowHtml(infoWindowObj.htmlText);
+                }
             };
-        	
             google.maps.Event.addListener(parentMarker,  parentMarker.properties.showInformationEvent, showWindowHandler(parentMarker, infoWindow));
             callback(parentMarker.parentMap.getInfoWindow());            
         };
+
     }
 
     if (!google.maps.Map.prototype.createPolyline) {
