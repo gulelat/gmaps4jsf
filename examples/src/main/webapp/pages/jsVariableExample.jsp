@@ -9,7 +9,7 @@
         </head>  
 		<body onunload="GUnload()">
 	            <h:form id="form">
-	    		<m:map width="500px" height="500px" latitude="30.01" longitude="31.14" jsVariable="map1">
+                        <m:map width="500px" height="500px" latitude="30.01" longitude="31.14" jsVariable="map1" debug="true">
 	                    <m:marker latitude="30.01" longitude="31.14" jsVariable="marker1"/>
 	                    <m:htmlInformationWindow latitude="30.01" longitude="31.14" htmlText="Egypt"/>
 	                </m:map>

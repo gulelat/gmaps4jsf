@@ -37,11 +37,7 @@ public class HTMLInfoWindowRenderer extends Renderer {
 
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-
-        // render the informationWindow.
         writer.write(ComponentUtils.pad(component) + "parent.createInfoWindow(" + convertToJavascriptObject(context, (HTMLInformationWindow) component) + ", parent, function (parent) {\n");
-        
-        // encode marker client side events ...
         EventEncoder.encodeEventListeners(context, (HTMLInformationWindow) component, writer);
     }
 
