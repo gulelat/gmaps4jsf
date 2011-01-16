@@ -35,19 +35,19 @@
                     document.getElementById(m.mapStateHiddenFieldID).value = latlng;
                     
                     /* Submit the form on marker value change if required. */
-                    if (m.submitOnValueChange == 'true') {
+                    if (m.submitOnValueChange === 'true') {
                         setTimeout(function() {
                             document.getElementById(m.parentFormID).submit();
                         }, 500);
                     }
-                }
+                };
             };
             google.maps.Event.addListener(themap, 'click', mapClickFunction(map));
         };
 
         gmaps4jsf.getMap = function (map, partiallyTriggered) {
             if (partiallyTriggered) {
-                // If it is partially triggered then it is always updated on the response rendering
+                /* If it is partially triggered then it is always updated on the response rendering */
                 return null;
             }
             var id = typeof map === "object" ? map.id : map;
@@ -64,7 +64,7 @@
             if (props.location.address) {
                 props.gmaps4jsf.geocode(props.location.address, function (location) {
                     if (location) {
-                        self._center(location, props.zoom, callback)
+                        self._center(location, props.zoom, callback);
                     }
                 });
             } else {
@@ -120,7 +120,7 @@
 
     if (!google.maps.Map.prototype.markers) {
 
-        google.maps.Map.prototype.markers = new Array();    
+        google.maps.Map.prototype.markers = [];
 
         google.maps.Map.prototype.createMarker = function(marker, callback) {
             var self = this;
@@ -144,33 +144,33 @@
 
         google.maps.Map.prototype._dragEnd = function (m) {
             return function(latlng) {
-                var markersState = document.getElementById(m.stateHiddenFieldID).value;
-                if (markersState.indexOf(m.markerID + '=') != -1) {
+                var i, markersState = document.getElementById(m.stateHiddenFieldID).value;
+                if (markersState.indexOf(m.markerID + '=') !== -1) {
                      var markersArray = markersState.split('&');
                      var updatedMarkersState = "";
                      for (i = 0; markersArray.length > i; ++i) {
-                        if (markersArray[i].indexOf(m.markerID + '=') == -1) {
+                        if (markersArray[i].indexOf(m.markerID + '=') === -1) {
                             updatedMarkersState += markersArray[i];
-                            if (markersArray.length != 1 && ((markersArray.length - 1) > i)) {
+                            if (markersArray.length !== 1 && ((markersArray.length - 1) > i)) {
                                 updatedMarkersState += '&';
                             }
                         }
                      }
                      markersState = updatedMarkersState;
                 }
-                if (markersState != null && markersState != "") {
+                if (markersState !== null && markersState !== "") {
                     markersState = '&' + markersState;
                 }
                 markersState = m.markerID + '=' + latlng + markersState;
                 /* Save the marker state. */
                 document.getElementById(m.stateHiddenFieldID).value = markersState;
                 /* Submit the form on marker value change if required. */
-                if (m.submitOnValueChange == 'true') {
+                if (m.submitOnValueChange === 'true') {
                     setTimeout(function() {
                         document.getElementById(m.parentFormID).submit();
                     }, 500);
                 }
-            }
+            };
         };
 
         google.maps.Map.prototype._markerCreationCallback = function(marker, markerOptions, callback) {
@@ -197,10 +197,11 @@
         };
 
         google.maps.Map.prototype.clearMarkers = function() {
-            for (var i = 0; i < this.markers.length; i++) {
+            var i;
+            for (i = 0; i < this.markers.length; i++) {
                 this.markers[i].set_map(null);
             }
-            this.markers = new Array();
+            this.markers = [];
         };
 
     }
@@ -221,7 +222,7 @@
             var showWindowHandler = function (markerObj, infoWindowObj) {
                 return function(latlng) {
                     markerObj.openInfoWindowHtml(infoWindowObj.htmlText);
-                }
+                };
             };
             google.maps.Event.addListener(parentMarker,  parentMarker.properties.showInformationEvent, showWindowHandler(parentMarker, infoWindow));
             callback(parentMarker.parentMap.getInfoWindow());            
@@ -300,40 +301,32 @@
     if (!google.maps.Map.prototype.createCircle) {
 
         google.maps.Map.prototype.createCircle = function (circle) {
-        	var bounds = new GLatLngBounds();
-        	var circlePoints = Array();
-        	var circleObject;
-        	
-        	with (Math) {
-        		if (circle.unit == 'KM') {
-        			var d = circle.raduis / 6378.8;	/* radians */
-        		}
-        		else { /* miles */
-        			var d = circle.raduis / 3963.189;	/* radians  */
-        		}
-        		var lat1 = (PI / 180) * circle.latitude; /* radians */
-        		var lng1 = (PI / 180) * circle.longitude; /* radians */
-        		for (var a = 0; a < 361; a++) {
-        			var tc = (PI / 180) * a;
-        			var y = asin(sin(lat1) * cos(d) + cos(lat1) * sin(d) * cos(tc));
-        			var dlng = atan2(sin(tc) * sin(d) * cos(lat1), cos(d) - sin(lat1) * sin(y));
-        			var x = ((lng1 - dlng + PI) % (2 * PI)) - PI ; /* MOD function */
-        			var point = new GLatLng(parseFloat(y * (180 / PI)), parseFloat(x * (180 / PI)));
-        			circlePoints.push(point);
-        			bounds.extend(point);
-        		}
-        		if (d < 1.5678565720686044) {
-        			circleObject = new GPolygon(circlePoints, circle.strokeColour, circle.lineWidth, circle.strokeOpacity, circle.fillColour, circle.fillOpacity);	
-        		}
-        		else {
-        			circleObject = new GPolygon(circlePoints, circle.strokeColour, circle.lineWidth, circle.strokeOpacity);	
-        		}
-        		this.addOverlay(circleObject);	
-			};
+            var bounds = new google.maps.LatLngBounds();
+            var a, circleObject, circlePoints = [];
+            var d = circle.raduis / 3963.189;	/* radians  */
+            if (circle.unit === 'KM') {
+                d = circle.raduis / 6378.8;	/* radians */
+            }
+            var lat1 = (Math.PI / 180) * circle.latitude; /* radians */
+            var lng1 = (Math.PI / 180) * circle.longitude; /* radians */
+            for (a = 0; a <= 360; a++) {
+                var tc = (Math.PI / 180) * a;
+                var y = Math.asin(Math.sin(lat1) * Math.cos(d) + Math.cos(lat1) * Math.sin(d) * Math.cos(tc));
+                var dlng = Math.atan2(Math.sin(tc) * Math.sin(d) * Math.cos(lat1), Math.cos(d) - Math.sin(lat1) * Math.sin(y));
+                var x = ((lng1 - dlng + Math.PI) % (2 * Math.PI)) - Math.PI ; /* MOD function */
+                var point = new google.maps.LatLng(parseFloat(y * (180 / Math.PI)), parseFloat(x * (180 / Math.PI)));
+                circlePoints.push(point);
+                bounds.extend(point);
+            }
+            if (d < 1.5678565720686044) {
+                circleObject = new google.maps.Polygon(circlePoints, circle.strokeColour, circle.lineWidth, circle.strokeOpacity, circle.fillColour, circle.fillOpacity);
+            }
+            else {
+                circleObject = new google.maps.Polygon(circlePoints, circle.strokeColour, circle.lineWidth, circle.strokeOpacity);
+            }
+            this.addOverlay(circleObject);
+        };
 
-		}
-	}   
-    
-    /* End of controls */
+    }
 
 })(window);
