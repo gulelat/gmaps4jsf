@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.googlecode.gmaps4jsf</groupId>
         <artifactId>gmaps4jsf-project</artifactId>
-        <version>1.1.4-Maintenance</version>
+        <version>3.0.0</version>
     </parent>
     <artifactId>plugins-project</artifactId>
     <packaging>pom</packaging>
