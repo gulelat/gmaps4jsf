@@ -1,0 +1,7 @@
+1. When defining JS event listeners, it should be added before the map component (not after as what was supported in previous versions).
+2. Renaming the Map (renderOnWindowLoad) attribute to (partiallyTriggered) attribute.
+3. The direction component.
+4. The markerCluster experimental component.
+5. Fixing the marker eventListener execution for markers inside <ui:repeat/>.
+6. Supporting the Map Serverside events.
+7. Enhancing performance dramatically.

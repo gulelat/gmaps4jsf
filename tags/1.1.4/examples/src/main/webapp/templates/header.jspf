@@ -1,0 +1,24 @@
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://code.google.com/p/gmaps4jsf/" prefix="m" %>
+
+<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/basic.css" />
+<table class="pageHeader">
+    <tr>
+        <td>
+            <img src="<%= request.getContextPath() %>/images/site/logo.png" alt="GMaps4JSF logo" />
+        </td>
+        <td width="100%">
+            <span style="font-size:15px;color:#FFFFFF"> The GMaps and JavaServer&#8482; Faces Integration Library</span>
+            <span style="font-size:10px;color:#FFFFFF">(GMaps4JSF Version 1.1.4</span>
+        </td>
+    </tr>
+</table>
+<div>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <m:resources key="ABQIAAAAD6cDv-a0AnpzXA4gj6utCRTUlDOzA1Sd8h2eDxLDJEZUtkHZ_xQlPmNUQ-At6YLqCd29cGkwT8i95A"/>
+    <style type="text/css">
+        html, body { height: 100% }
+    </style>
+</div>            
