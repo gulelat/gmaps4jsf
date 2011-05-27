@@ -172,12 +172,12 @@ public class TagMojo extends BaseFacesMojo {
     private void writePackageImportAndClassDefinition(BufferedWriter writer, Component component, String tagClassName) throws IOException {
         writer.write("package " + component.getPackage() + ";\n\n");
 
-        writer.write("import javax.faces.webapp.UIComponentTag;\n");
+        writer.write("import javax.faces.webapp.UIComponentELTag;\n");
         writer.write("import javax.faces.component.UIComponent;\n");
         writer.write("import com.googlecode.gmaps4jsf.util.ComponentUtils;\n");
         writer.write("\n");
 
-        writer.write("public class " + tagClassName + " extends UIComponentTag {\n");
+        writer.write("public class " + tagClassName + " extends UIComponentELTag {\n");
         writer.write("\n");
     }
 
