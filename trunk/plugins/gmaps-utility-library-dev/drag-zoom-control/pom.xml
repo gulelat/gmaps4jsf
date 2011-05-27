@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.googlecode.gmaps4jsf</groupId>
         <artifactId>gmaps-utility-library-dev</artifactId>
-        <version>3.0.0</version>
+        <version>3.0.0-SNAPSHOT</version>
     </parent>
     <artifactId>drag-zoom-control</artifactId>
     <name>DragZoom Component (Extended GMaps4JSF component)</name>
