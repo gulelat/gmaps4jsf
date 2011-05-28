@@ -9,6 +9,16 @@
     <artifactId>gmaps4jsf-examples</artifactId>
     <packaging>war</packaging>
     <name>GMaps4JSF Examples Project</name>
+	
+    <repositories>
+    <!-- defined for the wagon plugin -->
+		<repository>
+			<id>repository.jboss.org</id>
+			<name>JBoss Repository for Maven</name>
+			<url>http://snapshots.jboss.org/maven2/</url>
+		</repository>			
+    </repositories>	
+	
     <build>
         <plugins>
             <plugin>
@@ -26,6 +36,7 @@
             </plugin>
         </plugins>
     </build>
+	
     <dependencies>
         <dependency>
             <groupId>${groupId}</groupId>
@@ -38,12 +49,26 @@
             <version>2.0.5</version>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>net.java.dev.ajax4jsf</groupId>
-            <artifactId>ajax4jsf</artifactId>
-            <version>1.0.6</version>
-            <scope>runtime</scope>
-        </dependency>
+		
+		<!-- RichFaces libraries -->	
+		<dependency>
+			<groupId>org.richfaces.framework</groupId>
+			<artifactId>richfaces-api</artifactId>
+			<version>3.3.4-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.richfaces.framework</groupId>
+			<artifactId>richfaces-impl</artifactId>
+			<version>3.3.4-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.richfaces.ui</groupId>
+			<artifactId>richfaces-ui</artifactId>
+			<version>3.3.4-SNAPSHOT</version>
+		</dependency>
+		
         <dependency>
             <groupId>org.apache.myfaces.tomahawk</groupId>
             <artifactId>tomahawk</artifactId>
