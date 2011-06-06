@@ -18,6 +18,7 @@
  */
 package com.googlecode.gmaps4jsf.example.beans;
 
+import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 public class Multiple {
 
     private List locations;
+    private LocationBean location;
 
     public Multiple() {
         locations = new ArrayList();
@@ -37,6 +39,10 @@ public class Multiple {
             bean.setLongitude(random());
             locations.add(bean);
         }
+    }
+
+    public void addLocation(ActionEvent e) {
+        locations.add(location.clone());
     }
 
     private String random() {
@@ -49,6 +55,14 @@ public class Multiple {
 
     public void setLocations(List locations) {
         this.locations = locations;
+    }
+
+    public LocationBean getLocation() {
+        return location;
+    }
+
+    public void setLocation(LocationBean location) {
+        this.location = location;
     }
 
 }

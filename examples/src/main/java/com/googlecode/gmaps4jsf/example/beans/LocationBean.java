@@ -42,4 +42,11 @@ public class LocationBean {
         this.longitude = longitude;
     }
 
+    @Override public LocationBean clone() {
+        LocationBean loc = new LocationBean();
+        loc.setLatitude(latitude);
+        loc.setLongitude(longitude);
+        return loc;
+    }
+
 }

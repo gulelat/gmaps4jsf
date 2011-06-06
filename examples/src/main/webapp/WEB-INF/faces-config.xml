@@ -62,6 +62,10 @@
         <managed-bean-name>multiple</managed-bean-name>
         <managed-bean-class>com.googlecode.gmaps4jsf.example.beans.Multiple</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>location</property-name>
+            <value>#{loc1}</value>
+        </managed-property>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>shapeData</managed-bean-name>
