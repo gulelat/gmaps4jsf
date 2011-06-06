@@ -18,9 +18,9 @@
  */
 package com.googlecode.gmaps4jsf.example.beans;
 
-import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.ArrayList;
+import javax.faces.event.ActionEvent;
 
 /**
  *
