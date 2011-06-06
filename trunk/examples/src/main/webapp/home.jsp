@@ -241,6 +241,13 @@
                             </h:outputLink>
                         </h:panelGrid>
 
+                        <h:outputText value="Marker Clusterer AJAX(Extended Component - Experimental)" />
+                        <h:panelGrid style="padding-left:25px">
+                            <h:outputLink value="pages/markerClusterAJAX.jsf">
+                                <f:verbatim>An example that groups markers in clusters and modifies them using AJAX requests.</f:verbatim>
+                            </h:outputLink>
+                        </h:panelGrid>
+
                     </t:panelTab>
 
                     <t:panelTab label="Mashups">
