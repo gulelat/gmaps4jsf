@@ -1,6 +1,4 @@
 #labels Featured
-<wiki:gadget url="http://mashups4jsf.googlecode.com/svn/wiki/ads/adsense.xml" border="0" width="780" height="100" />
-
 *How to configure the library:*
  * Place the the latest library jar in your web application WEB-INF/lib folder.
  * Include the tag library in your JSF page as follows:
