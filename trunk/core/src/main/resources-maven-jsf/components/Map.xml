@@ -99,11 +99,9 @@
             <name>type</name>
             <required>false</required>
             <type>java.lang.String</type>
-            <defaultValue>G_NORMAL_MAP</defaultValue>
+            <defaultValue>google.maps.MapTypeId.ROADMAP</defaultValue>
             <description>
                 The type of the map.
-                It can be one of the following values (G_NORMAL_MAP, G_SATELLITE_MAP and G_HYBRID_MAP).
-                Default value is (G_HYBRID_MAP).
             </description>
         </attribute>
         <attribute>
