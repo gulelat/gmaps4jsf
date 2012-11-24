@@ -44,7 +44,7 @@
                     }
                 };
             };
-            google.maps.event.addDomListener(themap, 'click', mapClickFunction(map));
+            google.maps.event.addListener(themap, 'click', mapClickFunction(map));
         };
 
         gmaps4jsf.getMap = function (map, partiallyTriggered) {
@@ -129,17 +129,36 @@
             var self = this;
             if (marker.address) {
                 self.properties.gmaps4jsf.geocode(marker.address, function(location) {
-                    if (location) {
-                        var m = new google.maps.Marker(location, marker.markerOptions);
+                    if (location) {                    	
+                        /*var m = new google.maps.Marker(marker.markerOptions);
+						themarker.setPosition(new google.maps.LatLng(location));*/
+    					var m = new google.maps.Marker({
+    						position: self.getCenter(),
+    						map: self
+    					});                   	
+                    	
                         self._markerCreationCallback(m, marker, callback);
                     }
                 });
             } else {
                 var themarker;
                 if (marker.latitude) {
-                    themarker = new google.maps.Marker(new google.maps.LatLng(marker.latitude, marker.longitude), marker.markerOptions);
+                    /*themarker = new google.maps.Marker(marker.markerOptions);
+					themarker.setPosition(new google.maps.LatLng(marker.latitude, marker.longitude));*/
+                	themarker = new google.maps.Marker({
+						position: new google.maps.LatLng(marker.latitude, marker.longitude),
+						map: self
+					});                   	
+                	
                 } else {
-                    themarker = new google.maps.Marker(self.getCenter(), marker.markerOptions);
+                	/*
+                    themarker = new google.maps.Marker(marker.markerOptions);
+					themarker.setPosition(self.getCenter());*/
+                	
+                	themarker = new google.maps.Marker({
+						position: self.getCenter(),
+						map: self
+					});         
                 }
                 self._markerCreationCallback(themarker, marker, callback);
             }
@@ -177,7 +196,8 @@
         };
 
         google.maps.Map.prototype._markerCreationCallback = function(marker, markerOptions, callback) {
-            var latlng = marker.getLatLng();
+            var latlng = marker.getPosition();
+            
             if (!markerOptions.latitude) {
                 markerOptions.latitude = latlng.lat();
                 markerOptions.longitude = latlng.lng();
@@ -188,12 +208,19 @@
                 this.properties.gmaps4jsf.window[markerOptions.jsVariable] = marker;
             }
             /* add a drag-end listener to the marker */
-            google.maps.Event.addListener(marker, 'dragend', this._dragEnd(markerOptions));
-            callback(this, marker);
+            google.maps.event.addListener(marker, 'dragend', this._dragEnd(markerOptions));
+            /*callback(this, marker);
             if (this.addMarker(marker)) {
                 this.reshape(latlng);
-            }
+            }*/
         };
+        /*
+        google.maps.Map.prototype.addMarker = function (marker) {
+			  return new google.maps.Marker({
+				  position: marker.getPosition(),
+				  map:  marker.parentMap
+			  });
+        };*/        
 
         google.maps.Map.prototype.getMarkers = function() {
             return this.markers;
@@ -227,7 +254,7 @@
                     markerObj.openInfoWindowHtml(infoWindowObj.htmlText);
                 };
             };
-            google.maps.Event.addListener(parentMarker,  parentMarker.properties.showInformationEvent, showWindowHandler(parentMarker, infoWindow));
+            google.maps.event.addListener(parentMarker,  parentMarker.properties.showInformationEvent, showWindowHandler(parentMarker, infoWindow));
             callback(parentMarker.parentMap.getInfoWindow());            
         };
 
