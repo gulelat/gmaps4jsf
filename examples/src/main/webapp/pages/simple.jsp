@@ -5,7 +5,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
      <f:view>
         <head>
-        	<%@include file="../templates/internalHeader.jspf" %>               
+		    <script type="text/javascript"
+		      src="https://maps.googleapis.com/maps/api/js?sensor=true">
+		    </script>             
         </head> 
          <body>
              <h:form id="form">
