@@ -34,7 +34,7 @@ import com.googlecode.gmaps4jsf.util.ComponentConstants;
 /**
  * @author Hazem Saleh
  * @date Jul 13, 2008
- * last modified at Jul 31, 2008
+ * last modified at Jul 31, 2012
  * The (MapRenderer) renders a google map.
  */
 public final class MapRenderer extends Renderer {
