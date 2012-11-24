@@ -15,18 +15,20 @@
                 if (container) {
                     themap = this.maps[id] = new google.maps.Map(container);
                     themap.properties = map;
-                    themap.setMapType(map.mapType);
+                    themap.setMapTypeId(map.mapType);
                     if (map.jsVariable) {
                         this.window[map.jsVariable] = themap;
                     }
                 }
             }
+            /*
             if (map.enableScrollWheelZoom) {
                 themap.enableScrollWheelZoom();
             } else {
                 themap.disableScrollWheelZoom();
             }
-            themap.center(map, callback);
+            */
+            themap.centeralize(map, callback);
             
             /* add a drag-end listener to the marker */
             var mapClickFunction = function (m) {
@@ -42,7 +44,7 @@
                     }
                 };
             };
-            google.maps.Event.addListener(themap, 'click', mapClickFunction(map));
+            google.maps.event.addDomListener(themap, 'click', mapClickFunction(map));
         };
 
         gmaps4jsf.getMap = function (map, partiallyTriggered) {
@@ -56,9 +58,9 @@
 
     }
 
-    if (!google.maps.Map.prototype.center) {
+    if (!google.maps.Map.prototype.centeralize) {
 
-        google.maps.Map.prototype.center = function (map, callback) {
+        google.maps.Map.prototype.centeralize = function (map, callback) {
             var self = this;
             var props = map ? map : self.properties;
             if (props.location.address) {
@@ -73,7 +75,8 @@
         };
 
         google.maps.Map.prototype._center = function (latlng, zoom, callback) {
-            this.setCenter(latlng, zoom);
+            this.setCenter(latlng);
+            this.setZoom(zoom);
             this._createMapCallback(callback);
         };
 
