@@ -64,9 +64,9 @@
             var self = this;
             var props = map ? map : self.properties;
             if (props.location.address) {
-                props.gmaps4jsf.geocode(props.location.address, function (location) {
-                    if (location) {
-                        self._center(location, props.zoom, callback);
+                props.gmaps4jsf.geocode(props.location.address, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        self._center(results[0].geometry.location, props.zoom, callback);
                     }
                 });
             } else {
@@ -128,12 +128,10 @@
         google.maps.Map.prototype.createMarker = function(marker, callback) {
             var self = this;
             if (marker.address) {
-                self.properties.gmaps4jsf.geocode(marker.address, function(location) {
-                    if (location) {                    	
-                        /*var m = new google.maps.Marker(marker.markerOptions);
-						themarker.setPosition(new google.maps.LatLng(location));*/
+                self.properties.gmaps4jsf.geocode(marker.address, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
     					var m = new google.maps.Marker({
-    						position: self.getCenter(),
+    						position: results[0].geometry.location,
     						map: self
     					});                   	
                     	
@@ -143,8 +141,6 @@
             } else {
                 var themarker;
                 if (marker.latitude) {
-                    /*themarker = new google.maps.Marker(marker.markerOptions);
-					themarker.setPosition(new google.maps.LatLng(marker.latitude, marker.longitude));*/
                 	themarker = new google.maps.Marker({
 						position: new google.maps.LatLng(marker.latitude, marker.longitude),
 						map: self
@@ -209,18 +205,12 @@
             }
             /* add a drag-end listener to the marker */
             google.maps.event.addListener(marker, 'dragend', this._dragEnd(markerOptions));
-            /*callback(this, marker);
+            callback(this, marker);
+            /*
             if (this.addMarker(marker)) {
                 this.reshape(latlng);
             }*/
-        };
-        /*
-        google.maps.Map.prototype.addMarker = function (marker) {
-			  return new google.maps.Marker({
-				  position: marker.getPosition(),
-				  map:  marker.parentMap
-			  });
-        };*/        
+        };     
 
         google.maps.Map.prototype.getMarkers = function() {
             return this.markers;
@@ -238,24 +228,37 @@
 
     if (!google.maps.Map.prototype.createInfoWindow) {
 
-        google.maps.Map.prototype.createInfoWindow = function(infoWindow, parentMap, callback) {
-            var pos = infoWindow.latitude ? new google.maps.LatLng(infoWindow.latitude, infoWindow.longitude) : this.getCenter();
-            this.openInfoWindowHtml(pos, infoWindow.htmlText);
-            callback(this.getInfoWindow());
+        google.maps.Map.prototype.createInfoWindow = function(infoWindowObj, parentMap, callback) {
+            var pos = infoWindowObj.latitude ? new google.maps.LatLng(infoWindowObj.latitude, infoWindowObj.longitude) : this.getCenter();
+			var infoWindow = new google.maps.InfoWindow({
+				content: infoWindowObj.htmlText
+			});			
+
+			infoWindow.setPosition(pos);			
+			infoWindow.open(parentMap);			
+				
+			callback(infoWindow);            
         };
 
     }
 
     if (!google.maps.Marker.prototype.createInfoWindow) {
 
-        google.maps.Marker.prototype.createInfoWindow = function(infoWindow, parentMarker, callback) {
+        google.maps.Marker.prototype.createInfoWindow = function(infoWindowObj, parentMarker, callback) {
             var showWindowHandler = function (markerObj, infoWindowObj) {
                 return function(latlng) {
-                    markerObj.openInfoWindowHtml(infoWindowObj.htmlText);
+                    /*markerObj.openInfoWindowHtml(infoWindowObj.htmlText);*/
+                	infoWindow.open(parentMarker.map, parentMarker);
                 };
             };
-            google.maps.event.addListener(parentMarker,  parentMarker.properties.showInformationEvent, showWindowHandler(parentMarker, infoWindow));
-            callback(parentMarker.parentMap.getInfoWindow());            
+
+			var infoWindow = new google.maps.InfoWindow({
+				content: infoWindowObj.htmlText
+			});			
+			
+            google.maps.event.addListener(parentMarker, parentMarker.properties.showInformationEvent, showWindowHandler(parentMarker, infoWindow));
+				
+			callback(infoWindow);
         };
 
     }
