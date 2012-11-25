@@ -25,8 +25,8 @@
         });
 
         gmaps4jsf.geocode = function (address, callback) {
-            var geocoder = new google.maps.ClientGeocoder();
-            geocoder.getLatLng(address, callback);
+            var geocoder = new google.maps.Geocoder();
+            geocoder.geocode({'address': address}, callback);
         };
 
         window.gmaps4jsf = gmaps4jsf;
