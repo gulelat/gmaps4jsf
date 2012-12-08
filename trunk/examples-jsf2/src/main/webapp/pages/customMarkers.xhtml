@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:m="http://code.google.com/p/gmaps4jsf/">
+
+<ui:composition template="../templates/layout.xhtml">
+
+        <ui:define name="title">Welcome to GMaps4JSF Examples</ui:define>
+        <ui:define name="ajaxIncludes"></ui:define>
+        
+        <ui:define name="mashup">
+             <h1>Map with custom draggable markers</h1>
+            
+         <h:form id="form">
+            <m:map width="800px" height="800px" latitude="24" longitude="15" jsVariable="map1" zoom="2">
+                <m:marker latitude="30.01" longitude="31.14" jsVariable="marker1" draggable="true">
+                    <m:eventListener eventName="dragend" jsFunction="marker1DragHandler"/>
+                    <m:icon imageURL="http://www.google.com/mapfiles/markerA.png"/>
+                    <m:htmlInformationWindow htmlText="Iam Marker A"/>
+                </m:marker>
+                <m:marker latitude="39" longitude="-101" jsVariable="marker2" draggable="true">
+                    <m:eventListener eventName="dragend" jsFunction="marker2DragHandler"/>
+                    <m:icon imageURL="http://www.google.com/mapfiles/markerB.png"/>
+                    <m:htmlInformationWindow htmlText="Iam Marker B"/>
+                </m:marker>
+                <m:marker latitude="-33" longitude="19" jsVariable="marker3" draggable="true">
+                    <m:eventListener eventName="dragend" jsFunction="marker3DragHandler"/>
+                    <m:icon imageURL="http://www.google.com/mapfiles/markerC.png"/>
+                    <m:htmlInformationWindow htmlText="Iam Marker C"/>
+                </m:marker>
+             </m:map>
+             <script type="text/javascript">
+                 function marker1DragHandler(event) {
+                     alert("Current markerA latlng is: " + event.latLng);
+                 }
+                 function marker2DragHandler(event) {
+                     alert("Current markerB latlng is: " + event.latLng);
+                 }
+                 function marker3DragHandler(event) {
+                     alert("Current markerC latlng is: " + event.latLng);
+                 }
+             </script>
+             <div id="message"/>
+         </h:form>
+        </ui:define>
+
+</ui:composition>
+</html>  
