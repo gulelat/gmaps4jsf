@@ -37,7 +37,7 @@ public interface ComponentConstants {
 	final String HTML_ATTR_TYPE_HIDDEN = "hidden";
 	final String HTML_ATTR_VALUE = "value";
 	final String CONST_MARKER_PREFIX = "marker_";
-	final String JS_GEVENT_OBJECT = "google.maps.Event";
+	final String JS_GEVENT_OBJECT = "google.maps.event";
 	final String JS_GMarker_OBJECT = "GMarker";
 	final String JS_GLatLng_OBJECT = "GLatLng";
 	final String JS_GSize_OBJECT = "GSize";

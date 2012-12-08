@@ -19,22 +19,21 @@
 package com.googlecode.gmaps4jsf.component.map;
 
 import java.io.IOException;
-import javax.faces.render.Renderer;
-import javax.faces.context.FacesContext;
+
 import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.event.ActionEvent;
-import javax.servlet.http.HttpServletRequest;
+import javax.faces.render.Renderer;
 
 import com.googlecode.gmaps4jsf.component.marker.MarkerValue;
+import com.googlecode.gmaps4jsf.util.ComponentConstants;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
 import com.googlecode.gmaps4jsf.util.FileReaderUtils;
-import com.googlecode.gmaps4jsf.util.ComponentConstants;
 
 /**
  * @author Hazem Saleh
- * @date Jul 13, 2008
- * last modified at Jul 31, 2012
+ * @date  Dec 08, 2012
  * The (MapRenderer) renders a google map.
  */
 public final class MapRenderer extends Renderer {

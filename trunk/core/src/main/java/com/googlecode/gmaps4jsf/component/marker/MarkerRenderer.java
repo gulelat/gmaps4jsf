@@ -34,7 +34,7 @@ import com.googlecode.gmaps4jsf.util.ComponentUtils;
 
 /**
  * @author Hazem Saleh
- * @date Jan 3, 2009
+ * @date Dec 08, 2012
  * The (MarkerRenderer) renders a google map marker.
  */
 public final class MarkerRenderer extends Renderer {
@@ -108,6 +108,7 @@ public final class MarkerRenderer extends Renderer {
 
     protected StringBuffer convertIconToJavascriptObject(Icon icon) {
         StringBuffer buffer = new StringBuffer("{");
+        /*
         buffer.append("shadow: '").append(ComponentUtils.unicode(icon.getShadowImageURL()));
         buffer.append("', iconSize: {width: ").append(icon.getWidth())
             .append(", height: ").append(icon.getHeight());
@@ -118,6 +119,8 @@ public final class MarkerRenderer extends Renderer {
         buffer.append("}, infoWindowAnchor: {x: ").append(icon.getXcoordInfoWindowAnchor())
             .append(", y: ").append(icon.getYcoordInfoWindowAnchor());
         buffer.append("}, image: '").append(icon.getImageURL()).append("'");
+        */
+        buffer.append("image: '").append(ComponentUtils.unicode(icon.getImageURL())).append("'");        
         return buffer.append("}");
     }
     
@@ -137,7 +140,7 @@ public final class MarkerRenderer extends Renderer {
         return null;
     }    
 
-    private static MarkerValue getMarkerValueFromState(String markerState) {
+    private static MarkerValue getMarkerValueFromState(String markerState) {    	
         MarkerValue markerValue      = new MarkerValue();
         String[]    markerExpression = markerState.split("=");
         String[]    markersLngLat    = markerExpression[1].split(",");
