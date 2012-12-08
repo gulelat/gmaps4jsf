@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:m="http://code.google.com/p/gmaps4jsf/">
+
+<ui:composition template="../templates/layout.xhtml">
+
+        <ui:define name="title">Welcome to GMaps4JSF Examples</ui:define>
+        <ui:define name="ajaxIncludes"></ui:define>
+        
+        <ui:define name="mashup">
+            <h1>Reverse Geocoding - Get the address after dragging the marker!!!</h1>
+            
+            <h:form id="form">
+                    <m:map width="500px" height="400px" latitude="40.730885" longitude="-73.997383" jsVariable="map1" zoom="15" autoReshape="true">
+                            <m:marker id="marker1" latitude="40.727421" longitude="-73.992620" jsVariable="marker1" draggable="true" 
+                                      submitOnValueChange="true" valueChangeListener="#{map2.processValueChangeForFirstMarker}">
+                                        <m:icon imageURL="http://www.google.com/mapfiles/markerA.png"/>                                      
+                                <m:htmlInformationWindow htmlText="Iam Marker A"/>
+                            </m:marker>
+                            
+                                
+                            <m:marker id="marker2" latitude="40.735161" longitude="-73.996696" jsVariable="marker2" draggable="true" 
+                                              submitOnValueChange="true" valueChangeListener="#{map2.processValueChangeForSecondMarker}">
+                                        <m:icon imageURL="http://www.google.com/mapfiles/markerB.png"/>                                                                                                                       
+                                <m:htmlInformationWindow htmlText="Iam Marker B"/>                        
+                            </m:marker>                              
+                    </m:map>
+                    
+                    <h:outputText value="&lt;b&gt;Marker A details:&lt;/b&gt;&lt;br/&gt;" rendered="#{map2.firstLocationInformation ne null}" escape="false"/> 
+                    <h:outputText value="#{map2.firstLocationInformation}&lt;br/&gt;" rendered="#{map2.firstLocationInformation ne null}" escape="false"/>                     
+                    <h:outputText value="&lt;b&gt;Marker B details:&lt;/b&gt;&lt;br/&gt;" rendered="#{map2.secondLocationInformation ne null}" escape="false"/>                   
+                    <h:outputText value="#{map2.secondLocationInformation}&lt;br/&gt;" rendered="#{map2.secondLocationInformation ne null}" escape="false"/>                                       
+            </h:form>
+        </ui:define>
+
+</ui:composition>
+</html>

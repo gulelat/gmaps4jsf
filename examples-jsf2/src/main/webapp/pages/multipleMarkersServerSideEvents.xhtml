@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:m="http://code.google.com/p/gmaps4jsf/">
+
+<ui:composition template="../templates/layout.xhtml">
+
+        <ui:define name="title">Welcome to GMaps4JSF Examples</ui:define>
+        <ui:define name="ajaxIncludes"></ui:define>
+        
+        <ui:define name="mashup">
+             <h1>Multiple markers inside repeat tag with ValueChangeListeners (non-Ajax)</h1>
+            
+         <h:form id="form">
+            <m:map width="500px" height="500px" zoom="2">
+                 <ui:repeat var="marker" value="#{markerList.data}">
+                     <m:marker latitude="#{marker.latitude}" 
+                               longitude="#{marker.longitude}"  
+                               jsVariable="#{marker.jsVariable}" 
+                               draggable="true" 
+                               submitOnValueChange="true" 
+                               valueChangeListener="#{marker.update}"/>
+                 </ui:repeat>
+            </m:map>
+            <h:outputText value="#{markerList.status}"></h:outputText>
+         </h:form>
+        </ui:define>
+
+</ui:composition>
+</html>  

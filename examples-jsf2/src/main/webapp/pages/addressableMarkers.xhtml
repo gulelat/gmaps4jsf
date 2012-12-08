@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:m="http://code.google.com/p/gmaps4jsf/">
+
+<ui:composition template="../templates/layout.xhtml">
+
+	<ui:define name="title">Welcome to GMaps4JSF Examples</ui:define>
+	<ui:define name="ajaxIncludes"></ui:define>
+	
+	<ui:define name="mashup">
+	     <h1>Map with addressable markers</h1>
+	    
+         <h:form id="form">
+ 			<m:map width="800px" height="800px" latitude="24" longitude="15" jsVariable="map1" zoom="2">
+                 <m:marker address="Cairo, Egypt" />
+                 <m:marker address="NY, USA" draggable="true">
+                     <m:eventListener eventName="dragend" jsFunction="markerDragHandler" />
+                     <m:htmlInformationWindow htmlText="Iam a draggable marker, you can drag me" />
+                 </m:marker>
+                 <m:marker address="Vienna, Austria" />
+             </m:map>
+             <script type="text/javascript">
+                 function markerDragHandler(event) {
+                     alert("Current marker latlng is: " + event.latLng);
+                 }
+             </script>
+         </h:form>
+	</ui:define>
+
+</ui:composition>
+</html>  

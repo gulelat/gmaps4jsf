@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:m="http://code.google.com/p/gmaps4jsf/">
+
+<ui:composition template="../templates/layout.xhtml">
+
+	<ui:define name="title">Welcome to GMaps4JSF Examples</ui:define>
+	<ui:define name="ajaxIncludes"></ui:define>
+	
+	<ui:define name="mashup">
+        <h1>Drag the markers and select your favorite places!!!</h1>
+    
+    	<h:form id="form">
+            <m:map width="800px" height="800px" latitude="24" longitude="15" jsVariable="map1" zoom="2">
+                <m:marker latitude="#{place1.latitude}" longitude="#{place1.longitude}" jsVariable="marker1" draggable="true">
+                    <m:eventListener eventName="dragend" jsFunction="marker1DragHandler"/>
+                </m:marker>
+                <m:marker latitude="#{place2.latitude}" longitude="#{place2.longitude}" jsVariable="marker2" draggable="true">
+                    <m:eventListener eventName="dragend" jsFunction="marker2DragHandler"/>
+                </m:marker>
+            </m:map>
+            <h:commandButton value="Save as a favorite place!!!" action="#{addressBean.doSearch}" />  <br />
+            <h:outputText value="First place (lat, lng): (#{place1.latitude}, #{place1.longitude})" /> <br />
+            <h:outputText value="Second place (lat, lng): (#{place2.latitude}, #{place2.longitude})" /> <br />
+            <script type="text/javascript">
+               function marker1DragHandler(event) {
+                   alert("Current marker1 latlng is: " + event.latLng);
+               }
+               function marker2DragHandler(event) {
+                   alert("Current marker2 latlng is: " + event.latLng);
+               }
+            </script>
+       </h:form>
+	</ui:define>
+
+</ui:composition>
+</html> 

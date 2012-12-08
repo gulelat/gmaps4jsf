@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:m="http://code.google.com/p/gmaps4jsf/">
+
+<ui:composition template="../templates/layout.xhtml">
+
+        <ui:define name="title">Welcome to GMaps4JSF Examples</ui:define>
+        <ui:define name="ajaxIncludes"></ui:define>
+        
+        <ui:define name="mashup">
+             <h1>Two maps in a page</h1>
+            
+         <h:form id="form">
+             <ul style="list-style-type:none;height:300px">
+                 <li style="float:left;margin-right:5px"><m:map width="300" height="300" latitude="30.01" longitude="31.14" /></li>
+                 <li style="float:left"><m:map width="300" height="300" latitude="30.01" longitude="31.14" /></li>
+             </ul>
+         </h:form>
+        </ui:define>
+
+</ui:composition>
+</html>  
