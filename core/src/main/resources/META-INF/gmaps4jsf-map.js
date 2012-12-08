@@ -32,9 +32,9 @@
             
             /* add a drag-end listener to the marker */
             var mapClickFunction = function (m) {
-                return function(overlay, latlng) {
+                return function(event) {
                     /* Save the map state. */
-                    document.getElementById(m.mapStateHiddenFieldID).value = latlng;
+                    document.getElementById(m.mapStateHiddenFieldID).value = event.latLng;
                     
                     /* Submit the form on marker value change if required. */
                     if (m.submitOnValueChange === 'true') {
@@ -86,14 +86,14 @@
 
         google.maps.Map.prototype.reshape = function(latlng) {
             this.setBounds(latlng);
-            if (this.properties.autoReshape && (this.markers.length > 1)) {
+            if (this.properties.autoReshape) {
                 var sw = this.bounds.getSouthWest();
                 sw = new google.maps.LatLng(sw.lat() - 0.005, sw.lng() - 0.005);
                 var ne = this.bounds.getNorthEast();
                 ne = new google.maps.LatLng(ne.lat() + 0.005, ne.lng() + 0.005);
                 var extra = new google.maps.LatLngBounds(sw, ne);
-                this.setZoom(this.getBoundsZoomLevel(extra));
                 this.setCenter(extra.getCenter());
+                this.fitBounds(extra);
             }
         };
 
@@ -108,15 +108,8 @@
 
     if (!google.maps.Map.prototype.buildIcon) {
 
-        google.maps.Map.prototype.buildIcon = function (icon) {
-            var iconObject = new google.maps.Icon(G_DEFAULT_ICON);
-            iconObject.image = icon.image;
-            iconObject.shadow = icon.shadow;
-            iconObject.iconSize = new google.maps.Size(icon.iconSize.width, icon.iconSize.height);
-            iconObject.shadowSize = new google.maps.Size(icon.shadowSize.width, icon.shadowSize.height);
-            iconObject.iconAnchor = new google.maps.Point(icon.iconAnchor.x, icon.iconAnchor.y);
-            iconObject.infoWindowAnchor = new google.maps.Point(icon.infoWindowAnchor.x, icon.infoWindowAnchor.y);
-            return iconObject;
+        google.maps.Map.prototype.buildIcon = function (icon) {        	
+        	return icon.image; /* To be enhanced in later releases */
         };
 
     }
@@ -132,7 +125,9 @@
                     if (status == google.maps.GeocoderStatus.OK) {
     					var m = new google.maps.Marker({
     						position: results[0].geometry.location,
-    						map: self
+    						map: self,
+    						draggable: marker.markerOptions.draggable,
+    						icon: marker.markerOptions.icon    						
     					});                   	
                     	
                         self._markerCreationCallback(m, marker, callback);
@@ -143,17 +138,17 @@
                 if (marker.latitude) {
                 	themarker = new google.maps.Marker({
 						position: new google.maps.LatLng(marker.latitude, marker.longitude),
-						map: self
+						map: self,
+						draggable: marker.markerOptions.draggable,
+						icon: marker.markerOptions.icon
 					});                   	
                 	
                 } else {
-                	/*
-                    themarker = new google.maps.Marker(marker.markerOptions);
-					themarker.setPosition(self.getCenter());*/
-                	
                 	themarker = new google.maps.Marker({
 						position: self.getCenter(),
-						map: self
+						map: self,
+						draggable: marker.markerOptions.draggable,
+						icon: marker.markerOptions.icon						
 					});         
                 }
                 self._markerCreationCallback(themarker, marker, callback);
@@ -161,8 +156,10 @@
         };
 
         google.maps.Map.prototype._dragEnd = function (m) {
-            return function(latlng) {
+            return function(mouseEvent) {
+            	var latlng = mouseEvent.latLng;
                 var i, markersState = document.getElementById(m.stateHiddenFieldID).value;
+                
                 if (markersState.indexOf(m.markerID + '=') !== -1) {
                      var markersArray = markersState.split('&');
                      var updatedMarkersState = "";
@@ -210,6 +207,8 @@
             if (this.addMarker(marker)) {
                 this.reshape(latlng);
             }*/
+            
+            this.reshape(latlng);            
         };     
 
         google.maps.Map.prototype.getMarkers = function() {
@@ -247,7 +246,6 @@
         google.maps.Marker.prototype.createInfoWindow = function(infoWindowObj, parentMarker, callback) {
             var showWindowHandler = function (markerObj, infoWindowObj) {
                 return function(latlng) {
-                    /*markerObj.openInfoWindowHtml(infoWindowObj.htmlText);*/
                 	infoWindow.open(parentMarker.map, parentMarker);
                 };
             };
