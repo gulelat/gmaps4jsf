@@ -27,8 +27,8 @@ import com.googlecode.gmaps4jsf.util.ComponentUtils;
 
 /**
  * Renders map controls.
- *
- * @author Jose Noheda [jose.noheda@gmail.com]
+ * @Data 22 Dec 2012
+ * @author Jose Noheda [jose.noheda@gmail.com] and Hazem Saleh
  */
 public final class MapControlRenderer extends Renderer {
 
@@ -41,10 +41,14 @@ public final class MapControlRenderer extends Renderer {
 
     protected String convertToJavascriptObject(MapControl control) {
         StringBuffer buffer = new StringBuffer("{");
+        
         buffer.append("name: '").append(ComponentUtils.unicode(control.getName()));
-        buffer.append("', position: '").append(ComponentUtils.unicode(control.getPosition()));
-        buffer.append("', offsetWidth: ").append(control.getOffsetWidth());
-        buffer.append(", offsetHeight: ").append(control.getOffsetHeight());
+        buffer.append("', position: ").append(ComponentUtils.unicode(control.getPosition()));
+        
+        if (control.getControlStyle() != null) {
+        	buffer.append(", style: ").append(control.getControlStyle());
+        } 
+        
         return buffer.append("}").toString();
     }
 

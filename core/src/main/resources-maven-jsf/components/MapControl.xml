@@ -45,44 +45,43 @@ the mapControl component should be a child of the map component.
             <type>java.lang.String</type>
             <description>The control name of the map.
                 It can take on the following values:
-                * GLargeMapControl - a large pan/zoom control used on Google Maps. Appears in the top left corner of the map by default.
-                * GSmallMapControl - a smaller pan/zoom control used on Google Maps. Appears in the top left corner of the map by default.
-                * GSmallZoomControl - a small zoom control (no panning controls) used in the small map blowup windows used to display driving directions steps on Google Maps.
-                * GScaleControl - a map scale.
-                * GMapTypeControl - buttons that let the user toggle between map types (such as Map and Satellite).
-                * GHierarchicalMapTypeControl - a selection of nested buttons and menu items for placing many map type selectors.
-                * GOverviewMapControl - a collapsible overview map in the corner of the screen.
+                * mapTypeControl
+				* panControl 
+				* zoomControl 
+				* scaleControl 
+				* rotateControl 
+				* overviewMapControl 
             </description>
         </attribute>
         <attribute>
             <name>position</name>
             <required>false</required>
             <type>java.lang.String</type>
-            <defaultValue>G_ANCHOR_TOP_LEFT</defaultValue>
+            <defaultValue>google.maps.ControlPosition.LEFT_TOP</defaultValue>
             <description>This attribute lets you specify the position of the map control.
                 It can take on the following values:
-                * G_ANCHOR_TOP_RIGHT
-                * G_ANCHOR_TOP_LEFT
-                * G_ANCHOR_BOTTOM_RIGHT
-                * G_ANCHOR_BOTTOM_LEFT
+                * TOP_CENTER
+                * TOP_LEFT
+                * TOP_RIGHT
+                * LEFT_TOP
+                * RIGHT_TOP
+                * LEFT_CENTER
+                * RIGHT_CENTER
+                * LEFT_BOTTOM
+                * RIGHT_BOTTOM
+                * BOTTOM_CENTER
+                * BOTTOM_LEFT
+                * BOTTOM_RIGHT
             </description>
         </attribute>
         <attribute>
-            <name>offsetWidth</name>
+            <name>controlStyle</name>
             <required>false</required>
             <type>java.lang.String</type>
-            <defaultValue>10</defaultValue>
             <description>
-                This attribute lets you specify the offset width of the map control position.
-            </description>
-        </attribute>
-        <attribute>
-            <name>offsetHeight</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-            <defaultValue>10</defaultValue>
-            <description>
-                This attribute lets you specify the offset height of the map control position.
+                This attribute lets you specify the style of the map control. 
+                For more information about the available styles, check:
+                https://developers.google.com/maps/documentation/javascript/reference#MapTypeControlStyle
             </description>
         </attribute>
     </attributes>

@@ -159,6 +159,15 @@
             </description>
         </attribute>    
         <attribute>
+            <name>showDefaultControls</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <defaultValue>true</defaultValue>
+            <description>
+                This attribute determines whether to display the default map controls.
+            </description>
+        </attribute>        
+        <attribute>
             <name>debug</name>
             <required>false</required>
             <type>java.lang.String</type>

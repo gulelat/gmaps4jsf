@@ -21,8 +21,9 @@ package com.googlecode.gmaps4jsf.component.mapcontrol;
 import junit.framework.TestCase;
 
 /**
- *
+ * @Date 22 Dec 2012
  * @author Jose Noheda
+ * @Edited by Hazem Saleh
  */
 public class MapControlRendererTest extends TestCase {
 
@@ -30,8 +31,9 @@ public class MapControlRendererTest extends TestCase {
 
     public void testConvertToJavascriptObject() {
         MapControl control = new MapControl();
-        control.setName("GLargeMapControl");
-        assertEquals("Map control JS", "{name: 'GLargeMapControl', position: 'G_ANCHOR_TOP_LEFT', offsetWidth: 10, offsetHeight: 10}", renderer.convertToJavascriptObject(control));
+        control.setName("panControl");
+        assertEquals("Map control JS", "{name: 'panControl', position: google.maps.ControlPosition.LEFT_TOP}", 
+        			 renderer.convertToJavascriptObject(control));
     }
 
 }

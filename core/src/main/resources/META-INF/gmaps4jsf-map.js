@@ -21,6 +21,12 @@
                     }
                 }
             }
+            
+            if (map.showDefaultControls  === 'false') {
+            	themap.set("disableDefaultUI", true);
+            } else {
+            	themap.set("disableDefaultUI", false);            	
+            }
             /*
             if (map.enableScrollWheelZoom) {
                 themap.enableScrollWheelZoom();
@@ -203,10 +209,6 @@
             /* add a drag-end listener to the marker */
             google.maps.event.addListener(marker, 'dragend', this._dragEnd(markerOptions));
             callback(this, marker);
-            /*
-            if (this.addMarker(marker)) {
-                this.reshape(latlng);
-            }*/
             
             this.reshape(latlng);            
         };     
@@ -318,13 +320,27 @@
     if (!google.maps.Map.prototype.createControl) {
 
         google.maps.Map.prototype.createControl = function (control) {
+        	/*
             var mapControlPosition = null;
             if (control.position) {
                 var position = eval(control.position);
                 mapControlPosition = new google.maps.ControlPosition(position, new google.maps.Size(control.offsetWidth, control.offsetHeight));
             }
             var ctl = eval("new " + control.name + "()");
-            this.addControl(ctl, mapControlPosition);
+            */
+            
+        	this.set(control.name, true);
+        	
+        	if (control.style != "") {
+	        	this.set(control.name + "Options", {
+	        		position: control.position
+	        	});
+        	} else {
+	        	this.set(control.name + "Options", {
+	        		position: control.position,
+	        		style: control.style
+	        	});        		
+        	}
         };
 
     }
