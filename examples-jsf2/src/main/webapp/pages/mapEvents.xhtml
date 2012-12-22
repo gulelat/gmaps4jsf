@@ -11,7 +11,28 @@
         <ui:define name="ajaxIncludes"></ui:define>
         
         <ui:define name="mashup">
-             <h1>Client-side Events of the map</h1>
+          <h1>Client-side Events of the map</h1>
+                      
+          <h:form id="form">
+              <div>Drag the map, close the window and click the marker!!!</div>
+              <m:map width="500px" height="500px" latitude="24" longitude="15" jsVariable="map1" zoom="2">
+                  <m:marker latitude="30.01" longitude="31.14" jsVariable="marker1">
+                      <m:eventListener eventName="click" jsFunction="marker1ClickHandler"/>
+                      <m:htmlInformationWindow htmlText="Close the marker window!!!">
+                          <m:eventListener eventName="closeclick" jsFunction="markerWindowClosed"/>
+                      </m:htmlInformationWindow>
+                  </m:marker>
+                  <m:marker latitude="39" longitude="-101" jsVariable="marker2">
+                      <m:eventListener eventName="click" jsFunction="marker2ClickHandler"/>
+                  </m:marker>
+                  <m:htmlInformationWindow latitude="-26.745610382199007" longitude="119.8828125" htmlText="Close the map window!!!">
+                      <m:eventListener eventName="closeclick" jsFunction="mapWindowClosed"/>
+                  </m:htmlInformationWindow>
+                  <m:eventListener eventName="moveend" jsFunction="mapMoveEndHandler"/>
+              </m:map>
+              <div id="message"/>
+          </h:form>
+          
              
          <script type="text/javascript">
                  function mapMoveEndHandler() {
@@ -32,29 +53,8 @@
                  }
                  function mapWindowClosed() {
                      alert("You closed the map window");
-                     map1.closeInfoWindow();
                  }
-          </script>
-                      
-          <h:form id="form">
-              <div>Drag the map, close the window and click the marker!!!</div>
-              <m:map width="90%" height="90%" latitude="24" longitude="15" jsVariable="map1" zoom="2">
-                  <m:marker latitude="30.01" longitude="31.14" jsVariable="marker1">
-                      <m:eventListener eventName="click" jsFunction="marker1ClickHandler"/>
-                      <m:htmlInformationWindow htmlText="Close the marker window!!!">
-                          <m:eventListener eventName="closeclick" jsFunction="markerWindowClosed"/>
-                      </m:htmlInformationWindow>
-                  </m:marker>
-                  <m:marker latitude="39" longitude="-101" jsVariable="marker2">
-                      <m:eventListener eventName="click" jsFunction="marker2ClickHandler"/>
-                  </m:marker>
-                  <m:htmlInformationWindow latitude="-26.745610382199007" longitude="119.8828125" htmlText="Close the map window!!!">
-                      <m:eventListener eventName="closeclick" jsFunction="mapWindowClosed"/>
-                  </m:htmlInformationWindow>
-                  <m:eventListener eventName="moveend" jsFunction="mapMoveEndHandler"/>
-              </m:map>
-              <div id="message"/>
-          </h:form>
+          </script>          
         </ui:define>
 
 </ui:composition>
