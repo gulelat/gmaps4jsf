@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:m="http://code.google.com/p/gmaps4jsf/">
+
+<ui:composition template="../templates/layout.xhtml">
+
+        <ui:define name="title">Welcome to GMaps4JSF Examples</ui:define>
+        <ui:define name="ajaxIncludes"></ui:define>
+        
+        <ui:define name="mashup">
+             <h1>A simple Polyline</h1>
+             
+			 <h:form id="form1">
+				 <m:map width="600px" height="600px" latitude="24" longitude="15" zoom="2">
+					 <m:polyline lineWidth="10" hexaColor="#ff0000" geodesic="false">
+						 <m:point latitude="30.01" longitude="31.14"/>
+						 <m:point latitude="-33" longitude="19"/>
+						 <m:point latitude="39" longitude="-101"/>
+					 </m:polyline>
+				 </m:map>
+			 </h:form>
+        </ui:define>
+
+</ui:composition>
+</html>  
