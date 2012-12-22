@@ -10,6 +10,7 @@
     <modules>
         <module>maven</module>
         <module>core</module>
+		<module>examples-jsf2</module>
     </modules>
     <dependencies>
         <dependency>
