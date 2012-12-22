@@ -14,9 +14,12 @@
              <h1>Adding controls to your map</h1>
             
          <h:form id="form">
-             <m:map width="500px" height="500px" debug="true">
-                 <m:mapControl name="GMapTypeControl"/>
-                 <m:mapControl name="GLargeMapControl" position="G_ANCHOR_BOTTOM_RIGHT"/>
+             <m:map width="500px" height="500px" showDefaultControls="false">
+                 <m:mapControl name="mapTypeControl"/>
+                 <m:mapControl name="panControl" position="google.maps.ControlPosition.LEFT_BOTTOM"/>
+                 <m:mapControl name="zoomControl" 
+                 			   position="google.maps.ControlPosition.RIGHT_BOTTOM" 
+                 			   controlStyle="google.maps.ZoomControlStyle.LARGE"/>                 
              </m:map>        
          </h:form>
         </ui:define>
