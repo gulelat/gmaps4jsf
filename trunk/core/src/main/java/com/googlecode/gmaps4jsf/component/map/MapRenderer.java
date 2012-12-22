@@ -118,7 +118,8 @@ public final class MapRenderer extends Renderer {
         buffer.append(", parentFormID: '").append(ComponentUtils.findParentForm(context, map).getClientId(context));        
         buffer.append("', mapType: ").append(map.getType()).append("");       
         buffer.append(", submitOnValueChange: '").append(map.getSubmitOnClick().toLowerCase());        
-        buffer.append("', mapStateHiddenFieldID: '").append(ComponentUtils.getMapStateHiddenFieldId(map));        
+        buffer.append("', mapStateHiddenFieldID: '").append(ComponentUtils.getMapStateHiddenFieldId(map));       
+        buffer.append("', showDefaultControls: '").append(map.getShowDefaultControls());              
         buffer.append("', autoReshape: ").append(map.getAutoReshape());
         
         return buffer.append("}").toString();
