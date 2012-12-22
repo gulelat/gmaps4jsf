@@ -41,11 +41,12 @@
     </build>	
 	
 	<dependencies>		
-        <dependency>
-            <groupId>${groupId}</groupId>
-            <artifactId>gmaps4jsf</artifactId>
-            <version>${version}</version>
-        </dependency>
+		<dependency>
+			<groupId>com.googlecode.gmaps4jsf</groupId>
+			<artifactId>gmaps4jsf-core</artifactId>
+			<version>3.0.0-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
 		
 		<dependency>
 			<groupId>javax.servlet</groupId>
