@@ -27,13 +27,7 @@
             } else {
             	themap.set("disableDefaultUI", false);            	
             }
-            /*
-            if (map.enableScrollWheelZoom) {
-                themap.enableScrollWheelZoom();
-            } else {
-                themap.disableScrollWheelZoom();
-            }
-            */
+            
             themap.centeralize(map, callback);
             
             /* add a drag-end listener to the marker */
@@ -267,8 +261,16 @@
 
         google.maps.Map.prototype.createPolyline = function (polyline, getContained) {
             var contained = getContained({});
-            var line = new google.maps.Polyline(contained.points, polyline.hexaColor, polyline.lineWidth, polyline.opacity, {geodesic: polyline.geodesic});
-            this.addOverlay(line);
+            var line = new google.maps.Polyline({
+            		path: contained.points, 
+            		strokeColor: polyline.hexaColor, 
+            		strokeWeight: polyline.lineWidth, 
+            		strokeOpacity: polyline.opacity, 
+            		geodesic: polyline.geodesic
+            });
+            
+            line.setMap(this);
+            
             if (polyline.jsVariable) {
                 this.properties.gmaps4jsf.window[polyline.jsVariable] = line;
             }
@@ -282,8 +284,17 @@
 
         google.maps.Map.prototype.createPolygon = function(polygon, getContained) {
             var contained = getContained();
-            var poly = new google.maps.Polygon(contained.points, polygon.hexStrokeColor, polygon.lineWidth, polygon.strokeOpacity, polygon.hexFillColor, polygon.fillOpacity);
-            this.addOverlay(poly);
+            var poly = new google.maps.Polygon({
+            	path: contained.points, 
+            	strokeColor: polygon.hexStrokeColor, 
+            	strokeWeight: polygon.lineWidth, 
+            	strokeOpacity: polygon.strokeOpacity, 
+            	fillColor: polygon.hexFillColor, 
+            	fillOpacity: polygon.fillOpacity
+            });
+
+            poly.setMap(this);
+            
             if (polygon.jsVariable) {
                 this.properties.gmaps4jsf.window[polygon.jsVariable] = poly;
             }
@@ -297,38 +308,39 @@
 
         google.maps.Map.prototype.createOverlay = function (overlay, callback) {
             var bounds = new google.maps.LatLngBounds(new google.maps.LatLng(overlay.startLatitude, overlay.startLongitude), new google.maps.LatLng(overlay.endLatitude, overlay.endLongitude));
-            var goverlay = new google.maps.GroundOverlay(overlay.imageURL, bounds);
-            this.addOverlay(goverlay);
+            var goverlay = new google.maps.GroundOverlay(
+            	overlay.imageURL, 
+            	bounds
+            );
+            
+            goverlay.setMap(this);
+            
             if (overlay.jsVariable) {
                 this.properties.gmaps4jsf.window[overlay.jsVariable] = goverlay;
             }
+            
             callback(this, goverlay);
         };
 
     }
 
+    /*
     if (!google.maps.Map.prototype.addDirection) {
 
         google.maps.Map.prototype.addDirection = function (direction) {
             var panel = this.properties.gmaps4jsf.window.document.getElementById(direction.attachNodeId);
+            
             var directions = new google.maps.Directions(this, panel);
+            
             directions.load("from: " + direction.fromAddress + " to: " + direction.toAddress, direction);
         };
 
     }
+    */
 
     if (!google.maps.Map.prototype.createControl) {
 
         google.maps.Map.prototype.createControl = function (control) {
-        	/*
-            var mapControlPosition = null;
-            if (control.position) {
-                var position = eval(control.position);
-                mapControlPosition = new google.maps.ControlPosition(position, new google.maps.Size(control.offsetWidth, control.offsetHeight));
-            }
-            var ctl = eval("new " + control.name + "()");
-            */
-            
         	this.set(control.name, true);
         	
         	if (control.style != "") {
@@ -366,12 +378,25 @@
                 bounds.extend(point);
             }
             if (d < 1.5678565720686044) {
-                circleObject = new google.maps.Polygon(circlePoints, circle.strokeColour, circle.lineWidth, circle.strokeOpacity, circle.fillColour, circle.fillOpacity);
+                circleObject = new google.maps.Polygon({
+                	path: circlePoints, 
+                	strokeColor: circle.strokeColour, 
+                	strokeWeight: circle.lineWidth, 
+                	strokeOpacity: circle.strokeOpacity, 
+                	fillColor: circle.fillColour, 
+                	fillOpacity: circle.fillOpacity
+                });
             }
             else {
-                circleObject = new google.maps.Polygon(circlePoints, circle.strokeColour, circle.lineWidth, circle.strokeOpacity);
+                circleObject = new google.maps.Polygon({
+                	path: circlePoints, 
+                	strokeColor: circle.strokeColour, 
+                	strokeWeight: circle.lineWidth, 
+                	strokeOpacity: circle.strokeOpacity
+                });
             }
-            this.addOverlay(circleObject);
+            
+            circleObject.setMap(this);
         };
 
     }

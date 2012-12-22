@@ -119,13 +119,6 @@
             <description>This flag determines whether to enable zooming on mouse scroll wheel.</description>
         </attribute>
         <attribute>
-            <name>addStreetOverlay</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-            <defaultValue>false</defaultValue>
-            <description>Setting this flag to true enables the map to work directly with the streetViewPanorama component.</description>
-        </attribute>
-        <attribute>
             <name>autoReshape</name>
             <required>false</required>
             <type>java.lang.String</type>
