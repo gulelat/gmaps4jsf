@@ -29,8 +29,7 @@
             }
             
             themap.centeralize(map, callback);
-            
-            /* add a drag-end listener to the marker */
+
             var mapClickFunction = function (m) {
                 return function(event) {
                     /* Save the map state. */
@@ -42,6 +41,9 @@
                             document.getElementById(m.parentFormID).submit();
                         }, 500);
                     }
+                    
+                    /* Invoke Ajax Script on other components ... */
+                    m.ajaxBehavior(event);
                 };
             };
             google.maps.event.addListener(themap, 'click', mapClickFunction(map));
@@ -154,31 +156,46 @@
                 self._markerCreationCallback(themarker, marker, callback);
             }
         };
+        
+        google.maps.Map.prototype.updateMarkersState = function (markerOptions, newLatLng) {
+            var i, markersState = document.getElementById(markerOptions.stateHiddenFieldID).value;
+            
+            if (markersState.indexOf(markerOptions.markerID + '=') !== -1) {
+                 var markersArray = markersState.split('&');
+                 var updatedMarkersState = "";
+                 for (i = 0; markersArray.length > i; ++i) {
+                    if (markersArray[i].indexOf(markerOptions.markerID + '=') === -1) {
+                        updatedMarkersState += markersArray[i];
+                        if (markersArray.length !== 1 && ((markersArray.length - 1) > i)) {
+                            updatedMarkersState += '&';
+                        }
+                    }
+                 }
+                 markersState = updatedMarkersState;
+            }
+            
+            if (markersState !== null && markersState !== "") {
+                markersState = '&' + markersState;
+            }
+            
+            if (newLatLng) {
+            	markersState = markerOptions.markerID + '=' + newLatLng + markersState;
+            } else {
+            	var latlng = new google.maps.LatLng(markerOptions.latitude, markerOptions.longitude);
+            	
+            	markersState = markerOptions.markerID + '=' + latlng + markersState;
+            }
+            
+            /* Save the marker state. */
+            document.getElementById(markerOptions.stateHiddenFieldID).value = markersState;        	
+        };
 
         google.maps.Map.prototype._dragEnd = function (m) {
             return function(mouseEvent) {
-            	var latlng = mouseEvent.latLng;
-                var i, markersState = document.getElementById(m.stateHiddenFieldID).value;
-                
-                if (markersState.indexOf(m.markerID + '=') !== -1) {
-                     var markersArray = markersState.split('&');
-                     var updatedMarkersState = "";
-                     for (i = 0; markersArray.length > i; ++i) {
-                        if (markersArray[i].indexOf(m.markerID + '=') === -1) {
-                            updatedMarkersState += markersArray[i];
-                            if (markersArray.length !== 1 && ((markersArray.length - 1) > i)) {
-                                updatedMarkersState += '&';
-                            }
-                        }
-                     }
-                     markersState = updatedMarkersState;
-                }
-                if (markersState !== null && markersState !== "") {
-                    markersState = '&' + markersState;
-                }
-                markersState = m.markerID + '=' + latlng + markersState;
-                /* Save the marker state. */
-                document.getElementById(m.stateHiddenFieldID).value = markersState;
+            	var newLatLng = mouseEvent.latLng;
+
+            	this.updateMarkersState(m, newLatLng);
+            	
                 /* Submit the form on marker value change if required. */
                 if (m.submitOnValueChange === 'true') {
                     setTimeout(function() {
@@ -191,7 +208,7 @@
         google.maps.Map.prototype._markerCreationCallback = function(marker, markerOptions, callback) {
             var latlng = marker.getPosition();
             
-            if (!markerOptions.latitude) {
+            if (! markerOptions.latitude) {
                 markerOptions.latitude = latlng.lat();
                 markerOptions.longitude = latlng.lng();
             }
@@ -200,7 +217,8 @@
             if (markerOptions.jsVariable) {
                 this.properties.gmaps4jsf.window[markerOptions.jsVariable] = marker;
             }
-            /* add a drag-end listener to the marker */
+            /* store marker state */
+        	this.updateMarkersState(markerOptions);            
             google.maps.event.addListener(marker, 'dragend', this._dragEnd(markerOptions));
             callback(this, marker);
             

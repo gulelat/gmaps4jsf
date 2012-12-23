@@ -101,7 +101,7 @@
             <type>java.lang.String</type>
             <defaultValue>google.maps.MapTypeId.ROADMAP</defaultValue>
             <description>
-                The type of the map.
+                The type of the map. Possible values are (HYBRID, ROADMAP, SATELLITE, TERRAIN).
             </description>
         </attribute>
         <attribute>

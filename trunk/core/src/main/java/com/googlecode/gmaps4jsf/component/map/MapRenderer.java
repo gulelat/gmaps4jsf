@@ -19,14 +19,20 @@
 package com.googlecode.gmaps4jsf.component.map;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.faces.component.UIComponent;
+import javax.faces.component.behavior.ClientBehavior;
+import javax.faces.component.behavior.ClientBehaviorContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.event.ActionEvent;
 import javax.faces.render.Renderer;
 
-import com.googlecode.gmaps4jsf.component.marker.MarkerValue;
+import com.googlecode.gmaps4jsf.component.common.BaseRenderer;
+import com.googlecode.gmaps4jsf.component.common.Position;
 import com.googlecode.gmaps4jsf.util.ComponentConstants;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
 import com.googlecode.gmaps4jsf.util.FileReaderUtils;
@@ -36,7 +42,7 @@ import com.googlecode.gmaps4jsf.util.FileReaderUtils;
  * @date  Dec 08, 2012
  * The (MapRenderer) renders a google map.
  */
-public final class MapRenderer extends Renderer {
+public final class MapRenderer extends BaseRenderer {
 
     private static final String MAP_RENDERED = "com.googlecode.gmaps4jsf.firstMap";
 
@@ -74,7 +80,7 @@ public final class MapRenderer extends Renderer {
     public void decode(FacesContext context, UIComponent component) {
         Map map = (Map) component;
         String markersStateValue = (String) context.getExternalContext().getRequestParameterMap().get(ComponentUtils.getMapMarkersStateHiddenFieldId(map));
-        	
+        
         ComponentUtils.setRequestAttribute(context, ComponentUtils.getMapMarkersStateHiddenFieldId(map), markersStateValue);
         
         String mapStateValue = (String) context.getExternalContext().getRequestParameterMap().get(ComponentUtils.getMapStateHiddenFieldId(map));
@@ -85,12 +91,14 @@ public final class MapRenderer extends Renderer {
         	String latitude =(mapStateValue.split(",")[0].substring(1).trim());
         	String longitude = (mapStateValue.split(",")[1].substring(0, mapStateValue.split(",")[1].length() - 1).trim());
         	
-        	map.setValue(new MarkerValue(longitude, latitude));
+        	map.setValue(new Position(latitude, longitude));
   
         	ActionEvent actionEvent = new ActionEvent(map);
         	
         	map.queueEvent(actionEvent);
         }
+        
+        decodeClientBehaviors(context, component);
     }
 
     /**
@@ -106,7 +114,7 @@ public final class MapRenderer extends Renderer {
         writer.endElement(ComponentConstants.HTML_SCRIPT);
     }
 
-    protected String convertToJavascriptObject(FacesContext context, Map map) {
+    protected String convertToJavascriptObject(FacesContext context, Map map, String ajaxBehavior) {
         StringBuffer buffer = new StringBuffer("{");
         buffer.append("id: '").append(map.getClientId(context)).append("',");
         buffer.append("enableScrollWheelZoom: ").append(map.getEnableScrollWheelZoom()).append(",");
@@ -121,6 +129,7 @@ public final class MapRenderer extends Renderer {
         buffer.append("', mapStateHiddenFieldID: '").append(ComponentUtils.getMapStateHiddenFieldId(map));       
         buffer.append("', showDefaultControls: '").append(map.getShowDefaultControls());              
         buffer.append("', autoReshape: ").append(map.getAutoReshape());
+        buffer.append(", ajaxBehavior: ").append(ajaxBehavior);        
         
         return buffer.append("}").toString();
     }
@@ -181,8 +190,10 @@ public final class MapRenderer extends Renderer {
         writer.writeAttribute(ComponentConstants.HTML_SCRIPT_TYPE, ComponentConstants.HTML_SCRIPT_LANGUAGE, ComponentConstants.HTML_SCRIPT_TYPE);
         writer.write("(function(window) {\n\t" 
         		    + ((map.getPartiallyTriggered().equalsIgnoreCase("false"))?"window.gmaps4jsf.addOnLoad(function() {\n\t\t":"") 
-        		    + "window.gmaps4jsf.createMap(" + convertToJavascriptObject(context, map) + ", " 
-        		    + "function (parent) {\n");
+        		    + "window.gmaps4jsf.createMap(" + convertToJavascriptObject(context, 
+        		    															map, 
+        		    															getAjaxInvocationScript(map, context)) + ", " 
+        		    + "function (parent) {\n");      
         
         // encode map client side events ...
         EventEncoder.encodeEventListeners(context, map, writer);

@@ -19,6 +19,9 @@
 package com.googlecode.gmaps4jsf.util;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.faces.component.ActionSource;
 import javax.faces.component.EditableValueHolder;
@@ -26,6 +29,9 @@ import javax.faces.component.UICommand;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
 import javax.faces.component.ValueHolder;
+import javax.faces.component.behavior.ClientBehavior;
+import javax.faces.component.behavior.ClientBehaviorContext;
+import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
@@ -42,7 +48,7 @@ import com.googlecode.gmaps4jsf.component.streetviewpanorama.StreetViewPanorama;
 
 
 public class ComponentUtils {
-
+	
 	public static String getStringValue(FacesContext context, ValueBinding vb) {
 		return vb.getValue(context).toString();
 	}

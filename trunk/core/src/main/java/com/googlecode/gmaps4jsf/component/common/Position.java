@@ -16,24 +16,25 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.googlecode.gmaps4jsf.component.marker;
+package com.googlecode.gmaps4jsf.component.common;
 
 /**
  * @author Hazem Saleh
- * @date May 22, 2009
- * The MarkerValue is used as the inner data structure of the Marker.
+ * @date Dec 23, 2012
+ * The Position is used as the inner data structure of the Marker.
  */
-public class MarkerValue implements java.io.Serializable {
-    String longitude;
+public class Position implements java.io.Serializable {
+	private static final long serialVersionUID = 7566340990017786689L;
+	String longitude;
     String latitude;
     
-    public MarkerValue() {    
+    public Position() {    
     }
     
-    public MarkerValue(String longitude, String latitude) {
+    public Position(String latitude, String longitude) {
         super();
+        this.latitude  = latitude;        
         this.longitude = longitude;
-        this.latitude  = latitude;
     }
     
     public String getLatitude() {
@@ -53,8 +54,8 @@ public class MarkerValue implements java.io.Serializable {
     }
 
     public boolean equals(Object object) {
-        if (object != null && object instanceof MarkerValue) {
-            MarkerValue marker = (MarkerValue) object;
+        if (object != null && object instanceof Position) {
+            Position marker = (Position) object;
             
             return (longitude.equals(marker.getLongitude()) &&
                     latitude.equals(marker.getLatitude()));  
@@ -64,6 +65,6 @@ public class MarkerValue implements java.io.Serializable {
     }
 
     public String toString() {
-        return "(" + longitude + ", " + latitude + ")";
+        return "(" + latitude + ", " + longitude + ")";
     }
 }
