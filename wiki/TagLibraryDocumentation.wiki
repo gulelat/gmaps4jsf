@@ -13,7 +13,6 @@
   * [iconComponent] (Added in 1.1.1)
   * [circleComponent] (Added in 1.1.3)
   * [resourcesComponent] (Added in 1.1.3)
-  * [directionComponent] (Added in 1.1.3-u3 and 1.1.4)
 
 # The GMaps4JSF extended components are:
   * [dragZoomComponent] (Experimental - Added in 1.1.3)
