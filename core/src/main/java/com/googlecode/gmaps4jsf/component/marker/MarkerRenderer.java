@@ -26,6 +26,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 
+import com.googlecode.gmaps4jsf.component.common.Position;
 import com.googlecode.gmaps4jsf.component.icon.Icon;
 import com.googlecode.gmaps4jsf.component.map.EventEncoder;
 import com.googlecode.gmaps4jsf.component.map.Map;
@@ -140,8 +141,8 @@ public final class MarkerRenderer extends Renderer {
         return null;
     }    
 
-    private static MarkerValue getMarkerValueFromState(String markerState) {    	
-        MarkerValue markerValue      = new MarkerValue();
+    private static Position getMarkerValueFromState(String markerState) {    	
+        Position markerValue      = new Position();
         String[]    markerExpression = markerState.split("=");
         String[]    markersLngLat    = markerExpression[1].split(",");
 
@@ -157,7 +158,8 @@ public final class MarkerRenderer extends Renderer {
             int         end         = mapState.indexOf(")", start);
             
             String      markerState = mapState.substring(start, end + 1);
-            MarkerValue markerValue = getMarkerValueFromState(markerState);
+            Position markerValue = getMarkerValueFromState(markerState);
+            
             marker.setSubmittedValue(markerValue);
         }
     }
