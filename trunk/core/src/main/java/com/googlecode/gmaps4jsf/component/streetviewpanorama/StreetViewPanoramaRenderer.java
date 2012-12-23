@@ -19,22 +19,23 @@
 package com.googlecode.gmaps4jsf.component.streetviewpanorama;
 
 import java.io.IOException;
-import javax.faces.render.Renderer;
-import javax.faces.context.FacesContext;
+
 import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import com.googlecode.gmaps4jsf.component.common.BaseRenderer;
 import com.googlecode.gmaps4jsf.component.map.EventEncoder;
+import com.googlecode.gmaps4jsf.util.ComponentConstants;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
 import com.googlecode.gmaps4jsf.util.FileReaderUtils;
-import com.googlecode.gmaps4jsf.util.ComponentConstants;
 
 /**
  * @author Hazem Saleh
- * @date Sep 20, 2008
+ * @date Dec 23, 2012
  * The (StreetViewPanoramaRenderer) renders a StreetViewPanorama.
  */
-public class StreetViewPanoramaRenderer extends Renderer {
+public class StreetViewPanoramaRenderer extends BaseRenderer {
 
     public boolean getRendersChildren() {
         return true;

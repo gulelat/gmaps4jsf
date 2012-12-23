@@ -20,7 +20,7 @@ package com.googlecode.gmaps4jsf.services;
 
 /**
  * @author Hazem Saleh
- * @date Dec 11, 2009
+ * @date Dec 23, 2012
  * The GMaps4JSFServiceFactory is the static factory of all of the GMaps4JSF services.
  */
 public class GMaps4JSFServiceFactory {

@@ -23,6 +23,8 @@ import javax.faces.render.Renderer;
 import javax.faces.context.FacesContext;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ResponseWriter;
+
+import com.googlecode.gmaps4jsf.component.common.BaseRenderer;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
 
 /**
@@ -30,7 +32,7 @@ import com.googlecode.gmaps4jsf.util.ComponentUtils;
  * @Data 22 Dec 2012
  * @author Jose Noheda [jose.noheda@gmail.com] and Hazem Saleh
  */
-public final class MapControlRenderer extends Renderer {
+public final class MapControlRenderer extends BaseRenderer {
 
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
         if (component.isRendered()) {

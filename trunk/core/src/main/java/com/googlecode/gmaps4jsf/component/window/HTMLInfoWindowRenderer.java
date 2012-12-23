@@ -23,17 +23,17 @@ import java.io.IOException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.render.Renderer;
 
+import com.googlecode.gmaps4jsf.component.common.BaseRenderer;
 import com.googlecode.gmaps4jsf.component.map.EventEncoder;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
 
 /**
- *
  * @author Jose Noheda [jose.noheda@gmail.com]
  * @author hazems
+ * @date Dec 23, 2012
  */
-public class HTMLInfoWindowRenderer extends Renderer {
+public class HTMLInfoWindowRenderer extends BaseRenderer {
 
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();

@@ -27,7 +27,7 @@ import com.googlecode.gmaps4jsf.component.polyline.AbstractPolyshape;
 
 /**
  * @author Hazem Saleh
- * @date April 12, 2009
+ * @date Dec 23, 2012
  * The (PolygonRenderer) renders a google map polygon.
  */
 public class PolygonRenderer extends AbstractPolyshape {

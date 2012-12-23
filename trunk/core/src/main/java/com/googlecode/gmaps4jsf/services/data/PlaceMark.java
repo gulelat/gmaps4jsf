@@ -20,7 +20,7 @@ package com.googlecode.gmaps4jsf.services.data;
 
 /**
  * @author Hazem Saleh
- * @date Dec 10, 2009
+ * @date Dec 23, 2012
  * The PlaceMark is used for holding the place information.
  * It is used by the <code>ReverseGeocoderService</code> class.
  */

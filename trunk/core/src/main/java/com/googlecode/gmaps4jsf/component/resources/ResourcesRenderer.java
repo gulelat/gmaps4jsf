@@ -29,7 +29,7 @@ import com.googlecode.gmaps4jsf.util.ComponentConstants;
 
 /**
  * @author Hazem Saleh
- * @date Decemeber 26, 2009
+ * @date Dec 23, 2012
  * 
  */
 public class ResourcesRenderer extends Renderer {

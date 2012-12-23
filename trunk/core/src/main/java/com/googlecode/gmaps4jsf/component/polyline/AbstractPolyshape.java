@@ -18,13 +18,13 @@
  */
 package com.googlecode.gmaps4jsf.component.polyline;
 
-import java.util.List;
 import java.io.IOException;
-import javax.faces.render.Renderer;
-import javax.faces.context.FacesContext;
+
 import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import com.googlecode.gmaps4jsf.component.point.Point;
+
+import com.googlecode.gmaps4jsf.component.common.BaseRenderer;
 import com.googlecode.gmaps4jsf.component.map.EventEncoder;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
 
@@ -33,7 +33,7 @@ import com.googlecode.gmaps4jsf.util.ComponentUtils;
  *
  * @author Jose Noheda [jose.noheda@gmail.com]
  */
-public abstract class AbstractPolyshape extends Renderer {
+public abstract class AbstractPolyshape extends BaseRenderer {
 
     public boolean getRendersChildren() {
         return true;
