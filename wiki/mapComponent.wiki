@@ -12,7 +12,7 @@ Beside the JSF UIComponent and UICommand standard attributes
 || type || false || The type of the map. It can be one of the following values (G_NORMAL_MAP, G_SATELLITE_MAP and G_HYBRID_MAP). || G_HYBRID_MAP ||
 || renderOnWindowLoad (renamed to partiallyTriggered since 1.1.4) || false || This flag determines whether to render the map on window load. This flag should be set to false if the map is inside a zone that will be updated by Ajax. || true ||
 || enableDragging || false || This flag determines whether to support map dragging. || true ||
-|| addStreetOverlay || false || Setting this flag to true enables the map to work directly with the streetViewPanorama component. || false ||
+|| addStreetOverlay (removed since GMaps4JSF 3.0.0) || false || Setting this flag to true enables the map to work directly with the streetViewPanorama component. || false ||
 || jsVariable || false || This flag determines the Javascript variable you want to use for referring to the map. It should unique. Use this attribute if you want to use write additional Javascript code for the map to customize it. || NA ||
 || showLocationNotFoundMessage (since 1.1.2) || false || This attribute determines whether to show an error message when the location is not found. || false ||
 || autoReshape (since 1.1.2) || false || Setting this flag to true enables the map to be resized to view all of the markers on it. || true ||
