@@ -19,17 +19,11 @@
 package com.googlecode.gmaps4jsf.component.map;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 
 import javax.faces.component.UIComponent;
-import javax.faces.component.behavior.ClientBehavior;
-import javax.faces.component.behavior.ClientBehaviorContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.event.ActionEvent;
-import javax.faces.render.Renderer;
 
 import com.googlecode.gmaps4jsf.component.common.BaseRenderer;
 import com.googlecode.gmaps4jsf.component.common.Position;
@@ -154,7 +148,12 @@ public final class MapRenderer extends BaseRenderer {
         writer.writeAttribute(ComponentConstants.HTML_ATTR_STYLE, "width: " + ComponentUtils.getMapWidth(map) + "; height: " + ComponentUtils.getMapHeight(map), ComponentConstants.HTML_ATTR_STYLE);
         writer.endElement(ComponentConstants.HTML_DIV);
         
-        // encode map markers state holder.
+        // Create a div container element to contain the map children DOM elements for Ajax operations.
+        writer.startElement(ComponentConstants.HTML_DIV, map);
+        writer.writeAttribute(ComponentConstants.HTML_ATTR_ID, map.getClientId(context) + "_container", ComponentConstants.HTML_ATTR_ID);
+        writer.endElement(ComponentConstants.HTML_DIV);        
+        
+        // encode map markers state holder hidden field (for restoring the markers state).
         Object mapMarkersState = ComponentUtils.getRequestAttribute(context, ComponentUtils.getMapMarkersStateHiddenFieldId(map));
 
         writer.startElement(ComponentConstants.HTML_INPUT, map);
@@ -172,7 +171,7 @@ public final class MapRenderer extends BaseRenderer {
 
         writer.endElement(ComponentConstants.HTML_INPUT);     
         
-        // encode map state holder.
+        // encode map state holder hidden field (for storing the latest click point on the map).
         writer.startElement(ComponentConstants.HTML_INPUT, map);
 
         writer.writeAttribute(ComponentConstants.HTML_ATTR_ID, ComponentUtils.getMapStateHiddenFieldId(map),

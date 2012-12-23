@@ -34,7 +34,7 @@
     <componentFamily>com.googlecode.gmaps4jsf</componentFamily>
     <rendererType>com.googlecode.gmaps4jsf.component.marker.MarkerRenderer</rendererType>
     <rendererClass>com.googlecode.gmaps4jsf.component.marker.MarkerRenderer</rendererClass>
-    <parent>javax.faces.component.UIInput</parent>
+    <parent>javax.faces.component.html.HtmlInputText</parent>
     <attributes>
         &input_component_attributes;
         <attribute>

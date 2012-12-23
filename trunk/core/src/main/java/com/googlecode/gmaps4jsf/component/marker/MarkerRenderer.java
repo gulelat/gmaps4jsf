@@ -24,7 +24,6 @@ import java.util.Iterator;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.render.Renderer;
 
 import com.googlecode.gmaps4jsf.component.common.BaseRenderer;
 import com.googlecode.gmaps4jsf.component.common.Position;
@@ -56,7 +55,11 @@ public final class MarkerRenderer extends BaseRenderer {
     	updateELBinding(facesContext, marker, markerState);            
         
     	// render the marker
-        writer.write(ComponentUtils.pad(marker) + "parent.createMarker(" + convertToJavascriptObject(facesContext, marker, markerState) + ", function (gmap, parent) {\n");
+        writer.write(ComponentUtils.pad(marker) + "parent.createMarker(" + convertToJavascriptObject(facesContext, 
+        																   marker, 
+        																   markerState,
+        																   getAjaxInvocationScript(marker, facesContext)
+        																   ) + ", function (gmap, parent) {\n");
         
         // encode marker client side events ...
         EventEncoder.encodeEventListeners(facesContext, marker, writer);
@@ -76,7 +79,7 @@ public final class MarkerRenderer extends BaseRenderer {
         decodeMarker(facesContext, marker, mapState);
     }    
 
-    protected String convertToJavascriptObject(FacesContext facesContext, Marker marker, String markerState) {
+    protected String convertToJavascriptObject(FacesContext facesContext, Marker marker, String markerState, String ajaxBehavior) {
         StringBuffer buffer = new StringBuffer("{address: '");
         
         if (markerState != null) {
@@ -89,9 +92,11 @@ public final class MarkerRenderer extends BaseRenderer {
             buffer.append(", longitude: ").append(marker.getLongitude());
         }
 
-        buffer.append(", parentFormID: '").append(ComponentUtils.findParentForm(facesContext, marker).getClientId(facesContext));
-        buffer.append("', showInformationEvent: '").append(marker.getShowInformationEvent());        
-        buffer.append("', submitOnValueChange: '").append(marker.getSubmitOnValueChange().toLowerCase());
+        buffer.append(", id: '").append(marker.getClientId(facesContext));        
+        buffer.append("', parentFormID: '").append(ComponentUtils.findParentForm(facesContext, marker).getClientId(facesContext));
+        buffer.append("', showInformationEvent: '").append(marker.getShowInformationEvent());
+        buffer.append("', ajaxBehavior: ").append(ajaxBehavior);          
+        buffer.append(", submitOnValueChange: '").append(marker.getSubmitOnValueChange().toLowerCase());
         buffer.append("', markerID: '").append(getUniqueMarkerId(facesContext, marker));
         buffer.append("', stateHiddenFieldID: '").append(ComponentUtils.getMapMarkersStateHiddenFieldId((Map) ComponentUtils.findParentMap(facesContext, marker)));        
         buffer.append("', markerOptions: {draggable: ").append(marker.getDraggable());
@@ -155,14 +160,16 @@ public final class MarkerRenderer extends BaseRenderer {
     
     private void decodeMarker(FacesContext facesContext, Marker marker, String mapState) {
         if (markerStateChanged(facesContext, marker, mapState)) {
-            int         start       = mapState.indexOf(getUniqueMarkerId(facesContext, marker) + "=");
-            int         end         = mapState.indexOf(")", start);
+            int start = mapState.indexOf(getUniqueMarkerId(facesContext, marker) + "=");
+            int end = mapState.indexOf(")", start);
             
-            String      markerState = mapState.substring(start, end + 1);
+            String markerState = mapState.substring(start, end + 1);
             Position markerValue = getMarkerValueFromState(markerState);
             
             marker.setSubmittedValue(markerValue);
         }
+        
+        decodeClientBehaviors(facesContext, marker);        
     }
 
 	private boolean markerStateChanged(FacesContext facesContext, Marker marker, String mapState) {
