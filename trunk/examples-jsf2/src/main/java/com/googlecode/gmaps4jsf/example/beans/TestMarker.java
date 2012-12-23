@@ -5,12 +5,13 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ValueChangeEvent;
 
 import com.googlecode.gmaps4jsf.component.marker.Marker;
-import com.googlecode.gmaps4jsf.component.marker.MarkerValue;
+import com.googlecode.gmaps4jsf.component.common.Position;
 
 public class TestMarker extends Marker {
 	
     public void update(ValueChangeEvent event) throws AbortProcessingException {
-        MarkerValue value = (MarkerValue) event.getNewValue();
+    	Position value = (Position) event.getNewValue();
+    	
         Marker source = (Marker) event.getSource();
         String markerID = source.getJsVariable();
         

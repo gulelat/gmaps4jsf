@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:m="http://code.google.com/p/gmaps4jsf/">
+
+<ui:composition template="../templates/layout.xhtml">
+
+        <ui:define name="title">Welcome to GMaps4JSF Examples</ui:define>
+        <ui:define name="ajaxIncludes"></ui:define>
+        
+        <ui:define name="mashup">
+            <h1>Ajaxified Map Actions - click the map to create markers dynamically</h1>
+            
+			<h:form id="form1">
+					<h:outputText id="markerNotification" value="#{map.markerNotification}"/>			
+					<m:map id="map1" width="800px" height="800px" latitude="24" longitude="15" 
+						   jsVariable="map1" zoom="2" 
+						   actionListener="#{map.handleMapClick}">
+						   
+						<f:ajax render="markerNotification"/>
+						<m:eventListener eventName="click" jsFunction="addMarkerHere"/>
+					</m:map>
+			</h:form>
+			
+			<script>
+				function addMarkerHere (event) {  		  
+					var marker = new google.maps.Marker({  
+						position: new google.maps.LatLng(event.latLng.lat(), event.latLng.lng()),
+						map: map1
+					});  
+				} 			
+			</script>
+			
+        </ui:define>
+
+</ui:composition>
+</html>  
