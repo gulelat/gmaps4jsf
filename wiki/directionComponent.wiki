@@ -1,4 +1,4 @@
-The direction component allows displaying routes and directions on the map.
+The direction component allows displaying routes and directions on the map. This component is not available since GMaps4JSF 3.0.0.
 
 ==Attributes==
 Beside the JSF UIComponent standard attributes. 
