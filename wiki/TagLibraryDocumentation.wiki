@@ -10,9 +10,9 @@
   * [pointComponent]
   * [streetViewPanoramaComponent]
   * [eventListenerComponent]
-  * [iconComponent] (Added in 1.1.1)
-  * [circleComponent] (Added in 1.1.3)
-  * [resourcesComponent] (Added in 1.1.3)
+  * [iconComponent] (Added since 1.1.1)
+  * [circleComponent] (Added since 1.1.3)
+  * [resourcesComponent] (Added since 1.1.3)
 
 ~~
 # The GMaps4JSF extended components are (not available since GMaps4JSF 3.0.0):~~
