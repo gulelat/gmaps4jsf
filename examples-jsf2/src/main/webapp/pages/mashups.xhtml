@@ -3,8 +3,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:m="http://code.google.com/p/gmaps4jsf/"
-      xmlns:mashup="http://code.google.com/p/mashups4jsf/">
+      xmlns:m="http://code.google.com/p/gmaps4jsf/">
 
 <ui:composition template="../templates/layout.xhtml">
 
@@ -52,23 +51,22 @@
                  </f:facet>
 
                  <h:commandLink value="View Place Information" action="#{place.setSelectedPlace}">
-                     <f:ajax render=":form1:placeMap :form1:placeWeather"/>
+                     <f:ajax render=":form1:placeMap"/>
                  </h:commandLink>
              </h:column>
          </h:dataTable>
 
          <br />
-         <h:panelGrid id="grid" columns="2" cellpadding="10px">
-             <h:panelGroup id="placeMap">
-                 <m:map width="400px" height="300px"
-                        renderOnWindowLoad="false"
-                        rendered="#{selectedPlace ne null}"
-                        address="#{selectedPlace.longAddressName}" zoom="9">
-                     <m:marker/>
-                     <m:htmlInformationWindow htmlText="#{selectedPlace.longAddressName}"/>
-                 </m:map>
-             </h:panelGroup>
-         </h:panelGrid>
+		 <h:panelGroup id="placeMap">
+			 #{selectedPlace.longAddressName}
+			 <m:map width="400px" height="300px"
+					partiallyTriggered="true"
+					rendered="#{selectedPlace ne null}"
+					address="#{selectedPlace.longAddressName}" zoom="9">
+				 <m:marker/>
+				 <m:htmlInformationWindow htmlText="#{selectedPlace.longAddressName}"/>
+			 </m:map>
+		 </h:panelGroup>
 
      </h:form>
 </ui:define>

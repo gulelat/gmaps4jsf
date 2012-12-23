@@ -24,14 +24,14 @@ import javax.faces.event.ValueChangeEvent;
 
 import com.googlecode.gmaps4jsf.component.map.Map;
 import com.googlecode.gmaps4jsf.component.marker.Marker;
-import com.googlecode.gmaps4jsf.component.marker.MarkerValue;
-import com.googlecode.gmaps4jsf.component.window.HTMLInformationWindow;
 import com.googlecode.gmaps4jsf.services.GMaps4JSFServiceFactory;
 import com.googlecode.gmaps4jsf.services.data.PlaceMark;
 
+import com.googlecode.gmaps4jsf.component.common.Position;
+
 /**
  * @author Hazem Saleh
- * @date May 23, 2009
+ * @date Dec 23, 2012
  * The MapBean is used for the server side events example of GMaps4JSF.
  */
 public class MapBean {
@@ -40,8 +40,18 @@ public class MapBean {
     String secondMarkerStatus;
     String firstLocationInformation;
     String secondLocationInformation;
+    
+    String markerNotification;
 
-    public String getFirstMarkerStatus() {
+    public String getMarkerNotification() {
+		return markerNotification;
+	}
+
+	public void setMarkerNotification(String markerNotification) {
+		this.markerNotification = markerNotification;
+	}
+
+	public String getFirstMarkerStatus() {
         return firstMarkerStatus;
     }
 
@@ -58,13 +68,13 @@ public class MapBean {
     }
    
     public void processValueChangeForFirstMarker(ValueChangeEvent event) throws AbortProcessingException {
-        firstMarkerStatus       = event.getNewValue().toString();
-        MarkerValue markerValue = (MarkerValue) event.getNewValue();
+        firstMarkerStatus = event.getNewValue().toString();
+        Position position = (Position) event.getNewValue();
         
         try {
-            PlaceMark placeMark = GMaps4JSFServiceFactory.getReverseGeocoderService().getPlaceMark(markerValue.getLatitude(), markerValue.getLongitude());
+            PlaceMark placeMark = GMaps4JSFServiceFactory.getReverseGeocoderService().getPlaceMark(position.getLatitude(), position.getLongitude());
             
-            firstLocationInformation = "Selected Latitude, Longitude: " + markerValue.getLatitude() + ", " + markerValue.getLongitude()
+            firstLocationInformation = "Selected Latitude, Longitude: " + position.getLatitude() + ", " + position.getLongitude()
                                      + "<br>Address: " + ignoreNull(placeMark.getAddress()) 
                                      + "<br>Country code: " + ignoreNull(placeMark.getCountryCode())
                                      + "<br>Country name: "+ ignoreNull(placeMark.getCountryName())
@@ -76,12 +86,12 @@ public class MapBean {
 
     public void processValueChangeForSecondMarker(ValueChangeEvent event) throws AbortProcessingException {
         secondMarkerStatus      = event.getNewValue().toString();
-        MarkerValue markerValue = (MarkerValue) event.getNewValue();
+        Position position = (Position) event.getNewValue();
         
         try {
-            PlaceMark placeMark = GMaps4JSFServiceFactory.getReverseGeocoderService().getPlaceMark(markerValue.getLatitude(), markerValue.getLongitude());
+            PlaceMark placeMark = GMaps4JSFServiceFactory.getReverseGeocoderService().getPlaceMark(position.getLatitude(), position.getLongitude());
             
-            secondLocationInformation = "Selected Latitude, Longitude: " + markerValue.getLatitude() + ", " + markerValue.getLongitude()
+            secondLocationInformation = "Selected Latitude, Longitude: " + position.getLatitude() + ", " + position.getLongitude()
                                       + "<br>Address: " + ignoreNull(placeMark.getAddress()) 
                                       + "<br>Country code: " + ignoreNull(placeMark.getCountryCode())
                                       + "<br>Country name: "+ ignoreNull(placeMark.getCountryName())
@@ -92,7 +102,7 @@ public class MapBean {
     }
     
     public void processValueChangeForMarker(ValueChangeEvent event) throws AbortProcessingException {
-        System.out.println("maker is dragged to: " + ((MarkerValue) event.getNewValue()).toString());
+        System.out.println("maker is dragged to: " + ((Position) event.getNewValue()).toString());
     }
 
     public String getFirstLocationInformation() {
@@ -120,19 +130,19 @@ public class MapBean {
     }
     
     public void addMarkerHere(ActionEvent actionEvent) {
-    	System.out.println("ActionEvent is called here = " + actionEvent.getComponent());
-    	
     	Map map = (Map) actionEvent.getComponent();
-    	
-    	System.out.println("Map Id = " + map.getId());
-    	System.out.println("Clicked Longitude = " + ((MarkerValue)map.getValue()).getLongitude());
-    	System.out.println("Clicked Latitude = " + ((MarkerValue)map.getValue()).getLatitude());
     	
     	Marker marker = new Marker();
     	
-    	marker.setLongitude(((MarkerValue)map.getValue()).getLongitude());
-    	marker.setLatitude(((MarkerValue)map.getValue()).getLatitude());
+    	marker.setLongitude(((Position) map.getValue()).getLongitude());
+    	marker.setLatitude(((Position) map.getValue()).getLatitude());
     	    	
     	map.getChildren().add(marker);
     }
+    
+    public void handleMapClick(ActionEvent actionEvent) {
+    	Map map = (Map) actionEvent.getComponent();
+    	
+    	markerNotification = "A new marker is added with the following: " +  map.getValue();
+    }    
 }
