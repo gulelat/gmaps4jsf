@@ -23,14 +23,16 @@ import javax.faces.render.Renderer;
 import javax.faces.context.FacesContext;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ResponseWriter;
+
+import com.googlecode.gmaps4jsf.component.common.BaseRenderer;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
 
 /**
  * @author Hazem Saleh
- * @date September 20, 2008
+ * @date Dec 23, 2012
  * The GroundOverlayEncoder is used for encoding the map ground overlay.
  */
-public final class GroundOverlayRenderer extends Renderer {
+public final class GroundOverlayRenderer extends BaseRenderer {
 
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
         if (component.isRendered()) {

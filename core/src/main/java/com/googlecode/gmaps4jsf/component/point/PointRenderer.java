@@ -24,14 +24,15 @@ import javax.faces.context.FacesContext;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ResponseWriter;
 
+import com.googlecode.gmaps4jsf.component.common.BaseRenderer;
 import com.googlecode.gmaps4jsf.util.ComponentUtils;
 
 /**
  * @author Hazem Saleh
- * @date August 16, 2009
- * The (PointRenderer) renders a google map polygon.
+ * @date Dec 23, 2012
+ * The (PointRenderer) renders a google map Point.
  */
-public class PointRenderer extends Renderer {
+public class PointRenderer extends BaseRenderer {
 
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
         if (component.isRendered()) {

@@ -32,7 +32,7 @@ import com.googlecode.gmaps4jsf.services.data.PlaceMark;
 /**
  * <p>
  * @author Hazem Saleh
- * @date Dec 10, 2009
+ * @date Dec 23, 2012
  * The <code>ReverseGeocoderServiceImpl</code> is implementation of the <code>ReverseGeocoderService</code> interface.
  * </p>
  */

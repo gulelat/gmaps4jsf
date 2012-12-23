@@ -26,6 +26,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 
+import com.googlecode.gmaps4jsf.component.common.BaseRenderer;
 import com.googlecode.gmaps4jsf.component.common.Position;
 import com.googlecode.gmaps4jsf.component.icon.Icon;
 import com.googlecode.gmaps4jsf.component.map.EventEncoder;
@@ -38,7 +39,7 @@ import com.googlecode.gmaps4jsf.util.ComponentUtils;
  * @date Dec 08, 2012
  * The (MarkerRenderer) renders a google map marker.
  */
-public final class MarkerRenderer extends Renderer {
+public final class MarkerRenderer extends BaseRenderer {
     
     protected static String getUniqueMarkerId(FacesContext facesContext, Marker marker) {
         return marker.getClientId(facesContext).replace(':', '_');

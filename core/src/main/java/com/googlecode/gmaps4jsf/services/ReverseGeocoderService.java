@@ -22,7 +22,7 @@ import com.googlecode.gmaps4jsf.services.data.PlaceMark;
 
 /**
  * @author Hazem Saleh
- * @date Dec 10, 2009
+ * @date Dec 23, 2012
  * The <code>ReverseGeocoderService</code> is used for getting the placemark. 
  */
 public interface ReverseGeocoderService {
