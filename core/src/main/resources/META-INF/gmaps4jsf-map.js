@@ -30,20 +30,22 @@
             
             themap.centeralize(map, callback);
 
-            var mapClickFunction = function (m) {
+            var mapClickFunction = function (mapObj) {
                 return function(event) {
                     /* Save the map state. */
-                    document.getElementById(m.mapStateHiddenFieldID).value = event.latLng;
+                    document.getElementById(mapObj.mapStateHiddenFieldID).value = event.latLng;
                     
                     /* Submit the form on marker value change if required. */
-                    if (m.submitOnValueChange === 'true') {
+                    if (mapObj.submitOnValueChange === 'true') {
                         setTimeout(function() {
-                            document.getElementById(m.parentFormID).submit();
+                            document.getElementById(mapObj.parentFormID).submit();
                         }, 500);
                     }
                     
                     /* Invoke Ajax Script on other components ... */
-                    m.ajaxBehavior(event);
+                    if (mapObj.ajaxBehavior && mapObj.ajaxBehavior.action) { 
+                    	mapObj.ajaxBehavior.action(event);
+                	}
                 };
             };
             google.maps.event.addListener(themap, 'click', mapClickFunction(map));
@@ -155,6 +157,21 @@
                 }
                 self._markerCreationCallback(themarker, marker, callback);
             }
+            
+            /* generate the marker hidden DOM */
+            this.generateMarkerDOM(marker.id);
+        };
+        
+        google.maps.Map.prototype.generateMarkerDOM = function (markerID) {
+        	var element = document.createElement("input");
+
+        	element.setAttribute("type", "hidden");
+        	element.setAttribute("id", markerID);
+        	element.setAttribute("name", markerID);
+
+        	var container = document.getElementById(this.properties.id);
+
+        	container.appendChild(element);        	
         };
         
         google.maps.Map.prototype.updateMarkersState = function (markerOptions, newLatLng) {
@@ -190,18 +207,24 @@
             document.getElementById(markerOptions.stateHiddenFieldID).value = markersState;        	
         };
 
-        google.maps.Map.prototype._dragEnd = function (m) {
+        google.maps.Map.prototype._dragEnd = function (markerObj) {
+        	var self = this;
+        	
             return function(mouseEvent) {
             	var newLatLng = mouseEvent.latLng;
 
-            	this.updateMarkersState(m, newLatLng);
+            	self.updateMarkersState(markerObj, newLatLng);
             	
                 /* Submit the form on marker value change if required. */
-                if (m.submitOnValueChange === 'true') {
+                if (markerObj.submitOnValueChange === 'true') {
                     setTimeout(function() {
-                        document.getElementById(m.parentFormID).submit();
+                        document.getElementById(markerObj.parentFormID).submit();
                     }, 500);
                 }
+                
+                if (markerObj.ajaxBehavior && markerObj.ajaxBehavior.valueChange) {
+                	markerObj.ajaxBehavior.valueChange(mouseEvent);
+            	}
             };
         };
 

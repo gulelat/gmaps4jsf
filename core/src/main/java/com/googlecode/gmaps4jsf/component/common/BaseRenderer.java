@@ -73,17 +73,17 @@ public class BaseRenderer extends Renderer {
 
 	public String getAjaxInvocationScript(ClientBehaviorHolder component, FacesContext context) {
         java.util.Map<String, List<ClientBehavior>> behaviorEvents = component.getClientBehaviors();
-    	String invocationScript = "function(event) {";
-    	
+        String invocationScript = "{";
+        
         if (! behaviorEvents.isEmpty()) {
             String clientId = ((UIComponent) component).getClientId(context);
             List<ClientBehaviorContext.Parameter> params = Collections.emptyList();
             
             for (Iterator<String> eventIterator = behaviorEvents.keySet().iterator(); eventIterator.hasNext();) {
                 String event = eventIterator.next();
-                
-                System.out.println("event: " + event);
 
+                invocationScript += event + ": function(event) {";                
+                
                 for (Iterator<ClientBehavior> behaviorIter = behaviorEvents.get(event).iterator(); behaviorIter.hasNext();) {
                     ClientBehavior behavior = behaviorIter.next();
                     ClientBehaviorContext cbc = ClientBehaviorContext.createClientBehaviorContext(context, 
@@ -95,6 +95,8 @@ public class BaseRenderer extends Renderer {
                     	invocationScript += script + ";";
                     }
                 }
+                
+                invocationScript += "}";
             }   
         }
         
