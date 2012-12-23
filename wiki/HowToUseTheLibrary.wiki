@@ -4,8 +4,9 @@
  * Include the tag library in your JSF page as follows:
 {{{
  <%@ taglib uri="http://code.google.com/p/gmaps4jsf/" prefix="m" %>
-
+}}}
 or if you are using Facelets:
+{{{
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
