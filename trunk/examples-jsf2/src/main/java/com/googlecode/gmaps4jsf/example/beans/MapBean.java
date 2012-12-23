@@ -68,7 +68,7 @@ public class MapBean {
     }
    
     public void processValueChangeForFirstMarker(ValueChangeEvent event) throws AbortProcessingException {
-        firstMarkerStatus = event.getNewValue().toString();
+        firstMarkerStatus = "Marker A status:" + event.getNewValue().toString();
         Position position = (Position) event.getNewValue();
         
         try {
@@ -84,8 +84,8 @@ public class MapBean {
         }
     }
 
-    public void processValueChangeForSecondMarker(ValueChangeEvent event) throws AbortProcessingException {
-        secondMarkerStatus      = event.getNewValue().toString();
+    public void processValueChangeForSecondMarker(ValueChangeEvent event) throws AbortProcessingException {    	
+        secondMarkerStatus = "Marker B status:" + event.getNewValue().toString();
         Position position = (Position) event.getNewValue();
         
         try {
