@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:m="http://code.google.com/p/gmaps4jsf/">
+
+<ui:composition template="../templates/layout.xhtml">
+
+        <ui:define name="title">Welcome to GMaps4JSF Examples</ui:define>
+        <ui:define name="ajaxIncludes"></ui:define>
+        
+        <ui:define name="mashup">
+             <h1>Ajaxified Marker Actions - Drag the markers</h1>
+            
+                <h:form id="form">
+                        <h:outputText id="firstMarkerStatus" value="#{map.firstMarkerStatus}"/> <br/>
+                        <h:outputText id="secondMarkerStatus" value="#{map.secondMarkerStatus}"/> <br/>
+                
+                        <m:map width="800px" height="800px" latitude="24" longitude="15" jsVariable="map1" zoom="2">
+                                
+                                <m:marker id="marker1" latitude="30.01" longitude="31.14" 
+                                		  jsVariable="marker1" draggable="true" 
+                                          valueChangeListener="#{map.processValueChangeForFirstMarker}">
+                                                   
+                                        <m:icon imageURL="http://www.google.com/mapfiles/markerA.png"/>
+                                        <m:htmlInformationWindow htmlText="Iam Marker A"/>
+                                        
+                                        <f:ajax render="firstMarkerStatus"/>
+                                </m:marker>
+                                
+                                <m:marker id="marker2" latitude="39" longitude="-101" 
+                                		  jsVariable="marker2" draggable="true"
+                                          valueChangeListener="#{map.processValueChangeForSecondMarker}">
+                                        <m:icon imageURL="http://www.google.com/mapfiles/markerB.png"/>
+                                        <m:htmlInformationWindow htmlText="Iam Marker B"/>
+                                        
+                                        <f:ajax render="secondMarkerStatus"/>                                        
+                                </m:marker>
+                        </m:map>                        
+                </h:form>
+        </ui:define>
+
+</ui:composition>
+</html>  

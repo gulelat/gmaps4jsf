@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:m="http://code.google.com/p/gmaps4jsf/">
+
+<ui:composition template="../templates/layout.xhtml">
+
+        <ui:define name="title">Welcome to GMaps4JSF Examples</ui:define>
+        <ui:define name="ajaxIncludes"></ui:define>
+        
+        <ui:define name="mashup">
+          <h1>Client-side Events of the map</h1>
+                      
+          <h:form id="form">
+              <div>Drag the map, close the window and click the marker!!!</div>
+              <m:map width="500px" height="500px" latitude="24" longitude="15" jsVariable="map1" zoom="2">
+                  <m:marker latitude="30.01" longitude="31.14" jsVariable="marker1">
+                      <m:eventListener eventName="click" jsFunction="marker1ClickHandler"/>
+                      <m:htmlInformationWindow htmlText="Close the marker window!!!">
+                          <m:eventListener eventName="closeclick" jsFunction="markerWindowClosed"/>
+                      </m:htmlInformationWindow>
+                  </m:marker>
+                  <m:marker latitude="39" longitude="-101" jsVariable="marker2">
+                      <m:eventListener eventName="click" jsFunction="marker2ClickHandler"/>
+                  </m:marker>
+                  <m:htmlInformationWindow latitude="-26.745610382199007" longitude="119.8828125" htmlText="Close the map window!!!">
+                      <m:eventListener eventName="closeclick" jsFunction="mapWindowClosed"/>
+                  </m:htmlInformationWindow>
+                  <m:eventListener eventName="moveend" jsFunction="mapMoveEndHandler"/>
+              </m:map>
+              <div id="message"/>
+          </h:form>
+          
+             
+         <script type="text/javascript">
+                 function mapMoveEndHandler() {
+                     var center = map1.getCenter();
+                     document.getElementById("message").innerHTML = "Center of map is " + center.toString();
+                 }
+                 function marker1ClickHandler() {
+                     alert("You clicked on Egypt marker");
+                 }
+                 function marker2ClickHandler() {
+                     alert("You clicked on US marker");
+                 }
+                 function mapClickHandler(overlay,  latlng,  overlaylatlng) {
+                     alert("You click on (lat, lng): " + latlng);
+                 }
+                 function markerWindowClosed() {
+                     alert("You closed the marker window");
+                 }
+                 function mapWindowClosed() {
+                     alert("You closed the map window");
+                 }
+          </script>          
+        </ui:define>
+
+</ui:composition>
+</html>  

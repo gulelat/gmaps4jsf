@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:m="http://code.google.com/p/gmaps4jsf/">
+
+<ui:composition template="../templates/layout.xhtml">
+
+        <ui:define name="title">Welcome to GMaps4JSF Examples</ui:define>
+        <ui:define name="ajaxIncludes"></ui:define>
+        
+        <ui:define name="mashup">
+             <h1>Locate your address on the map</h1>
+            
+            <h:form id="form">
+            
+            <h:panelGrid columns="2">                
+                <h:outputText value="Enter your address like 'Giza, Egypt' :"/>
+                <h:inputText id="txtAddress" value="#{addressBean.address}"/>
+                <h:commandButton value="Get my location on the map" action="#{addressBean.doSearch}"/>                                                 
+            </h:panelGrid>      
+            
+            <h:panelGrid>                             
+                <m:map width="500px" height="500px" address="#{addressBean.address}">
+                   <m:marker/>
+                   <m:htmlInformationWindow htmlText="#{addressBean.address}"/>
+                </m:map>
+            </h:panelGrid>                      
+            </h:form>
+        </ui:define>
+
+</ui:composition>
+</html>  

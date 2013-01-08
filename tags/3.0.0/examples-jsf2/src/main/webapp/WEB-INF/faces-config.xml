@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+              version="2.0">
+   
+    <managed-bean>
+        <managed-bean-name>loc1</managed-bean-name>
+        <managed-bean-class>com.googlecode.gmaps4jsf.example.beans.LocationBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>latitude</property-name>
+            <value>10.123</value>
+        </managed-property>
+        <managed-property>
+            <property-name>longitude</property-name>
+            <value>10.231</value>
+        </managed-property>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>loc2</managed-bean-name>
+        <managed-bean-class>com.googlecode.gmaps4jsf.example.beans.LocationBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>latitude</property-name>
+            <value>10.231</value>
+        </managed-property>
+        <managed-property>
+            <property-name>longitude</property-name>
+            <value>10.123</value>
+        </managed-property>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>locs</managed-bean-name>
+        <managed-bean-class>java.util.ArrayList</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <list-entries>
+            <value-class>com.googlecode.gmaps4jsf.example.beans.LocationBean</value-class>
+            <value>#{loc1}</value>
+            <value>#{loc2}</value>
+        </list-entries>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>multiple</managed-bean-name>
+        <managed-bean-class>com.googlecode.gmaps4jsf.example.beans.Multiple</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>shapeData</managed-bean-name>
+        <managed-bean-class>com.googlecode.gmaps4jsf.example.beans.ShapeData</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>    
+    
+    <managed-bean>
+        <managed-bean-name>markerList</managed-bean-name>
+        <managed-bean-class>com.googlecode.gmaps4jsf.example.beans.MarkerList</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>    
+    
+    <managed-bean>
+        <managed-bean-name>addressBean</managed-bean-name>
+        <managed-bean-class>com.googlecode.gmaps4jsf.example.beans.AddressBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>address</property-name>
+            <value>Cairo, Egypt</value>
+        </managed-property>               
+    </managed-bean>	
+    
+    <managed-bean>
+  		<managed-bean-name>tree</managed-bean-name>
+  		<managed-bean-class>com.googlecode.gmaps4jsf.example.beans.MashupBean</managed-bean-class>
+	  	<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+    <managed-bean>
+  		<managed-bean-name>place1</managed-bean-name>
+  		<managed-bean-class>com.googlecode.gmaps4jsf.example.beans.FavoritePlace</managed-bean-class>
+	  	<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+		    <property-name>longitude</property-name>
+		    <value>31.14</value>
+		</managed-property>
+		<managed-property>
+		    <property-name>latitude</property-name>
+		    <value>30.01</value>
+		</managed-property>
+	</managed-bean>	
+
+    <managed-bean>
+  		<managed-bean-name>place2</managed-bean-name>
+  		<managed-bean-class>com.googlecode.gmaps4jsf.example.beans.FavoritePlace</managed-bean-class>
+	  	<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+		    <property-name>longitude</property-name>
+		    <value>-101</value>
+		</managed-property>
+		<managed-property>
+		    <property-name>latitude</property-name>
+		    <value>39</value>
+		</managed-property>	  	
+	</managed-bean>
+	
+    <managed-bean>
+  		<managed-bean-name>place3</managed-bean-name>
+  		<managed-bean-class>com.googlecode.gmaps4jsf.example.beans.FavoritePlace</managed-bean-class>
+	  	<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+		    <property-name>longitude</property-name>
+		    <value>-101</value>
+		</managed-property>
+		<managed-property>
+		    <property-name>latitude</property-name>
+		    <value>39</value>
+		</managed-property>	  	
+	</managed-bean>	
+
+    <managed-bean>
+  		<managed-bean-name>map</managed-bean-name>
+  		<managed-bean-class>com.googlecode.gmaps4jsf.example.beans.MapBean</managed-bean-class>
+	  	<managed-bean-scope>session</managed-bean-scope>  	
+	</managed-bean>
+	
+    <managed-bean>
+  		<managed-bean-name>map2</managed-bean-name>
+  		<managed-bean-class>com.googlecode.gmaps4jsf.example.beans.MapBean</managed-bean-class>
+	  	<managed-bean-scope>session</managed-bean-scope>  	
+	</managed-bean>	
+</faces-config>

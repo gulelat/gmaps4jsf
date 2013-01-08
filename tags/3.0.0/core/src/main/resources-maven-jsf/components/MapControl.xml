@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+//-->
+
+<!--
+the mapControl component should be a child of the map component.
+//-->
+
+<!DOCTYPE component SYSTEM "../misc/component.dtd" [
+<!ENTITY standard_uicomponent_attributes SYSTEM "../entities/standard_uicomponent_attributes.xml">
+]>
+<component>
+    <tag>mapControl</tag>
+    <tagClass>com.googlecode.gmaps4jsf.component.mapcontrol.MapControlTag</tagClass>
+    <componentClass>com.googlecode.gmaps4jsf.component.mapcontrol.MapControl</componentClass>
+    <componentType>com.googlecode.gmaps4jsf.MapControl</componentType>
+    <componentFamily>com.googlecode.gmaps4jsf</componentFamily>
+    <rendererType>com.googlecode.gmaps4jsf.component.mapcontrol.MapControlRenderer</rendererType>
+    <rendererClass>com.googlecode.gmaps4jsf.component.mapcontrol.MapControlRenderer</rendererClass>
+    <parent>javax.faces.component.UIComponentBase</parent>
+    <attributes>
+        &standard_uicomponent_attributes;
+        <attribute>
+            <name>name</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+            <description>The control name of the map.
+                It can take on the following values:
+                * mapTypeControl
+				* panControl 
+				* zoomControl 
+				* scaleControl 
+				* rotateControl 
+				* overviewMapControl 
+            </description>
+        </attribute>
+        <attribute>
+            <name>position</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <defaultValue>google.maps.ControlPosition.LEFT_TOP</defaultValue>
+            <description>This attribute lets you specify the position of the map control.
+                It can take on the following values:
+                * TOP_CENTER
+                * TOP_LEFT
+                * TOP_RIGHT
+                * LEFT_TOP
+                * RIGHT_TOP
+                * LEFT_CENTER
+                * RIGHT_CENTER
+                * LEFT_BOTTOM
+                * RIGHT_BOTTOM
+                * BOTTOM_CENTER
+                * BOTTOM_LEFT
+                * BOTTOM_RIGHT
+            </description>
+        </attribute>
+        <attribute>
+            <name>controlStyle</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <description>
+                This attribute lets you specify the style of the map control. 
+                For more information about the available styles, check:
+                https://developers.google.com/maps/documentation/javascript/reference#MapTypeControlStyle
+            </description>
+        </attribute>
+    </attributes>
+</component>

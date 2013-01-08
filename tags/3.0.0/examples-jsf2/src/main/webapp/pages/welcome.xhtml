@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="../templates/layout.xhtml">
+
+<ui:define name="title">Welcome to GMaps4JSF 3.0.0</ui:define>
+<ui:define name="ajaxIncludes"></ui:define>
+
+<ui:define name="mashup">
+    
+    <h:form id="gmaps4jsfForm">
+                     
+         <h1>GMaps4JSF components</h1>    
+         
+         <h:outputText value="Simple" />
+         <h:panelGrid style="padding-left:25px">
+             <h:outputLink value="simple.xhtml">
+                     A simple map with basic components
+             </h:outputLink>
+         </h:panelGrid>
+         
+         <h:outputText value="Duped" />
+         <h:panelGrid style="padding-left:25px">
+             <h:outputLink value="two.xhtml">
+                 <f:verbatim>Two maps in a page</f:verbatim>
+             </h:outputLink>
+         </h:panelGrid>
+
+         <h:outputText value="Repeated" />
+         <h:panelGrid style="padding-left:25px">
+             <h:outputLink value="repeat.xhtml">
+                 <f:verbatim><span >A list of markers with info windows (for-each sample)</span></f:verbatim>
+             </h:outputLink>
+         </h:panelGrid>
+
+         <h:outputText value="Auto-Arrange Map" />
+         <h:panelGrid style="padding-left:25px">
+             <h:outputLink value="autoReshape.xhtml">
+                 <f:verbatim>A map that is reshaped according to its markers' positions</f:verbatim>
+             </h:outputLink>
+         </h:panelGrid>
+
+         <h:outputText value="Markers and Information Windows" />
+         <h:panelGrid style="padding-left:25px">
+             <h:outputLink value="mapWithMarkersAndInfoWindows.xhtml">
+                 <f:verbatim><span >A map with both markers and Information windows</span></f:verbatim>
+             </h:outputLink>
+         </h:panelGrid>
+
+         <h:outputText value="Draggable Markers" />
+         <h:panelGrid style="padding-left:25px">
+             <h:outputLink value="draggableMarkers.xhtml">
+                 <f:verbatim>Map with draggable markers</f:verbatim>
+             </h:outputLink>
+         </h:panelGrid>
+
+         <h:outputText value="Addressable Markers" />
+         <h:panelGrid style="padding-left:25px">
+             <h:outputLink value="addressableMarkers.xhtml">
+                 <f:verbatim><span>Map with addressable markers</span></f:verbatim>
+             </h:outputLink>
+         </h:panelGrid>
+
+         <h:outputText value="Custom Markers" />
+         <h:panelGrid style="padding-left:25px">
+             <h:outputLink value="customMarkers.xhtml">
+                 <f:verbatim><span>Map with custom draggable markers</span></f:verbatim>
+             </h:outputLink>
+         </h:panelGrid>
+
+         <h:outputText value="Controls" />
+         <h:panelGrid style="padding-left:25px">
+             <h:outputLink value="mapWithControls.xhtml">
+                 <f:verbatim>Adding controls to your map</f:verbatim>
+             </h:outputLink>
+         </h:panelGrid>
+
+         <h:outputText value="Client-side EventListeners" />
+         <h:panelGrid style="padding-left:25px">
+             <h:outputLink value="mapEvents.xhtml">
+                 <f:verbatim>Listening to client-side events on your map and markers</f:verbatim>
+             </h:outputLink>
+         </h:panelGrid>
+
+         <h:outputText value="Server-side Markers EventListeners (Example 1)" />
+         <h:panelGrid style="padding-left:25px">
+             <h:outputLink value="markersServerSideEvents.xhtml">
+                 <f:verbatim>Listening to server-side events on markers (Example 1)</f:verbatim>
+             </h:outputLink>
+         </h:panelGrid>
+         
+         <h:outputText value="Server-side Markers EventListeners (Example 2)" />
+         <h:panelGrid style="padding-left:25px">
+             <h:outputLink value="multipleMarkersServerSideEvents.xhtml">
+                 <f:verbatim>Listening to server-side events on markers (Example 2)</f:verbatim>
+             </h:outputLink>
+         </h:panelGrid>        
+         
+         <h:outputText value="Server-side Map EventListeners" />
+         <h:panelGrid style="padding-left:25px">
+             <h:outputLink value="mapServerSideEvents.xhtml">
+                 <f:verbatim>Listening to server-side events on a map</f:verbatim>
+             </h:outputLink>
+         </h:panelGrid>                            
+
+         <h:outputText value="Geocoding" />
+         <h:panelGrid style="padding-left:25px">
+             <h:outputLink value="getMyLocation.xhtml">
+                 <f:verbatim><span>An example that demonstrates the usage of the address attribute of the map</span></f:verbatim>
+             </h:outputLink>
+         </h:panelGrid>
+
+         <h:outputText value="Reverse Geocoding" />
+         <h:panelGrid style="padding-left:25px">
+             <h:outputLink value="reverseGeocoding.xhtml">
+                 <f:verbatim><span>An example that demonstrates the usage of the GMaps4JSF ReverseGeocoder service</span></f:verbatim>
+             </h:outputLink>
+         </h:panelGrid>
+         
+         <h:outputText value="Polylines" />
+         <h:panelGrid style="padding-left:25px">
+             <h:outputLink value="mapSimplePolyline.xhtml">
+                 <f:verbatim>Draw a simple polyline on your map</f:verbatim>
+             </h:outputLink>
+             <h:outputLink value="mapGeodesicPolyline.xhtml">
+                 <f:verbatim>Draw a geodesic polyline on your map</f:verbatim>
+             </h:outputLink>
+             <h:outputLink value="mapMixedPolylines.xhtml">
+                 <f:verbatim>Draw mixed polylines on your map</f:verbatim>
+             </h:outputLink>
+         </h:panelGrid>
+
+         <h:outputText value="Polygons" />
+         <h:panelGrid style="padding-left:25px">
+             <h:outputLink value="mapPolygon.xhtml">
+                 <f:verbatim>Draw a polygon on your map</f:verbatim>
+             </h:outputLink>
+             <h:outputLink value="mapPolygons.xhtml">
+                 <f:verbatim>Draw many polygons on your map</f:verbatim>
+             </h:outputLink>
+         </h:panelGrid>
+
+         <h:outputText value="Circles" />
+         <h:panelGrid style="padding-left:25px">
+             <h:outputLink value="mapCircle.xhtml">
+                 <f:verbatim><span>Draw a circle on your map</span></f:verbatim>
+             </h:outputLink>
+             <h:outputLink value="mapCircles.xhtml">
+                 <f:verbatim><span>Draw many circles on your map</span></f:verbatim>
+             </h:outputLink>
+         </h:panelGrid>
+
+         <h:outputText value="Polygons + Polylines + Events" />
+         <h:panelGrid style="padding-left:25px">
+             <h:outputLink value="mixedGraphics.xhtml">
+                 <f:verbatim><span >Draw polygons, polylines on your map and listen to their events</span></f:verbatim>
+             </h:outputLink>
+         </h:panelGrid>
+
+         <h:outputText value="GroundOverlay" />
+         <h:panelGrid style="padding-left:25px">
+             <h:outputLink value="groundoverlay.xhtml">
+                 <f:verbatim>Place GMaps4JSF logo on the earth</f:verbatim>
+             </h:outputLink>
+         </h:panelGrid>
+
+         <h:outputText value="JavaScript Customization" />
+         <h:panelGrid style="padding-left:25px">
+             <h:outputLink value="jsVariableExample.xhtml">
+                 <f:verbatim>An example that demonstrates the ability to use map and markers using JavaScript using the (jsVariable) attribute</f:verbatim>
+             </h:outputLink>
+         </h:panelGrid>           
+         
+         
+         <h:outputText value="StreetViewPanorama" />
+         <h:panelGrid style="padding-left:25px">
+             <h:outputLink value="streetViewPanorama.xhtml">
+                 <f:verbatim>An example that shows the street view panorama using latitude and longitude</f:verbatim>
+             </h:outputLink>
+             <h:outputLink value="streetViewPanoramaUsingAddress.xhtml">
+                 <f:verbatim>An example that shows the street view panorama using address</f:verbatim>
+             </h:outputLink>
+             <h:outputLink value="streetViewPanoramaEvents.xhtml">
+                 <f:verbatim><span>An event listener example that listens to the street view panorama</span></f:verbatim>
+             </h:outputLink>
+         </h:panelGrid>
+         
+         <h:outputText value="GMaps4JSF Ajax Support" />
+         <h:panelGrid style="padding-left:25px">
+             <h:outputLink value="mapAjax.xhtml">
+                 <f:verbatim>Ajaxified Map Actions</f:verbatim>
+             </h:outputLink>
+             
+             <h:outputLink value="markersAjax.xhtml">
+                 <f:verbatim>Ajaxified Markers Actions</f:verbatim>
+             </h:outputLink>             
+                      
+             <h:outputLink value="mashups.xhtml">
+                 <f:verbatim>An example that displays the place location from a table selection</f:verbatim>
+             </h:outputLink>
+         </h:panelGrid>       
+         
+         <h:outputText value="Mashup Remix" />
+         <h:panelGrid style="padding-left:25px">
+             <h:outputLink value="theater1.xhtml">
+                 <f:verbatim>Drag the marker on the map to know the place name and weather information</f:verbatim>
+             </h:outputLink>
+             
+             <h:outputLink value="theater2.xhtml">
+                 <f:verbatim>Mashup Remix = (GMaps + Twitter + YouTube + Yahoo! Weather) * (Using JSF Tags)</f:verbatim>
+             </h:outputLink>             
+         </h:panelGrid>    
+                
+    </h:form>
+</ui:define>    
+<ui:define name="footer">
+</ui:define>    
+
+</ui:composition>
+</html>  

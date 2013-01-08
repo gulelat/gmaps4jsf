@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:m="http://code.google.com/p/gmaps4jsf/">
+
+<ui:composition template="../templates/layout.xhtml">
+
+        <ui:define name="title">Welcome to GMaps4JSF Examples</ui:define>
+        <ui:define name="ajaxIncludes"></ui:define>
+        
+        <ui:define name="mashup">
+            <h1>Multiple Circles</h1>
+            <h:form id="form1">        
+	            <m:map width="700px" height="700px" latitude="24" longitude="15" zoom="3">
+	                <m:circle latitude="26.745610382199022" longitude="31.2890625" 
+	                		 lineWidth="1" hexStrokeColor="#cc0033" raduis="500" />
+	                <m:circle latitude="39" longitude="-101"  
+	                		   raduis="1000"  lineWidth="10" 
+	                		   hexStrokeColor="#336600" hexFillColor="#339900"/>            
+	                <m:circle latitude="23.241346102386135" longitude="79.453125"  
+	                		   lineWidth="2" raduis="1000" 
+	                		   hexStrokeColor="#000000" hexFillColor="#000000"/>                
+	                <m:circle latitude="-1.7575368113083125" longitude="22.8515625"  
+	                		  lineWidth="4"  raduis="1000" 
+	                		  hexStrokeColor="#000000" hexFillColor="#ff3300"/>
+	                <m:circle latitude="39.36827914916013" longitude="35.859375"  
+	                		  lineWidth="5" raduis="500" hexStrokeColor="#ff0033" hexFillColor="#ff0099"/>
+	            </m:map> 
+            </h:form>
+        </ui:define>
+
+</ui:composition>
+</html>  
