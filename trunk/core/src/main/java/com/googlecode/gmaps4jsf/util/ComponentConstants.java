@@ -76,4 +76,8 @@ public interface ComponentConstants {
 	final String MARKER_ATTR_LATITUDE = "latitude";
 	final String MARKER_ATTR_LONGITUDE = "longitude";    
     final String MARKER_LOAD_EVENT ="load";
+    
+	public static final String FORMATTED_ADDRESS_LABEL = "formatted_address";	
+	public static final String ADDRESS_COMPONENT_LABEL = "address_components";
+	public static final String RESULTS_LABEL = "results";	
 }
