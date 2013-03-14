@@ -28,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.googlecode.gmaps4jsf.services.data.PlaceMark;
+import com.googlecode.gmaps4jsf.util.ComponentConstants;
 
 /**
  * <p>
@@ -45,25 +46,16 @@ public class ReverseGeocoderServiceImpl implements ReverseGeocoderService {
     
     public PlaceMark getPlaceMark(String latitude, String longitude) throws Exception {
         try {
-            URL            url        = new URL("http://maps.google.com/maps/geo?q=" 
-                                      + latitude.trim()
-                                      + "," 
-                                      + longitude.trim() 
-                                      + "&output=json&sensor=false&key=abcdef");
-            URLConnection  connection = url.openConnection();
-            StringBuilder  builder    = new StringBuilder();
-            BufferedReader reader     = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            PlaceMark      placeMark  = new PlaceMark();
-            String         line;
+            URL            url       = new URL("http://maps.googleapis.com/maps/api/geocode/json?latlng=" 
+                                     + latitude.trim()
+                                     + "," 
+                                     + longitude.trim() 
+                                     + "&sensor=false");
             
-            while((line = reader.readLine()) != null) {
-             builder.append(line);
-            }
-    
-            JSONObject json = new JSONObject(builder.toString());
+            PlaceMark      placeMark = new PlaceMark();
+            JSONObject     json      = new JSONObject(readURL(url));
+            JSONArray      results   = (JSONArray) json.getJSONArray(ComponentConstants.RESULTS_LABEL);
             
-            JSONArray results = (JSONArray) json.getJSONArray("Placemark");
-    
             JSONObject placeMarkPrimaryData = (JSONObject) results.get(0);
             
             getPlaceMarkPrimaryInformation(placeMark, placeMarkPrimaryData);
@@ -73,6 +65,19 @@ public class ReverseGeocoderServiceImpl implements ReverseGeocoderService {
             throw new Exception("Error: " + exception.getMessage());
         }
     }
+    
+    private static String readURL(URL url) throws Exception {
+        URLConnection  connection = url.openConnection();
+        StringBuilder  builder    = new StringBuilder();
+        BufferedReader reader     = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        String         line;
+        
+        while((line = reader.readLine()) != null) {
+        	builder.append(line);
+        }        
+        
+        return builder.toString();
+    }    
 
     /*
      * The <code>getPlaceMarkPrimaryInformation</code> is used for getting all of the place marker
@@ -80,80 +85,38 @@ public class ReverseGeocoderServiceImpl implements ReverseGeocoderService {
      */
     private void getPlaceMarkPrimaryInformation(PlaceMark placeMark, JSONObject placeMarkPrimaryData) {
         
-        // ID
+        // Address
         try {
-            placeMark.setId((String) placeMarkPrimaryData.get("id"));            
+            placeMark.setAddress((String) placeMarkPrimaryData.get(ComponentConstants.FORMATTED_ADDRESS_LABEL));
         } catch (JSONException exception) {
-            //System.out.println("[warning] id is not available ...");
+        	System.err.println("Unable to get the place mark address");          	
         }
         
-        // ADDRESS
+        // Postal code
         try {
-            placeMark.setAddress((String) placeMarkPrimaryData.get("address"));
+        	JSONArray results = (JSONArray) placeMarkPrimaryData.getJSONArray(ComponentConstants.ADDRESS_COMPONENT_LABEL);
+        	
+        	for (int i = 0; i < results.length(); ++i) {
+        		JSONObject jsonObject = results.getJSONObject(i);
+        		
+        		String shortName = jsonObject.getString("short_name");        		
+        		JSONArray types = jsonObject.getJSONArray("types");
+        		
+        		for (int j = 0; j < types.length(); ++j) {
+        			String attribute = types.getString(j);
+        			
+        			if ("postal_code".equals(attribute)) {
+        				placeMark.setPostalCodeNumber(shortName);
+        				break;
+        			}
+        		}
+        	}
+        	
+        	
         } catch (JSONException exception) {
-            //System.out.println("[warning] address is not available ...");
-        }        
-        
-        try {
-            
-            // ADDRESS DETAILS
-            JSONObject addressDetailsObject = (JSONObject) placeMarkPrimaryData.get("AddressDetails");            
-            
-            // ACCURACY
-            try {
-                placeMark.setAccuracy((Integer) addressDetailsObject.get("Accuracy"));
-            } catch (JSONException exception) {
-                //System.out.println("[warning] accuracy is not available ...");
-            }
-            
-            try {
-                
-                // COUNTRY                
-                JSONObject country = (JSONObject) addressDetailsObject.get("Country");  
-                
-                // POSTAL CODE.
-                try { 
-                   String postalCode = ((JSONObject) ((JSONObject) ((JSONObject) country.get("AdministrativeArea")).get("Locality")).get("PostalCode")).get("PostalCodeNumber").toString();
-
-                   placeMark.setPostalCodeNumber(postalCode);
-                } catch (Exception exception) {
-                    try {
-                        String postalCode = ((JSONObject) ((JSONObject) ((JSONObject) ((JSONObject) ((JSONObject) country.get("AdministrativeArea")).get("SubAdministrativeArea")).get("Locality")).get("DependentLocality")).get("PostalCode")).get("PostalCodeNumber").toString();
-                        
-                        placeMark.setPostalCodeNumber(postalCode);
-                    } catch (Exception innerException) {
-                        try {
-                            String postalCode = ((JSONObject) ((JSONObject) ((JSONObject) ((JSONObject) country.get("AdministrativeArea")).get("SubAdministrativeArea")).get("Locality")).get("PostalCode")).get("PostalCodeNumber").toString();
-                            
-                            placeMark.setPostalCodeNumber(postalCode);
-                        } catch (Exception innerException2) {
-                        }
-                    }
-                }
-                
-                // COUNTRYNAME
-                try {
-                    placeMark.setCountryName((String) country.get("CountryName"));
-                } catch (JSONException exception) {
-                    //System.out.println("[warning] countryName is not available ...");
-                }                
-                
-                // COUNTRYNAMECODE
-                try {
-                    placeMark.setCountryCode((String) country.get("CountryNameCode"));
-                } catch (JSONException exception) {
-                    //System.out.println("[warning] countryNameCode is not available ...");
-                }
-                
-            } catch (JSONException exception) {
-                //System.out.println("[warning] country is not available ...");
-            }                
-            
-
-        } catch (JSONException exception) {
-            //System.out.println("[warning] addressDetailsObject is not available ...");
+        	System.err.println("Unable to get the place mark address");          	
         }
-    }    
+    }
     
     private ReverseGeocoderServiceImpl() {
     }
