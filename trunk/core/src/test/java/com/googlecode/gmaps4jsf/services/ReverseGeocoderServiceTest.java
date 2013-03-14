@@ -31,7 +31,11 @@ public class ReverseGeocoderServiceTest extends TestCase {
     public void testGetPlaceMark() throws Exception {
         PlaceMark placeMark = GMaps4JSFServiceFactory.getReverseGeocoderService().getPlaceMark("40.714224", "-73.961452");
         assertNotNull("Place mark is retrieved", placeMark);
-        assertEquals("Place mark in US", "USA", placeMark.getCountryName());
+        assertNotNull(placeMark.getAddress());
+        assertNotNull(placeMark.getPostalCodeNumber());
+        
+        System.out.println("Address: " + placeMark.getAddress());
+        System.out.println("PostalCodeNumber: " + placeMark.getPostalCodeNumber());        
     }
 
 }
