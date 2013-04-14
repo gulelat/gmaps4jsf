@@ -55,7 +55,7 @@
         <dependency>
             <groupId>com.googlecode.mashups4jsf</groupId>
             <artifactId>mashups4jsf-core</artifactId>
-            <version>0.0.2</version>
+            <version>1.0.0</version>
 			<scope>compile</scope>			
         </dependency>  	
 
