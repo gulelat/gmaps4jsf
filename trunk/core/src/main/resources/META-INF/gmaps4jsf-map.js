@@ -227,6 +227,21 @@
             	}
             };
         };
+        
+        /* Support Marker Ajaxified onclick */
+        google.maps.Map.prototype._markerClick = function (markerObj) {
+        	var self = this;
+        	
+            return function(mouseEvent) {
+            	var newLatLng = mouseEvent.latLng;
+
+            	self.updateMarkersState(markerObj, newLatLng);
+            	
+                if (markerObj.ajaxBehavior && markerObj.ajaxBehavior.click) {
+                	markerObj.ajaxBehavior.click(mouseEvent);
+            	}
+            };
+        };        
 
         google.maps.Map.prototype._markerCreationCallback = function(marker, markerOptions, callback) {
             var latlng = marker.getPosition();
@@ -243,6 +258,7 @@
             /* store marker state */
         	this.updateMarkersState(markerOptions);            
             google.maps.event.addListener(marker, 'dragend', this._dragEnd(markerOptions));
+            google.maps.event.addListener(marker, 'click', this._markerClick(markerOptions));           
             callback(this, marker);
             
             this.reshape(latlng);            
