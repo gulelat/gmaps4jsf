@@ -20,6 +20,7 @@ package com.googlecode.gmaps4jsf.example.beans;
 
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
 
 import com.googlecode.gmaps4jsf.component.map.Map;
@@ -67,6 +68,7 @@ public class MapBean {
         this.secondMarkerStatus = secondMarkerStatus;
     }
    
+    /*
     public void processValueChangeForFirstMarker(ValueChangeEvent event) throws AbortProcessingException {
         firstMarkerStatus = "Marker A status:" + event.getNewValue().toString();
         Position position = (Position) event.getNewValue();
@@ -83,7 +85,8 @@ public class MapBean {
             firstLocationInformation = NOT_AVAILABLE;
         }
     }
-
+	*/
+    
     public void processValueChangeForSecondMarker(ValueChangeEvent event) throws AbortProcessingException {    	
         secondMarkerStatus = "Marker B status:" + event.getNewValue().toString();
         Position position = (Position) event.getNewValue();
@@ -104,6 +107,14 @@ public class MapBean {
     public void processValueChangeForMarker(ValueChangeEvent event) throws AbortProcessingException {
         System.out.println("maker is dragged to: " + ((Position) event.getNewValue()).toString());
     }
+    
+    public void processClickForMarker(AjaxBehaviorEvent event) throws AbortProcessingException {
+    	Marker marker = ((Marker) event.getSource());
+    	
+        System.out.println("marker is clicked: Latitude = " + marker.getLatitude() + ", Longitude = " + marker.getLongitude());    	
+        
+        firstMarkerStatus = "marker is clicked: Latitude = " + marker.getLatitude() + ", Longitude = " + marker.getLongitude();    
+    }    
 
     public String getFirstLocationInformation() {
         return firstLocationInformation;
