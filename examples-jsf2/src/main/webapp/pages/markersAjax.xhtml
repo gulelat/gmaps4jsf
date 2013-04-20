@@ -11,7 +11,7 @@
         <ui:define name="ajaxIncludes"></ui:define>
         
         <ui:define name="mashup">
-             <h1>Ajaxified Marker Actions - Drag the markers</h1>
+             <h1>Ajaxified Marker Actions - Click marker A and Drag marker B</h1>
             
                 <h:form id="form">
                         <h:outputText id="firstMarkerStatus" value="#{map.firstMarkerStatus}"/> <br/>
@@ -20,20 +20,17 @@
                         <m:map width="800px" height="800px" latitude="24" longitude="15" jsVariable="map1" zoom="2">
                                 
                                 <m:marker id="marker1" latitude="30.01" longitude="31.14" 
-                                		  jsVariable="marker1" draggable="true" 
-                                          valueChangeListener="#{map.processValueChangeForFirstMarker}">
-                                                   
-                                        <m:icon imageURL="http://www.google.com/mapfiles/markerA.png"/>
-                                        <m:htmlInformationWindow htmlText="Iam Marker A"/>
-                                        
-                                        <f:ajax render="firstMarkerStatus"/>
+                                		  jsVariable="marker1" draggable="false">
+                                		  
+                                        <m:icon imageURL="http://www.google.com/mapfiles/markerA.png"/>                                        
+                                        <f:ajax event="click" listener="#{map.processClickForMarker}" render="firstMarkerStatus"/>
                                 </m:marker>
                                 
                                 <m:marker id="marker2" latitude="39" longitude="-101" 
                                 		  jsVariable="marker2" draggable="true"
                                           valueChangeListener="#{map.processValueChangeForSecondMarker}">
                                         <m:icon imageURL="http://www.google.com/mapfiles/markerB.png"/>
-                                        <m:htmlInformationWindow htmlText="Iam Marker B"/>
+                                        <m:htmlInformationWindow htmlText="Iam Marker B. Drag me."/>
                                         
                                         <f:ajax render="secondMarkerStatus"/>                                        
                                 </m:marker>
