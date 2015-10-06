@@ -1,0 +1,2 @@
+# Thanks for your donation! #
+GMaps4JSF (one of the [Mashups4JSF](http://code.google.com/p/mashups4jsf) project components) is an open source project with a free community support. Donations help us to continue the development journey and tell us that you are really appreciating our current work. If you want to donate, click [here](http://www.mashups4jsf.com/donate.htm).
